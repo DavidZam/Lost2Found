@@ -8,7 +8,7 @@
     android:paddingLeft="16dp"
     android:paddingRight="16dp"
     android:paddingTop="16dp"
-    android:theme="@style/AppTheme"
+    android:theme="@style/LoginTheme"
     tools:context="es.lost2found.lost2found.loginregisterUI.LoginActivity">
 
     <LinearLayout
@@ -37,7 +37,7 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="397dp"
+            android:layout_height="479dp"
             android:layout_below="@+id/login_layout"
             android:paddingBottom="0dp"
             android:paddingLeft="15dp"
@@ -48,31 +48,31 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Email"
-                android:textSize="17dp"
                 android:inputType="textEmailAddress"
-                android:paddingTop="70dp"/>
+                android:paddingTop="80dp"
+                android:textSize="17dp" />
 
             <EditText
                 android:id="@+id/password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Password"
-                android:textSize="17dp"
-                android:inputType="textPassword"
                 android:layout_below="@id/email"
-                android:paddingTop="30dp"/>
+                android:hint="Password"
+                android:inputType="textPassword"
+                android:paddingTop="15dp"
+                android:textSize="17dp" />
 
             <Button
                 android:id="@+id/login_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/login_button_text"
                 android:layout_below="@id/password"
                 android:layout_marginTop="20dp"
                 android:shadowColor="@color/textSecondaryColor"
+                android:text="@string/login_button_text"
                 android:textAllCaps="false"
-                android:textColor="@color/textPrimaryColor"/>
-                <!--android:onClick="login"-->
+                android:textColor="@color/textPrimaryColor" />
+            <!--android:onClick="login"-->
 
             <TextView
                 android:id="@+id/wrong_user"
@@ -82,31 +82,32 @@
                 android:layout_marginTop="15dp"
                 android:paddingTop="16dp"
                 android:textAlignment="center"
-                android:textColor="@color/colorPrimary"/>
+                android:textColor="@color/colorPrimary" />
 
             <TextView
                 android:id="@+id/register_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/wrong_user"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="50dp"
                 android:text="¿No tienes cuenta?"
                 android:textAlignment="center"
-                android:textColor="@color/textOccasionalColor"/>
+                android:textColor="@color/textOccasionalColor" />
 
             <Button
                 android:id="@+id/register_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/register_button_text"
                 android:layout_below="@id/register_text"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="10dp"
+                android:marginBottom="10dp"
                 android:shadowColor="@color/textSecondaryColor"
+                android:text="@string/register_button_text"
                 android:textAllCaps="false"
-                android:textColor="@color/textPrimaryColor"/>
-                <!--android:onClick="register"-->
+                android:textColor="@color/textPrimaryColor" />
+            <!--android:onClick="register"-->
 
-    </RelativeLayout>
+        </RelativeLayout>
 
 </LinearLayout>
 

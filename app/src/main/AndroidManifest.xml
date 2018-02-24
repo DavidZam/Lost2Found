@@ -10,7 +10,6 @@
 
         <activity
             android:name=".lost2found.loginregisterUI.LoginActivity"
-            android:theme="@android:style/Theme.Holo.Light.NoActionBar.Fullscreen"
             android:configChanges="orientation|screenSize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
