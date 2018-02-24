@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
+    <dimen name="question_size">18dp</dimen>
+    <dimen name="margin_top_answer">25dp</dimen>
+    <dimen name="margin_top_correction">15dp</dimen>
+    <dimen name="test_complete">40dp</dimen>
+    <dimen name="test_score">130dp</dimen>
+    <dimen name="number_size">29dp</dimen>
+    <dimen name="number_left_margin_text">10dp</dimen>
+    <dimen name="correction_icon_size">80dp</dimen>
+</resources>
