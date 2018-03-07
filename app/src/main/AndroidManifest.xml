@@ -10,12 +10,18 @@
 
         <activity
             android:name=".lost2found.loginregisterUI.LoginActivity"
-            android:configChanges="orientation|screenSize">
+            android:theme="@style/LoginRegisterTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+
+        <activity
+            android:name=".lost2found.loginregisterUI.RegisterActivity"
+            android:label=""
+            android:screenOrientation="portrait"
+            android:theme="@style/LoginRegisterTheme"/>
 
     </application>
 
