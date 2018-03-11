@@ -9,7 +9,7 @@
     android:paddingRight="16dp"
     android:paddingTop="16dp"
     android:theme="@style/LoginRegisterTheme"
-    tools:context="es.lost2found.lost2found.loginregisterUI.LoginActivity">
+    tools:context="es.lost2found.loginregisterUI.LoginActivity">
     <!---->
 
     <LinearLayout
@@ -27,25 +27,24 @@
             android:paddingRight="15dp">
 
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="50dp"
+                android:layout_width="250dp"
+                android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentTop="true"
-                android:layout_marginEnd="60dp"
-                android:layout_marginStart="60dp"
+                android:layout_marginEnd="30dp"
+                android:layout_marginStart="30dp"
                 android:layout_marginTop="60dp"
                 android:scaleType="fitCenter"
-                android:src="@drawable/lost2found" />
+                android:src="@drawable/ic_logo" />
         </RelativeLayout>
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="479dp"
             android:layout_below="@+id/login_layout"
-            android:paddingBottom="0dp"
             android:paddingLeft="15dp"
             android:paddingRight="15dp"
-            android:layout_marginTop="15dp">
+            android:layout_marginTop="5dp">
 
 
             <EditText
@@ -54,7 +53,7 @@
                 android:layout_height="wrap_content"
                 android:hint="Email"
                 android:inputType="textEmailAddress"
-                android:paddingTop="55dp"
+                android:paddingTop="30dp"
                 android:textSize="17dp" />
 
             <EditText
@@ -89,14 +88,10 @@
 
             <Button
                 android:id="@+id/register_button"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
                 android:layout_below="@id/repassword"
                 android:layout_marginTop="20dp"
-                android:shadowColor="@color/textSecondaryColor"
                 android:text="@string/register_button_text"
-                android:textAllCaps="false"
-                android:textColor="@color/textPrimaryColor" />
+                style="@style/buttonStyle" />
             <!--android:onClick="register"-->
 
             <TextView
@@ -104,8 +99,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/register_button"
-                android:layout_marginTop="15dp"
-                android:paddingTop="16dp"
+                android:layout_marginTop="10dp"
+                android:paddingTop="15dp"
                 android:textAlignment="center"
                 android:textColor="@color/colorPrimary" />
 
@@ -121,15 +116,12 @@
 
             <Button
                 android:id="@+id/login_button"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+
                 android:layout_below="@id/login_text"
                 android:layout_marginTop="5dp"
-                android:shadowColor="@color/textSecondaryColor"
                 android:text="@string/login_button_text"
-                android:textAllCaps="false"
                 android:onClick="login"
-                android:textColor="@color/textPrimaryColor" />
+                style="@style/buttonStyle" />
 
         </RelativeLayout>
 

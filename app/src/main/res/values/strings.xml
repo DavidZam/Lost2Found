@@ -2,5 +2,26 @@
     <string name="app_name">Lost2Found</string>
     <string name="login_button_text">Entrar</string>
     <string name="register_button_text">¡Regístrate!</string>
+    <string name="create_announce_text">Crear nuevo anuncio</string>
     <string name="button_create_account">Create account</string>
+    <string name="title_activity_home">HomeActivity</string>
+    <string name="title_announce_section">Mis anuncios</string>
+
+    <string name="nav_title_section1">Home</string>
+    <string name="nav_title_section2">Búsqueda</string>
+    <string name="nav_title_section3">Chats</string>
+    <string name="nav_title_section4">Open Data</string>
+    <string name="nav_title_section5">Configuración</string>
+
+    <string name="nav_header_text1">User name</string>
+    <string name="nav_header_text2">User email</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_example">Example action</string>
+
+    <string name="action_settings">Settings</string>
+
+
 </resources>

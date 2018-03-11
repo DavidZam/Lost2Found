@@ -3,9 +3,7 @@
     <color name="colorPrimary">#009688</color>
     <color name="colorPrimaryDark">#4DB6AC</color>
     <color name="colorAccent">#699CFC</color>
-    <color name="colorBackground">#E0F2F1</color>
-    <color name="loginFont">#FFFFFF</color>
-    <color name="textPrimaryColor">#FFFFFF</color>
+    <color name="colorBackground">#FFFFFF</color>
     <color name="textSecondaryColor">#000000</color>
     <color name="textOccasionalColor">#808080</color>
     <color name="errorColor">#FF0000</color>
