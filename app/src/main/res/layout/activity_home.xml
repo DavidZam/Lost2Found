@@ -7,13 +7,8 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
     android:paddingTop="16dp"
-    android:theme="@style/LoginRegisterTheme"
+    android:theme="@style/Lost2FoundTheme"
     tools:context="es.lost2found.homeUI.HomeActivity">
-
-    <!--<FrameLayout
-        android:id="@+id/content_frame"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />-->
 
     <RelativeLayout
         android:id="@+id/content_frame"
@@ -26,11 +21,8 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
-            android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
-            android:text="@string/app_name"
-
-            android:textColor="@color/textSecondaryColor"/>
+            android:theme="@style/ToolbarStyle"
+            android:text="@string/app_name" />
 
 
         <TextView
@@ -44,27 +36,70 @@
             android:text="@string/title_announce_section"
             android:textSize="20dp" />
 
-        <ListView
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/announce_layout"
+        android:layout_width="fill_parent"
+        android:layout_below="@id/announce_title"
+        android:layout_height="?android:attr/listPreferredItemHeight"
+        android:padding="8dip" >
+
+        <ImageView
+            android:id="@+id/announce_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginRight="6dip"
+            android:src="@drawable/ic_phone_android"
+            />
+
+        <TextView
+            android:id="@+id/firstLine"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@id/secondLine"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignWithParentIfMissing="true"
+            android:layout_toRightOf="@id/announce_icon"
+            android:gravity="center_vertical"
+            android:text="Anuncio pérdida"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/secondLine"
+            android:layout_width="fill_parent"
+            android:layout_height="26dip"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_toRightOf="@id/announce_icon"
+            android:ellipsize="marquee"
+            android:singleLine="true"
+            android:text="Móvil android"
+            android:textSize="12sp" />
+
+    </RelativeLayout>
+
+        <!--<ListView
             android:id="@+id/announce_section"
+            android:layout_below="@id/announce_title"
             android:layout_width="370dp"
             android:layout_centerHorizontal="true"
-            android:layout_height="325dp"
-            android:layout_below="@id/announce_title">
+            android:layout_height="325dp">
 
-
-        </ListView>
+        </ListView>-->
 
 
         <Button
             android:id="@+id/create_announce_button"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="12dp"
             android:text="@string/create_announce_text"
             android:layout_marginEnd="15dp"
             android:layout_marginStart="15dp"
-            android:layout_below="@id/announce_section"
+            android:layout_below="@id/announce_layout"
             style="@style/buttonStyle"
              />
-        <!-- android:onClick="register"-->
+         <!--android:onClick="register"-->
 
         </RelativeLayout>
 
@@ -78,7 +113,5 @@
         app:menu="@menu/navigate_menu"
         app:headerLayout="@layout/nav_header"
         />
-
-<!--android:background="?attr/colorPrimary"-->
 
 </android.support.v4.widget.DrawerLayout>

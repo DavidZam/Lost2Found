@@ -9,21 +9,35 @@
     android:orientation="vertical"
     android:gravity="bottom">
 
+    <ImageView
+        android:id="@+id/user_image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:scaleType="fitStart"
+        android:src="@drawable/ic_account" />
+
     <TextView
         android:id="@+id/user_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@id/user_image"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="5dp"
         android:text="@string/nav_header_text1"
+        android:textColor="@color/colorPrimaryDarkText"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         />
 
     <TextView
+        android:id="@+id/user_email"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/nav_header_text2"
+        android:textColor="@color/colorPrimaryDarkText"
         android:layout_below="@id/user_name"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="5dp"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         />
-
 
 </LinearLayout>

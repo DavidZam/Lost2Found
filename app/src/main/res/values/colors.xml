@@ -3,10 +3,11 @@
     <color name="colorPrimary">#699CFC</color>
     <color name="colorPrimaryDark">#296EC8</color>
     <color name="colorBlueLight">#A0CDFF</color>
-    <color name="colorAccent">#4DB6AC</color>
-    <color name="colorAccentDark">#009688</color>
+    <color name="colorPrimaryText">#000000</color>
+    <color name="colorPrimaryDarkText">#FFFFFF</color>
+    <color name="colorBlueLightText">#000000</color>
     <color name="colorBackground">#FFFFFF</color>
-    <color name="textSecondaryColor">#000000</color>
-    <color name="textOccasionalColor">#808080</color>
     <color name="errorColor">#FF0000</color>
+    <color name="textOccasionalColor">#808080</color>
+
 </resources>

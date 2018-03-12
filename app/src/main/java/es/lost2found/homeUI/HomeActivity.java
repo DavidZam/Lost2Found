@@ -10,8 +10,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.EditText;
-import android.widget.TextView;
 
 import es.lost2found.R;
 
@@ -22,7 +20,6 @@ public class HomeActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_home);
 
         Toolbar tb = findViewById(R.id.toolbar);
@@ -71,6 +68,7 @@ public class HomeActivity extends AppCompatActivity {
                     }
                 }
         );
+
     }
 
     @Override
