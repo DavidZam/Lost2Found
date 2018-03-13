@@ -3,9 +3,16 @@
     <string name="login_button_text">Entrar</string>
     <string name="register_button_text">¡Regístrate!</string>
     <string name="create_announce_text">Crear nuevo anuncio</string>
-    <string name="button_create_account">Create account</string>
-    <string name="title_activity_home">HomeActivity</string>
     <string name="title_announce_section">Mis anuncios</string>
+
+    <string name="email_textloginregister">Email</string>
+    <string name="pass_textloginregister">Contraseña</string>
+    <string name="noaccount_textlogin">¿No tienes cuenta?</string>
+    <string name="name_textregister">Nombre</string>
+    <string name="passagain_textregister">Vuelve a escribir la contraseña</string>
+    <string name="alreadyhaveaccount">Ya tengo cuenta</string>
+
+
 
     <string name="nav_title_section1">Home</string>
     <string name="nav_title_section2">Búsqueda</string>
