@@ -10,3 +10,6 @@
 app/src/main/java/es/lost2found/lost2found/loginregisterUI/HomeActivity.java
 app/src/main/java/es/lost2found/lost2found/loginregisterUI/HomeActivity.java
 .idea/vcs.xml
+app/src/main/res/layout/activity_home.xml
+app/src/main/AndroidManifest.xml
+app/src/main/java/es/lost2found/homeUI/HomeActivity.java
