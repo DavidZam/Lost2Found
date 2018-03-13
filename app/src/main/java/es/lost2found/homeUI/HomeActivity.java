@@ -7,11 +7,15 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.EditText;
-import android.widget.TextView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import es.lost2found.R;
 
@@ -22,7 +26,6 @@ public class HomeActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_home);
 
         Toolbar tb = findViewById(R.id.toolbar);
@@ -30,10 +33,10 @@ public class HomeActivity extends AppCompatActivity {
         ActionBar ab = getSupportActionBar();
         ab.setDisplayHomeAsUpEnabled(true);
         ab.setHomeAsUpIndicator(R.drawable.ic_menu);
-
         mDrawerLayout = findViewById(R.id.drawer_layout);
 
         NavigationView navView = findViewById(R.id.nav_view);
+
         navView.setNavigationItemSelectedListener(
                 new NavigationView.OnNavigationItemSelectedListener() {
                     @Override
@@ -47,7 +50,7 @@ public class HomeActivity extends AppCompatActivity {
                     }
                 }
         );
-
+        /*
         mDrawerLayout.addDrawerListener(
                 new DrawerLayout.DrawerListener() {
                     @Override
@@ -71,6 +74,35 @@ public class HomeActivity extends AppCompatActivity {
                     }
                 }
         );
+        */
+
+        // In this example we fill announceList with a function fill_with_data(), in the future we'll do it with the database info
+        List<Announce> announceList = fill_with_data();
+
+        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
+        RecyclerViewAdapter adapter = new RecyclerViewAdapter(announceList, getApplication());
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        // Adding a ItemAnimator to the RecyclerView (Optional)
+        RecyclerView.ItemAnimator itemAnimator = new DefaultItemAnimator();
+        itemAnimator.setAddDuration(1000);
+        itemAnimator.setRemoveDuration(1000);
+        /*recyclerView.setItemAnimator(itemAnimator);*/
+    }
+
+    public List<Announce> fill_with_data() {
+
+        List<Announce> announce = new ArrayList<>();
+
+        announce.add(new Announce("Anuncio1", "Descripcion1", R.drawable.ic_phone_android));
+        announce.add(new Announce("Anuncio2", "Descripcion2", R.drawable.ic_phone_android));
+        announce.add(new Announce("Anuncio3", "Descripcion3", R.drawable.ic_phone_android));
+        announce.add(new Announce("Anuncio4", "Descripcion4", R.drawable.ic_phone_android));
+        announce.add(new Announce("Anuncio5", "Descripcion5", R.drawable.ic_phone_android));
+        announce.add(new Announce("Anuncio6", "Descripcion6", R.drawable.ic_phone_android));
+
+        return announce;
     }
 
     @Override

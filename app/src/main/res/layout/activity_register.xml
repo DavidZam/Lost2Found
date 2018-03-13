@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_register"
     android:layout_width="match_parent"
@@ -8,123 +8,94 @@
     android:paddingLeft="16dp"
     android:paddingRight="16dp"
     android:paddingTop="16dp"
-    android:theme="@style/LoginRegisterTheme"
+    android:theme="@style/Lost2FoundTheme"
     tools:context="es.lost2found.loginregisterUI.LoginActivity">
-    <!---->
 
     <LinearLayout
+        android:id="@+id/register_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:orientation="vertical">
 
-        <RelativeLayout
-            android:id="@+id/logo_layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingLeft="15dp"
-            android:paddingRight="15dp">
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="30dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="60dp"
+        android:scaleType="fitCenter"
+        android:src="@drawable/ic_logo" />
 
-            <ImageView
-                android:layout_width="250dp"
-                android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true"
-                android:layout_marginEnd="30dp"
-                android:layout_marginStart="30dp"
-                android:layout_marginTop="60dp"
-                android:scaleType="fitCenter"
-                android:src="@drawable/ic_logo" />
-        </RelativeLayout>
+    <EditText
+        android:id="@+id/email"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/email_textloginregister"
+        android:inputType="textEmailAddress"
+        android:paddingTop="30dp"
+        android:textSize="17sp" />
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="479dp"
-            android:layout_below="@+id/login_layout"
-            android:paddingLeft="15dp"
-            android:paddingRight="15dp"
-            android:layout_marginTop="5dp">
+    <EditText
+        android:id="@+id/name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/name_textregister"
+        android:inputType="text"
+        android:paddingTop="25dp"
+        android:textSize="17sp" />
 
+    <EditText
+        android:id="@+id/password"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/pass_textloginregister"
+        android:inputType="textPassword"
+        android:paddingTop="25dp"
+        android:textSize="17sp" />
 
-            <EditText
-                android:id="@+id/email"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Email"
-                android:inputType="textEmailAddress"
-                android:paddingTop="30dp"
-                android:textSize="17dp" />
+    <EditText
+        android:id="@+id/repassword"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/passagain_textregister"
+        android:inputType="textPassword"
+        android:paddingTop="25dp"
+        android:textSize="17sp" />
 
-            <EditText
-                android:id="@+id/name"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/email"
-                android:hint="Nombre"
-                android:inputType="text"
-                android:paddingTop="25dp"
-                android:textSize="17dp" />
+    <Button
+        android:id="@+id/register_button"
+        android:layout_marginTop="20dp"
+        android:text="@string/register_button_text"
+        style="@style/buttonStyle" />
+    <!--android:onClick="register"-->
 
-            <EditText
-                android:id="@+id/password"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/name"
-                android:hint="Contraseña"
-                android:inputType="textPassword"
-                android:paddingTop="25dp"
-                android:textSize="17dp" />
+    <TextView
+        android:id="@+id/user_already_exists"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:paddingTop="15dp"
+        android:textAlignment="center"
+        android:textColor="@color/colorPrimary" />
 
-            <EditText
-                android:id="@+id/repassword"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/password"
-                android:hint="Vuelve a escribir la contraseña"
-                android:inputType="textPassword"
-                android:paddingTop="25dp"
-                android:textSize="17dp" />
+    <TextView
+        android:id="@+id/login_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:text="@string/alreadyhaveaccount"
+        android:textAlignment="center"
+        android:textColor="@color/textOccasionalColor" />
 
-            <Button
-                android:id="@+id/register_button"
-                android:layout_below="@id/repassword"
-                android:layout_marginTop="20dp"
-                android:text="@string/register_button_text"
-                style="@style/buttonStyle" />
-            <!--android:onClick="register"-->
-
-            <TextView
-                android:id="@+id/user_already_exists"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/register_button"
-                android:layout_marginTop="10dp"
-                android:paddingTop="15dp"
-                android:textAlignment="center"
-                android:textColor="@color/colorPrimary" />
-
-            <TextView
-                android:id="@+id/login_text"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/user_already_exists"
-                android:layout_marginTop="5dp"
-                android:text="Ya tengo cuenta"
-                android:textAlignment="center"
-                android:textColor="@color/textOccasionalColor" />
-
-            <Button
-                android:id="@+id/login_button"
-
-                android:layout_below="@id/login_text"
-                android:layout_marginTop="5dp"
-                android:text="@string/login_button_text"
-                android:onClick="login"
-                style="@style/buttonStyle" />
-
-        </RelativeLayout>
+    <Button
+        android:id="@+id/login_button"
+        android:layout_marginTop="5dp"
+        android:text="@string/login_button_text"
+        android:onClick="login"
+        style="@style/buttonStyle" />
 
     </LinearLayout>
 
-</RelativeLayout>
+</android.support.constraint.ConstraintLayout>
