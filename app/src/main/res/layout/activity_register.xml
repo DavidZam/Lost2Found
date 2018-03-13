@@ -34,7 +34,7 @@
         android:layout_height="wrap_content"
         android:hint="@string/email_textloginregister"
         android:inputType="textEmailAddress"
-        android:paddingTop="30dp"
+        android:paddingTop="25dp"
         android:textSize="17sp" />
 
     <EditText
@@ -43,7 +43,7 @@
         android:layout_height="wrap_content"
         android:hint="@string/name_textregister"
         android:inputType="text"
-        android:paddingTop="25dp"
+        android:paddingTop="20dp"
         android:textSize="17sp" />
 
     <EditText
@@ -52,7 +52,7 @@
         android:layout_height="wrap_content"
         android:hint="@string/pass_textloginregister"
         android:inputType="textPassword"
-        android:paddingTop="25dp"
+        android:paddingTop="20dp"
         android:textSize="17sp" />
 
     <EditText
@@ -61,7 +61,7 @@
         android:layout_height="wrap_content"
         android:hint="@string/passagain_textregister"
         android:inputType="textPassword"
-        android:paddingTop="25dp"
+        android:paddingTop="20dp"
         android:textSize="17sp" />
 
     <Button
@@ -76,7 +76,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:paddingTop="15dp"
+        android:paddingTop="10dp"
         android:textAlignment="center"
         android:textColor="@color/colorPrimary" />
 
@@ -91,7 +91,7 @@
 
     <Button
         android:id="@+id/login_button"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="15dp"
         android:text="@string/login_button_text"
         android:onClick="login"
         style="@style/buttonStyle" />

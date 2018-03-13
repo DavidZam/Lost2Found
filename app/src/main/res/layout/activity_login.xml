@@ -70,7 +70,7 @@
         android:id="@+id/register_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="65dp"
+        android:layout_marginTop="55dp"
         android:text="@string/noaccount_textlogin"
         android:textAlignment="center"
         android:textColor="@color/textOccasionalColor" />
@@ -79,7 +79,7 @@
         android:id="@+id/register_button"
         android:text="@string/register_button_text"
         android:onClick="register"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="15dp"
         style="@style/buttonStyle"  />
 
     </LinearLayout>
