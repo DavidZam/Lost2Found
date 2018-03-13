@@ -8,7 +8,7 @@
     android:paddingLeft="16dp"
     android:paddingRight="16dp"
     android:paddingTop="16dp"
-    android:theme="@style/LoginRegisterTheme"
+    android:theme="@style/Lost2FoundTheme"
     tools:context="es.lost2found.loginregisterUI.LoginActivity">
     <!---->
 
@@ -116,7 +116,6 @@
 
             <Button
                 android:id="@+id/login_button"
-
                 android:layout_below="@id/login_text"
                 android:layout_marginTop="5dp"
                 android:text="@string/login_button_text"

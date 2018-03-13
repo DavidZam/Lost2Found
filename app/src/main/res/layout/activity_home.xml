@@ -7,66 +7,59 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
     android:paddingTop="16dp"
-    android:theme="@style/LoginRegisterTheme"
+    android:theme="@style/Lost2FoundTheme"
     tools:context="es.lost2found.homeUI.HomeActivity">
-
-    <!--<FrameLayout
-        android:id="@+id/content_frame"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />-->
 
     <RelativeLayout
         android:id="@+id/content_frame"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="16dp"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        tools:context=".homeUI.HomeActivity"
+        tools:showIn="@layout/activity_home"
         android:background="@color/colorBackground">
 
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
-            android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
-            android:text="@string/app_name"
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:theme="@style/ToolbarStyle"
+        android:text="@string/title_announce_section"
+        android:textSize="20sp"
+        android:layout_centerHorizontal="true" />
 
-            android:textColor="@color/textSecondaryColor"/>
+    <android.support.v7.widget.RecyclerView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/my_recycler_view"
+        android:layout_below="@+id/toolbar"
+        android:scrollbars="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clickable="true"
+        android:focusable="true" />
 
+    </RelativeLayout>
 
-        <TextView
-            android:id="@+id/announce_title"
-            android:layout_below="@id/toolbar"
-            android:layout_marginTop="15dp"
-            android:layout_marginLeft="120dp"
-            android:layout_width="125dp"
-            android:layout_centerHorizontal="true"
-            android:layout_height="30dp"
-            android:text="@string/title_announce_section"
-            android:textSize="20dp" />
+    <android.support.design.widget.CoordinatorLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="true">
 
-        <ListView
-            android:id="@+id/announce_section"
-            android:layout_width="370dp"
-            android:layout_centerHorizontal="true"
-            android:layout_height="325dp"
-            android:layout_below="@id/announce_title">
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/new_announce"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="16dp"
+        app:backgroundTint="@color/colorPrimary"
+        android:src="@drawable/ic_add"
+        android:clickable="true"
+        android:focusable="true"/>
 
-
-        </ListView>
-
-
-        <Button
-            android:id="@+id/create_announce_button"
-            android:layout_marginTop="20dp"
-            android:text="@string/create_announce_text"
-            android:layout_marginEnd="15dp"
-            android:layout_marginStart="15dp"
-            android:layout_below="@id/announce_section"
-            style="@style/buttonStyle"
-             />
-        <!-- android:onClick="register"-->
-
-        </RelativeLayout>
+    </android.support.design.widget.CoordinatorLayout>
 
     <android.support.design.widget.NavigationView
         android:layout_marginTop="16dp"
@@ -78,7 +71,5 @@
         app:menu="@menu/navigate_menu"
         app:headerLayout="@layout/nav_header"
         />
-
-<!--android:background="?attr/colorPrimary"-->
 
 </android.support.v4.widget.DrawerLayout>
