@@ -1,38 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
+
+<android.support.v4.widget.DrawerLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
 
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/drawer_layout"
+    android:fitsSystemWindows="true"
+    android:paddingTop="16dp"
+    android:theme="@style/Lost2FoundTheme"
 
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:title="Buscar objeto"
     tools:context="es.lost2found.seekerUI.SeekerActivity">
-
-    <!--<TextView
-        android:id="@+id/Categoria"
-        android:layout_width="206dp"
-        android:layout_height="34dp"
-        android:lineSpacingExtra="24sp"
-        android:text="Categoría"
-        android:textSize="24sp"
-        tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="16dp"
-        tools:ignore="MissingConstraints" />
-        -->
-
-    <Spinner
-        android:id="@+id/listaCategorias"
-        android:layout_width="363dp"
-        android:layout_height="50dp"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="11dp"
-        tools:layout_editor_absoluteY="60dp" />
-
-
-
-    <!---    Menú    -->
 
     <RelativeLayout
         android:id="@+id/content_frame"
@@ -40,50 +20,30 @@
         android:layout_height="match_parent"
         android:layout_marginTop="16dp"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        tools:context=".homeUI.HomeActivity"
-        tools:showIn="@layout/activity_home"
+        tools:context=".seekerUI.SeekerActivity"
         android:background="@color/colorBackground">
 
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:theme="@style/ToolbarStyle"
-            android:text="@string/title_announce_section"
+            android:layout_centerHorizontal="true"
+            android:text="Buscar objeto"
             android:textSize="20sp"
-            android:layout_centerHorizontal="true" />
+            android:theme="@style/ToolbarStyle" />
 
-        <android.support.v7.widget.RecyclerView
-            xmlns:android="http://schemas.android.com/apk/res/android"
-            android:id="@+id/my_recycler_view"
+        <Spinner
+            android:id="@+id/listaCategorias"
+            
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_alignParentStart="true"
             android:layout_below="@+id/toolbar"
-            android:scrollbars="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:clickable="true"
-            android:focusable="true" />
-
+            android:visibility="visible"
+            tools:ignore="MissingConstraints"
+            tools:layout_editor_absoluteX="11dp"
+            tools:layout_editor_absoluteY="60dp" />
     </RelativeLayout>
-
-    <android.support.design.widget.CoordinatorLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fitsSystemWindows="true">
-
-        <android.support.design.widget.FloatingActionButton
-            android:id="@+id/new_announce"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom|end"
-            android:layout_margin="16dp"
-            app:backgroundTint="@color/colorPrimary"
-            android:src="@drawable/ic_add"
-            android:clickable="true"
-            android:focusable="true"/>
-
-    </android.support.design.widget.CoordinatorLayout>
 
     <android.support.design.widget.NavigationView
         android:layout_marginTop="16dp"
@@ -96,6 +56,8 @@
         app:headerLayout="@layout/nav_header"
         />
 
+</android.support.v4.widget.DrawerLayout>
 
 
-</android.support.constraint.ConstraintLayout>
+
+
