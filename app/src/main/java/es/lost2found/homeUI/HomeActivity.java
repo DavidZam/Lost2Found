@@ -1,5 +1,6 @@
 package es.lost2found.homeUI;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
@@ -18,6 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import es.lost2found.R;
+import es.lost2found.seekerUI.SeekerActivity;
 
 public class HomeActivity extends AppCompatActivity {
 
@@ -37,6 +39,8 @@ public class HomeActivity extends AppCompatActivity {
 
         NavigationView navView = findViewById(R.id.nav_view);
 
+        final Intent buscar = new Intent(this, SeekerActivity.class);
+
         navView.setNavigationItemSelectedListener(
                 new NavigationView.OnNavigationItemSelectedListener() {
                     @Override
@@ -45,6 +49,11 @@ public class HomeActivity extends AppCompatActivity {
                         mDrawerLayout.closeDrawers();
 
                         // Add code here to update the UI based on the item selected
+
+                        if(menuItem.getItemId() == R.id.nav_search) {
+
+                            startActivity(buscar);
+                        }
 
                         return true;
                     }
@@ -147,4 +156,5 @@ public class HomeActivity extends AppCompatActivity {
         //else
         //new RegisterDB().execute(email, pass, name, role);*/
     }
+
 }

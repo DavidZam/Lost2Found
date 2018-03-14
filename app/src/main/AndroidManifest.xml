@@ -29,6 +29,11 @@
             android:screenOrientation="portrait"
             android:label="@string/title_announce_section"/>
 
+        <activity
+            android:name=".seekerUI.SeekerActivity"
+            android:screenOrientation="portrait"
+            android:label="Buscar objeto"/>
+
     </application>
 
 </manifest>
