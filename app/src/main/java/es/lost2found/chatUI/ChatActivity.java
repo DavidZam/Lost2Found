@@ -1,6 +1,8 @@
 package es.lost2found.chatUI;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -17,7 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import es.lost2found.R;
-import es.lost2found.homeUI.Announce;
+import es.lost2found.homeUI.HomeActivity;
 
 public class ChatActivity extends AppCompatActivity {
 
@@ -33,11 +35,11 @@ public class ChatActivity extends AppCompatActivity {
         ActionBar ab = getSupportActionBar();
         ab.setDisplayHomeAsUpEnabled(true);
         ab.setHomeAsUpIndicator(R.drawable.ic_menu);
-        mDrawerLayout = findViewById(R.id.drawer_layout);
+        mDrawerLayout = findViewById(R.id.chat_layout);
 
         NavigationView navView = findViewById(R.id.nav_view);
 
-        // Final intent chat = new Intent(this, seekerActivity.class)
+        final Intent home = new Intent(this, HomeActivity.class);
 
         navView.setNavigationItemSelectedListener(
                 new NavigationView.OnNavigationItemSelectedListener() {
@@ -48,14 +50,15 @@ public class ChatActivity extends AppCompatActivity {
 
                         // Add code here to update the UI based on the item selected
 
-                        // if(menuItem.getItemId()== R.id.nav_search) {
-                        // startActivity(buscar);
-                        //}
+                        if(menuItem.getItemId()== R.id.nav_home) {
+                            startActivity(home);
+                        }
 
                         return true;
                     }
                 }
         );
+        navView.setCheckedItem(R.id.nav_chat);
 
         // In this example we fill announceList with a function fill_with_data(), in the future we'll do it with the database info
         List<Chat> listChat = fill_with_data();
@@ -69,7 +72,8 @@ public class ChatActivity extends AppCompatActivity {
         RecyclerView.ItemAnimator itemAnimator = new DefaultItemAnimator();
         itemAnimator.setAddDuration(1000);
         itemAnimator.setRemoveDuration(1000);
-    /*recyclerView.setItemAnimator(itemAnimator);*/
+        /*recyclerView.setItemAnimator(itemAnimator);*/
+
     }
 
     public List<Chat> fill_with_data() {

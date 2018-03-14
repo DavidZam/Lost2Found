@@ -11,10 +11,10 @@
 
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-        <!--android:label="@string/app_name"-->
 
         <activity
-            android:name=".loginregisterUI.LoginActivity">
+            android:name=".loginregisterUI.LoginActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -34,6 +34,12 @@
             android:name=".chatUI.ChatActivity"
             android:screenOrientation="portrait"
             android:label="@string/title_chat_section"/>
+
+        <activity
+            android:name=".chatUI.ChatConcrete"
+            android:screenOrientation="portrait"
+            />
+        <!--android:label="@string/title_chatconcrete_section"-->
 
     </application>
 

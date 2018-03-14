@@ -34,7 +34,7 @@ public class RegisterActivity extends AppCompatActivity {
      * @param view
      */
     public void register(View view) {
-        EditText editText = (EditText) findViewById(R.id.email);
+        /*EditText editText = (EditText) findViewById(R.id.email);
         String name = editText.getText().toString();
 
         editText = (EditText) findViewById(R.id.name);
@@ -59,6 +59,6 @@ public class RegisterActivity extends AppCompatActivity {
             textView.setText(this.msgerror);
         }
         //else
-            //new RegisterDB().execute(email, pass, name, role);
+            //new RegisterDB().execute(email, pass, name, role);*/
     }
 }

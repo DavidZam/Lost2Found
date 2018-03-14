@@ -58,6 +58,7 @@ public class HomeActivity extends AppCompatActivity {
                     }
                 }
         );
+        navView.setCheckedItem(R.id.nav_home);
         /*
         mDrawerLayout.addDrawerListener(
                 new DrawerLayout.DrawerListener() {

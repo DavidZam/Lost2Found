@@ -1,6 +1,8 @@
 package es.lost2found.chatUI;
 
+import android.app.Application;
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +13,7 @@ import java.util.List;
 
 import es.lost2found.R;
 import es.lost2found.homeUI.View_Holder;
+import es.lost2found.loginregisterUI.RegisterActivity;
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<ChatView_Holder> {
     List<Chat> listChat = Collections.emptyList();
@@ -27,16 +30,22 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<ChatView_Holder> {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_chat, parent, false);
         ChatView_Holder holder = new ChatView_Holder(v);
 
-        /*
+
         holder.itemView.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View v) {
+            //View itemView = v.findViewById(R.id.activity_concrete_chat);
+            Context context = v.getContext();
+            Intent intent = new Intent(context, ChatConcrete.class);
+            context.startActivity(intent);
+
+            /*
             int position = holder .getAdapterPosition();
             // This is org.greenrobot.eventbus
-            Application.getInstance().getEventBus().post(new OnHistoryClickEvent(position));
+            Application.getInstance().getEventBus().post(new OnHistoryClickEvent(position));*/
         }
         });
-        holder .itemView.setOnLongClickListener(new View.OnLongClickListener() {
+        /*holder .itemView.setOnLongClickListener(new View.OnLongClickListener() {
         @Override
         public boolean onLongClick(View v) {
             int position = holder .getAdapterPosition();
@@ -44,8 +53,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<ChatView_Holder> {
             Application.getInstance().getEventBus().post(new OnHistoryLongClickEvent(position));
             return true;
         }
-        });
-         */
+        });*/
 
         return holder;
     }

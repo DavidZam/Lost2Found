@@ -9,5 +9,8 @@
     <color name="colorBackground">#FFFFFF</color>
     <color name="errorColor">#FF0000</color>
     <color name="textOccasionalColor">#808080</color>
+    <color name="otherUserMsgColor">#26A69A</color>
+    <color name="lineChatColor">#dfdfdf</color>
+
 
 </resources>
