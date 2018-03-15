@@ -1,14 +1,13 @@
-package es.lost2found.loginregisterUI;
+package es.lost2found.lost2foundUI.loginregisterUI;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 
 import es.lost2found.R;
-import es.lost2found.homeUI.HomeActivity;
+import es.lost2found.lost2foundUI.homeUI.HomeActivity;
 
 public class LoginActivity extends AppCompatActivity {
     @Override

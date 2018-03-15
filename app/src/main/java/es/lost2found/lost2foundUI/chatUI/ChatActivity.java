@@ -1,8 +1,7 @@
-package es.lost2found.chatUI;
+package es.lost2found.lost2foundUI.chatUI;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -16,11 +15,13 @@ import android.view.MenuItem;
 import android.view.View;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import es.lost2found.R;
-import es.lost2found.homeUI.HomeActivity;
-import es.lost2found.seekerUI.SeekerActivity;
+import es.lost2found.entities.Chat;
+import es.lost2found.lost2foundUI.homeUI.HomeActivity;
+import es.lost2found.lost2foundUI.seekerUI.SeekerActivity;
 
 public class ChatActivity extends AppCompatActivity {
 
@@ -64,8 +65,10 @@ public class ChatActivity extends AppCompatActivity {
         );
         navView.setCheckedItem(R.id.nav_chat);
 
-        // In this example we fill announceList with a function fill_with_data(), in the future we'll do it with the database info
-        List<Chat> listChat = fill_with_data();
+        // In this example we fill listChat with a function fill_with_data(), in the future we'll do it with the database info
+        List<Chat> listChat = new ArrayList<>();
+        Chat chat = new Chat();
+        chat.fill_with_data(listChat);
 
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.chat_recyclerview);
         RecyclerViewAdapter adapter = new RecyclerViewAdapter(listChat, getApplication());
@@ -78,20 +81,6 @@ public class ChatActivity extends AppCompatActivity {
         itemAnimator.setRemoveDuration(1000);
         /*recyclerView.setItemAnimator(itemAnimator);*/
 
-    }
-
-    public List<Chat> fill_with_data() {
-
-        List<Chat> chat = new ArrayList<>();
-
-        chat.add(new Chat("Chat1", "Mensaje1", R.drawable.ic_chaticon));
-        chat.add(new Chat("Chat2", "Mensaje2", R.drawable.ic_chaticon));
-        chat.add(new Chat("Chat3", "Mensaje3", R.drawable.ic_chaticon));
-        chat.add(new Chat("Chat4", "Mensaje4", R.drawable.ic_chaticon));
-        chat.add(new Chat("Chat5", "Mensaje5", R.drawable.ic_chaticon));
-        chat.add(new Chat("Chat6", "Mensaje6", R.drawable.ic_chaticon));
-
-        return chat;
     }
 
     @Override

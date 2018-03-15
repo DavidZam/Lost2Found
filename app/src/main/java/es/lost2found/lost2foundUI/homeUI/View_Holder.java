@@ -1,12 +1,10 @@
-package es.lost2found.homeUI;
+package es.lost2found.lost2foundUI.homeUI;
 
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-
-import org.w3c.dom.Text;
 
 import es.lost2found.R;
 

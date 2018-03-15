@@ -1,8 +1,7 @@
-package es.lost2found.homeUI;
+package es.lost2found.lost2foundUI.homeUI;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -19,8 +18,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import es.lost2found.R;
-import es.lost2found.chatUI.ChatActivity;
-import es.lost2found.seekerUI.SeekerActivity;
+import es.lost2found.entities.Announce;
+import es.lost2found.lost2foundUI.chatUI.ChatActivity;
+import es.lost2found.lost2foundUI.seekerUI.SeekerActivity;
 
 public class HomeActivity extends AppCompatActivity {
 
@@ -90,7 +90,9 @@ public class HomeActivity extends AppCompatActivity {
         */
 
         // In this example we fill announceList with a function fill_with_data(), in the future we'll do it with the database info
-        List<Announce> announceList = fill_with_data();
+       List<Announce> announceList = new ArrayList<>();
+       Announce announce = new Announce();
+       announce.fill_with_data(announceList);
 
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.announce_recyclerview);
         RecyclerViewAdapter adapter = new RecyclerViewAdapter(announceList, getApplication());
@@ -104,19 +106,6 @@ public class HomeActivity extends AppCompatActivity {
         /*recyclerView.setItemAnimator(itemAnimator);*/
     }
 
-    public List<Announce> fill_with_data() {
-
-        List<Announce> announce = new ArrayList<>();
-
-        announce.add(new Announce("Anuncio1", "Descripcion1", R.drawable.ic_phone_android));
-        announce.add(new Announce("Anuncio2", "Descripcion2", R.drawable.ic_phone_android));
-        announce.add(new Announce("Anuncio3", "Descripcion3", R.drawable.ic_phone_android));
-        announce.add(new Announce("Anuncio4", "Descripcion4", R.drawable.ic_phone_android));
-        announce.add(new Announce("Anuncio5", "Descripcion5", R.drawable.ic_phone_android));
-        announce.add(new Announce("Anuncio6", "Descripcion6", R.drawable.ic_phone_android));
-
-        return announce;
-    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

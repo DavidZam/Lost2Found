@@ -1,6 +1,5 @@
-package es.lost2found.chatUI;
+package es.lost2found.lost2foundUI.chatUI;
 
-import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
@@ -12,8 +11,8 @@ import java.util.Collections;
 import java.util.List;
 
 import es.lost2found.R;
-import es.lost2found.homeUI.View_Holder;
-import es.lost2found.loginregisterUI.RegisterActivity;
+import es.lost2found.entities.Chat;
+import es.lost2found.lost2foundUI.chatUI.chatConcreteUI.ChatConcrete;
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<ChatView_Holder> {
     List<Chat> listChat = Collections.emptyList();

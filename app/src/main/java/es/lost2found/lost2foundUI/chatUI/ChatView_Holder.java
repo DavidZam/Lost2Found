@@ -1,4 +1,4 @@
-package es.lost2found.chatUI;
+package es.lost2found.lost2foundUI.chatUI;
 
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;

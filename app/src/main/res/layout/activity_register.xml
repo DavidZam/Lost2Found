@@ -9,7 +9,7 @@
     android:paddingRight="16dp"
     android:paddingTop="16dp"
     android:theme="@style/Lost2FoundTheme"
-    tools:context="es.lost2found.loginregisterUI.LoginActivity">
+    tools:context=".lost2foundUI.loginregisterUI.LoginActivity">
 
     <LinearLayout
         android:id="@+id/register_layout"

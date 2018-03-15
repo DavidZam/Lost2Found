@@ -9,7 +9,7 @@
 
     android:paddingTop="16dp"
     android:theme="@style/Lost2FoundTheme"
-    tools:context="es.lost2found.homeUI.HomeActivity">
+    tools:context=".lost2foundUI.homeUI.HomeActivity">
 
     <RelativeLayout
         android:id="@+id/content_frame"
@@ -17,7 +17,7 @@
         android:layout_height="match_parent"
         android:layout_marginTop="16dp"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        tools:context=".homeUI.HomeActivity"
+        tools:context=".lost2foundUI.homeUI.HomeActivity"
         tools:showIn="@layout/activity_home"
         android:background="@color/colorBackground">
 

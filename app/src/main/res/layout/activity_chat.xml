@@ -9,7 +9,7 @@
     android:fitsSystemWindows="true"
     android:paddingTop="16dp"
     android:theme="@style/Lost2FoundTheme"
-    tools:context="es.lost2found.chatUI.ChatActivity">
+    tools:context=".lost2foundUI.chatUI.ChatActivity">
 
     <RelativeLayout
         android:id="@+id/content_frame"
@@ -17,7 +17,7 @@
         android:layout_height="match_parent"
         android:layout_marginTop="16dp"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        tools:context=".chatUI.ChatActivity"
+        tools:context=".lost2foundUI.chatUI.ChatActivity"
         tools:showIn="@layout/activity_chat"
         android:background="@color/colorBackground">
 

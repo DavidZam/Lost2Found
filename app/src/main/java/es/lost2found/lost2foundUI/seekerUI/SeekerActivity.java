@@ -1,4 +1,4 @@
-package es.lost2found.seekerUI;
+package es.lost2found.lost2foundUI.seekerUI;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -16,8 +16,8 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import es.lost2found.R;
-import es.lost2found.chatUI.ChatActivity;
-import es.lost2found.homeUI.HomeActivity;
+import es.lost2found.lost2foundUI.chatUI.ChatActivity;
+import es.lost2found.lost2foundUI.homeUI.HomeActivity;
 
 
 public class SeekerActivity extends AppCompatActivity {
@@ -80,6 +80,7 @@ public class SeekerActivity extends AppCompatActivity {
                     }
                 }
         );
+        navView.setCheckedItem(R.id.nav_search);
 
     }
 

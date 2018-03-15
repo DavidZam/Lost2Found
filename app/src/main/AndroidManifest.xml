@@ -13,7 +13,7 @@
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
 
         <activity
-            android:name=".loginregisterUI.LoginActivity"
+            android:name=".lost2foundUI.loginregisterUI.LoginActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -22,26 +22,26 @@
         </activity>
 
         <activity
-            android:name=".loginregisterUI.RegisterActivity"
+            android:name=".lost2foundUI.loginregisterUI.RegisterActivity"
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".homeUI.HomeActivity"
+            android:name=".lost2foundUI.homeUI.HomeActivity"
             android:screenOrientation="portrait"
             android:label="@string/title_announce_section"/>
 
         <activity
-        android:name=".seekerUI.SeekerActivity"
+        android:name=".lost2foundUI.seekerUI.SeekerActivity"
         android:screenOrientation="portrait"
         android:label="Buscar objeto"/>
 
         <activity
-            android:name=".chatUI.ChatActivity"
+            android:name=".lost2foundUI.chatUI.ChatActivity"
             android:screenOrientation="portrait"
             android:label="@string/title_chat_section"/>
 
         <activity
-            android:name=".chatUI.ChatConcrete"
+            android:name=".lost2foundUI.chatUI.chatConcreteUI.ChatConcrete"
             android:screenOrientation="portrait"
             />
         <!--android:label="@string/title_chatconcrete_section"-->
