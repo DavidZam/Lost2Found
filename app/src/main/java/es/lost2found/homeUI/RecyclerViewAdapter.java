@@ -54,7 +54,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<View_Holder> {
 
     @Override
     public void onBindViewHolder(View_Holder holder, int position) {
-        // Use the provided View_Holder on the onCreateViewHolder method to populate the current row on the RecycleView
+        // Use the provided ChatView_Holder on the onCreateViewHolder method to populate the current row on the RecycleView
         holder.title.setText(listAnnounce.get(position).title);
         holder.description.setText(listAnnounce.get(position).description);
         holder.imageView.setImageResource(listAnnounce.get(position).imageId);

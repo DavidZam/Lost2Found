@@ -1,4 +1,4 @@
-package es.lost2found.homeUI;
+package es.lost2found.chatUI;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -19,35 +19,27 @@ import java.util.ArrayList;
 import java.util.List;
 
 import es.lost2found.R;
-<<<<<<< HEAD
-import es.lost2found.seekerUI.SeekerActivity;
-=======
-import es.lost2found.chatUI.ChatActivity;
->>>>>>> master
+import es.lost2found.homeUI.HomeActivity;
 
-public class HomeActivity extends AppCompatActivity {
+public class ChatActivity extends AppCompatActivity {
 
     private DrawerLayout mDrawerLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_home);
+        setContentView(R.layout.activity_chat);
 
         Toolbar tb = findViewById(R.id.toolbar);
         setSupportActionBar(tb);
         ActionBar ab = getSupportActionBar();
         ab.setDisplayHomeAsUpEnabled(true);
         ab.setHomeAsUpIndicator(R.drawable.ic_menu);
-        mDrawerLayout = findViewById(R.id.drawer_layout);
+        mDrawerLayout = findViewById(R.id.chat_layout);
 
         NavigationView navView = findViewById(R.id.nav_view);
 
-<<<<<<< HEAD
-        final Intent buscar = new Intent(this, SeekerActivity.class);
-=======
-        final Intent chat = new Intent(this, ChatActivity.class);
->>>>>>> master
+        final Intent home = new Intent(this, HomeActivity.class);
 
         navView.setNavigationItemSelectedListener(
                 new NavigationView.OnNavigationItemSelectedListener() {
@@ -58,52 +50,21 @@ public class HomeActivity extends AppCompatActivity {
 
                         // Add code here to update the UI based on the item selected
 
-<<<<<<< HEAD
-                        if(menuItem.getItemId() == R.id.nav_search) {
-
-                            startActivity(buscar);
-=======
-                        if(menuItem.getItemId()== R.id.nav_chat) {
-                            startActivity(chat);
->>>>>>> master
+                        if(menuItem.getItemId()== R.id.nav_home) {
+                            startActivity(home);
                         }
 
                         return true;
                     }
                 }
         );
-        navView.setCheckedItem(R.id.nav_home);
-        /*
-        mDrawerLayout.addDrawerListener(
-                new DrawerLayout.DrawerListener() {
-                    @Override
-                    public void onDrawerSlide(@NonNull View drawerView, float slideOffset) {
-
-                    }
-
-                    @Override
-                    public void onDrawerOpened(@NonNull View drawerView) {
-
-                    }
-
-                    @Override
-                    public void onDrawerClosed(@NonNull View drawerView) {
-
-                    }
-
-                    @Override
-                    public void onDrawerStateChanged(int newState) {
-
-                    }
-                }
-        );
-        */
+        navView.setCheckedItem(R.id.nav_chat);
 
         // In this example we fill announceList with a function fill_with_data(), in the future we'll do it with the database info
-        List<Announce> announceList = fill_with_data();
+        List<Chat> listChat = fill_with_data();
 
-        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.announce_recyclerview);
-        RecyclerViewAdapter adapter = new RecyclerViewAdapter(announceList, getApplication());
+        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.chat_recyclerview);
+        RecyclerViewAdapter adapter = new RecyclerViewAdapter(listChat, getApplication());
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
@@ -112,20 +73,21 @@ public class HomeActivity extends AppCompatActivity {
         itemAnimator.setAddDuration(1000);
         itemAnimator.setRemoveDuration(1000);
         /*recyclerView.setItemAnimator(itemAnimator);*/
+
     }
 
-    public List<Announce> fill_with_data() {
+    public List<Chat> fill_with_data() {
 
-        List<Announce> announce = new ArrayList<>();
+        List<Chat> chat = new ArrayList<>();
 
-        announce.add(new Announce("Anuncio1", "Descripcion1", R.drawable.ic_phone_android));
-        announce.add(new Announce("Anuncio2", "Descripcion2", R.drawable.ic_phone_android));
-        announce.add(new Announce("Anuncio3", "Descripcion3", R.drawable.ic_phone_android));
-        announce.add(new Announce("Anuncio4", "Descripcion4", R.drawable.ic_phone_android));
-        announce.add(new Announce("Anuncio5", "Descripcion5", R.drawable.ic_phone_android));
-        announce.add(new Announce("Anuncio6", "Descripcion6", R.drawable.ic_phone_android));
+        chat.add(new Chat("Chat1", "Mensaje1", R.drawable.ic_chaticon));
+        chat.add(new Chat("Chat2", "Mensaje2", R.drawable.ic_chaticon));
+        chat.add(new Chat("Chat3", "Mensaje3", R.drawable.ic_chaticon));
+        chat.add(new Chat("Chat4", "Mensaje4", R.drawable.ic_chaticon));
+        chat.add(new Chat("Chat5", "Mensaje5", R.drawable.ic_chaticon));
+        chat.add(new Chat("Chat6", "Mensaje6", R.drawable.ic_chaticon));
 
-        return announce;
+        return chat;
     }
 
     @Override
@@ -142,7 +104,7 @@ public class HomeActivity extends AppCompatActivity {
      *
      * @param view
      */
-    public void home(View view) {
+    public void chat(View view) {
         /*EditText editText = (EditText) findViewById(R.id.email);
         String name = editText.getText().toString();
 

@@ -3,13 +3,13 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/drawer_layout"
+    android:id="@+id/chat_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-
+    android:fitsSystemWindows="true"
     android:paddingTop="16dp"
     android:theme="@style/Lost2FoundTheme"
-    tools:context="es.lost2found.homeUI.HomeActivity">
+    tools:context="es.lost2found.chatUI.ChatActivity">
 
     <RelativeLayout
         android:id="@+id/content_frame"
@@ -17,8 +17,8 @@
         android:layout_height="match_parent"
         android:layout_marginTop="16dp"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        tools:context=".homeUI.HomeActivity"
-        tools:showIn="@layout/activity_home"
+        tools:context=".chatUI.ChatActivity"
+        tools:showIn="@layout/activity_chat"
         android:background="@color/colorBackground">
 
     <android.support.v7.widget.Toolbar
@@ -30,7 +30,7 @@
 
     <android.support.v7.widget.RecyclerView
         xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/announce_recyclerview"
+        android:id="@+id/chat_recyclerview"
         android:layout_below="@+id/toolbar"
         android:scrollbars="vertical"
         android:layout_width="match_parent"
@@ -39,26 +39,6 @@
         android:focusable="true" />
 
     </RelativeLayout>
-
-    <android.support.design.widget.CoordinatorLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fitsSystemWindows="true">
-
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/new_announce"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_margin="16dp"
-        app:backgroundTint="@color/colorPrimary"
-        android:src="@drawable/ic_add"
-        android:clickable="true"
-        android:focusable="true"/>
-
-    </android.support.design.widget.CoordinatorLayout>
 
     <android.support.design.widget.NavigationView
         android:layout_marginTop="16dp"
