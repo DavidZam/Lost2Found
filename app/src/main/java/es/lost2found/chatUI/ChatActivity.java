@@ -20,6 +20,7 @@ import java.util.List;
 
 import es.lost2found.R;
 import es.lost2found.homeUI.HomeActivity;
+import es.lost2found.seekerUI.SeekerActivity;
 
 public class ChatActivity extends AppCompatActivity {
 
@@ -40,6 +41,7 @@ public class ChatActivity extends AppCompatActivity {
         NavigationView navView = findViewById(R.id.nav_view);
 
         final Intent home = new Intent(this, HomeActivity.class);
+        final Intent buscar = new Intent(this, SeekerActivity.class);
 
         navView.setNavigationItemSelectedListener(
                 new NavigationView.OnNavigationItemSelectedListener() {
@@ -52,6 +54,8 @@ public class ChatActivity extends AppCompatActivity {
 
                         if(menuItem.getItemId()== R.id.nav_home) {
                             startActivity(home);
+                        }else if(menuItem.getItemId()== R.id.nav_search) {
+                            startActivity(buscar);
                         }
 
                         return true;
