@@ -14,44 +14,48 @@
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/green_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingTop="16dp"
-        android:paddingLeft="240dp"
+        android:paddingRight="16dp"
         android:paddingBottom="2dp">
 
         <TextView
             android:id="@+id/userSender"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginEnd="12dp"
+            android:layout_toStartOf="@+id/hourMsg"
             android:text="Nombre usuario"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:textSize="12sp"
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginTop="4dp" />
-
-        <TextView
-            android:id="@+id/textMsg"
-            android:text="texto del mensaje"
-            android:background="@drawable/rounded_rectangle_green"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/userSender"
-            android:maxWidth="240dp"
-            android:padding="7dp"
-            android:textColor="#ffffff"
-            android:layout_marginTop="4dp"
-            app:layout_constraintTop_toBottomOf="@+id/userSender"/>
+            app:layout_constraintTop_toTopOf="@id/textMsg" />
 
         <TextView
             android:id="@+id/hourMsg"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_above="@+id/textMsg"
-            android:layout_alignEnd="@+id/textMsg"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginEnd="12dp"
             android:text="11:40"
-            android:textSize="12sp"
-            app:layout_constraintBottom_toBottomOf="@+id/textMsg"
-            app:layout_constraintLeft_toRightOf="@+id/textMsg" />
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/textMsg"
+            android:text="¿Encontraste un movil hace poco no?"
+            android:background="@drawable/rounded_rectangle_green"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/userSender"
+            android:layout_alignParentEnd="true"
+            android:minWidth="30dp"
+            android:maxWidth="240dp"
+            android:padding="7dp"
+            android:textColor="#ffffff"
+            android:layout_marginTop="8dp"
+            app:layout_constraintTop_toTopOf="parent"/>
 
     </RelativeLayout>
 
