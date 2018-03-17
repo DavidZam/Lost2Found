@@ -9,16 +9,25 @@
     <RelativeLayout android:id="@+id/content_frame"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="16dp"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         tools:context=".lost2foundUI.chatUI.chatConcreteUI.ChatConcrete"
         tools:showIn="@layout/activity_concrete_chat"
         android:orientation="vertical"
-        android:background="@color/colorBackground">
+        android:background="@color/colorSecondaryText">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar_center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Chat con.."
+        android:theme="@style/ToolbarStyle">
+
+    </android.support.v7.widget.Toolbar>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/reyclerview_message_list"
         android:scrollbars="vertical"
+        android:layout_below="@id/toolbar_center"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         />

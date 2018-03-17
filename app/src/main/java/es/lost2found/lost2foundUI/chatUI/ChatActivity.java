@@ -15,12 +15,11 @@ import android.view.MenuItem;
 import android.view.View;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import es.lost2found.R;
 import es.lost2found.entities.Chat;
-import es.lost2found.lost2foundUI.homeUI.HomeActivity;
+import es.lost2found.lost2foundUI.announceUI.AnnounceActivity;
 import es.lost2found.lost2foundUI.seekerUI.SeekerActivity;
 
 public class ChatActivity extends AppCompatActivity {
@@ -41,7 +40,7 @@ public class ChatActivity extends AppCompatActivity {
 
         NavigationView navView = findViewById(R.id.nav_view);
 
-        final Intent home = new Intent(this, HomeActivity.class);
+        final Intent home = new Intent(this, AnnounceActivity.class);
         final Intent buscar = new Intent(this, SeekerActivity.class);
 
         navView.setNavigationItemSelectedListener(

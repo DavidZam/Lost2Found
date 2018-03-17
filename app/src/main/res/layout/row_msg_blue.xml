@@ -16,18 +16,19 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="16dp"
-        android:paddingLeft="16dp"
-        android:paddingBottom="2dp">
+        android:paddingTop="10dp"
+        android:paddingLeft="10dp"
+        android:paddingBottom="10dp">
 
         <TextView
             android:id="@+id/userSender"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
-            android:layout_marginStart="12dp"
+            android:layout_marginStart="5dp"
             android:layout_toEndOf="@+id/hourMsg"
-            android:text="Luis del olmo"
+            android:text="Nombre usuario"
+            app:layout_constraintTop_toTopOf="@id/textMsg"
             android:textSize="12sp"/>
 
         <TextView
@@ -35,10 +36,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
-            android:layout_above="@+id/textMsg"
-            android:layout_alignEnd="@+id/textMsg"
-            android:text="11:40"
+            android:layout_alignParentTop="true"
+            android:layout_marginEnd="5dp"
+            android:text="11:43"
             android:textSize="12sp" />
+        <!--android:layout_above="@+id/textMsg"
+            android:layout_alignEnd="@+id/textMsg"-->
 
         <TextView
             android:id="@+id/textMsg"

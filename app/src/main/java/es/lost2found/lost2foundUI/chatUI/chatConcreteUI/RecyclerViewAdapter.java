@@ -118,10 +118,15 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter {
     public int getItemViewType(int position) {
         Message msg = (Message) listMsg.get(position);
 
-        if(msg.getUserSender().equals("Yo")) { // Arreglar esto en su día y repensarlo.
+        /*if(msg.getUserSender().equals("Yo")) { // Arreglar esto en su día y repensarlo.
             return VIEW_TYPE_MESSAGE_SENT;
         } else {
             return VIEW_TYPE_MESSAGE_RECEIVED;
+        }*/
+        if(!msg.getUserSender().equals("Yo")) { // Arreglar esto en su día y repensarlo.
+            return VIEW_TYPE_MESSAGE_RECEIVED;
+        } else {
+            return VIEW_TYPE_MESSAGE_SENT;
         }
     }
 

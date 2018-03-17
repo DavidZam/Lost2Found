@@ -7,7 +7,7 @@ import android.view.View;
 import android.widget.EditText;
 
 import es.lost2found.R;
-import es.lost2found.lost2foundUI.homeUI.HomeActivity;
+import es.lost2found.lost2foundUI.announceUI.AnnounceActivity;
 
 public class LoginActivity extends AppCompatActivity {
     @Override
@@ -32,8 +32,8 @@ public class LoginActivity extends AppCompatActivity {
      *
      * @param view
      */
-    public void home(View view) {
-        Intent intent = new Intent(this, HomeActivity.class);
+    public void announce(View view) {
+        Intent intent = new Intent(this, AnnounceActivity.class);
         startActivity(intent);
         finish();
     }

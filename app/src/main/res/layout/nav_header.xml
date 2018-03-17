@@ -24,7 +24,7 @@
         android:layout_marginTop="5dp"
         android:layout_marginLeft="5dp"
         android:text="@string/nav_header_text1"
-        android:textColor="@color/colorPrimaryDarkText"
+        android:textColor="@color/colorSecondaryText"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         />
 
@@ -33,7 +33,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/nav_header_text2"
-        android:textColor="@color/colorPrimaryDarkText"
+        android:textColor="@color/colorSecondaryText"
         android:layout_below="@id/user_name"
         android:layout_marginTop="10dp"
         android:layout_marginLeft="5dp"

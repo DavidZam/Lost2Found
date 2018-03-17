@@ -1,30 +1,22 @@
 package es.lost2found.lost2foundUI.chatUI.chatConcreteUI;
 
-import android.content.Intent;
-import android.database.DataSetObserver;
 import android.os.Bundle;
-import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.KeyEvent;
+import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AbsListView;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ListView;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import es.lost2found.R;
 import es.lost2found.entities.Message;
-import es.lost2found.lost2foundUI.homeUI.HomeActivity;
-import es.lost2found.lost2foundUI.seekerUI.SeekerActivity;
 
 public class ChatConcrete extends AppCompatActivity {
     private RecyclerView recyclerView;
@@ -35,6 +27,11 @@ public class ChatConcrete extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_concrete_chat);
+
+        Toolbar tb = findViewById(R.id.toolbar_center);
+        setSupportActionBar(tb);
+        ActionBar ab = getSupportActionBar();
+        ab.setDisplayHomeAsUpEnabled(false);
 
         mDrawerLayout = findViewById(R.id.chat_concrete_layout);
 
@@ -58,16 +55,6 @@ public class ChatConcrete extends AppCompatActivity {
         itemAnimator.setRemoveDuration(1000);
         /*recyclerView.setItemAnimator(itemAnimator);*/
 
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch(item.getItemId()) {
-            case android.R.id.home:
-                mDrawerLayout.openDrawer(GravityCompat.START);
-                return true;
-        }
-        return super.onOptionsItemSelected(item);
     }
 
     /**

@@ -40,9 +40,9 @@ public class Message {
     public List<Message> fill_with_data(List<Message> msg) {
 
         msg.add(new Message("Yo", "Hola!", "11:10", true));
-        msg.add(new Message("Luis","Buenas", "11:10", true));
-        msg.add(new Message("Yo","¿Encontraste un movil hace poco no?", "11:10",true));
-        msg.add(new Message("Luis","Si", "11:10", true));
+        msg.add(new Message("Luis","Buenas", "11:13", true));
+        msg.add(new Message("Yo","¿Encontraste un movil hace poco no?", "11:14",true));
+        msg.add(new Message("Luis","Si", "11:17", true));
 
         return msg;
     }

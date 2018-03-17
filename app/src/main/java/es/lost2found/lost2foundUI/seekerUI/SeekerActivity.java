@@ -7,47 +7,41 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Spinner;
-import android.widget.Toast;
+
+
+//import com.jaredrummler.materialspinner.MaterialSpinner;
+import com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import es.lost2found.R;
+import es.lost2found.entities.Announce;
+import es.lost2found.lost2foundUI.announceUI.AnnounceViewAdapter;
+import es.lost2found.lost2foundUI.announceUI.AnnounceActivity;
 import es.lost2found.lost2foundUI.chatUI.ChatActivity;
-import es.lost2found.lost2foundUI.homeUI.HomeActivity;
 
 
 public class SeekerActivity extends AppCompatActivity {
-    private Spinner listaCategorias;
-    private String[] datos = {"Categoría", "Tarjetas", "Carteras/Monederos", "Teléfonos", "Otros"};
     private DrawerLayout mDrawerLayout;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_seeker);
 
-        listaCategorias = (Spinner)findViewById(R.id.listaCategorias);
-
-        ArrayAdapter<String> adaptador = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, datos);
-        listaCategorias.setAdapter(adaptador);
-        listaCategorias.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
-                Toast toast = Toast.makeText(adapterView.getContext(), (String) adapterView.getItemAtPosition(position), Toast.LENGTH_SHORT);
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-            }
-        });
-
-
+        String[] categorias = {"Tarjetas Bancarias", "Tarjetas Transporte Público", "Carteras/Monederos", "Teléfonos", "Otros"};
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, categorias);
+        MaterialBetterSpinner materialDesignSpinner = (MaterialBetterSpinner) findViewById(R.id.listaCategorias);
+        materialDesignSpinner.setAdapter(arrayAdapter);
 
         //Menú
-
         Toolbar tb = findViewById(R.id.toolbar);
         setSupportActionBar(tb);
         ActionBar ab = getSupportActionBar();
@@ -57,7 +51,7 @@ public class SeekerActivity extends AppCompatActivity {
 
         NavigationView navView = findViewById(R.id.nav_view);
 
-        final Intent menu = new Intent(this, HomeActivity.class);
+        final Intent menu = new Intent(this, AnnounceActivity.class);
         final Intent chat = new Intent(this, ChatActivity.class);
 
         navView.setNavigationItemSelectedListener(
@@ -82,6 +76,21 @@ public class SeekerActivity extends AppCompatActivity {
         );
         navView.setCheckedItem(R.id.nav_search);
 
+        // In this example we fill announceList with a function fill_with_data(), in the future we'll do it with the database info
+        List<Announce> announceList = new ArrayList<>();
+        Announce announce = new Announce();
+        announce.fill_with_data(announceList);
+
+        RecyclerView recyclerView = findViewById(R.id.search_recyclerview);
+        AnnounceViewAdapter adapter = new AnnounceViewAdapter(announceList, getApplication());
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        // Adding a ItemAnimator to the RecyclerView (Optional)
+        RecyclerView.ItemAnimator itemAnimator = new DefaultItemAnimator();
+        itemAnimator.setAddDuration(1000);
+        itemAnimator.setRemoveDuration(1000);
+        /*recyclerView.setItemAnimator(itemAnimator);*/
     }
 
     @Override

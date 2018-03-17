@@ -1,7 +1,8 @@
-package es.lost2found.lost2foundUI.homeUI;
+package es.lost2found.lost2foundUI.announceUI;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -22,14 +23,14 @@ import es.lost2found.entities.Announce;
 import es.lost2found.lost2foundUI.chatUI.ChatActivity;
 import es.lost2found.lost2foundUI.seekerUI.SeekerActivity;
 
-public class HomeActivity extends AppCompatActivity {
+public class AnnounceActivity extends AppCompatActivity implements FloatingActionButton.OnClickListener {
 
     private DrawerLayout mDrawerLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_home);
+        setContentView(R.layout.activity_announce);
 
         Toolbar tb = findViewById(R.id.toolbar);
         setSupportActionBar(tb);
@@ -89,13 +90,13 @@ public class HomeActivity extends AppCompatActivity {
         );
         */
 
-        // In this example we fill announceList with a function fill_with_data(), in the future we'll do it with the database info
+       // In this example we fill announceList with a function fill_with_data(), in the future we'll do it with the database info
        List<Announce> announceList = new ArrayList<>();
        Announce announce = new Announce();
        announce.fill_with_data(announceList);
 
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.announce_recyclerview);
-        RecyclerViewAdapter adapter = new RecyclerViewAdapter(announceList, getApplication());
+        AnnounceViewAdapter adapter = new AnnounceViewAdapter(announceList, getApplication());
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
@@ -104,6 +105,15 @@ public class HomeActivity extends AppCompatActivity {
         itemAnimator.setAddDuration(1000);
         itemAnimator.setRemoveDuration(1000);
         /*recyclerView.setItemAnimator(itemAnimator);*/
+
+        FloatingActionButton createAnnounce = (FloatingActionButton) findViewById(R.id.new_announce);
+        createAnnounce.setOnClickListener(this);
+    }
+
+    @Override
+    public void onClick(View v) {
+        final Intent newannounce = new Intent(this, NewAnnounceActivity.class);
+        startActivity(newannounce);
     }
 
 
@@ -121,7 +131,7 @@ public class HomeActivity extends AppCompatActivity {
      *
      * @param view
      */
-    public void home(View view) {
+    public void announce(View view) {
         /*EditText editText = (EditText) findViewById(R.id.email);
         String name = editText.getText().toString();
 

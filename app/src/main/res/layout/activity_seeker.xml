@@ -21,25 +21,36 @@
         android:layout_marginTop="16dp"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         tools:context=".lost2foundUI.seekerUI.SeekerActivity"
-        android:background="@color/colorBackground">
+        android:background="@color/colorSecondaryText">
 
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:layout_centerHorizontal="true"
-            android:text="Buscar objeto"
             android:textSize="20sp"
             android:theme="@style/ToolbarStyle" />
-        <Spinner
+
+        <com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner
             android:id="@+id/listaCategorias"
             android:layout_width="match_parent"
-            android:layout_height="70dp"
-            android:layout_alignParentStart="true"
+            android:layout_height="wrap_content"
+            android:layout_margin="7dp"
             android:layout_below="@+id/toolbar"
-            android:visibility="visible"
-            tools:layout_editor_absoluteX="11dp"
-            tools:layout_editor_absoluteY="60dp" />
+            android:hint="@string/spinner_placeholder"
+            android:textColorHint="@color/colorPrimaryText"
+            app:met_floatingLabel="normal" />
+
+        <android.support.v7.widget.RecyclerView
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/search_recyclerview"
+            android:layout_below="@+id/listaCategorias"
+            android:scrollbars="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+             />
+        <!-- android:clickable="true"
+            android:focusable="true" -->
 
     </RelativeLayout>
 

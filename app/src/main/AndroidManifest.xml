@@ -26,14 +26,14 @@
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".lost2foundUI.homeUI.HomeActivity"
+            android:name=".lost2foundUI.announceUI.AnnounceActivity"
             android:screenOrientation="portrait"
             android:label="@string/title_announce_section"/>
 
         <activity
         android:name=".lost2foundUI.seekerUI.SeekerActivity"
         android:screenOrientation="portrait"
-        android:label="Buscar objeto"/>
+        android:label="Buscar Anuncio"/>
 
         <activity
             android:name=".lost2foundUI.chatUI.ChatActivity"
@@ -43,8 +43,17 @@
         <activity
             android:name=".lost2foundUI.chatUI.chatConcreteUI.ChatConcrete"
             android:screenOrientation="portrait"
+            android:label="@string/title_chatconcrete_section" />
+
+        <activity
+            android:name=".lost2foundUI.announceUI.NewAnnounceActivity"
+            android:screenOrientation="portrait"
             />
-        <!--android:label="@string/title_chatconcrete_section"-->
+
+        <activity
+            android:name=".lost2foundUI.announceUI.matchingAnnounceUI.MatchingAnnounce"
+            android:screenOrientation="portrait"
+            android:label="@string/title_matchannounce_section" />
 
     </application>
 
