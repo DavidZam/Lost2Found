@@ -28,4 +28,10 @@ public class PlaceActivity extends AppCompatActivity {
         finish();
     }
 
+    public void map(View view) {
+        Intent intent = new Intent(this, MapActivity.class);
+        startActivity(intent);
+        finish();
+    }
+
 }

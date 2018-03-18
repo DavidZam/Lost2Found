@@ -48,8 +48,8 @@
                 android:layout_alignParentStart="true"
                 android:layout_below="@+id/transport_place_button"
                 android:layout_marginTop="76dp"
+                android:onClick="map"
                 android:text="@string/map_button_text" />
-            <!--android:onClick="place"-->
 
             <Button
                 android:id="@+id/concrete_dir_button"

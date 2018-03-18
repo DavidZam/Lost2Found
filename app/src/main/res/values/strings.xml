@@ -11,9 +11,11 @@
     <string name="concrete_place_button_text">Dirección concreta</string>
     <string name="announce_button_text">Crear</string>
     <string name="contact_button_text">Contactar</string>
+    <string name="select_button_text">Seleccionar</string>
     <string name="spinner_placeholder">Categoria</string>
     <string name="spinner2_placeholder">Tipo Anuncio</string>
     <string name="create_announce_text">Crear nuevo anuncio</string>
+    <string name="location_text">Ubicación</string>
     <string name="new_announce_text">Nuevo anuncio</string>
     <string name="date_announce_text">Día Pérdida/Hallazgo</string>
     <string name="hour_announce_text">Hora Pérdida/Hallazgo</string>
