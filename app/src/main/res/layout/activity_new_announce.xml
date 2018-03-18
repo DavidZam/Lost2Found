@@ -111,8 +111,8 @@
                 style="@style/buttonStyle"
                 android:layout_below="@id/listCategories"
                 android:layout_marginTop="15dp"
+                android:onClick="place"
                 android:text="@string/place_button_text" />
-            <!--android:onClick="place"-->
 
             <Button
                 android:id="@+id/upload_image"

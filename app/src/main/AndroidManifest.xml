@@ -48,12 +48,28 @@
         <activity
             android:name=".lost2foundUI.announceUI.NewAnnounceActivity"
             android:screenOrientation="portrait"
+            android:label="@string/new_announce_text"
             />
 
         <activity
-            android:name=".lost2foundUI.announceUI.matchingAnnounceUI.MatchingAnnounce"
+            android:name=".lost2foundUI.announceUI.matchingAnnounceUI.MatchAnnounce"
             android:screenOrientation="portrait"
             android:label="@string/title_matchannounce_section" />
+
+        <activity
+            android:name=".lost2foundUI.announceUI.matchingAnnounceUI.MatchAnnounceInfoActivity"
+            android:screenOrientation="portrait"
+            android:label="@string/title_matchannounce_info" />
+
+        <activity
+            android:name=".lost2foundUI.placeUI.PlaceActivity"
+            android:screenOrientation="portrait"
+            android:label="@string/title_typeplace_section" />
+
+        <activity
+            android:name=".lost2foundUI.placeUI.TransportPlaceActivity"
+            android:screenOrientation="portrait"
+            android:label="@string/title_transrport_typeplace_section" />
 
     </application>
 

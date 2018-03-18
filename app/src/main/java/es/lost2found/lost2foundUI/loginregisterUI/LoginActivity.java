@@ -43,11 +43,11 @@ public class LoginActivity extends AppCompatActivity {
      * @param view
      */
     public void login(View view) {
-        EditText editText = (EditText) findViewById(R.id.email);
+        /*EditText editText = (EditText) findViewById(R.id.email);
         String email = editText.getText().toString();
 
         EditText passwordEditText = (EditText) findViewById(R.id.password);
-        String password = passwordEditText.getText().toString();
+        String password = passwordEditText.getText().toString();^*/
 
         //new LoginDB().execute(email, password);
     }

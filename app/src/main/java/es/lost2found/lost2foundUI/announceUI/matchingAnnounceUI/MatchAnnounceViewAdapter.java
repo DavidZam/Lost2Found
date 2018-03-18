@@ -16,12 +16,12 @@ import es.lost2found.R;
 import es.lost2found.entities.Announce;
 import es.lost2found.lost2foundUI.announceUI.AnnounceViewHolder;
 
-public class MatchingAnnounceViewAdapter extends RecyclerView.Adapter<AnnounceViewHolder> {
+public class MatchAnnounceViewAdapter extends RecyclerView.Adapter<AnnounceViewHolder> {
 
     List<Announce> listAnnounce = Collections.emptyList();
     Context context;
 
-    public MatchingAnnounceViewAdapter(List<Announce> listAnnounce, Context context) {
+    public MatchAnnounceViewAdapter(List<Announce> listAnnounce, Context context) {
         this.listAnnounce = listAnnounce;
         this.context = context;
     }
@@ -37,7 +37,7 @@ public class MatchingAnnounceViewAdapter extends RecyclerView.Adapter<AnnounceVi
             public void onClick(View v) {
                 //View itemView = v.findViewById(R.id.activity_concrete_chat);
                 /*Context context = v.getContext();
-                Intent intent = new Intent(context, MatchingAnnounce.class);
+                Intent intent = new Intent(context, MatchAnnounce.class);
                 context.startActivity(intent);*/
             }
         });

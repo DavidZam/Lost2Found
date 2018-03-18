@@ -1,5 +1,6 @@
 package es.lost2found.lost2foundUI.announceUI;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.ActionBar;
@@ -14,6 +15,8 @@ import com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner;
 import es.lost2found.DatePickerUI;
 import es.lost2found.R;
 import es.lost2found.lost2foundUI.TimePickerUI;
+import es.lost2found.lost2foundUI.announceUI.matchingAnnounceUI.MatchAnnounceInfoActivity;
+import es.lost2found.lost2foundUI.placeUI.PlaceActivity;
 
 public class NewAnnounceActivity extends AppCompatActivity {
     //private DrawerLayout mDrawerLayout;
@@ -36,7 +39,7 @@ public class NewAnnounceActivity extends AppCompatActivity {
         Toolbar tb = findViewById(R.id.toolbar_center);
         setSupportActionBar(tb);
         ActionBar ab = getSupportActionBar();
-        ab.setDisplayHomeAsUpEnabled(true);
+        ab.setDisplayHomeAsUpEnabled(false);
 
 
     }
@@ -51,4 +54,9 @@ public class NewAnnounceActivity extends AppCompatActivity {
         newFragment.show(getSupportFragmentManager(), "datePicker");
     }
 
+    public void place(View view) {
+        Intent intent = new Intent(this, PlaceActivity.class);
+        startActivity(intent);
+        finish();
+    }
 }

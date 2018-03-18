@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_match_announce_info"
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent">
+
+    <RelativeLayout android:id="@+id/content_frame"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".lost2foundUI.announceUI.matchingAnnounceUI.MatchAnnounceInfoActivity"
+        tools:showIn="@layout/activity_matchannounce_info"
+        android:background="@color/colorSecondaryText">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar_center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:theme="@style/ToolbarStyle">
+
+        </android.support.v7.widget.Toolbar>
+
+        <RelativeLayout
+            android:id="@+id/login_layout"
+            android:layout_width="match_parent"
+            android:padding="16dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/toolbar_center"
+            android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/textinfoannounce"
+            android:layout_width="match_parent"
+            android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras id mollis augue. Etiam tincidunt, eros ut malesuada tincidunt, ex enim volutpat turpis, eget ullamcorper lacus nibh nec arcu. Pellentesque ultricies imperdiet lectus et tempor. Phasellus vitae dictum sem. Morbi metus mi, ultrices non felis a, dapibus iaculis dolor. Mauris dictum porttitor eros ut sagittis. Fusce eleifend convallis velit, ut vulputate elit feugiat nec. Morbi suscipit tortor sit amet viverra egestas. Integer mollis elementum libero, quis accumsan turpis gravida eu. Suspendisse dictum feugiat odio sit amet cursus. Sed congue massa vel risus eleifend, nec placerat dui volutpat. Cras sit amet sem volutpat, lacinia diam eget, efficitur arcu. Nullam ultricies felis eu lacus convallis tincidunt vitae id justo. Maecenas massa ipsum, scelerisque in erat in, blandit rhoncus justo. Aliquam ac nunc vel erat euismod condimentum. Donec eget ex ac erat fermentum viverra. "
+            android:layout_height="wrap_content" />
+
+            <ImageView
+                android:id="@+id/imageinfoannounce"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_above="@+id/register_button"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="24dp"
+                android:src="@drawable/ic_phone_android" />
+
+            <Button
+                android:id="@+id/register_button"
+                style="@style/buttonStyle"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentStart="true"
+                android:text="@string/contact_button_text" />
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+</android.support.constraint.ConstraintLayout>

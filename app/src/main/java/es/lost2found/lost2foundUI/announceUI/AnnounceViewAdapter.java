@@ -12,7 +12,7 @@ import java.util.List;
 
 import es.lost2found.R;
 import es.lost2found.entities.Announce;
-import es.lost2found.lost2foundUI.announceUI.matchingAnnounceUI.MatchingAnnounce;
+import es.lost2found.lost2foundUI.announceUI.matchingAnnounceUI.MatchAnnounce;
 
 public class AnnounceViewAdapter extends RecyclerView.Adapter<AnnounceViewHolder>{
     List<Announce> listAnnounce = Collections.emptyList();
@@ -34,7 +34,7 @@ public class AnnounceViewAdapter extends RecyclerView.Adapter<AnnounceViewHolder
             public void onClick(View v) {
                 //View itemView = v.findViewById(R.id.activity_concrete_chat);
                 Context context = v.getContext();
-                Intent intent = new Intent(context, MatchingAnnounce.class);
+                Intent intent = new Intent(context, MatchAnnounce.class);
                 context.startActivity(intent);
             }
         });
