@@ -65,8 +65,8 @@
         android:id="@+id/register_button"
         android:layout_marginTop="20dp"
         android:text="@string/register_button_text"
+        android:onClick="register"
         style="@style/buttonStyle" />
-    <!--android:onClick="register"-->
 
     <TextView
         android:id="@+id/user_already_exists"
@@ -75,13 +75,13 @@
         android:layout_marginTop="10dp"
         android:paddingTop="10dp"
         android:textAlignment="center"
-        android:textColor="@color/colorPrimary" />
+        android:textColor="@color/errorColor" />
 
     <TextView
         android:id="@+id/login_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="10dp"
         android:text="@string/alreadyhaveaccount"
         android:textAlignment="center"
         android:textColor="@color/textOccasionalColor" />

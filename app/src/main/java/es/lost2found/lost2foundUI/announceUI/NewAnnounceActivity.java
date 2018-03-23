@@ -12,11 +12,9 @@ import android.widget.EditText;
 
 import com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner;
 
-import es.lost2found.DatePickerUI;
+import es.lost2found.lost2foundUI.DatePickerUI;
 import es.lost2found.R;
 import es.lost2found.lost2foundUI.TimePickerUI;
-import es.lost2found.lost2foundUI.announceUI.matchingAnnounceUI.MatchAnnounceInfoActivity;
-import es.lost2found.lost2foundUI.placeUI.MapActivity;
 import es.lost2found.lost2foundUI.placeUI.PlaceActivity;
 
 public class NewAnnounceActivity extends AppCompatActivity {

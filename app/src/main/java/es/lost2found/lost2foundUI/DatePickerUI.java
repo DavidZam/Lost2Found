@@ -1,4 +1,4 @@
-package es.lost2found;
+package es.lost2found.lost2foundUI;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
@@ -8,6 +8,8 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 
 import java.util.Calendar;
+
+import es.lost2found.R;
 
 public class DatePickerUI extends DialogFragment implements DatePickerDialog.OnDateSetListener {
 

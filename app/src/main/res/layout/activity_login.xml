@@ -50,7 +50,7 @@
     <Button
         android:id="@+id/login_button"
         android:text="@string/login_button_text"
-        android:onClick="announce"
+        android:onClick="login"
         style="@style/buttonStyle" />
     <!--android:onClick="login"-->
 
