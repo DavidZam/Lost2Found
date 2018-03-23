@@ -25,16 +25,15 @@ public class LoginActivity extends AppCompatActivity {
         String email = sp.getString("email", null);
         if(email != null) {
             String name = sp.getString("nombre", null);
-
-            this.proccessLogin(new User(name, email, null));
+            this.processLogin(new User(name, email, null));
         }
     }
 
     public void login(View view) {
-        EditText editText = (EditText) findViewById(R.id.email);
+        EditText editText = findViewById(R.id.email);
         String email = editText.getText().toString();
 
-        EditText passwordEditText = (EditText) findViewById(R.id.password);
+        EditText passwordEditText = findViewById(R.id.password);
         String password = passwordEditText.getText().toString();
 
         new LoginDB().execute(email, password);
@@ -47,7 +46,7 @@ public class LoginActivity extends AppCompatActivity {
 
         @Override
         protected void onPreExecute() {
-            this.dialog.setMessage("Log in, please wait.");
+            this.dialog.setMessage("Entrando, espera");
             this.dialog.show();
         }
 
@@ -59,11 +58,11 @@ public class LoginActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(User result) {
             this.dialog.dismiss();
-            proccessLogin(result);
+            processLogin(result);
         }
     }
 
-    private void proccessLogin(User user) {
+    private void processLogin(User user) {
         Intent intent = new Intent(this, AnnounceActivity.class);
 
         SharedPreferences sp = getSharedPreferences("Login", 0);
@@ -85,7 +84,7 @@ public class LoginActivity extends AppCompatActivity {
             }
             else {
                 TextView textView = (TextView) findViewById(R.id.wrong_user);
-                textView.setText("Email or password incorrect.");
+                textView.setText("Email o contraseña incorrectos");
             }
         }
     }

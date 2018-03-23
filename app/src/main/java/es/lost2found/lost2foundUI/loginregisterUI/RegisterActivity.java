@@ -21,7 +21,6 @@ public class RegisterActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        //this.msgerror = "";
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
     }
@@ -32,79 +31,40 @@ public class RegisterActivity extends AppCompatActivity {
         finish();
     }
 
-    /**
-     *
-     * @param view
-     */
     public void register(View view) {
-        EditText editText = (EditText) findViewById(R.id.email);
+        EditText editText = findViewById(R.id.email);
+        String email = editText.getText().toString();
+
+        editText = findViewById(R.id.name);
         String name = editText.getText().toString();
 
-        editText = (EditText) findViewById(R.id.name);
-        String email= editText.getText().toString();
-
-        editText = (EditText) findViewById(R.id.password);
+        editText = findViewById(R.id.password);
         String pass = editText.getText().toString();
 
-        editText = (EditText) findViewById(R.id.repassword);
+        editText = findViewById(R.id.repassword);
         String confirmPass = editText.getText().toString();
 
 
-        if(name.equalsIgnoreCase("") || email.equalsIgnoreCase("") || pass.equalsIgnoreCase("") || confirmPass.equalsIgnoreCase("")) {
-            this.msgerror = "Please, complete all the fields.";
-            TextView textView = (TextView) findViewById(R.id.user_already_exists);
+        if(email.equalsIgnoreCase("") || name.equalsIgnoreCase("") || pass.equalsIgnoreCase("") || confirmPass.equalsIgnoreCase("")) {
+            this.msgerror = "Completa todos los campos";
+            TextView textView = findViewById(R.id.user_already_exists);
             textView.setText(this.msgerror);
-        }
-        else if(!pass.equals(confirmPass)) {
-            this.msgerror = "Passwords doesn't match.";
-            TextView textView = (TextView) findViewById(R.id.user_already_exists);
+        } else if(!pass.equals(confirmPass)) {
+            this.msgerror = "Las contraseñas no coinciden";
+            TextView textView = findViewById(R.id.user_already_exists);
             textView.setText(this.msgerror);
-        }
-        else
-            new RegisterDB().execute(email, pass, name);
+        } else
+            new RegisterDB().execute(name, email, pass);
     }
-
-
-
-    /**
-     * Verify the sign up process after atempt to intert into the database.
-     * @param user
-     */
-    private void processRegister(User user) {
-        Intent intent = new Intent(this, AnnounceActivity.class);
-
-        if(user != null) {    // Insert correct.
-            SharedPreferences sp = getSharedPreferences("Login", 0);
-            SharedPreferences.Editor ed = sp.edit();            // Saved the user login credencials.
-            ed.putString("email", user.getEmail());
-            ed.putString("nombre", user.getName());
-            ed.commit();
-
-            intent.putExtra("user", user);
-            startActivity(intent);
-            finish();
-        }
-        else {
-            this.msgerror = "Email already exist in the database.";
-            TextView textView = (TextView) findViewById(R.id.user_already_exists);
-            textView.setText(this.msgerror);
-        }
-    }
-
-
-    /**
-     * Classroom to perform database access async.
-     */
 
     private class RegisterDB extends AsyncTask<String, Void, User> {
         private ProgressDialog dialog = new ProgressDialog(RegisterActivity.this);
 
         @Override
         protected void onPreExecute() {
-            this.dialog.setMessage("Sign in, please wait.");
+            this.dialog.setMessage("Registrando usuario, espera");
             this.dialog.show();
         }
-
 
         @Override
         protected User doInBackground(String... strings) {
@@ -115,6 +75,30 @@ public class RegisterActivity extends AppCompatActivity {
         protected void onPostExecute(User result) {
             this.dialog.dismiss();
             processRegister(result);
+        }
+    }
+
+    /**
+     * Verify the sign up process after atempt to intert into the database.
+     * @param user
+     */
+    private void processRegister(User user) {
+        Intent intent = new Intent(this, AnnounceActivity.class);
+
+        if(user != null) { // Insert correct.
+            SharedPreferences sp = getSharedPreferences("Login", 0);
+            SharedPreferences.Editor ed = sp.edit();            // Saved the user login credencials.
+            ed.putString("email", user.getEmail());
+            ed.putString("nombre", user.getName());
+            ed.apply(); //ed.commit()
+
+            intent.putExtra("user", user);
+            startActivity(intent);
+            finish();
+        } else {
+            this.msgerror = "Ese usuario ya existe";
+            TextView textView = findViewById(R.id.user_already_exists);
+            textView.setText(this.msgerror);
         }
     }
 }

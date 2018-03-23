@@ -4,8 +4,11 @@ import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
+import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.util.Arrays;
@@ -38,7 +41,7 @@ public class DB_user {
             HttpURLConnection con = (HttpURLConnection) url.openConnection();
             con.setRequestMethod("POST");
             con.setRequestProperty("User-Agent", "your user agent");
-            con.setRequestProperty("Accept-Language", "en-US,en;q=0.5");
+            con.setRequestProperty("Accept-Language", "sp,SP;q=0.5");
 
             String urlParameters = "json=" + jsonString;
 
@@ -63,21 +66,20 @@ public class DB_user {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
         return  ret;
     }
 
-    public static User insertUser(String nombre, String contrasena, String email) {
+    public static User insertUser(String nombre, String email, String contrasena) {
         User ret = null;
         try {
             JSONObject jsonObject = new JSONObject();
+            jsonObject.put("nombre", nombre);
             jsonObject.put("email", email);
             jsonObject.put("contrasena", contrasena);
-            jsonObject.put("nombre", nombre);
 
-            List l = new LinkedList();
-            l.addAll(Arrays.asList(jsonObject));
-            String jsonString = l.toString();
+            List list = new LinkedList();
+            list.addAll(Arrays.asList(jsonObject));
+            String jsonString = list.toString();
 
             jsonString = URLEncoder.encode(jsonString, "UTF-8");
 
@@ -85,31 +87,37 @@ public class DB_user {
             URL url = new URL(urlStr);
 
             HttpURLConnection con = (HttpURLConnection) url.openConnection();
-            con.setRequestMethod("POST");
-            con.setRequestProperty("User-Agent", "your user agent");
-            //String language = Locale.getDefault().getLanguage();
-            con.setRequestProperty("Accept-Language", "sp-SP,sp;q=0.5");
+            try {
+                con.setRequestMethod("POST");
+                con.setRequestProperty("User-Agent", "your user agent");
+                con.setRequestProperty("Accept-Language", "sp-SP,sp;q=0.5");
 
-            String urlParameters = "json=" + jsonString;
+                String urlParameters = "json=" + jsonString;
 
-            con.setDoOutput(true);
-            DataOutputStream wr = new DataOutputStream(con.getOutputStream());
-            wr.writeBytes(urlParameters);
-            wr.flush();
-            wr.close();
+                con.setDoOutput(true);
+                OutputStream outstream = con.getOutputStream(); // Falla AQUI
+                DataOutputStream wr = new DataOutputStream(outstream);
+                wr.writeBytes(urlParameters);
 
-            BufferedReader in = new BufferedReader((new InputStreamReader(con.getInputStream())));
-            String inputLine;
-            StringBuffer response = new StringBuffer();
+                InputStream instream = con.getInputStream();
+                InputStreamReader instreamreader = new InputStreamReader(instream);
+                BufferedReader in = new BufferedReader(instreamreader);
+                String inputLine;
+                StringBuffer response = new StringBuffer();
 
-            while((inputLine = in.readLine()) != null)
-                response.append(inputLine);
+                while ((inputLine = in.readLine()) != null)
+                    response.append(inputLine);
 
-            if(response.toString().equals("correct"))
-                ret = new User(nombre, email, contrasena);
+                if (response.toString().equals("correct"))
+                    ret = new User(email, nombre, contrasena);
 
-            //wr.close();
-
+                wr.flush();
+                wr.close();
+            } finally {
+                con.disconnect();
+            }
+        } catch(MalformedURLException e) {
+            e.printStackTrace();
         } catch (Exception e) {
             e.printStackTrace();
         }

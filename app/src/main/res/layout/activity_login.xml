@@ -58,7 +58,7 @@
         android:id="@+id/wrong_user"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="30dp"
         android:paddingTop="16dp"
         android:textAlignment="center"
         android:textColor="@color/colorPrimary" />
@@ -67,7 +67,7 @@
         android:id="@+id/register_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="55dp"
+        android:layout_marginTop="32dp"
         android:text="@string/noaccount_textlogin"
         android:textAlignment="center"
         android:textColor="@color/textOccasionalColor" />
