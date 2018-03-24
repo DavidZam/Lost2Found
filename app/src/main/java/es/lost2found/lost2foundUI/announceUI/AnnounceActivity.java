@@ -1,6 +1,7 @@
 package es.lost2found.lost2foundUI.announceUI;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -14,6 +15,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,17 +23,20 @@ import java.util.List;
 import es.lost2found.R;
 import es.lost2found.entities.Announce;
 import es.lost2found.lost2foundUI.chatUI.ChatActivity;
+import es.lost2found.lost2foundUI.loginregisterUI.LoginActivity;
 import es.lost2found.lost2foundUI.seekerUI.SeekerActivity;
 
 public class AnnounceActivity extends AppCompatActivity implements FloatingActionButton.OnClickListener {
 
     private DrawerLayout mDrawerLayout;
+    private Button btnLogout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_announce);
 
+        btnLogout = (Button) findViewById(R.id.boton_salir);
         Toolbar tb = findViewById(R.id.toolbar);
         setSupportActionBar(tb);
         ActionBar ab = getSupportActionBar();
@@ -108,6 +113,16 @@ public class AnnounceActivity extends AppCompatActivity implements FloatingActio
 
         FloatingActionButton createAnnounce = (FloatingActionButton) findViewById(R.id.new_announce);
         createAnnounce.setOnClickListener(this);
+
+
+        // Logout button click event
+        btnLogout.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                logoutUser();
+            }
+        });
     }
 
     @Override
@@ -125,6 +140,24 @@ public class AnnounceActivity extends AppCompatActivity implements FloatingActio
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+
+    /**
+     * Logging out the user. Will set isLoggedIn flag to false in shared
+     * preferences Clears the user data from sqlite users table
+     * */
+    private void logoutUser() {
+        SharedPreferences sp = getSharedPreferences("Login", 0);
+        SharedPreferences.Editor ed = sp.edit();
+        ed.putString("email", null);
+        ed.putString("name", null);
+        ed.putString("role", null);
+        ed.commit();
+
+        Intent intent = new Intent(this, LoginActivity.class);
+        startActivity(intent);
+        finish();
     }
 
     /**

@@ -25,7 +25,7 @@ public class LoginActivity extends AppCompatActivity {
         String email = sp.getString("email", null);
         if(email != null) {
             String name = sp.getString("nombre", null);
-            this.processLogin(new User(name, email, null));
+            this.processLogin(new User(email, name, null));
         }
     }
 

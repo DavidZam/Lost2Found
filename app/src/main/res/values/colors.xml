@@ -9,5 +9,6 @@
     <color name="textOccasionalColor">#808080</color>
     <color name="otherUserMsgColor">#26A69A</color>
     <color name="lineChatColor">#dfdfdf</color>
+    <color name="btn_logut_bg">#ff6861</color>
 
 </resources>

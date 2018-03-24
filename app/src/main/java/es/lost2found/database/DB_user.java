@@ -14,14 +14,14 @@ import java.net.URLEncoder;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Locale;
 
 import es.lost2found.entities.User;
 
 public class DB_user {
 
     // private static String SERVER_PATH = ""; // COMPLETAR
-    private static String SERVER_PATH = "http://localhost/lost2found/database/user/";
+   // private static String SERVER_PATH = "http://localhost/lost2found/database/user/";
+    private static String SERVER_PATH = "http://192.168.1.33/lost2found/database/user/";
 
     public static User findUserByEmail(String email, String contrasena) {
         User ret = null;
@@ -29,7 +29,7 @@ public class DB_user {
         try {
             JSONObject jsonObject = new JSONObject();
             jsonObject.put("email", email);
-            jsonObject.put("password", contrasena);
+            jsonObject.put("contrasena", contrasena);
 
             List list = new LinkedList();
             list.addAll(Arrays.asList(jsonObject));
@@ -95,7 +95,7 @@ public class DB_user {
                 String urlParameters = "json=" + jsonString;
 
                 con.setDoOutput(true);
-                OutputStream outstream = con.getOutputStream(); // Falla AQUI
+                OutputStream outstream = con.getOutputStream();
                 DataOutputStream wr = new DataOutputStream(outstream);
                 wr.writeBytes(urlParameters);
 
