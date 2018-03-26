@@ -82,7 +82,7 @@ public class DB_user {
             list.addAll(Arrays.asList(jsonObject));
             String jsonString = list.toString();
 
-            //jsonString = URLEncoder.encode(jsonString, "UTF-8");
+            jsonString = URLEncoder.encode(jsonString, "UTF-8");
 
             String urlStr = SERVER_PATH + "insertUserJSON.php";
             URL url = new URL(urlStr);
@@ -93,13 +93,12 @@ public class DB_user {
                 con.setRequestProperty("User-Agent", "your user agent");
                 con.setRequestProperty("Accept-Language", "sp-SP,sp;q=0.5");
 
-                //String urlParameters = "json=" + jsonString;
-                jsonString = "json=" + jsonString;
+                String urlParameters = "json=" + jsonString;
 
                 con.setDoOutput(true);
                 OutputStream outstream = con.getOutputStream();
                 DataOutputStream wr = new DataOutputStream(outstream);
-                wr.writeBytes(jsonString);
+                wr.writeBytes(urlParameters);
                 wr.flush();
                 wr.close();
 
