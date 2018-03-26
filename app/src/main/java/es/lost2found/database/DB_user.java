@@ -19,9 +19,10 @@ import es.lost2found.entities.User;
 
 public class DB_user {
 
-    // private static String SERVER_PATH = ""; // COMPLETAR
-   // private static String SERVER_PATH = "http://localhost/lost2found/database/user/";
-    private static String SERVER_PATH = "http://192.168.1.33/lost2found/database/user/";
+
+    //private static String SERVER_PATH = "http://192.168.1.42/lost2found/database/user/";
+    // Server: jcorreas-hp.fdi.ucm.es
+    private static String SERVER_PATH = "http://jcorreas-hp.fdi.ucm.es/lost2found/database/user/";
 
     public static User findUserByEmail(String email, String contrasena) {
         User ret = null;
@@ -81,7 +82,7 @@ public class DB_user {
             list.addAll(Arrays.asList(jsonObject));
             String jsonString = list.toString();
 
-            jsonString = URLEncoder.encode(jsonString, "UTF-8");
+            //jsonString = URLEncoder.encode(jsonString, "UTF-8");
 
             String urlStr = SERVER_PATH + "insertUserJSON.php";
             URL url = new URL(urlStr);
@@ -92,16 +93,26 @@ public class DB_user {
                 con.setRequestProperty("User-Agent", "your user agent");
                 con.setRequestProperty("Accept-Language", "sp-SP,sp;q=0.5");
 
-                String urlParameters = "json=" + jsonString;
+                //String urlParameters = "json=" + jsonString;
+                jsonString = "json=" + jsonString;
 
                 con.setDoOutput(true);
                 OutputStream outstream = con.getOutputStream();
                 DataOutputStream wr = new DataOutputStream(outstream);
-                wr.writeBytes(urlParameters);
+                wr.writeBytes(jsonString);
+                wr.flush();
+                wr.close();
 
-                InputStream instream = con.getInputStream();
-                InputStreamReader instreamreader = new InputStreamReader(instream);
-                BufferedReader in = new BufferedReader(instreamreader);
+                InputStream instream;
+
+                int status = con.getResponseCode();
+
+                if (status != HttpURLConnection.HTTP_OK)
+                    instream = con.getErrorStream();
+                else
+                    instream = con.getInputStream();
+
+                BufferedReader in = new BufferedReader(new InputStreamReader(instream));
                 String inputLine;
                 StringBuffer response = new StringBuffer();
 
@@ -111,8 +122,7 @@ public class DB_user {
                 if (response.toString().equals("correct"))
                     ret = new User(email, nombre, contrasena);
 
-                wr.flush();
-                wr.close();
+
             } finally {
                 con.disconnect();
             }
