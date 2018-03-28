@@ -52,7 +52,16 @@ public class DB_user {
             wr.flush();
             wr.close();
 
-            BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
+            InputStream instream;
+
+            int status = con.getResponseCode();
+
+            if (status != HttpURLConnection.HTTP_OK)
+                instream = con.getErrorStream();
+            else
+                instream = con.getInputStream();
+
+            BufferedReader in = new BufferedReader(new InputStreamReader(instream));
             String inputLine;
             StringBuffer response = new StringBuffer();
 
