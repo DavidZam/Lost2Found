@@ -10,6 +10,8 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import org.json.JSONObject;
+
 import es.lost2found.R;
 import es.lost2found.database.DB_user;
 import es.lost2found.entities.User;
@@ -62,13 +64,39 @@ public class RegisterActivity extends AppCompatActivity {
 
         @Override
         protected void onPreExecute() {
-            this.dialog.setMessage("Registrando usuario, espera");
+            this.dialog.setMessage("Comprobando, espera");
             this.dialog.show();
         }
 
         @Override
         protected User doInBackground(String... strings) {
-            return DB_user.insertUser(strings[0], strings[1], strings[2]);
+            /*String emailUserDB = "";
+            String nameUserDB = "";
+            User user = DB_user.findUserByEmail(strings[1], strings[2]);
+            if(user != null) {
+                emailUserDB = user.getEmail();
+                nameUserDB = user.getName();
+                if (!strings[1].equalsIgnoreCase(emailUserDB) || !strings[0].equalsIgnoreCase(nameUserDB)) { // || strings[0].equalsIgnoreCase(passHashUserDB)
+                    return DB_user.insertUser(strings[0], strings[1], strings[2]);
+                }
+            }
+            // Usuario nulo: no existe o algun campo no coincide
+            // Usuario no nulo: TODO coincide, email, name, passHash*/
+
+            //User user = DB_user.checkIfUserAlreadyExists(strings[0], strings[1]);
+            //JSONObject object = DB_user.checkIfUserAlreadyExists(strings[0], strings[1]);
+            boolean userExists = DB_user.checkIfUserAlreadyExists(strings[0], strings[1]);
+            if(userExists) { // User exists
+                /*String emailUserDB = user.getEmail();
+                String nameUserDB = user.getName();
+                if(!strings[1].equalsIgnoreCase(emailUserDB) && !strings[0].equalsIgnoreCase(nameUserDB)) {
+
+                } else {*/
+                    return null;
+                //}
+            } else {
+                return DB_user.insertUser(strings[0], strings[1], strings[2]);
+            }
         }
 
         @Override
@@ -79,13 +107,16 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     /**
-     * Verify the sign up process after atempt to intert into the database.
+     * Verify the sign up process after atempt to insert into the database.
      * @param user
      */
     private void processRegister(User user) {
-        Intent intent = new Intent(this, AnnounceActivity.class);
-
-        if(user != null) { // Insert correct.
+        if(user == null) { // User already exists
+            this.msgerror = "Ese usuario ya existe";
+            TextView textView = findViewById(R.id.user_already_exists);
+            textView.setText(this.msgerror);
+        } else { // User doesn't exists
+            Intent intent = new Intent(this, AnnounceActivity.class);
             SharedPreferences sp = getSharedPreferences("Login", 0);
             SharedPreferences.Editor ed = sp.edit();            // Saved the user login credencials.
             ed.putString("email", user.getEmail());
@@ -95,10 +126,6 @@ public class RegisterActivity extends AppCompatActivity {
             intent.putExtra("user", user);
             startActivity(intent);
             finish();
-        } else {
-            this.msgerror = "Ese usuario ya existe";
-            TextView textView = findViewById(R.id.user_already_exists);
-            textView.setText(this.msgerror);
         }
     }
 }

@@ -22,6 +22,8 @@
     <string name="image_upload_text">Subir imagen</string>
     <string name="info_announce_text">+ Info</string>
 
+    <string name="error_txt1">Email o contraseña incorrectos</string>
+
     <string name="title_announce_section">Mis anuncios</string>
     <string name="title_chat_section">Mis chats</string>
     <string name="title_chatconcrete_section">Chat con </string>
@@ -44,6 +46,11 @@
     <string name="nav_title_section3">Chats</string>
     <string name="nav_title_section4">Open Data</string>
     <string name="nav_title_section5">Configuración</string>
+    <string name="nav_title_section6">Cerrar sesión</string>
+    <string name="nav_title_section7">Contacto</string>
+    <string name="nav_title_section8">Sobre nosotros</string>
+    <string name="nav_title_section9">Ayuda</string>
+    <string name="nav_title_section10">Valoración</string>
 
     <string name="nav_header_text1">User name</string>
     <string name="nav_header_text2">User email</string>

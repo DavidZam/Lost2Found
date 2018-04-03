@@ -36,7 +36,6 @@ public class AnnounceActivity extends AppCompatActivity implements FloatingActio
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_announce);
 
-        btnLogout = (Button) findViewById(R.id.boton_salir);
         Toolbar tb = findViewById(R.id.toolbar);
         setSupportActionBar(tb);
         ActionBar ab = getSupportActionBar();
@@ -51,6 +50,7 @@ public class AnnounceActivity extends AppCompatActivity implements FloatingActio
 
         navView.setNavigationItemSelectedListener(
                 new NavigationView.OnNavigationItemSelectedListener() {
+
                     @Override
                     public boolean onNavigationItemSelected(MenuItem menuItem) {
                         menuItem.setChecked(true);
@@ -62,6 +62,8 @@ public class AnnounceActivity extends AppCompatActivity implements FloatingActio
                             startActivity(buscar);
                         }else if(menuItem.getItemId()== R.id.nav_chat) {
                             startActivity(chat);
+                        }else if(menuItem.getItemId()== R.id.nav_logout) {
+                            logoutUser();
                         }
 
                         return true;
@@ -100,7 +102,7 @@ public class AnnounceActivity extends AppCompatActivity implements FloatingActio
        Announce announce = new Announce();
        announce.fill_with_data(announceList);
 
-        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.announce_recyclerview);
+        RecyclerView recyclerView = findViewById(R.id.announce_recyclerview);
         AnnounceViewAdapter adapter = new AnnounceViewAdapter(announceList, getApplication());
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -111,18 +113,8 @@ public class AnnounceActivity extends AppCompatActivity implements FloatingActio
         itemAnimator.setRemoveDuration(1000);
         /*recyclerView.setItemAnimator(itemAnimator);*/
 
-        FloatingActionButton createAnnounce = (FloatingActionButton) findViewById(R.id.new_announce);
+        FloatingActionButton createAnnounce = findViewById(R.id.new_announce);
         createAnnounce.setOnClickListener(this);
-
-
-        // Logout button click event
-        btnLogout.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                logoutUser();
-            }
-        });
     }
 
     @Override
@@ -142,18 +134,12 @@ public class AnnounceActivity extends AppCompatActivity implements FloatingActio
         return super.onOptionsItemSelected(item);
     }
 
-
-    /**
-     * Logging out the user. Will set isLoggedIn flag to false in shared
-     * preferences Clears the user data from sqlite users table
-     * */
     private void logoutUser() {
         SharedPreferences sp = getSharedPreferences("Login", 0);
         SharedPreferences.Editor ed = sp.edit();
         ed.putString("email", null);
         ed.putString("name", null);
-        ed.putString("role", null);
-        ed.commit();
+        ed.apply();
 
         Intent intent = new Intent(this, LoginActivity.class);
         startActivity(intent);

@@ -1,5 +1,7 @@
 package es.lost2found.entities;
 
+import android.content.SharedPreferences;
+
 import org.json.JSONObject;
 
 import java.io.Serializable;
@@ -44,20 +46,13 @@ public class User implements Serializable {
         this.email = email;
     }
 
-    public String getPassword() {
-        return this.password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
+    public String getPassHash() { return this.password; }
 
     @Override
     public String toString() {
         return "User{" +
                 "email='" + email + '\'' +
                 ", nombre='" + name + '\'' +
-                ", contrasena='" + password + '\'' +
                 '}';
     }
 }

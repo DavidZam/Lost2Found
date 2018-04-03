@@ -1,6 +1,7 @@
 package es.lost2found.lost2foundUI.chatUI;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -20,6 +21,7 @@ import java.util.List;
 import es.lost2found.R;
 import es.lost2found.entities.Chat;
 import es.lost2found.lost2foundUI.announceUI.AnnounceActivity;
+import es.lost2found.lost2foundUI.loginregisterUI.LoginActivity;
 import es.lost2found.lost2foundUI.seekerUI.SeekerActivity;
 
 public class ChatActivity extends AppCompatActivity {
@@ -56,6 +58,8 @@ public class ChatActivity extends AppCompatActivity {
                             startActivity(home);
                         }else if(menuItem.getItemId()== R.id.nav_search) {
                             startActivity(buscar);
+                        }else if(menuItem.getItemId()== R.id.nav_logout) {
+                            logoutUser();
                         }
 
                         return true;
@@ -90,6 +94,18 @@ public class ChatActivity extends AppCompatActivity {
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void logoutUser() {
+        SharedPreferences sp = getSharedPreferences("Login", 0);
+        SharedPreferences.Editor ed = sp.edit();
+        ed.putString("email", null);
+        ed.putString("name", null);
+        ed.apply();
+
+        Intent intent = new Intent(this, LoginActivity.class);
+        startActivity(intent);
+        finish();
     }
 
     /**

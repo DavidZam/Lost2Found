@@ -61,7 +61,7 @@
         android:layout_marginTop="30dp"
         android:paddingTop="16dp"
         android:textAlignment="center"
-        android:textColor="@color/colorPrimary" />
+        android:textColor="@color/errorColor" />
 
     <TextView
         android:id="@+id/register_text"

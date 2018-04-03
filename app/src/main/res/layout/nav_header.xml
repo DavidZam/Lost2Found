@@ -1,43 +1,74 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="?attr/colorPrimary"
-    android:padding="16dp"
-    android:theme="@style/AppTheme"
+    android:gravity="bottom"
     android:orientation="vertical"
-    android:gravity="bottom">
+    android:padding="8dp"
+    android:theme="@style/AppTheme"
+    tools:layout_editor_absoluteY="25dp">
 
     <ImageView
         android:id="@+id/user_image"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginTop="20dp"
         android:scaleType="fitStart"
-        android:src="@drawable/ic_account" />
+        android:src="@drawable/ic_account"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <!--<Button
+        android:id="@+id/logout_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="9dp"
+        android:background="@drawable/rounded_rectangle_blue"
+        android:padding="10sp"
+        android:text="@string/text_logoutbutton_button"
+        android:textAllCaps="false"
+        android:textColor="@color/colorSecondaryText"
+        android:textSize="18sp"
+        app:layout_constraintStart_toEndOf="@+id/user_image"
+        app:layout_constraintTop_toBottomOf="@+id/user_name" />
+    android:onClick="moreinfoannounce"-->
 
     <TextView
         android:id="@+id/user_name"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/user_image"
-        android:layout_marginTop="5dp"
-        android:layout_marginLeft="5dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="40dp"
         android:text="@string/nav_header_text1"
-        android:textColor="@color/colorSecondaryText"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-        />
+        android:textColor="@color/colorSecondaryText"
+        android:textSize="16sp"
+        app:layout_constraintStart_toEndOf="@+id/user_image"
+        app:layout_constraintTop_toTopOf="parent" />
+    <!--ARREGLARELTEXTO-->
 
     <TextView
-        android:id="@+id/user_email"
-        android:layout_width="match_parent"
+        android:id="@+id/user_mail"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/nav_header_text2"
-        android:textColor="@color/colorSecondaryText"
-        android:layout_below="@id/user_name"
+        android:layout_below="@id/user_image"
+        android:layout_marginBottom="8dp"
         android:layout_marginTop="10dp"
-        android:layout_marginLeft="5dp"
+        android:text="@string/nav_header_text2"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-        />
+        android:textColor="@color/colorSecondaryText"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/user_name"
+        app:layout_constraintTop_toBottomOf="@+id/user_name" />
+    <!--ARREGLARELTEXTO-->
 
-</LinearLayout>
+</android.support.constraint.ConstraintLayout>

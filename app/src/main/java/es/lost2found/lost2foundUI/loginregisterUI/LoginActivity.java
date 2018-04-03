@@ -76,7 +76,7 @@ public class LoginActivity extends AppCompatActivity {
             if(user != null) {
                 SharedPreferences.Editor ed = sp.edit();            // Saved the user login credencials.
                 ed.putString("email", user.getEmail());
-                ed.commit();
+                ed.apply();
 
                 intent.putExtra("user", user);
                 startActivity(intent);
@@ -84,7 +84,7 @@ public class LoginActivity extends AppCompatActivity {
             }
             else {
                 TextView textView = (TextView) findViewById(R.id.wrong_user);
-                textView.setText("Email o contraseña incorrectos");
+                textView.setText(textView.getResources().getString(R.string.error_txt1));
             }
         }
     }

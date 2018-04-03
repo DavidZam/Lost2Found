@@ -38,15 +38,6 @@
         android:clickable="true"
         android:focusable="true" />
 
-        <Button
-            android:id="@+id/boton_salir"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_above="@+id/announce_recyclerview"
-            android:layout_alignParentEnd="true"
-            android:background="@color/btn_logut_bg"
-            android:text="Salir" />
-
     </RelativeLayout>
 
     <android.support.design.widget.CoordinatorLayout
@@ -70,10 +61,9 @@
     </android.support.design.widget.CoordinatorLayout>
 
     <android.support.design.widget.NavigationView
-        android:layout_marginTop="16dp"
         android:id="@+id/nav_view"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_gravity="start"
         android:fitsSystemWindows="true"
         app:menu="@menu/navigate_menu"
