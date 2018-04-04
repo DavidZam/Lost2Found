@@ -14,6 +14,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,6 +42,21 @@ public class ChatActivity extends AppCompatActivity {
         mDrawerLayout = findViewById(R.id.chat_layout);
 
         NavigationView navView = findViewById(R.id.nav_view);
+
+        View headerLayout = navView.getHeaderView(0);
+        TextView emailUser = headerLayout.findViewById(R.id.user_mail);
+        TextView nameUser = headerLayout.findViewById(R.id.user_name);
+        SharedPreferences spref = getApplicationContext().getSharedPreferences("Login", 0);
+        if(spref != null) {
+            if (spref.contains("email")) {
+                String userEmail = spref.getString("email", "");
+                emailUser.setText(userEmail);
+            }
+            if (spref.contains("name")) {
+                String userName = spref.getString("name", "");
+                nameUser.setText(userName);
+            }
+        }
 
         final Intent home = new Intent(this, AnnounceActivity.class);
         final Intent buscar = new Intent(this, SeekerActivity.class);

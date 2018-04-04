@@ -65,7 +65,7 @@ public class LoginActivity extends AppCompatActivity {
     private void processLogin(User user) {
         Intent intent = new Intent(this, AnnounceActivity.class);
 
-        SharedPreferences sp = getSharedPreferences("Login", 0);
+        SharedPreferences sp = getApplicationContext().getSharedPreferences("Login", 0);
         String email = sp.getString("email", null);
         if(email != null) { // Login perform with SharedPreferences credentials.
             intent.putExtra("user", user);
@@ -76,6 +76,7 @@ public class LoginActivity extends AppCompatActivity {
             if(user != null) {
                 SharedPreferences.Editor ed = sp.edit();            // Saved the user login credencials.
                 ed.putString("email", user.getEmail());
+                ed.putString("name", user.getName());
                 ed.apply();
 
                 intent.putExtra("user", user);
@@ -83,7 +84,7 @@ public class LoginActivity extends AppCompatActivity {
                 finish();
             }
             else {
-                TextView textView = (TextView) findViewById(R.id.wrong_user);
+                TextView textView = findViewById(R.id.wrong_user);
                 textView.setText(textView.getResources().getString(R.string.error_txt1));
             }
         }

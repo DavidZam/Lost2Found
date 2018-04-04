@@ -15,6 +15,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.TextView;
 
 
 //import com.jaredrummler.materialspinner.MaterialSpinner;
@@ -52,6 +53,21 @@ public class SeekerActivity extends AppCompatActivity {
         mDrawerLayout = findViewById(R.id.drawer_layout);
 
         NavigationView navView = findViewById(R.id.nav_view);
+
+        View headerLayout = navView.getHeaderView(0);
+        TextView emailUser = headerLayout.findViewById(R.id.user_mail);
+        TextView nameUser = headerLayout.findViewById(R.id.user_name);
+        SharedPreferences spref = getApplicationContext().getSharedPreferences("Login", 0);
+        if(spref != null) {
+            if (spref.contains("email")) {
+                String userEmail = spref.getString("email", "");
+                emailUser.setText(userEmail);
+            }
+            if (spref.contains("name")) {
+                String userName = spref.getString("name", "");
+                nameUser.setText(userName);
+            }
+        }
 
         final Intent menu = new Intent(this, AnnounceActivity.class);
         final Intent chat = new Intent(this, ChatActivity.class);

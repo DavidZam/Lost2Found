@@ -70,30 +70,9 @@ public class RegisterActivity extends AppCompatActivity {
 
         @Override
         protected User doInBackground(String... strings) {
-            /*String emailUserDB = "";
-            String nameUserDB = "";
-            User user = DB_user.findUserByEmail(strings[1], strings[2]);
-            if(user != null) {
-                emailUserDB = user.getEmail();
-                nameUserDB = user.getName();
-                if (!strings[1].equalsIgnoreCase(emailUserDB) || !strings[0].equalsIgnoreCase(nameUserDB)) { // || strings[0].equalsIgnoreCase(passHashUserDB)
-                    return DB_user.insertUser(strings[0], strings[1], strings[2]);
-                }
-            }
-            // Usuario nulo: no existe o algun campo no coincide
-            // Usuario no nulo: TODO coincide, email, name, passHash*/
-
-            //User user = DB_user.checkIfUserAlreadyExists(strings[0], strings[1]);
-            //JSONObject object = DB_user.checkIfUserAlreadyExists(strings[0], strings[1]);
             boolean userExists = DB_user.checkIfUserAlreadyExists(strings[0], strings[1]);
             if(userExists) { // User exists
-                /*String emailUserDB = user.getEmail();
-                String nameUserDB = user.getName();
-                if(!strings[1].equalsIgnoreCase(emailUserDB) && !strings[0].equalsIgnoreCase(nameUserDB)) {
-
-                } else {*/
-                    return null;
-                //}
+                return null;
             } else {
                 return DB_user.insertUser(strings[0], strings[1], strings[2]);
             }
@@ -120,7 +99,7 @@ public class RegisterActivity extends AppCompatActivity {
             SharedPreferences sp = getSharedPreferences("Login", 0);
             SharedPreferences.Editor ed = sp.edit();            // Saved the user login credencials.
             ed.putString("email", user.getEmail());
-            ed.putString("nombre", user.getName());
+            ed.putString("name", user.getName());
             ed.apply(); //ed.commit()
 
             intent.putExtra("user", user);

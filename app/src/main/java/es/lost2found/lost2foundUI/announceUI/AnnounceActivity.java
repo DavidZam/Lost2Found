@@ -15,7 +15,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,12 +29,23 @@ import es.lost2found.lost2foundUI.seekerUI.SeekerActivity;
 public class AnnounceActivity extends AppCompatActivity implements FloatingActionButton.OnClickListener {
 
     private DrawerLayout mDrawerLayout;
-    private Button btnLogout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_announce);
+
+        /*
+        String restoredUserName = prefs.getString("text", null);
+        if(restoredUserName != null) {
+            String useremail = prefs.getString("email", "No email defined");
+            String username = prefs.getString("nombre", "No name defined");
+            TextView emailUser = findViewById(R.id.user_name);
+            emailUser.setText(useremail);
+            TextView nameUser = findViewById(R.id.user_mail);
+            nameUser.setText(username);
+        }*/
+
 
         Toolbar tb = findViewById(R.id.toolbar);
         setSupportActionBar(tb);
@@ -44,6 +55,21 @@ public class AnnounceActivity extends AppCompatActivity implements FloatingActio
         mDrawerLayout = findViewById(R.id.drawer_layout);
 
         NavigationView navView = findViewById(R.id.nav_view);
+
+        View headerLayout = navView.getHeaderView(0);
+        TextView emailUser = headerLayout.findViewById(R.id.user_mail);
+        TextView nameUser = headerLayout.findViewById(R.id.user_name);
+        SharedPreferences spref = getApplicationContext().getSharedPreferences("Login", 0);
+        if(spref != null) {
+            if (spref.contains("email")) {
+                String userEmail = spref.getString("email", "");
+                emailUser.setText(userEmail);
+            }
+            if (spref.contains("name")) {
+                String userName = spref.getString("name", "");
+                nameUser.setText(userName);
+            }
+        }
 
         final Intent buscar = new Intent(this, SeekerActivity.class);
         final Intent chat = new Intent(this, ChatActivity.class);
@@ -145,6 +171,8 @@ public class AnnounceActivity extends AppCompatActivity implements FloatingActio
         startActivity(intent);
         finish();
     }
+
+
 
     /**
      *
