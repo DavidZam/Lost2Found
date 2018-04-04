@@ -86,6 +86,26 @@
             android:screenOrientation="portrait"
             android:label="@string/location_text" />
 
+        <activity
+            android:name=".lost2foundUI.otherUI.AboutUsActivity"
+            android:screenOrientation="portrait"
+            android:label="@string/about_us_text" />
+
+        <activity
+            android:name=".lost2foundUI.otherUI.ContactActivity"
+            android:screenOrientation="portrait"
+            android:label="@string/contact_text" />
+
+        <activity
+            android:name=".lost2foundUI.otherUI.HelpActivity"
+            android:screenOrientation="portrait"
+            android:label="@string/help_text" />
+
+        <activity
+            android:name=".lost2foundUI.otherUI.RateActivity"
+            android:screenOrientation="portrait"
+            android:label="@string/rate_text" />
+
     </application>
 
 </manifest>

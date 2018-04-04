@@ -30,6 +30,10 @@ import es.lost2found.lost2foundUI.announceUI.AnnounceViewAdapter;
 import es.lost2found.lost2foundUI.announceUI.AnnounceActivity;
 import es.lost2found.lost2foundUI.chatUI.ChatActivity;
 import es.lost2found.lost2foundUI.loginregisterUI.LoginActivity;
+import es.lost2found.lost2foundUI.otherUI.AboutUsActivity;
+import es.lost2found.lost2foundUI.otherUI.ContactActivity;
+import es.lost2found.lost2foundUI.otherUI.HelpActivity;
+import es.lost2found.lost2foundUI.otherUI.RateActivity;
 
 
 public class SeekerActivity extends AppCompatActivity {
@@ -69,8 +73,12 @@ public class SeekerActivity extends AppCompatActivity {
             }
         }
 
-        final Intent menu = new Intent(this, AnnounceActivity.class);
+        final Intent home = new Intent(this, AnnounceActivity.class);
         final Intent chat = new Intent(this, ChatActivity.class);
+        final Intent contact = new Intent(this, ContactActivity.class);
+        final Intent aboutus = new Intent(this, AboutUsActivity.class);
+        final Intent help = new Intent(this, HelpActivity.class);
+        final Intent rate = new Intent(this, RateActivity.class);
 
         navView.setNavigationItemSelectedListener(
                 new NavigationView.OnNavigationItemSelectedListener() {
@@ -82,14 +90,21 @@ public class SeekerActivity extends AppCompatActivity {
 
                         // Add code here to update the UI based on the item selected
 
-                        if(menuItem.getItemId() == R.id.nav_home) {
-                            startActivity(menu);
-                        }else if(menuItem.getItemId() == R.id.nav_chat) {
+                        if(menuItem.getItemId()== R.id.nav_home) {
+                            startActivity(home);
+                        }else if(menuItem.getItemId()== R.id.nav_chat) {
                             startActivity(chat);
-                        }else if(menuItem.getItemId()== R.id.nav_logout) {
+                        }else if(menuItem.getItemId()== R.id.nav_contact) {
+                            startActivity(contact);
+                        } else if(menuItem.getItemId()== R.id.nav_info) {
+                            startActivity(aboutus);
+                        } else if(menuItem.getItemId()== R.id.nav_help) {
+                            startActivity(help);
+                        }else if(menuItem.getItemId()== R.id.nav_feedback) {
+                            startActivity(rate);
+                        } else if(menuItem.getItemId()== R.id.nav_logout) {
                             logoutUser();
                         }
-
                         return true;
                     }
                 }

@@ -22,6 +22,11 @@
     <string name="image_upload_text">Subir imagen</string>
     <string name="info_announce_text">+ Info</string>
 
+    <string name="contact_text">Contáctanos!</string>
+    <string name="about_us_text">Sobre nosotros</string>
+    <string name="help_text">Ayuda</string>
+    <string name="rate_text">Valóranos!</string>
+
     <string name="error_txt1">Email o contraseña incorrectos</string>
 
     <string name="title_announce_section">Mis anuncios</string>

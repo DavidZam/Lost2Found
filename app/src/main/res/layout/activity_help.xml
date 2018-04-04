@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.DrawerLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/drawer_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:paddingTop="16dp"
+    android:theme="@style/Lost2FoundTheme"
+    tools:context=".lost2foundUI.otherUI.HelpActivity">
+
+    <RelativeLayout
+        android:id="@+id/content_frame"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="16dp"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        tools:context=".lost2foundUI.otherUI.HelpActivity"
+        tools:showIn="@layout/activity_help"
+        android:background="@color/colorSecondaryText">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:theme="@style/ToolbarStyle"
+            android:layout_centerHorizontal="true" />
+
+            <TextView
+                android:id="@+id/textinfo"
+                android:layout_width="match_parent"
+                android:layout_height="348dp"
+                android:padding="8sp"
+                android:layout_below="@id/toolbar"
+                android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum eu ipsum felis. Quisque consequat dui eu nibh pharetra vehicula. Nam et nibh ante. Interdum et malesuada fames ac ante ipsum primis in faucibus. Sed at orci volutpat, semper tortor ut, pulvinar nisi. Nam semper luctus cursus. Praesent et lacus sapien. Phasellus congue nibh nec odio posuere, et fermentum turpis pharetra. Proin tincidunt nisl a sagittis luctus. Vivamus ac pharetra massa, vel tempus purus. Sed sagittis posuere sapien sed convallis. Curabitur fermentum et libero vel auctor.
+
+Quisque eget mauris vel tellus ornare mattis a vel nibh. Sed a ornare metus. Suspendisse potenti. Ut sed auctor neque. Aliquam tortor tortor, porta sed purus eget, semper scelerisque urna. Nullam eget lacinia arcu. In nec elementum mauris. Aliquam tempor posuere faucibus. Nulla ac dapibus sem. Curabitur et odio ac dui lobortis rhoncus tempus at ligula. Maecenas convallis est lorem, nec condimentum felis ullamcorper et." />
+
+            <ImageView
+                android:id="@+id/imageinfoannounce"
+                android:layout_width="280dp"
+                android:layout_height="72dp"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="32dp"
+                android:src="@drawable/lost2found" />
+
+        </RelativeLayout>
+
+    <android.support.design.widget.NavigationView
+        android:id="@+id/nav_view"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:fitsSystemWindows="true"
+        app:menu="@menu/navigate_menu"
+        app:headerLayout="@layout/nav_header"
+        />
+
+</android.support.v4.widget.DrawerLayout>
