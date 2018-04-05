@@ -37,13 +37,13 @@
             android:layout_height="wrap_content" />
 
             <ImageView
-                android:id="@+id/imageinfoannounce"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_above="@+id/register_button"
-                android:layout_centerHorizontal="true"
-                android:layout_marginBottom="24dp"
-                android:src="@drawable/ic_phone_android" />
+            android:id="@+id/imageinfoannounce"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/register_button"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="24dp"
+            android:src="@drawable/ic_phone_android" />
 
             <Button
                 android:id="@+id/register_button"

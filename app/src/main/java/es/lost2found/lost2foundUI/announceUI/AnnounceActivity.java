@@ -82,7 +82,6 @@ public class AnnounceActivity extends AppCompatActivity implements FloatingActio
         final Intent help = new Intent(this, HelpActivity.class);
         final Intent rate = new Intent(this, RateActivity.class);
 
-
         navView.setNavigationItemSelectedListener(
                 new NavigationView.OnNavigationItemSelectedListener() {
 
@@ -163,6 +162,7 @@ public class AnnounceActivity extends AppCompatActivity implements FloatingActio
     public void onClick(View v) {
         final Intent newannounce = new Intent(this, NewAnnounceActivity.class);
         startActivity(newannounce);
+        finish(); // revisar
     }
 
 

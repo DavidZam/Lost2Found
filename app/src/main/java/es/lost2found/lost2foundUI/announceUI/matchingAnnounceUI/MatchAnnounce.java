@@ -3,6 +3,8 @@ package es.lost2found.lost2foundUI.announceUI.matchingAnnounceUI;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.NavUtils;
+import android.support.v4.app.TaskStackBuilder;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -10,6 +12,7 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
@@ -18,6 +21,7 @@ import java.util.List;
 
 import es.lost2found.R;
 import es.lost2found.entities.Announce;
+import es.lost2found.lost2foundUI.announceUI.AnnounceActivity;
 import es.lost2found.lost2foundUI.chatUI.chatConcreteUI.ChatConcrete;
 
 public class MatchAnnounce extends AppCompatActivity {
@@ -30,7 +34,8 @@ public class MatchAnnounce extends AppCompatActivity {
         Toolbar tb = findViewById(R.id.toolbar_center);
         setSupportActionBar(tb);
         ActionBar ab = getSupportActionBar();
-        ab.setDisplayHomeAsUpEnabled(false);
+        ab.setDisplayHomeAsUpEnabled(true);
+        ab.setHomeAsUpIndicator(R.drawable.ic_arrow_back);
 
         // In this example we fill announceList with a function fill_with_data(), in the future we'll do it with the database info
         List<Announce> announceList = new ArrayList<>();
@@ -53,6 +58,14 @@ public class MatchAnnounce extends AppCompatActivity {
         Intent intent = new Intent(this, MatchAnnounceInfoActivity.class);
         startActivity(intent);
         finish();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        Intent announcehome = new Intent(this, AnnounceActivity.class);
+        startActivity(announcehome);
+        finish();
+        return true;
     }
 
     /**

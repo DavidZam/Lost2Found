@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_match_announce_info"
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent">
+
+    <RelativeLayout android:id="@+id/content_frame"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".lost2foundUI.announceUI.matchingAnnounceUI.MatchAnnounceInfoActivity"
+        tools:showIn="@layout/activity_matchannounce_info"
+        android:background="@color/colorSecondaryText">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar_center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:theme="@style/ToolbarStyle">
+
+        </android.support.v7.widget.Toolbar>
+
+        <RelativeLayout
+            android:id="@+id/login_layout"
+            android:layout_width="match_parent"
+            android:padding="16dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/toolbar_center"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/textinfoannounce"
+                android:layout_width="match_parent"
+                android:layout_height="372dp"
+                android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum eu ipsum felis. Quisque consequat dui eu nibh pharetra vehicula. Nam et nibh ante. Interdum et malesuada fames ac ante ipsum primis in faucibus. Sed at orci volutpat, semper tortor ut, pulvinar nisi. Nam semper luctus cursus. Praesent et lacus sapien. Phasellus congue nibh nec odio posuere, et fermentum turpis pharetra. Proin tincidunt nisl a sagittis luctus. Vivamus ac pharetra massa, vel tempus purus. Sed sagittis posuere sapien sed convallis. Curabitur fermentum et libero vel auctor.
+
+Quisque eget mauris vel tellus ornare mattis a vel nibh. Sed a ornare metus. Suspendisse potenti. Ut sed auctor neque. Aliquam tortor tortor, porta sed purus eget, semper scelerisque urna. Nullam eget lacinia arcu. In nec elementum mauris. Aliquam tempor posuere faucibus. Nulla ac dapibus sem. Curabitur et odio ac dui lobortis rhoncus tempus at ligula. Maecenas convallis est lorem, nec condimentum felis ullamcorper et." />
+
+            <ImageView
+                android:id="@+id/imageinfoannounce"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="43dp"
+                android:src="@drawable/ic_phone_android" />
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+</android.support.constraint.ConstraintLayout>

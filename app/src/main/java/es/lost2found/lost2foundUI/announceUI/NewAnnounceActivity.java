@@ -6,6 +6,7 @@ import android.support.v4.app.DialogFragment;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
@@ -38,8 +39,8 @@ public class NewAnnounceActivity extends AppCompatActivity {
         Toolbar tb = findViewById(R.id.toolbar_center);
         setSupportActionBar(tb);
         ActionBar ab = getSupportActionBar();
-        ab.setDisplayHomeAsUpEnabled(false);
-
+        ab.setDisplayHomeAsUpEnabled(true);
+        ab.setHomeAsUpIndicator(R.drawable.ic_arrow_back);
 
     }
 
@@ -57,5 +58,13 @@ public class NewAnnounceActivity extends AppCompatActivity {
         Intent intent = new Intent(this, PlaceActivity.class);
         startActivity(intent);
         finish();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        Intent announce = new Intent(this, AnnounceActivity.class);
+        startActivity(announce);
+        finish();
+        return true;
     }
 }

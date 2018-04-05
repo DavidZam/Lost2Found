@@ -36,14 +36,9 @@
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".lost2foundUI.announceUI.AnnounceActivity"
+            android:name=".lost2foundUI.seekerUI.SeekerActivity"
             android:screenOrientation="portrait"
-            android:label="@string/title_announce_section"/>
-
-        <activity
-        android:name=".lost2foundUI.seekerUI.SeekerActivity"
-        android:screenOrientation="portrait"
-        android:label="Buscar Anuncio"/>
+            android:label="Buscar Anuncio"/>
 
         <activity
             android:name=".lost2foundUI.chatUI.ChatActivity"
@@ -62,27 +57,39 @@
             />
 
         <activity
-            android:name=".lost2foundUI.announceUI.matchingAnnounceUI.MatchAnnounce"
+            android:name=".lost2foundUI.announceUI.AnnounceActivity"
             android:screenOrientation="portrait"
-            android:label="@string/title_matchannounce_section" />
+            android:label="@string/title_announce_section"/>
+
+        <activity
+            android:name=".lost2foundUI.announceUI.matchingAnnounceUI.MatchAnnounce"
+            android:parentActivityName=".lost2foundUI.announceUI.AnnounceActivity"
+            android:screenOrientation="portrait"
+            android:label="@string/title_matchannounce_section" >
+        </activity>
 
         <activity
             android:name=".lost2foundUI.announceUI.matchingAnnounceUI.MatchAnnounceInfoActivity"
+            android:parentActivityName=".lost2foundUI.announceUI.matchingAnnounceUI.MatchAnnounce"
             android:screenOrientation="portrait"
-            android:label="@string/title_matchannounce_info" />
+            android:label="@string/title_matchannounce_info" >
+        </activity>
 
         <activity
             android:name=".lost2foundUI.placeUI.PlaceActivity"
+            android:parentActivityName=".lost2foundUI.announceUI.NewAnnounceActivity"
             android:screenOrientation="portrait"
             android:label="@string/title_typeplace_section" />
 
         <activity
             android:name=".lost2foundUI.placeUI.TransportPlaceActivity"
+            android:parentActivityName=".lost2foundUI.placeUI.PlaceActivity"
             android:screenOrientation="portrait"
             android:label="@string/title_transrport_typeplace_section" />
 
         <activity
             android:name=".lost2foundUI.placeUI.MapActivity"
+            android:parentActivityName=".lost2foundUI.placeUI.PlaceActivity"
             android:screenOrientation="portrait"
             android:label="@string/location_text" />
 
@@ -105,6 +112,12 @@
             android:name=".lost2foundUI.otherUI.RateActivity"
             android:screenOrientation="portrait"
             android:label="@string/rate_text" />
+
+        <activity
+            android:name=".lost2foundUI.seekerUI.SeekerAnnounceInfoActivity"
+            android:parentActivityName=".lost2foundUI.seekerUI.SeekerActivity"
+            android:screenOrientation="portrait"
+            android:label="@string/title_matchannounce_info" />
 
     </application>
 

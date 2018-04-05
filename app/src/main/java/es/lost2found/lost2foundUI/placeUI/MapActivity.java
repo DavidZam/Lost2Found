@@ -1,5 +1,6 @@
 package es.lost2found.lost2foundUI.placeUI;
 
+import android.content.Intent;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -7,6 +8,7 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -35,7 +37,8 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         Toolbar tb = findViewById(R.id.toolbar_center);
         setSupportActionBar(tb);
         ActionBar ab = getSupportActionBar();
-        ab.setDisplayHomeAsUpEnabled(false);
+        ab.setDisplayHomeAsUpEnabled(true);
+        ab.setHomeAsUpIndicator(R.drawable.ic_arrow_back);
 
     }
 
@@ -46,6 +49,14 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         LatLng sydney = new LatLng(-33.852, 151.211);
         googleMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
         googleMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        Intent place = new Intent(this, PlaceActivity.class);
+        startActivity(place);
+        finish();
+        return true;
     }
 
 }

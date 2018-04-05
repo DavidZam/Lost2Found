@@ -117,7 +117,7 @@ public class SeekerActivity extends AppCompatActivity {
         announce.fill_with_data(announceList);
 
         RecyclerView recyclerView = findViewById(R.id.search_recyclerview);
-        AnnounceViewAdapter adapter = new AnnounceViewAdapter(announceList, getApplication());
+        SeekerAnnounceViewAdapter adapter = new SeekerAnnounceViewAdapter(announceList, getApplication());
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 

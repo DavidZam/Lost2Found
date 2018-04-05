@@ -5,9 +5,11 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.view.View;
 
 import es.lost2found.R;
+import es.lost2found.lost2foundUI.announceUI.NewAnnounceActivity;
 
 public class PlaceActivity extends AppCompatActivity {
 
@@ -19,7 +21,9 @@ public class PlaceActivity extends AppCompatActivity {
         Toolbar tb = findViewById(R.id.toolbar_center);
         setSupportActionBar(tb);
         ActionBar ab = getSupportActionBar();
-        ab.setDisplayHomeAsUpEnabled(false);
+        ab.setDisplayHomeAsUpEnabled(true);
+        ab.setHomeAsUpIndicator(R.drawable.ic_arrow_back);
+
     }
 
     public void transportPlace(View view) {
@@ -34,4 +38,11 @@ public class PlaceActivity extends AppCompatActivity {
         finish();
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        Intent newannounce = new Intent(this, NewAnnounceActivity.class);
+        startActivity(newannounce);
+        finish();
+        return true;
+    }
 }

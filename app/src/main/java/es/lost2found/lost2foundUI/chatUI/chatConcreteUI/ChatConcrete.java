@@ -1,5 +1,6 @@
 package es.lost2found.lost2foundUI.chatUI.chatConcreteUI;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -17,6 +18,8 @@ import java.util.List;
 
 import es.lost2found.R;
 import es.lost2found.entities.Message;
+import es.lost2found.lost2foundUI.announceUI.NewAnnounceActivity;
+import es.lost2found.lost2foundUI.chatUI.ChatActivity;
 
 public class ChatConcrete extends AppCompatActivity {
     private RecyclerView recyclerView;
@@ -31,7 +34,8 @@ public class ChatConcrete extends AppCompatActivity {
         Toolbar tb = findViewById(R.id.toolbar_center);
         setSupportActionBar(tb);
         ActionBar ab = getSupportActionBar();
-        ab.setDisplayHomeAsUpEnabled(false);
+        ab.setDisplayHomeAsUpEnabled(true);
+        ab.setHomeAsUpIndicator(R.drawable.ic_arrow_back);
 
         mDrawerLayout = findViewById(R.id.chat_concrete_layout);
 
@@ -55,6 +59,14 @@ public class ChatConcrete extends AppCompatActivity {
         itemAnimator.setRemoveDuration(1000);
         /*recyclerView.setItemAnimator(itemAnimator);*/
 
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        Intent chat = new Intent(this, ChatActivity.class);
+        startActivity(chat);
+        finish();
+        return true;
     }
 
     /**
