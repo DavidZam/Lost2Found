@@ -37,4 +37,5 @@ dependencies {
     compile 'com.google.android.gms:play-services-maps:11.8.0'
     testCompile 'junit:junit:4.12'
     implementation 'com.android.support:design:27.1.0'
+    implementation project(':library-release')
 }

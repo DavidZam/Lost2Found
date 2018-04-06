@@ -34,6 +34,4 @@ public class TimePickerUI extends DialogFragment implements TimePickerDialog.OnT
         time.setText(view.getCurrentHour() + ":" + view.getCurrentMinute());
         time.setTextSize(15);
     }
-
-
 }

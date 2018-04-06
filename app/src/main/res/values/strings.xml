@@ -14,11 +14,14 @@
     <string name="select_button_text">Seleccionar</string>
     <string name="spinner_placeholder">Categoria</string>
     <string name="spinner2_placeholder">Tipo Anuncio</string>
+    <string name="spinner3_placeholder">Color</string>
+    <string name="color_dialog_title">Elige un color</string>
+
     <string name="create_announce_text">Crear nuevo anuncio</string>
     <string name="location_text">Ubicación</string>
     <string name="new_announce_text">Nuevo anuncio</string>
-    <string name="date_announce_text">Día Pérdida/Hallazgo</string>
-    <string name="hour_announce_text">Hora Pérdida/Hallazgo</string>
+    <string name="date_announce_text">Día</string>
+    <string name="hour_announce_text">Hora</string>
     <string name="image_upload_text">Subir imagen</string>
     <string name="info_announce_text">+ Info</string>
 
@@ -38,6 +41,9 @@
     <string name="title_transrport_typeplace_section">Tipos de lugar de transporte</string>
 
     <string name="email_textloginregister">Email</string>
+    <string name="brand_text">Marca</string>
+    <string name="model_text">Modelo</string>
+    <string name="color_text">Color</string>
     <string name="pass_textloginregister">Contraseña</string>
     <string name="noaccount_textlogin">¿No tienes cuenta?</string>
     <string name="name_textregister">Nombre</string>
