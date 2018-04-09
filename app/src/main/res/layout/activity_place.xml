@@ -37,7 +37,7 @@
                 style="@style/buttonStyle"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentTop="true"
-                android:layout_marginTop="51dp"
+                android:layout_marginTop="73dp"
                 android:onClick="transportPlace"
                 android:text="@string/trasnport_place_button_text" />
 
@@ -47,7 +47,7 @@
                 style="@style/buttonStyle"
                 android:layout_alignParentStart="true"
                 android:layout_below="@+id/transport_place_button"
-                android:layout_marginTop="76dp"
+                android:layout_marginTop="52dp"
                 android:onClick="map"
                 android:text="@string/map_button_text" />
 
@@ -56,8 +56,17 @@
                 style="@style/buttonStyle"
                 android:layout_alignParentStart="true"
                 android:layout_below="@+id/map_button"
-                android:layout_marginTop="69dp"
+                android:layout_marginTop="48dp"
                 android:text="@string/concrete_place_button_text" />
+
+            <Button
+                android:id="@+id/create_button"
+                style="@style/buttonStyle"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentStart="true"
+                android:layout_marginBottom="27dp"
+                android:onClick="createAnnounce"
+                android:text="@string/create_button_text" />
 
         </RelativeLayout>
 

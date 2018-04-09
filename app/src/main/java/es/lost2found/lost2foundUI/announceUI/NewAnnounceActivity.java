@@ -2,6 +2,7 @@ package es.lost2found.lost2foundUI.announceUI;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -14,6 +15,9 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner;
+
+import java.util.Calendar;
+import java.util.Date;
 
 import es.lost2found.database.DB_announce;
 import es.lost2found.entities.Announce;
@@ -76,14 +80,8 @@ public class NewAnnounceActivity extends AppCompatActivity {
                 .show(this, "dialog");
     }
 
-    public void place(View view) {
-        Intent intent = new Intent(this, PlaceActivity.class);
-        startActivity(intent);
-        finish();
-    }
 
-    public void createAnnounce(View view) {
-
+    public void saveData(View view) {
         // Id
 
         // TipoAnuncio (Perdida o Hallazgo)
@@ -95,6 +93,8 @@ public class NewAnnounceActivity extends AppCompatActivity {
         String announceDayText = announceDay.getText().toString();
 
         // Hora actual (de creacion del anuncio) FALTA capturar hora actual con date()) actualhour
+        Date currentTime = Calendar.getInstance().getTime();
+        String currentTimeText = String.valueOf(currentTime);
 
         // Hora de la pérdida o hallazgo
         EditText announceLostFoundHourHour = findViewById(R.id.hour_show);
@@ -104,25 +104,34 @@ public class NewAnnounceActivity extends AppCompatActivity {
 
         // Recompensa ¿? !!
 
+        // Imagen ¿? !!
+
         // Categoria
         MaterialBetterSpinner announceCategorieSpinner = findViewById(R.id.listCategories);
         String announceCategorie = announceCategorieSpinner.getText().toString();
 
         // Marca
+        EditText announceBrand = findViewById(R.id.marca);
+        String announceBrandText = announceBrand.getText().toString();
 
         // Modelo
+        EditText announceModel = findViewById(R.id.model);
+        String announceModelText = announceModel.getText().toString();
 
-        // Color  ¿Quitar el editText de Color? (Valor feo)
-        EditText selectedColor = findViewById(R.id.color_show);
-        String selectedColorText = String.valueOf(selectedColor);
+        // Color  ¿Quitar el editText de Color?
+        SharedPreferences sp = getApplicationContext().getSharedPreferences("colorBtn", 0);
+        String colorchoice = sp.getString("colorChoice", null);
+
+        /*EditText selectedColor = findViewById(R.id.color_show);
+        String selectedColorText = String.valueOf(selectedColor);*/
 
         // Lugar
         //Button announcePlace = findViewById(R.id.place_button);
         //announcePlace.get
         // Para obtener los datos del lugar puede que haya que llamar a otras funciones ya que se divide en transporte, mapa o direccion concreta.
 
-        new announceDB().execute(announceType, announceDayText, announceLostFoundHourHourText, announceCategorie); // Falta el lugar
-
+        // Id, TipoAnuncio, HoraActual, DiaAnuncio, HoraPerdidaoHallazgo, Modelo, Marca, Color, idUsuario e idLugar, Categoria (NombreTabla)
+        new announceDB().execute(announceType, currentTimeText, announceDayText, announceLostFoundHourHourText, announceModelText, announceBrandText, colorchoice, announceCategorie); // Falta el lugar
     }
 
     private class announceDB extends AsyncTask<String, Void, Announce> {
@@ -131,13 +140,13 @@ public class NewAnnounceActivity extends AppCompatActivity {
 
         @Override
         protected void onPreExecute() {
-            this.dialog.setMessage("Creando anuncio...");
+            this.dialog.setMessage("Cargando...");
             this.dialog.show();
         }
 
         @Override
         protected Announce doInBackground(String... strings) {
-            return DB_announce.insertAnnounce(strings[0], strings[1], strings[2], strings[3]);
+            return DB_announce.insertAnnounce(strings[0], strings[1], strings[2], strings[3], strings[4], strings[5], strings[6], strings[7]);
         }
 
         @Override
@@ -148,7 +157,11 @@ public class NewAnnounceActivity extends AppCompatActivity {
     }
 
     private void processNewAnnounce(Announce announce) {
-        Intent intent = new Intent(this, AnnounceActivity.class);
+        Intent intent = new Intent(this, PlaceActivity.class);
+        startActivity(intent);
+        finish();
+
+        //Intent intent = new Intent(this, AnnounceActivity.class);
 
         /*SharedPreferences sp = getApplicationContext().getSharedPreferences("Login", 0);
         String email = sp.getString("email", null);
@@ -174,4 +187,10 @@ public class NewAnnounceActivity extends AppCompatActivity {
             }
         }*/
     }
+
+    /*public void place(View view) {
+        Intent intent = new Intent(this, PlaceActivity.class);
+        startActivity(intent);
+        finish();
+    }*/
 }

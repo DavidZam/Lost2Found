@@ -112,7 +112,7 @@ public class SeekerActivity extends AppCompatActivity {
         navView.setCheckedItem(R.id.nav_search);
 
         // In this example we fill announceList with a function fill_with_data(), in the future we'll do it with the database info
-        List<Announce> announceList = new ArrayList<>();
+        /*List<Announce> announceList = new ArrayList<>();
         Announce announce = new Announce();
         announce.fill_with_data(announceList);
 

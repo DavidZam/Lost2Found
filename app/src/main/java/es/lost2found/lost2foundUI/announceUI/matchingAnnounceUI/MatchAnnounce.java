@@ -38,7 +38,7 @@ public class MatchAnnounce extends AppCompatActivity {
         ab.setHomeAsUpIndicator(R.drawable.ic_arrow_back);
 
         // In this example we fill announceList with a function fill_with_data(), in the future we'll do it with the database info
-        List<Announce> announceList = new ArrayList<>();
+        /*List<Announce> announceList = new ArrayList<>();
         Announce announce = new Announce();
         announce.fill_with_data(announceList);
 

@@ -1,6 +1,7 @@
 package es.lost2found.lost2foundUI.pickerUI;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -12,6 +13,7 @@ import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.EditText;
 
 import eltos.simpledialogfragment.color.SimpleColorWheelDialog;
@@ -303,9 +305,18 @@ public class ColorPickerUI extends CustomListDialog<ColorPickerUI> implements Si
 
     public void onColorSet() {
         // Do something with the color chosen by the user
-        EditText color = getActivity().findViewById(R.id.color_show);
+
+        //Button colorBtn = getActivity().findViewById(R.id.color_button);
+
+        SharedPreferences sp = getActivity().getApplicationContext().getSharedPreferences("colorBtn", 0);
+        String colorhex = String.valueOf(mSelectedColor);
+        SharedPreferences.Editor ed = sp.edit();            // Saved the user color choice.
+        ed.putString("colorChoice", colorhex);
+        ed.apply();
+
+        /*EditText color = getActivity().findViewById(R.id.color_show);
         String colorhex = String.valueOf(mSelectedColor);
         color.setText(colorhex);
-        color.setTextSize(15);
+        color.setTextSize(15);*/
     }
 }

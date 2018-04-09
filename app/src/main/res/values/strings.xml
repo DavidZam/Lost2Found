@@ -3,13 +3,16 @@
     <string name="login_button_text">Entrar</string>
     <string name="register_button_text">¡Regístrate!</string>
     <string name="place_button_text">Lugar</string>
+    <string name="image_button_text">Imagen</string>
+    <string name="color_button_text">Color</string>
     <string name="trasnport_place_button_text">Lugar de transporte</string>
     <string name="underground_trasnport_button_text">Metro</string>
     <string name="bus_transport_button_text">Autobús</string>
     <string name="airport_transport_button_text">Aeropuerto</string>
     <string name="map_button_text">Mapa</string>
     <string name="concrete_place_button_text">Dirección concreta</string>
-    <string name="announce_button_text">Crear</string>
+    <string name="create_button_text">Crear</string>
+    <string name="next_button_text">Siguiente</string>
     <string name="contact_button_text">Contactar</string>
     <string name="select_button_text">Seleccionar</string>
     <string name="spinner_placeholder">Categoria</string>

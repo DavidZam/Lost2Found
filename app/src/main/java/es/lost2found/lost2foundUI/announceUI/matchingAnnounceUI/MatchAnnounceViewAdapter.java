@@ -69,13 +69,13 @@ public class MatchAnnounceViewAdapter extends RecyclerView.Adapter<AnnounceViewH
     @Override
     public void onBindViewHolder(AnnounceViewHolder holder, int position) {
         // Use the provided ChatView_Holder on the onCreateViewHolder method to populate the current row on the RecycleView
-        TextView title = holder.getTitle();
+        /*TextView title = holder.getTitle();
         TextView descr = holder.getDescription();
         ImageView image = holder.getImageView();
 
         title.setText(listAnnounce.get(position).title);
         descr.setText(listAnnounce.get(position).description);
-        image.setImageResource(listAnnounce.get(position).imageId);
+        image.setImageResource(listAnnounce.get(position).imageId);*/
         //animate(holder);
     }
 

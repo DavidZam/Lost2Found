@@ -137,19 +137,13 @@
 
             <Button
                 android:id="@+id/color_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignStart="@+id/announce_type"
+                style="@style/buttonStyle"
                 android:layout_below="@+id/model"
-                android:layout_marginTop="-5sp"
-                android:background="@color/colorPrimary"
+                android:layout_marginTop="15sp"
                 android:onClick="showColorPickerDialog"
-                android:text="Color"
-                android:textAllCaps="false"
-                android:textColor="@color/colorSecondaryText"
-                android:textSize="16sp" />
+                android:text="Color" />
 
-            <EditText
+            <!--<EditText
                 android:id="@+id/color_show"
                 android:layout_width="119dp"
                 android:layout_height="wrap_content"
@@ -157,15 +151,15 @@
                 android:layout_alignParentStart="true"
                 android:layout_marginStart="114dp"
                 android:inputType="number"
-                android:textAlignment="center" />
+                android:textAlignment="center" />-->
 
-            <Button
+            <!--<Button
                 android:id="@+id/place_button"
                 style="@style/buttonStyle"
-                android:layout_below="@id/color_show"
+                android:layout_below="@id/color_button"
                 android:layout_marginTop="15dp"
                 android:onClick="place"
-                android:text="@string/place_button_text" />
+                android:text="@string/place_button_text" />-->
 
             <!--<Button
                 android:id="@+id/upload_image"
@@ -176,12 +170,12 @@
                 android:onClick="place"-->
 
             <Button
-                android:id="@+id/register_button"
+                android:id="@+id/next_button"
                 style="@style/buttonStyle"
-                android:layout_below="@id/place_button"
-                android:layout_marginTop="35dp"
-                android:onClick="createAnnounce"
-                android:text="@string/announce_button_text" />
+                android:layout_below="@id/color_button"
+                android:layout_marginTop="40dp"
+                android:onClick="saveData"
+                android:text="@string/next_button_text" />
 
         </RelativeLayout>
 

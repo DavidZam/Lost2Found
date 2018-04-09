@@ -45,9 +45,9 @@ public class SeekerAnnounceViewAdapter extends RecyclerView.Adapter<SeekerAnnoun
     @Override
     public void onBindViewHolder(SeekerAnnounceViewHolder holder, int position) {
         // Use the provided ChatView_Holder on the onCreateViewHolder method to populate the current row on the RecycleView
-        holder.title.setText(listAnnounce.get(position).title);
+        /*holder.title.setText(listAnnounce.get(position).title);
         holder.description.setText(listAnnounce.get(position).description);
-        holder.imageView.setImageResource(listAnnounce.get(position).imageId);
+        holder.imageView.setImageResource(listAnnounce.get(position).imageId);*/
         //animate(holder);
     }
 
