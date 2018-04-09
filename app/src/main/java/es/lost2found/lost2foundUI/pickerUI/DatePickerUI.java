@@ -1,4 +1,4 @@
-package es.lost2found.lost2foundUI;
+package es.lost2found.lost2foundUI.pickerUI;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;

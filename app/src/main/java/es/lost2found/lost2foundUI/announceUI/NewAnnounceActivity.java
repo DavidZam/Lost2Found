@@ -2,6 +2,7 @@ package es.lost2found.lost2foundUI.announceUI;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
@@ -11,17 +12,15 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.EditText;
-
 import com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner;
 
 import es.lost2found.database.DB_announce;
 import es.lost2found.entities.Announce;
-import es.lost2found.lost2foundUI.ColorPickerUI;
-import es.lost2found.lost2foundUI.DatePickerUI;
+import es.lost2found.lost2foundUI.pickerUI.ColorPickerUI;
+import es.lost2found.lost2foundUI.pickerUI.DatePickerUI;
 import es.lost2found.R;
-import es.lost2found.lost2foundUI.TimePickerUI;
+import es.lost2found.lost2foundUI.pickerUI.TimePickerUI;
 import es.lost2found.lost2foundUI.placeUI.PlaceActivity;
 
 public class NewAnnounceActivity extends AppCompatActivity {
@@ -59,18 +58,22 @@ public class NewAnnounceActivity extends AppCompatActivity {
     }
 
     public void showTimePickerDialog(View v) {
-        DialogFragment newFragment = new TimePickerUI();
-        newFragment.show(getSupportFragmentManager(), "timePicker");
+        DialogFragment hourFragment = new TimePickerUI();
+        hourFragment.show(getSupportFragmentManager(), "timePicker");
     }
 
     public void showDatePickerDialog(View v) {
-        DialogFragment newFragment = new DatePickerUI();
-        newFragment.show(getSupportFragmentManager(), "datePicker");
+        DialogFragment dateFragment = new DatePickerUI();
+        dateFragment.show(getSupportFragmentManager(), "datePicker");
     }
 
     public void showColorPickerDialog(View v) {
         ColorPickerUI colorpicker = new ColorPickerUI();
-        //colorpicker.show();
+        colorpicker.build()
+                .title(R.string.color_dialog_title)
+                .colorPreset(Color.BLACK)
+                .allowCustom(true)
+                .show(this, "dialog");
     }
 
     public void place(View view) {
@@ -109,7 +112,9 @@ public class NewAnnounceActivity extends AppCompatActivity {
 
         // Modelo
 
-        // Color
+        // Color  ¿Quitar el editText de Color? (Valor feo)
+        EditText selectedColor = findViewById(R.id.color_show);
+        String selectedColorText = String.valueOf(selectedColor);
 
         // Lugar
         //Button announcePlace = findViewById(R.id.place_button);

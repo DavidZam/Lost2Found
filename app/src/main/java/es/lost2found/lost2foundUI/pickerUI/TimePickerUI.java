@@ -1,14 +1,11 @@
-package es.lost2found.lost2foundUI;
+package es.lost2found.lost2foundUI.pickerUI;
 
 import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.text.format.DateFormat;
-import android.view.Gravity;
-import android.view.View;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.TimePicker;
 
 import java.util.Calendar;
