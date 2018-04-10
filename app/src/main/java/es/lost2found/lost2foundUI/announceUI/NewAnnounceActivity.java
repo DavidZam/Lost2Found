@@ -118,16 +118,19 @@ public class NewAnnounceActivity extends AppCompatActivity {
         EditText announceModel = findViewById(R.id.model);
         String announceModelText = announceModel.getText().toString();
 
-        // Color  ¿Quitar el editText de Color?
+        // Color
         SharedPreferences sp = getApplicationContext().getSharedPreferences("colorBtn", 0);
         String colorchoice = sp.getString("colorChoice", null);
 
-        /*EditText selectedColor = findViewById(R.id.color_show);
-        String selectedColorText = String.valueOf(selectedColor);*/
+        // Place
+        SharedPreferences sp2 = getApplicationContext().getSharedPreferences("transportPlace", 0);
+        String linechoice = sp2.getString("lineChoice", null);
+        String stationchoice = sp2.getString("stationchoice", null);
+        if(linechoice == null || stationchoice == null) {
+            SharedPreferences sp3 = getApplicationContext().getSharedPreferences("transportTerminalPlace", 0);
+            String terminalChoice = sp3.getString("terminalChoice", null);
+        }
 
-        // Lugar
-        //Button announcePlace = findViewById(R.id.place_button);
-        //announcePlace.get
         // Para obtener los datos del lugar puede que haya que llamar a otras funciones ya que se divide en transporte, mapa o direccion concreta.
 
         // Id, TipoAnuncio, HoraActual, DiaAnuncio, HoraPerdidaoHallazgo, Modelo, Marca, Color, idUsuario e idLugar, Categoria (NombreTabla)

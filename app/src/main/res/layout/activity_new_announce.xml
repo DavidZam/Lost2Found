@@ -175,7 +175,7 @@
                 android:layout_below="@id/color_button"
                 android:layout_marginTop="40dp"
                 android:onClick="saveData"
-                android:text="@string/next_button_text" />
+                android:text="@string/create_button_text" />
 
         </RelativeLayout>
 

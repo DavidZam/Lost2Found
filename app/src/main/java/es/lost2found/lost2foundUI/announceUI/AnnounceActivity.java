@@ -28,6 +28,7 @@ import es.lost2found.lost2foundUI.otherUI.AboutUsActivity;
 import es.lost2found.lost2foundUI.otherUI.ContactActivity;
 import es.lost2found.lost2foundUI.otherUI.HelpActivity;
 import es.lost2found.lost2foundUI.otherUI.RateActivity;
+import es.lost2found.lost2foundUI.placeUI.PlaceActivity;
 import es.lost2found.lost2foundUI.seekerUI.SeekerActivity;
 
 public class AnnounceActivity extends AppCompatActivity implements FloatingActionButton.OnClickListener {
@@ -49,7 +50,6 @@ public class AnnounceActivity extends AppCompatActivity implements FloatingActio
             TextView nameUser = findViewById(R.id.user_mail);
             nameUser.setText(username);
         }*/
-
 
         Toolbar tb = findViewById(R.id.toolbar);
         setSupportActionBar(tb);
@@ -160,9 +160,10 @@ public class AnnounceActivity extends AppCompatActivity implements FloatingActio
 
     @Override
     public void onClick(View v) {
-        final Intent newannounce = new Intent(this, NewAnnounceActivity.class);
+        //final Intent newannounce = new Intent(this, NewAnnounceActivity.class);
+        final Intent newannounce = new Intent(this, PlaceActivity.class);
         startActivity(newannounce);
-        finish(); // revisar
+        finish();
     }
 
 

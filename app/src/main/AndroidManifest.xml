@@ -82,7 +82,7 @@
             android:label="@string/title_typeplace_section" />
 
         <activity
-            android:name=".lost2foundUI.placeUI.TransportPlaceActivity"
+            android:name=".lost2foundUI.placeUI.transportUI.TransportPlaceActivity"
             android:parentActivityName=".lost2foundUI.placeUI.PlaceActivity"
             android:screenOrientation="portrait"
             android:label="@string/title_transrport_typeplace_section" />
@@ -120,10 +120,10 @@
             android:label="@string/title_matchannounce_info" />
 
         <activity
-            android:name=".lost2foundUI.pickerUI.ColorPickerUI"
-            android:parentActivityName=".lost2foundUI.announceUI.NewAnnounceActivity"
+            android:name=".lost2foundUI.placeUI.transportUI.FillTransportPlaceActivity"
+            android:parentActivityName=".lost2foundUI.placeUI.transportUI.TransportPlaceActivity"
             android:screenOrientation="portrait"
-            android:label="@string/color_dialog_title" />
+            android:label="@string/transport_title_text" />
 
     </application>
 

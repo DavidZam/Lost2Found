@@ -1,7 +1,8 @@
-package es.lost2found.lost2foundUI.placeUI;
+package es.lost2found.lost2foundUI.placeUI.transportUI;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
@@ -9,62 +10,59 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
 
 import es.lost2found.R;
-import es.lost2found.database.DB_place;
-import es.lost2found.entities.Place;
+import es.lost2found.database.DB_announce;
+import es.lost2found.database.DB_transportPlace;
+import es.lost2found.entities.Announce;
+import es.lost2found.entities.TransportPlace;
 import es.lost2found.lost2foundUI.announceUI.NewAnnounceActivity;
-import es.lost2found.lost2foundUI.placeUI.transportUI.TransportPlaceActivity;
+import es.lost2found.lost2foundUI.placeUI.PlaceActivity;
 
-public class PlaceActivity extends AppCompatActivity {
+public class FillTransportPlaceActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_place);
+        setContentView(R.layout.activity_fill_transport_place);
 
         Toolbar tb = findViewById(R.id.toolbar_center);
         setSupportActionBar(tb);
         ActionBar ab = getSupportActionBar();
         ab.setDisplayHomeAsUpEnabled(true);
         ab.setHomeAsUpIndicator(R.drawable.ic_arrow_back);
-
-    }
-
-    public void transportPlace(View view) {
-        Intent intent = new Intent(this, TransportPlaceActivity.class);
-        startActivity(intent);
-        finish();
-    }
-
-    public void map(View view) {
-        Intent intent = new Intent(this, MapActivity.class);
-        startActivity(intent);
-        finish();
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        Intent newannounce = new Intent(this, NewAnnounceActivity.class);
-        startActivity(newannounce);
+        Intent place = new Intent(this, TransportPlaceActivity.class);
+        startActivity(place);
         finish();
         return true;
     }
 
-    public void savePlaceData(View view) {
-        // Place de transporte
+    public void saveTransportPlaceData(View view) {
+        // Linea
+        EditText line = findViewById(R.id.line);
+        String lineText = line.getText().toString();
 
-        // Ubicacion del mapa
+        // Estacion
+        EditText station = findViewById(R.id.station);
+        String stationText = station.getText().toString();
 
-        // Direccion concreta
+        /*SharedPreferences sp = getApplicationContext().getSharedPreferences("transportPlace", 0);
+        SharedPreferences.Editor ed = sp.edit();            // Saved the user color choice.
+        ed.putString("lineChoice", lineText);
+        ed.putString("stationChoice", stationText);
+        ed.apply();*/
 
-        // Id, Nombre
-        new placeDB().execute();
+        new transportPlaceDB().execute(lineText, stationText); // Falta el lugar
     }
 
-    private class placeDB extends AsyncTask<String, Void, Place> {
+    private class transportPlaceDB extends AsyncTask<String, Void, TransportPlace> {
 
-        private ProgressDialog dialog = new ProgressDialog(PlaceActivity.this);
+        private ProgressDialog dialog = new ProgressDialog(FillTransportPlaceActivity.this);
 
         @Override
         protected void onPreExecute() {
@@ -73,19 +71,23 @@ public class PlaceActivity extends AppCompatActivity {
         }
 
         @Override
-        protected Place doInBackground(String... strings) {
-            return DB_place.insertPlace(strings[0]);
+        protected TransportPlace doInBackground(String... strings) {
+            return DB_transportPlace.insertTransportPlace(strings[0], strings[1]);
         }
 
         @Override
-        protected void onPostExecute(Place result) {
+        protected void onPostExecute(TransportPlace result) {
             this.dialog.dismiss();
-            processNewPlace(result);
+            processNewTransportPlace(result);
         }
     }
 
-    private void processNewPlace(Place place) {
-        Intent intent = new Intent(this, PlaceActivity.class);
+    private void processNewTransportPlace(TransportPlace transportPlace) {
+        Intent intent = new Intent(this, NewAnnounceActivity.class);
+        SharedPreferences sp = getSharedPreferences("placeId", 0);
+        SharedPreferences.Editor ed = sp.edit();            // Saved the user login credencials.
+        ed.putInt("id", transportPlace.getId());
+        ed.apply(); //ed.commit()
         startActivity(intent);
         finish();
 
