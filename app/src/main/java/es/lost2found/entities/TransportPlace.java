@@ -1,36 +1,25 @@
 package es.lost2found.entities;
 
-import org.json.JSONObject;
+import java.io.Serializable;
 
-import es.lost2found.database.DB_transportPlace;
+public class TransportPlace extends Place implements Serializable {
 
-public class TransportPlace { // extends Place
-
-    //private String nombre;
-    //private String codigoEstacion;
-    //private String movilidad;
+    private Integer id;
     private String line;
     private String station;
 
-    public TransportPlace(String line, String station) { // Integer id, String nombre,
-        //super(id, nombre);
+    public TransportPlace(Integer id, String line, String station) {
+        super(id);
         this.line = line;
         this.station = station;
     }
 
-    public TransportPlace(String json) {
-        //super(json);
-        try {
-            JSONObject jObject = new JSONObject(json);
-            this.line = jObject.getString("line");
-            this.station = jObject.getString("station");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    public Integer getId() {
+        return this.id;
     }
 
-    public Integer getId() {
-        return DB_transportPlace.getId(line, station);
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getLine() {

@@ -81,6 +81,7 @@ public class RegisterActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(User result) {
             this.dialog.dismiss();
+            //Integer userId = result.getId(result.getEmail());
             processRegister(result);
         }
     }
@@ -100,6 +101,8 @@ public class RegisterActivity extends AppCompatActivity {
             SharedPreferences.Editor ed = sp.edit();            // Saved the user login credencials.
             ed.putString("email", user.getEmail());
             ed.putString("name", user.getName());
+            Integer userId = user.getId();
+            ed.putInt("userId", userId);
             ed.apply(); //ed.commit()
 
             intent.putExtra("user", user);

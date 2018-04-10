@@ -77,7 +77,7 @@
 
         <activity
             android:name=".lost2foundUI.placeUI.PlaceActivity"
-            android:parentActivityName=".lost2foundUI.announceUI.NewAnnounceActivity"
+            android:parentActivityName=".lost2foundUI.announceUI.AnnounceActivity"
             android:screenOrientation="portrait"
             android:label="@string/title_typeplace_section" />
 

@@ -79,7 +79,7 @@ public class DB_announce {
         return  ret;
     }*/
     // Id, TipoAnuncio, HoraActual, DiaAnuncio, HoraPerdidaoHallazgo, Modelo, Marca, Color, idUsuario e idLugar, Categoria (NombreTabla)
-    public static Announce insertAnnounce(String announceType, String currentTime, String announceDateText, String announceHourText, String model, String brand, String color, String announceCategorie) {
+    public static Announce insertAnnounce(String announceType, String currentTime, String announceDateText, String announceHourText, String model, String brand, String color, String idUser, String idPlace, String announceCategorie) {
         Announce ret = null;
         try {
             JSONObject jsonObject = new JSONObject();
@@ -90,6 +90,8 @@ public class DB_announce {
             jsonObject.put("model", model);
             jsonObject.put("brand", brand);
             jsonObject.put("color", color);
+            jsonObject.put("idUser", idUser);
+            jsonObject.put("idPlace", idPlace);
             jsonObject.put("announceCategorie", announceCategorie);
 
             List list = new LinkedList();

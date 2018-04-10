@@ -6,16 +6,15 @@
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingTop="16dp"
     android:theme="@style/Lost2FoundTheme"
-    tools:context=".lost2foundUI.announceUI.AnnounceActivity">
+    tools:context=".lost2foundUI.placeUI.transportUI.FillTransportPlaceActivity">
 
     <RelativeLayout
         android:id="@+id/content_frame"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        tools:context=".lost2foundUI.placeUI.transportUI.TransportPlaceActivity"
+        tools:context=".lost2foundUI.placeUI.transportUI.FillTransportPlaceActivity"
         tools:showIn="@layout/activity_fill_transport_place"
         android:background="@color/colorSecondaryText">
 
@@ -39,8 +38,8 @@
                 android:id="@+id/fillhelp1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
                 android:layout_alignParentTop="true"
-                android:layout_centerHorizontal="true"
                 android:layout_marginTop="45dp"
                 android:padding="8sp"
                 android:text="@string/fill_help1"
@@ -51,9 +50,9 @@
                 android:id="@+id/fillhelp2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
-                android:layout_alignStart="@+id/fillhelp4"
-                android:layout_marginTop="150dp"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/fillhelp1"
+                android:layout_marginStart="22dp"
                 android:padding="8sp"
                 android:text="@string/fill_help2"
                 android:textSize="18sp"
@@ -75,9 +74,9 @@
                 android:id="@+id/fillhelp4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_alignTop="@+id/fillhelp5"
-                android:layout_marginStart="35dp"
+                android:layout_alignBaseline="@+id/fillhelp5"
+                android:layout_alignBottom="@+id/fillhelp5"
+                android:layout_alignStart="@+id/fillhelp2"
                 android:padding="8sp"
                 android:text="@string/fill_help4"
                 android:textSize="18sp"
@@ -87,10 +86,10 @@
                 android:id="@+id/fillhelp5"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentTop="true"
-                android:layout_marginEnd="35dp"
-                android:layout_marginTop="180dp"
+                android:layout_below="@+id/fillhelp1"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="30dp"
+                android:layout_toEndOf="@+id/fillhelp4"
                 android:padding="8sp"
                 android:text="@string/fill_help5"
                 android:textSize="18sp"
@@ -114,11 +113,22 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
                 android:layout_centerHorizontal="true"
-                android:layout_marginBottom="140dp"
+                android:layout_marginBottom="165dp"
                 android:hint="@string/station_text"
                 android:inputType="text"
                 android:textColor="@color/colorPrimaryText"
                 android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/wrong_info"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_above="@+id/confirm_button"
+                android:layout_alignParentStart="true"
+                android:layout_marginBottom="16dp"
+                android:paddingTop="16dp"
+                android:textAlignment="center"
+                android:textColor="@color/errorColor" />
 
             <Button
                 android:id="@+id/confirm_button"

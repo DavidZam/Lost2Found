@@ -6,13 +6,17 @@ import org.json.JSONObject;
 
 import java.io.Serializable;
 
+import es.lost2found.database.DB_user;
+
 public class User implements Serializable {
 
+    private Integer id;
     private String name;
     private String email;
     private String password;
 
-    public User(String email, String name, String password) {
+    public User(Integer id, String email, String name, String password) {
+        this.id = id;
         this.email = email;
         this.name = name;
         this.password = password;
@@ -47,6 +51,14 @@ public class User implements Serializable {
     }
 
     public String getPassHash() { return this.password; }
+
+    public Integer getId() {
+        return this.id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
     @Override
     public String toString() {

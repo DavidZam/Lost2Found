@@ -143,6 +143,16 @@
                 android:onClick="showColorPickerDialog"
                 android:text="Color" />
 
+            <TextView
+                android:id="@+id/wrong_information"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_above="@+id/create_button"
+                android:layout_alignParentStart="true"
+                android:paddingTop="16dp"
+                android:textAlignment="center"
+                android:textColor="@color/errorColor" />
+
             <!--<EditText
                 android:id="@+id/color_show"
                 android:layout_width="119dp"
@@ -170,10 +180,11 @@
                 android:onClick="place"-->
 
             <Button
-                android:id="@+id/next_button"
+                android:id="@+id/create_button"
                 style="@style/buttonStyle"
-                android:layout_below="@id/color_button"
-                android:layout_marginTop="40dp"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentStart="true"
+                android:layout_marginBottom="12dp"
                 android:onClick="saveData"
                 android:text="@string/create_button_text" />
 

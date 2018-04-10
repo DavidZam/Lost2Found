@@ -36,24 +36,26 @@
     <string name="rate_text">Valóranos!</string>
 
     <string name="error_txt1">Email o contraseña incorrectos</string>
+    <string name="error_txt2">Introduce la linea y la estacion</string>
+    <string name="error_txt3">Completa toda la información</string>
 
     <string name="title_announce_section">Mis anuncios</string>
     <string name="title_chat_section">Mis chats</string>
     <string name="title_chatconcrete_section">Chat con </string>
     <string name="title_matchannounce_section">Anuncios match</string>
     <string name="title_matchannounce_info">Información anuncio</string>
-    <string name="title_typeplace_section">Tipos de lugar</string>
+    <string name="title_typeplace_section">Escoge un lugar</string>
     <string name="title_transrport_typeplace_section">Tipos de lugar de transporte</string>
 
     <string name="email_textloginregister">Email</string>
     <string name="brand_text">Marca</string>
     <string name="model_text">Modelo</string>
     <string name="color_text">Color</string>
-    <string name="fill_help1">Especifique la linea y la estacion donde ha perdido o encontrado el objeto tal y como se muestra en los siguientes ejemplos (sin tildes):</string>
+    <string name="fill_help1">Especifique la linea y estacion donde ha perdido o encontrado el objeto como se muestra en estos ejemplos (sin tildes):</string>
     <string name="fill_help2">"Linea 2"</string>
     <string name="fill_help3">"Santo Domingo"</string>
     <string name="fill_help4">"149"</string>
-    <string name="fill_help5">"Fuencarral Gta. Quevedo"</string>
+    <string name="fill_help5">"Fuencarral Glorieta Quevedo"</string>
     <string name="fill_help6">"Especifique la terminal donde ha perdido o encontrado el objeto tal y como se muestra en el ejemplo:"</string>
     <string name="fill_help7">"Terminal 4"</string>
     <string name="line_text">Linea</string>

@@ -14,6 +14,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.TextView;
+
 import com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner;
 
 import java.util.Calendar;
@@ -122,19 +124,26 @@ public class NewAnnounceActivity extends AppCompatActivity {
         SharedPreferences sp = getApplicationContext().getSharedPreferences("colorBtn", 0);
         String colorchoice = sp.getString("colorChoice", null);
 
-        // Place
-        SharedPreferences sp2 = getApplicationContext().getSharedPreferences("transportPlace", 0);
-        String linechoice = sp2.getString("lineChoice", null);
-        String stationchoice = sp2.getString("stationchoice", null);
-        if(linechoice == null || stationchoice == null) {
-            SharedPreferences sp3 = getApplicationContext().getSharedPreferences("transportTerminalPlace", 0);
-            String terminalChoice = sp3.getString("terminalChoice", null);
+        // PlaceId
+        SharedPreferences sp2 = getApplicationContext().getSharedPreferences("placeId", 0);
+        Integer placeId = sp2.getInt("idLugarTte", 0);
+        String placeIdText = String.valueOf(placeId);
+
+        // UserId
+        SharedPreferences sp3 = getApplicationContext().getSharedPreferences("Login", 0);
+        Integer userId = sp3.getInt("userId", 0);
+        String userIdext = String.valueOf(userId);
+
+        if(announceType.equalsIgnoreCase("") || announceDayText.equalsIgnoreCase("") || announceLostFoundHourHourText.equalsIgnoreCase("")
+                || announceCategorie.equalsIgnoreCase("") || announceBrandText.equalsIgnoreCase("") || announceModelText.equalsIgnoreCase("")
+                || colorchoice.equalsIgnoreCase("") || announceDayText.equalsIgnoreCase("")) {
+            TextView textView = findViewById(R.id.wrong_information);
+            textView.setText(textView.getResources().getString(R.string.error_txt3));
+        } else {
+            // Para obtener los datos del lugar puede que haya que llamar a otras funciones ya que se divide en transporte, mapa o direccion concreta.
+            // Id, TipoAnuncio, HoraActual, DiaAnuncio, HoraPerdidaoHallazgo, Modelo, Marca, Color, idUsuario e idLugar, Categoria (NombreTabla)
+            new announceDB().execute(announceType, currentTimeText, announceDayText, announceLostFoundHourHourText, announceModelText, announceBrandText, colorchoice, userIdext, placeIdText, announceCategorie); // Falta el lugar
         }
-
-        // Para obtener los datos del lugar puede que haya que llamar a otras funciones ya que se divide en transporte, mapa o direccion concreta.
-
-        // Id, TipoAnuncio, HoraActual, DiaAnuncio, HoraPerdidaoHallazgo, Modelo, Marca, Color, idUsuario e idLugar, Categoria (NombreTabla)
-        new announceDB().execute(announceType, currentTimeText, announceDayText, announceLostFoundHourHourText, announceModelText, announceBrandText, colorchoice, announceCategorie); // Falta el lugar
     }
 
     private class announceDB extends AsyncTask<String, Void, Announce> {
@@ -149,7 +158,7 @@ public class NewAnnounceActivity extends AppCompatActivity {
 
         @Override
         protected Announce doInBackground(String... strings) {
-            return DB_announce.insertAnnounce(strings[0], strings[1], strings[2], strings[3], strings[4], strings[5], strings[6], strings[7]);
+            return DB_announce.insertAnnounce(strings[0], strings[1], strings[2], strings[3], strings[4], strings[5], strings[6], strings[7], strings[8], strings[9]);
         }
 
         @Override

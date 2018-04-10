@@ -11,11 +11,14 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import es.lost2found.R;
 import es.lost2found.database.DB_announce;
+import es.lost2found.database.DB_place;
 import es.lost2found.database.DB_transportPlace;
 import es.lost2found.entities.Announce;
+import es.lost2found.entities.Place;
 import es.lost2found.entities.TransportPlace;
 import es.lost2found.lost2foundUI.announceUI.NewAnnounceActivity;
 import es.lost2found.lost2foundUI.placeUI.PlaceActivity;
@@ -56,8 +59,11 @@ public class FillTransportPlaceActivity extends AppCompatActivity {
         ed.putString("lineChoice", lineText);
         ed.putString("stationChoice", stationText);
         ed.apply();*/
-
-        new transportPlaceDB().execute(lineText, stationText); // Falta el lugar
+        if(lineText.equalsIgnoreCase("") || stationText.equalsIgnoreCase("")) {
+            TextView textView = findViewById(R.id.wrong_info);
+            textView.setText(textView.getResources().getString(R.string.error_txt2));
+        } else
+            new transportPlaceDB().execute(lineText, stationText);
     }
 
     private class transportPlaceDB extends AsyncTask<String, Void, TransportPlace> {
@@ -85,11 +91,16 @@ public class FillTransportPlaceActivity extends AppCompatActivity {
     private void processNewTransportPlace(TransportPlace transportPlace) {
         Intent intent = new Intent(this, NewAnnounceActivity.class);
         SharedPreferences sp = getSharedPreferences("placeId", 0);
-        SharedPreferences.Editor ed = sp.edit();            // Saved the user login credencials.
-        ed.putInt("id", transportPlace.getId());
-        ed.apply(); //ed.commit()
+        SharedPreferences.Editor ed = sp.edit();  // Saved the place data filled by the user.
+        Integer placeId = transportPlace.getId(); // transportPlace.getId();
+
+        ed.putInt("idLugarTte", placeId); // Comprobar
+        ed.apply();
+
+        intent.putExtra("transportPlace", transportPlace);
         startActivity(intent);
         finish();
+
 
         //Intent intent = new Intent(this, AnnounceActivity.class);
 

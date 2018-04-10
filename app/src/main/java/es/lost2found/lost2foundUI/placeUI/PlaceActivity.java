@@ -13,7 +13,7 @@ import android.view.View;
 import es.lost2found.R;
 import es.lost2found.database.DB_place;
 import es.lost2found.entities.Place;
-import es.lost2found.lost2foundUI.announceUI.NewAnnounceActivity;
+import es.lost2found.lost2foundUI.announceUI.AnnounceActivity;
 import es.lost2found.lost2foundUI.placeUI.transportUI.TransportPlaceActivity;
 
 public class PlaceActivity extends AppCompatActivity {
@@ -45,7 +45,7 @@ public class PlaceActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        Intent newannounce = new Intent(this, NewAnnounceActivity.class);
+        Intent newannounce = new Intent(this, AnnounceActivity.class);
         startActivity(newannounce);
         finish();
         return true;
@@ -74,7 +74,7 @@ public class PlaceActivity extends AppCompatActivity {
 
         @Override
         protected Place doInBackground(String... strings) {
-            return DB_place.insertPlace(strings[0]);
+            return DB_place.insertPlace();
         }
 
         @Override

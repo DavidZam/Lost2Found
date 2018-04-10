@@ -6,8 +6,6 @@
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-
-    android:paddingTop="16dp"
     android:theme="@style/Lost2FoundTheme"
     tools:context=".lost2foundUI.announceUI.AnnounceActivity">
 
@@ -24,7 +22,7 @@
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
+        android:layout_height="60sp"
         android:theme="@style/ToolbarStyle"
         android:layout_centerHorizontal="true" />
 
