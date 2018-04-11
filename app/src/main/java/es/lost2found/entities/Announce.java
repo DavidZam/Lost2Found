@@ -3,6 +3,7 @@ package es.lost2found.entities;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import es.lost2found.R;
@@ -15,9 +16,9 @@ public class Announce {
 
     // String announceType, String announceDateText, String currentTime, String announceHourText, String announceCategorie, String brand, String model, String color
     public String announceType;
-    public String announceDateText;
-    public String currentTime;
-    public String announceHourText;
+    public Date announceDateText;
+    public Date currentTime;
+    public Date announceHourText;
     public String announceCategorie;
     public String brand;
     public String model;
@@ -29,7 +30,7 @@ public class Announce {
         this.imageId = imageId;
     }*/
 
-    public Announce(String announceType, String currentTime, String announceDateText, String announceHourText, String model, String brand, String color, String announceCategorie) {
+    public Announce(String announceType, Date currentTime, Date announceDateText, Date announceHourText, String model, String brand, String color, String announceCategorie) {
         this.announceType = announceType;
         this.announceDateText = announceDateText;
         this.currentTime = currentTime;
@@ -40,12 +41,12 @@ public class Announce {
         this.color = color;
     }
 
-    public Announce(String json) {
+    /*public Announce(String json) {
         try {
             JSONObject jObject = new JSONObject(json);
             this.announceType = jObject.getString("announceType");
             this.currentTime = jObject.getString("currentTime");
-            this.announceDateText = jObject.getString("announceDateText");
+            this.announceDateText = jObject.getDate("announceDateText");
             this.announceHourText = jObject.getString("announceHourText");
             this.model = jObject.getString("model");
             this.brand = jObject.getString("brand");
@@ -54,7 +55,7 @@ public class Announce {
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
+    }*/
 
     // Faltan los getters y setters
     /*

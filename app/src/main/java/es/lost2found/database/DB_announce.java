@@ -11,6 +11,8 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.LinkedList;
@@ -79,13 +81,13 @@ public class DB_announce {
         return  ret;
     }*/
     // Id, TipoAnuncio, HoraActual, DiaAnuncio, HoraPerdidaoHallazgo, Modelo, Marca, Color, idUsuario e idLugar, Categoria (NombreTabla)
-    public static Announce insertAnnounce(String announceType, String currentTime, String announceDateText, String announceHourText, String model, String brand, String color, String idUser, String idPlace, String announceCategorie) {
+    public static Announce insertAnnounce(String announceType, String currentTime, String announceDayText, String announceHourText, String model, String brand, String color, String idUser, String idPlace, String announceCategorie) {
         Announce ret = null;
         try {
             JSONObject jsonObject = new JSONObject();
             jsonObject.put("announceType", announceType);
             jsonObject.put("currentTime", currentTime);
-            jsonObject.put("announceDateText", announceDateText);
+            jsonObject.put("announceDateText", announceDayText);
             jsonObject.put("announceHourText", announceHourText);
             jsonObject.put("model", model);
             jsonObject.put("brand", brand);
@@ -93,6 +95,19 @@ public class DB_announce {
             jsonObject.put("idUser", idUser);
             jsonObject.put("idPlace", idPlace);
             jsonObject.put("announceCategorie", announceCategorie);
+
+            SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy"); // EEE, MMM d, yyyy
+            SimpleDateFormat hourFormat = new SimpleDateFormat("h:mm a");
+            Date announceDayDate = null;
+            Date hourCurrentTime = null;
+            Date hourAnnounce = null;
+            try {
+                announceDayDate = dateFormat.parse(announceDayText);
+                hourCurrentTime = hourFormat.parse(currentTime);
+                hourAnnounce = hourFormat.parse(announceHourText);
+            } catch(ParseException e) {
+                e.printStackTrace();
+            }
 
             List list = new LinkedList();
             list.addAll(Arrays.asList(jsonObject));
@@ -135,7 +150,7 @@ public class DB_announce {
                     response.append(inputLine);
 
                 if (response.toString().equals("correct"))
-                    ret = new Announce(announceType, currentTime, announceDateText, announceHourText, model, brand, color, announceCategorie);
+                    ret = new Announce(announceType, hourCurrentTime, announceDayDate, hourAnnounce, model, brand, color, announceCategorie);
             } finally {
                 con.disconnect();
             }

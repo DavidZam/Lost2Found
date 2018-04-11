@@ -76,6 +76,8 @@ public class LoginActivity extends AppCompatActivity {
         else {              // Login perform without SharedPreferences credentials.
             if(user != null) {
                 SharedPreferences.Editor ed = sp.edit();            // Saved the user login credencials.
+                Integer userId = user.getId();
+                ed.putInt("userId", userId);
                 ed.putString("email", user.getEmail());
                 ed.putString("name", user.getName());
                 ed.apply();

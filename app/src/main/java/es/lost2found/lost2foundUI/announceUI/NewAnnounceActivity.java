@@ -18,6 +18,8 @@ import android.widget.TextView;
 
 import com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -37,12 +39,12 @@ public class NewAnnounceActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_announce);
 
-        String[] announceType = {"Pérdida", "Hallazgo"};
+        String[] announceType = {"Perdida", "Hallazgo"};
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, announceType);
         MaterialBetterSpinner materialDesignSpinner = findViewById(R.id.announce_type);
         materialDesignSpinner.setAdapter(arrayAdapter);
 
-        String[] categories = {"Tarjetas Bancarias", "Tarjetas Transporte Público", "Carteras/Monederos", "Teléfonos", "Otros"};
+        String[] categories = {"Tarjetas Bancarias", "Tarjetas Transporte Publico", "Carteras/Monederos", "Telefonos", "Otros"};
         ArrayAdapter<String> arrayAdapter2 = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, categories);
         MaterialBetterSpinner materialDesignSpinner2 = findViewById(R.id.listCategories);
         materialDesignSpinner2.setAdapter(arrayAdapter2);
@@ -169,9 +171,11 @@ public class NewAnnounceActivity extends AppCompatActivity {
     }
 
     private void processNewAnnounce(Announce announce) {
-        Intent intent = new Intent(this, PlaceActivity.class);
+        Intent intent = new Intent(this, AnnounceActivity.class);
         startActivity(intent);
         finish();
+
+        // El anuncio se crea, falta mostrarlo en la pagina inicial en el Recycler View.
 
         //Intent intent = new Intent(this, AnnounceActivity.class);
 
