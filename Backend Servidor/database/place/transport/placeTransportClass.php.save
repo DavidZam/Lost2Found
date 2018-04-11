@@ -10,42 +10,19 @@
 			mysqli_stmt_bind_param($sql, "s", $tipoTte);
 
 			$query = $sql->execute();
-
-			if(!$query)
+					if(!$query)
 	                die();
-
 			$result = $sql->store_result();
 
 			$realresult = $sql->bind_result($linea);
-			
-			//$sql->fetch();
-			
+
 			$rawdata = array();
-			
-
-			//$rawdata = $realresult->fetchAll();
-
-			/*while($row = mysqli_fetch_array($result, MYSQL_ASSOC)) {
-				$rawdata[] = $row;
-			}*/
 
 			//$correct = $query;
 
 			$sql->fetch();
-
-			while($row = mysqli_fetch_array($result)) {
-                                //foreach($row as $key => $value) {
-				echo "aqui";
-                                    $rawdata['linea'] = utf8_encode($linea);
-                                //}
-                        }
-
-			//var_dump($rawdata);
-
-			/*foreach($row as $key => $value) {
-				$rawdata[] = utf8_encode($row);
-			}*/
-			
+			var_dump($rawdata);
+			$rawdata['linea'] = utf8_encode($linea);
 			//$rawdata['correct'] = $correct;
 
 		        disconnectDB($connection);

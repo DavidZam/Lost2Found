@@ -10,8 +10,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.TextView;
+
+import com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner;
 
 import es.lost2found.R;
 import es.lost2found.database.DB_announce;
@@ -35,6 +38,57 @@ public class FillTransportPlaceActivity extends AppCompatActivity {
         ActionBar ab = getSupportActionBar();
         ab.setDisplayHomeAsUpEnabled(true);
         ab.setHomeAsUpIndicator(R.drawable.ic_arrow_back);
+
+        SharedPreferences sp = getApplicationContext().getSharedPreferences("transportButton", 0);
+        boolean metro = sp.getBoolean("metro", false);
+        boolean bus = sp.getBoolean("bus", false);
+        if(metro) {
+            new transportDB().execute("metro");
+            /*String[] metroLines =
+            ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, metroLines);
+            MaterialBetterSpinner materialDesignSpinner = findViewById(R.id.listLines);
+            materialDesignSpinner.setAdapter(arrayAdapter);
+
+            String[] metroStations = {"Perdida", "Hallazgo"};
+            ArrayAdapter<String> arrayAdapter2 = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, metroStations);
+            MaterialBetterSpinner materialDesignSpinner2 = findViewById(R.id.listStations);
+            materialDesignSpinner2.setAdapter(arrayAdapter2);*/
+        } else {
+            if(bus) {
+                new transportDB().execute("bus");
+                /*String[] busLines =
+                ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, busLines);
+                MaterialBetterSpinner materialDesignSpinner = findViewById(R.id.listLines);
+                materialDesignSpinner.setAdapter(arrayAdapter);
+
+                /*String[] busStations = {"Perdida", "Hallazgo"};
+                ArrayAdapter<String> arrayAdapter2 = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, busStations);
+                MaterialBetterSpinner materialDesignSpinner2 = findViewById(R.id.listStations);
+                materialDesignSpinner2.setAdapter(arrayAdapter2);*/
+            }
+        }
+    }
+
+    private class transportDB extends AsyncTask<String, Void, String> {
+
+        private ProgressDialog dialog = new ProgressDialog(FillTransportPlaceActivity.this);
+
+        @Override
+        protected void onPreExecute() {
+            //this.dialog.setMessage("Cargando...");
+            //this.dialog.show();
+        }
+
+        @Override
+        protected String doInBackground(String... strings) {
+            return DB_transportPlace.getLines(strings[0]);
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            this.dialog.dismiss();
+            //processNewAnnounce(result);
+        }
     }
 
     @Override
@@ -46,24 +100,24 @@ public class FillTransportPlaceActivity extends AppCompatActivity {
     }
 
     public void saveTransportPlaceData(View view) {
-        // Linea
+        /*// Linea
         EditText line = findViewById(R.id.line);
-        String lineText = line.getText().toString();
+        //String lineText = line.getText().toString();
 
         // Estacion
         EditText station = findViewById(R.id.station);
-        String stationText = station.getText().toString();
+        //String stationText = station.getText().toString();
 
         /*SharedPreferences sp = getApplicationContext().getSharedPreferences("transportPlace", 0);
         SharedPreferences.Editor ed = sp.edit();            // Saved the user color choice.
         ed.putString("lineChoice", lineText);
         ed.putString("stationChoice", stationText);
-        ed.apply();*/
+        ed.apply();*//*
         if(lineText.equalsIgnoreCase("") || stationText.equalsIgnoreCase("")) {
             TextView textView = findViewById(R.id.wrong_info);
             textView.setText(textView.getResources().getString(R.string.error_txt2));
         } else
-            new transportPlaceDB().execute(lineText, stationText);
+            new transportPlaceDB().execute(lineText, stationText);*/
     }
 
     private class transportPlaceDB extends AsyncTask<String, Void, TransportPlace> {

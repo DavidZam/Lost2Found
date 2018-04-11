@@ -87,12 +87,11 @@ public class DB_transportPlace {
         return ret;
     }
 
-    /*public static Integer getId(String line, String station) {
-        Integer id = null;
+    public static String getLines(String transport) {
+        String lines = "";
         try {
             JSONObject jsonObject = new JSONObject();
-            jsonObject.put("lineText", line);
-            jsonObject.put("stationText", station);
+            jsonObject.put("tipoTte", transport);
 
             List list = new LinkedList();
             list.addAll(Arrays.asList(jsonObject));
@@ -100,7 +99,7 @@ public class DB_transportPlace {
 
             jsonString = URLEncoder.encode(jsonString, "UTF-8");
 
-            String urlStr = SERVER_PATH + "getPlaceByIdJSON.php";
+            String urlStr = SERVER_PATH + "getLinesByTypeTteJSON.php";
             URL url = new URL(urlStr);
 
             HttpURLConnection con = (HttpURLConnection) url.openConnection();
@@ -134,21 +133,21 @@ public class DB_transportPlace {
                 while ((inputLine = in.readLine()) != null)
                     response.append(inputLine);
 
-                JSONObject object = new JSONObject(response.toString());
-                if(object.getBoolean("correct")) {
-                    try {
-                        id = object.getInt("id");
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                }
+                //JSONObject object = new JSONObject(response.toString());
+                //if(object.getBoolean("correct")) {
+                    //try {
+                        lines = response.toString();
+                    //} catch (Exception e) {
+                        //e.printStackTrace();
+                    //}
+                //}
             } finally {
                 con.disconnect();
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return id;
-    }*/
+        return lines;
+    }
 
 }

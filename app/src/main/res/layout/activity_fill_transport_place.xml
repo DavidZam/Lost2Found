@@ -46,7 +46,29 @@
                 android:textSize="18sp"
                 android:textStyle="italic" />
 
-            <TextView
+            <com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner
+                android:id="@+id/listLines"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/fillhelp1"
+                android:layout_marginTop="8dp"
+                android:hint="@string/spinner4_placeholder"
+                android:textColorHint="@color/colorPrimaryText"
+                app:met_floatingLabel="normal" />
+
+            <com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner
+                android:id="@+id/listStations"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/listLines"
+                android:layout_marginTop="8dp"
+                android:hint="@string/spinner5_placeholder"
+                android:textColorHint="@color/colorPrimaryText"
+                app:met_floatingLabel="normal" />
+
+            <!--<TextView
                 android:id="@+id/fillhelp2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -128,7 +150,7 @@
                 android:layout_marginBottom="16dp"
                 android:paddingTop="16dp"
                 android:textAlignment="center"
-                android:textColor="@color/errorColor" />
+                android:textColor="@color/errorColor" />-->
 
             <Button
                 android:id="@+id/confirm_button"

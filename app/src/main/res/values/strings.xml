@@ -20,6 +20,8 @@
     <string name="spinner_placeholder">Categoria</string>
     <string name="spinner2_placeholder">Tipo Anuncio</string>
     <string name="spinner3_placeholder">Color</string>
+    <string name="spinner4_placeholder">Línea</string>
+    <string name="spinner5_placeholder">Estación</string>
     <string name="color_dialog_title">Elige un color</string>
 
     <string name="create_announce_text">Crear nuevo anuncio</string>
@@ -51,17 +53,13 @@
     <string name="brand_text">Marca</string>
     <string name="model_text">Modelo</string>
     <string name="color_text">Color</string>
-    <string name="fill_help1">Especifique la linea y estacion donde ha perdido o encontrado el objeto como se muestra en estos ejemplos (sin tildes):</string>
+    <string name="fill_help1">Especifique la linea y estacion donde ha perdido o encontrado el objeto</string>
     <string name="fill_help2">"Linea 2"</string>
     <string name="fill_help3">"Santo Domingo"</string>
     <string name="fill_help4">"149"</string>
     <string name="fill_help5">"Fuencarral Glorieta Quevedo"</string>
-    <string name="fill_help6">"Especifique la terminal donde ha perdido o encontrado el objeto tal y como se muestra en el ejemplo:"</string>
-    <string name="fill_help7">"Terminal 4"</string>
     <string name="line_text">Linea</string>
     <string name="station_text">Estacion</string>
-    <string name="terminal_text">Terminal</string>
-    <string name="flight_text">Vuelo destino</string>
     <string name="pass_textloginregister">Contraseña</string>
     <string name="noaccount_textlogin">¿No tienes cuenta?</string>
     <string name="name_textregister">Nombre</string>

@@ -222,7 +222,7 @@ CREATE TABLE otro (
 CREATE TABLE lugar_transporte (
   idLugarTte int(4) NOT NULL AUTO_INCREMENT,
   tipoTte varchar(10) NOT NULL,
-  linea varchar(15) NOT NULL,
+  linea varchar(100) NOT NULL,
   estacion varchar(30) NOT NULL,
   PRIMARY KEY (idLugarTte),
   CONSTRAINT fk_idLugar2 FOREIGN KEY (idLugarTte) REFERENCES lugar (id)     
@@ -373,72 +373,72 @@ INSERT INTO lugar (id) VALUES ('64');
 
 -- Metro --
 
-INSERT INTO lugar_transporte (idLugarTte, tipoTte, linea, estacion) VALUES ('1', 'metro', 'Línea 1 La Défense - Château de Vincennes', 'Champs Elysées');
-INSERT INTO lugar_transporte (idLugarTte, tipoTte, linea, estacion) VALUES ('2', 'metro', 'Línea 1 La Défense - Château de Vincennes', 'Les Sablons');
-INSERT INTO lugar_transporte (idLugarTte, tipoTte, linea, estacion) VALUES ('3', 'metro', 'Línea 1 La Défense - Château de Vincennes', 'St-Paul');
-INSERT INTO lugar_transporte (idLugarTte, tipoTte, linea, estacion) VALUES ('4', 'metro', 'Línea 1 La Défense - Château de Vincennes', 'Bérault');
-INSERT INTO lugar_transporte (idLugarTte, tipoTte, linea, estacion) VALUES ('5', 'metro', 'Línea 1 La Défense - Château de Vincennes', 'St-Mandé');
-INSERT INTO lugar_transporte (idLugarTte, tipoTte, linea, estacion) VALUES ('6', 'metro', 'Línea 2 Porte Dauphine - Nation', 'Ternes');
-INSERT INTO lugar_transporte (idLugarTte, tipoTte, linea, estacion) VALUES ('7', 'metro', 'Línea 2 Porte Dauphine - Nation', 'Monceau');
-INSERT INTO lugar_transporte (idLugarTte, tipoTte, linea, estacion) VALUES ('8', 'metro', 'Línea 2 Porte Dauphine - Nation', 'Courcelles');
-INSERT INTO lugar_transporte (idLugarTte, tipoTte, linea, estacion) VALUES ('9', 'metro', 'Línea 2 Porte Dauphine - Nation', 'Rome');
-INSERT INTO lugar_transporte (idLugarTte, tipoTte, linea, estacion) VALUES ('10', 'metro', 'Línea 3 Pont de Levallois Becon - Gallieni', 'Wagram');
-INSERT INTO lugar_transporte (idLugarTte, tipoTte, linea, estacion) VALUES ('12', 'metro', 'Línea 3 Pont de Levallois Becon - Gallieni', 'Jasmin');
-INSERT INTO lugar_transporte (idLugarTte, tipoTte, linea, estacion) VALUES ('13', 'metro', 'Línea 3 Pont de Levallois Becon - Gallieni', 'Ranelagh');
-INSERT INTO lugar_transporte (idLugarTte, tipoTte, linea, estacion) VALUES ('14', 'metro', 'Línea 3 Pont de Levallois Becon - Gallieni', 'Anatole France');
-INSERT INTO lugar_transporte (idLugarTte, tipoTte, linea, estacion) VALUES ('15', 'metro', 'Línea 3 Pont de Levallois Becon - Gallieni', 'Iéna');
-INSERT INTO lugar_transporte (idLugarTte, tipoTte, linea, estacion) VALUES ('16', 'metro', 'Línea 3bis Gambetta - Porte des Lilas', 'Pelleport');
-INSERT INTO lugar_transporte (idLugarTte, tipoTte, linea, estacion) VALUES ('17', 'metro', 'Línea 3bis Gambetta - Porte des Lilas', 'Saint-Fargeau');
-INSERT INTO lugar_transporte (idLugarTte, tipoTte, linea, estacion) VALUES ('18', 'metro', 'Línea 4 Porte de Clignancourt - Mairie de Montrouge', 'Simplon');
-INSERT INTO lugar_transporte (idLugarTte, tipoTte, linea, estacion) VALUES ('19', 'metro', 'Línea 4 Porte de Clignancourt - Mairie de Montrouge', 'Cháteau d´Eau');
-INSERT INTO lugar_transporte (idLugarTte, tipoTte, linea, estacion) VALUES ('20', 'metro', 'Línea 4 Porte de Clignancourt - Mairie de Montrouge', 'Étienne Marcel');
-INSERT INTO lugar_transporte (idLugarTte, tipoTte, linea, estacion) VALUES ('21', 'metro', 'Línea 5 Bobigny Pablo Picasso - Place d’Italie', 'Saint Marcel');
-INSERT INTO lugar_transporte (idLugarTte, tipoTte, linea, estacion) VALUES ('22', 'metro', 'Línea 5 Bobigny Pablo Picasso - Place d’Italie', 'Campo Formio');
-INSERT INTO lugar_transporte (idLugarTte, tipoTte, linea, estacion) VALUES ('23', 'metro', 'Línea 5 Bobigny Pablo Picasso - Place d’Italie', 'Bastille');
-INSERT INTO lugar_transporte (idLugarTte, tipoTte, linea, estacion) VALUES ('24', 'metro', 'Línea 5 Bobigny Pablo Picasso - Place d’Italie', 'Richard Lenoir');
-INSERT INTO lugar_transporte (idLugarTte, tipoTte, linea, estacion) VALUES ('25', 'metro', 'Línea 6: Charles de Gaulle Etoile - Nation', 'Picpus');
-INSERT INTO lugar_transporte (idLugarTte, tipoTte, linea, estacion) VALUES ('26', 'metro', 'Línea 6: Charles de Gaulle Etoile - Nation', 'Bel-Air');
-INSERT INTO lugar_transporte (idLugarTte, tipoTte, linea, estacion) VALUES ('27', 'metro', 'Línea 6: Charles de Gaulle Etoile - Nation', 'Chevaleret');
-INSERT INTO lugar_transporte (idLugarTte, tipoTte, linea, estacion) VALUES ('28', 'metro', 'Línea 7: Louis Leblanc - Pré Saint Gervais', 'Place Monge');
-INSERT INTO lugar_transporte (idLugarTte, tipoTte, linea, estacion) VALUES ('29', 'metro', 'Línea 7: Louis Leblanc - Pré Saint Gervais', 'Les Gobelins');
-INSERT INTO lugar_transporte (idLugarTte, tipoTte, linea, estacion) VALUES ('30', 'metro', 'Línea 7: Louis Leblanc - Pré Saint Gervais', 'Jussieu');
-INSERT INTO lugar_transporte (idLugarTte, tipoTte, linea, estacion) VALUES ('31', 'metro', 'Línea 7: Louis Leblanc - Pré Saint Gervais', 'Pyramides');
-INSERT INTO lugar_transporte (idLugarTte, tipoTte, linea, estacion) VALUES ('32', 'metro', 'Línea 8: Balard - Pointe du Lac', 'Commerce');
-INSERT INTO lugar_transporte (idLugarTte, tipoTte, linea, estacion) VALUES ('33', 'metro', 'Línea 8: Balard - Pointe du Lac', 'École Militaire');
-INSERT INTO lugar_transporte (idLugarTte, tipoTte, linea, estacion) VALUES ('34', 'metro', 'Línea 8: Balard - Pointe du Lac', 'Lourmel');
-INSERT INTO lugar_transporte (idLugarTte, tipoTte, linea, estacion) VALUES ('35', 'metro', 'Línea 9: Pont de Sèvres - Mairie de Montreuil', 'Robespierre');
-INSERT INTO lugar_transporte (idLugarTte, tipoTte, linea, estacion) VALUES ('36', 'metro', 'Línea 9: Pont de Sèvres - Mairie de Montreuil', 'Voltaire');
-INSERT INTO lugar_transporte (idLugarTte, tipoTte, linea, estacion) VALUES ('37', 'metro', 'Línea 9: Pont de Sèvres - Mairie de Montreuil', 'Charonne');
-INSERT INTO lugar_transporte (idLugarTte, tipoTte, linea, estacion) VALUES ('38', 'metro', 'Línea 10: Boulogne Pont de Saint Cloud - Gare d’Austerlitz', 'Ségur');
-INSERT INTO lugar_transporte (idLugarTte, tipoTte, linea, estacion) VALUES ('39', 'metro', 'Línea 10: Boulogne Pont de Saint Cloud - Gare d’Austerlitz', 'Vaneau');
-INSERT INTO lugar_transporte (idLugarTte, tipoTte, linea, estacion) VALUES ('40', 'metro', 'Línea 10: Boulogne Pont de Saint Cloud - Gare d’Austerlitz', 'Mirabeau');
-INSERT INTO lugar_transporte (idLugarTte, tipoTte, linea, estacion) VALUES ('41', 'metro', 'Línea 11: Châtelet - Mairie des Lilas', 'Belleville');
-INSERT INTO lugar_transporte (idLugarTte, tipoTte, linea, estacion) VALUES ('42', 'metro', 'Línea 11: Châtelet - Mairie des Lilas', 'Rambuteau');
-INSERT INTO lugar_transporte (idLugarTte, tipoTte, linea, estacion) VALUES ('43', 'metro', 'Línea 11: Châtelet - Mairie des Lilas', 'Jourdain');
-INSERT INTO lugar_transporte (idLugarTte, tipoTte, linea, estacion) VALUES ('44', 'metro', 'Línea 12: Front Populaire - Mairie d’Issy', 'Abbesses');
-INSERT INTO lugar_transporte (idLugarTte, tipoTte, linea, estacion) VALUES ('45', 'metro', 'Línea 12: Front Populaire - Mairie d’Issy', 'Pigalle');
-INSERT INTO lugar_transporte (idLugarTte, tipoTte, linea, estacion) VALUES ('46', 'metro', 'Línea 12: Front Populaire - Mairie d’Issy', 'Solférino');
-INSERT INTO lugar_transporte (idLugarTte, tipoTte, linea, estacion) VALUES ('47', 'metro', 'Línea 13: Gare Saint Lazare - Olympiades', 'Plaisance');
-INSERT INTO lugar_transporte (idLugarTte, tipoTte, linea, estacion) VALUES ('48', 'metro', 'Línea 13: Gare Saint Lazare - Olympiades', 'Gaité');
-INSERT INTO lugar_transporte (idLugarTte, tipoTte, linea, estacion) VALUES ('49', 'metro', 'Línea 13: Gare Saint Lazare - Olympiades', 'Varenne');
+INSERT INTO lugar_transporte (idLugarTte, tipoTte, linea, estacion) VALUES ('1', 'metro', '1 La Defense - Chateau de Vincennes', 'Champs Elysees');
+INSERT INTO lugar_transporte (idLugarTte, tipoTte, linea, estacion) VALUES ('2', 'metro', '1 La Defense - Chateau de Vincennes', 'Les Sablons');
+INSERT INTO lugar_transporte (idLugarTte, tipoTte, linea, estacion) VALUES ('3', 'metro', '1 La Defense - Chateau de Vincennes', 'St-Paul');
+INSERT INTO lugar_transporte (idLugarTte, tipoTte, linea, estacion) VALUES ('4', 'metro', '1 La Defense - Chateau de Vincennes', 'Berault');
+INSERT INTO lugar_transporte (idLugarTte, tipoTte, linea, estacion) VALUES ('5', 'metro', '1 La Defense - Chateau de Vincennes', 'St-Mande');
+INSERT INTO lugar_transporte (idLugarTte, tipoTte, linea, estacion) VALUES ('6', 'metro', '2 Porte Dauphine - Nation', 'Ternes');
+INSERT INTO lugar_transporte (idLugarTte, tipoTte, linea, estacion) VALUES ('7', 'metro', '2 Porte Dauphine - Nation', 'Monceau');
+INSERT INTO lugar_transporte (idLugarTte, tipoTte, linea, estacion) VALUES ('8', 'metro', '2 Porte Dauphine - Nation', 'Courcelles');
+INSERT INTO lugar_transporte (idLugarTte, tipoTte, linea, estacion) VALUES ('9', 'metro', '2 Porte Dauphine - Nation', 'Rome');
+INSERT INTO lugar_transporte (idLugarTte, tipoTte, linea, estacion) VALUES ('10', 'metro', '3 Pont de Levallois Becon - Gallieni', 'Wagram');
+INSERT INTO lugar_transporte (idLugarTte, tipoTte, linea, estacion) VALUES ('12', 'metro', '3 Pont de Levallois Becon - Gallieni', 'Jasmin');
+INSERT INTO lugar_transporte (idLugarTte, tipoTte, linea, estacion) VALUES ('13', 'metro', '3 Pont de Levallois Becon - Gallieni', 'Ranelagh');
+INSERT INTO lugar_transporte (idLugarTte, tipoTte, linea, estacion) VALUES ('14', 'metro', '3 Pont de Levallois Becon - Gallieni', 'Anatole France');
+INSERT INTO lugar_transporte (idLugarTte, tipoTte, linea, estacion) VALUES ('15', 'metro', '3 Pont de Levallois Becon - Gallieni', 'Iena');
+INSERT INTO lugar_transporte (idLugarTte, tipoTte, linea, estacion) VALUES ('16', 'metro', '3bis Gambetta - Porte des Lilas', 'Pelleport');
+INSERT INTO lugar_transporte (idLugarTte, tipoTte, linea, estacion) VALUES ('17', 'metro', '3bis Gambetta - Porte des Lilas', 'Saint-Fargeau');
+INSERT INTO lugar_transporte (idLugarTte, tipoTte, linea, estacion) VALUES ('18', 'metro', '4 Porte de Clignancourt - Mairie de Montrouge', 'Simplon');
+INSERT INTO lugar_transporte (idLugarTte, tipoTte, linea, estacion) VALUES ('19', 'metro', '4 Porte de Clignancourt - Mairie de Montrouge', 'Cháteau d´Eau');
+INSERT INTO lugar_transporte (idLugarTte, tipoTte, linea, estacion) VALUES ('20', 'metro', '4 Porte de Clignancourt - Mairie de Montrouge', 'Etienne Marcel');
+INSERT INTO lugar_transporte (idLugarTte, tipoTte, linea, estacion) VALUES ('21', 'metro', '5 Bobigny Pablo Picasso - Place d’Italie', 'Saint Marcel');
+INSERT INTO lugar_transporte (idLugarTte, tipoTte, linea, estacion) VALUES ('22', 'metro', '5 Bobigny Pablo Picasso - Place d’Italie', 'Campo Formio');
+INSERT INTO lugar_transporte (idLugarTte, tipoTte, linea, estacion) VALUES ('23', 'metro', '5 Bobigny Pablo Picasso - Place d’Italie', 'Bastille');
+INSERT INTO lugar_transporte (idLugarTte, tipoTte, linea, estacion) VALUES ('24', 'metro', '5 Bobigny Pablo Picasso - Place d’Italie', 'Richard Lenoir');
+INSERT INTO lugar_transporte (idLugarTte, tipoTte, linea, estacion) VALUES ('25', 'metro', '6 Charles de Gaulle Etoile - Nation', 'Picpus');
+INSERT INTO lugar_transporte (idLugarTte, tipoTte, linea, estacion) VALUES ('26', 'metro', '6 Charles de Gaulle Etoile - Nation', 'Bel-Air');
+INSERT INTO lugar_transporte (idLugarTte, tipoTte, linea, estacion) VALUES ('27', 'metro', '6 Charles de Gaulle Etoile - Nation', 'Chevaleret');
+INSERT INTO lugar_transporte (idLugarTte, tipoTte, linea, estacion) VALUES ('28', 'metro', '7 Louis Leblanc - Pre Saint Gervais', 'Place Monge');
+INSERT INTO lugar_transporte (idLugarTte, tipoTte, linea, estacion) VALUES ('29', 'metro', '7 Louis Leblanc - Pre Saint Gervais', 'Les Gobelins');
+INSERT INTO lugar_transporte (idLugarTte, tipoTte, linea, estacion) VALUES ('30', 'metro', '7 Louis Leblanc - Pre Saint Gervais', 'Jussieu');
+INSERT INTO lugar_transporte (idLugarTte, tipoTte, linea, estacion) VALUES ('31', 'metro', '7 Louis Leblanc - Pre Saint Gervais', 'Pyramides');
+INSERT INTO lugar_transporte (idLugarTte, tipoTte, linea, estacion) VALUES ('32', 'metro', '8 Balard - Pointe du Lac', 'Commerce');
+INSERT INTO lugar_transporte (idLugarTte, tipoTte, linea, estacion) VALUES ('33', 'metro', '8 Balard - Pointe du Lac', 'ecole Militaire');
+INSERT INTO lugar_transporte (idLugarTte, tipoTte, linea, estacion) VALUES ('34', 'metro', '8 Balard - Pointe du Lac', 'Lourmel');
+INSERT INTO lugar_transporte (idLugarTte, tipoTte, linea, estacion) VALUES ('35', 'metro', '9 Pont de Sèvres - Mairie de Montreuil', 'Robespierre');
+INSERT INTO lugar_transporte (idLugarTte, tipoTte, linea, estacion) VALUES ('36', 'metro', '9 Pont de Sèvres - Mairie de Montreuil', 'Voltaire');
+INSERT INTO lugar_transporte (idLugarTte, tipoTte, linea, estacion) VALUES ('37', 'metro', '9 Pont de Sèvres - Mairie de Montreuil', 'Charonne');
+INSERT INTO lugar_transporte (idLugarTte, tipoTte, linea, estacion) VALUES ('38', 'metro', '10 Boulogne Pont de Saint Cloud - Gare d’Austerlitz', 'Segur');
+INSERT INTO lugar_transporte (idLugarTte, tipoTte, linea, estacion) VALUES ('39', 'metro', '10 Boulogne Pont de Saint Cloud - Gare d’Austerlitz', 'Vaneau');
+INSERT INTO lugar_transporte (idLugarTte, tipoTte, linea, estacion) VALUES ('40', 'metro', '10 Boulogne Pont de Saint Cloud - Gare d’Austerlitz', 'Mirabeau');
+INSERT INTO lugar_transporte (idLugarTte, tipoTte, linea, estacion) VALUES ('41', 'metro', '11 Chatelet - Mairie des Lilas', 'Belleville');
+INSERT INTO lugar_transporte (idLugarTte, tipoTte, linea, estacion) VALUES ('42', 'metro', '11 Chatelet - Mairie des Lilas', 'Rambuteau');
+INSERT INTO lugar_transporte (idLugarTte, tipoTte, linea, estacion) VALUES ('43', 'metro', '11 Chatelet - Mairie des Lilas', 'Jourdain');
+INSERT INTO lugar_transporte (idLugarTte, tipoTte, linea, estacion) VALUES ('44', 'metro', '12 Front Populaire - Mairie d’Issy', 'Abbesses');
+INSERT INTO lugar_transporte (idLugarTte, tipoTte, linea, estacion) VALUES ('45', 'metro', '12 Front Populaire - Mairie d’Issy', 'Pigalle');
+INSERT INTO lugar_transporte (idLugarTte, tipoTte, linea, estacion) VALUES ('46', 'metro', '12 Front Populaire - Mairie d’Issy', 'Solferino');
+INSERT INTO lugar_transporte (idLugarTte, tipoTte, linea, estacion) VALUES ('47', 'metro', '13 Gare Saint Lazare - Olympiades', 'Plaisance');
+INSERT INTO lugar_transporte (idLugarTte, tipoTte, linea, estacion) VALUES ('48', 'metro', '13 Gare Saint Lazare - Olympiades', 'Gaite');
+INSERT INTO lugar_transporte (idLugarTte, tipoTte, linea, estacion) VALUES ('49', 'metro', '13 Gare Saint Lazare - Olympiades', 'Varenne');
 
 -- Autobus --
 
-INSERT INTO lugar_transporte (idLugarTte, tipoTte, linea, estacion) VALUES ('50', 'bus', 'Línea N51: Gare d´Enghlen', 'Genevilliers');
-INSERT INTO lugar_transporte (idLugarTte, tipoTte, linea, estacion) VALUES ('51', 'bus', 'Línea N51: Gare d´Enghlen', 'Saint-Denis');
-INSERT INTO lugar_transporte (idLugarTte, tipoTte, linea, estacion) VALUES ('52', 'bus', 'Línea N51: Gare d´Enghlen', 'Louvre');
-INSERT INTO lugar_transporte (idLugarTte, tipoTte, linea, estacion) VALUES ('53', 'bus', 'Línea N43: Gare de Sarcelles', 'Malrie de Stains');
-INSERT INTO lugar_transporte (idLugarTte, tipoTte, linea, estacion) VALUES ('54', 'bus', 'Línea N43: Gare de Sarcelles', 'Porte de la Chapelle');
-INSERT INTO lugar_transporte (idLugarTte, tipoTte, linea, estacion) VALUES ('55', 'bus', 'Línea N14: Malrie de St-Ouen', 'Port Royal');
-INSERT INTO lugar_transporte (idLugarTte, tipoTte, linea, estacion) VALUES ('56', 'bus', 'Línea N14: Malrie de St-Ouen', 'Denfert Rochereau');
-INSERT INTO lugar_transporte (idLugarTte, tipoTte, linea, estacion) VALUES ('57', 'bus', 'Línea N13: Malrie d´Issy', 'Porte de Pantin');
-INSERT INTO lugar_transporte (idLugarTte, tipoTte, linea, estacion) VALUES ('58', 'bus', 'Línea N14: Malrle de St-Ouen', 'Stallingrad');
-INSERT INTO lugar_transporte (idLugarTte, tipoTte, linea, estacion) VALUES ('59', 'bus', 'Línea N151: Gare de Mantes', 'Poissy');
-INSERT INTO lugar_transporte (idLugarTte, tipoTte, linea, estacion) VALUES ('60', 'bus', 'Línea N14: Malrle de St-Ouen', 'Charles de Gaulle');
-INSERT INTO lugar_transporte (idLugarTte, tipoTte, linea, estacion) VALUES ('61', 'bus', 'Línea N12: Romainville Carnot', 'Belleville');
-INSERT INTO lugar_transporte (idLugarTte, tipoTte, linea, estacion) VALUES ('62', 'bus', 'Línea N12: Romainville Carnot', 'République');
-INSERT INTO lugar_transporte (idLugarTte, tipoTte, linea, estacion) VALUES ('63', 'bus', 'Línea N16: Pont de Levallois', 'Quatre Routes');
-INSERT INTO lugar_transporte (idLugarTte, tipoTte, linea, estacion) VALUES ('64', 'bus', 'Línea N16: Pont de Levallois', 'Charles de Gaulle');
+INSERT INTO lugar_transporte (idLugarTte, tipoTte, linea, estacion) VALUES ('50', 'bus', 'N51 Gare d´Enghlen', 'Genevilliers');
+INSERT INTO lugar_transporte (idLugarTte, tipoTte, linea, estacion) VALUES ('51', 'bus', 'N51 Gare d´Enghlen', 'Saint-Denis');
+INSERT INTO lugar_transporte (idLugarTte, tipoTte, linea, estacion) VALUES ('52', 'bus', 'N51 Gare d´Enghlen', 'Louvre');
+INSERT INTO lugar_transporte (idLugarTte, tipoTte, linea, estacion) VALUES ('53', 'bus', 'N43 Gare de Sarcelles', 'Malrie de Stains');
+INSERT INTO lugar_transporte (idLugarTte, tipoTte, linea, estacion) VALUES ('54', 'bus', 'N43 Gare de Sarcelles', 'Porte de la Chapelle');
+INSERT INTO lugar_transporte (idLugarTte, tipoTte, linea, estacion) VALUES ('55', 'bus', 'N14 Malrie de St-Ouen', 'Port Royal');
+INSERT INTO lugar_transporte (idLugarTte, tipoTte, linea, estacion) VALUES ('56', 'bus', 'N14 Malrie de St-Ouen', 'Denfert Rochereau');
+INSERT INTO lugar_transporte (idLugarTte, tipoTte, linea, estacion) VALUES ('57', 'bus', 'N13 Malrie d´Issy', 'Porte de Pantin');
+INSERT INTO lugar_transporte (idLugarTte, tipoTte, linea, estacion) VALUES ('58', 'bus', 'N14 Malrle de St-Ouen', 'Stallingrad');
+INSERT INTO lugar_transporte (idLugarTte, tipoTte, linea, estacion) VALUES ('59', 'bus', 'N151 Gare de Mantes', 'Poissy');
+INSERT INTO lugar_transporte (idLugarTte, tipoTte, linea, estacion) VALUES ('60', 'bus', 'N14 Malrle de St-Ouen', 'Charles de Gaulle');
+INSERT INTO lugar_transporte (idLugarTte, tipoTte, linea, estacion) VALUES ('61', 'bus', 'N12 Romainville Carnot', 'Belleville');
+INSERT INTO lugar_transporte (idLugarTte, tipoTte, linea, estacion) VALUES ('62', 'bus', 'N12 Romainville Carnot', 'Republique');
+INSERT INTO lugar_transporte (idLugarTte, tipoTte, linea, estacion) VALUES ('63', 'bus', 'N16 Pont de Levallois', 'Quatre Routes');
+INSERT INTO lugar_transporte (idLugarTte, tipoTte, linea, estacion) VALUES ('64', 'bus', 'N16 Pont de Levallois', 'Charles de Gaulle');
 
 
 

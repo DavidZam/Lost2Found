@@ -5,7 +5,7 @@
       <module fileurl="file://$PROJECT_DIR$/Lost2Found.iml" filepath="$PROJECT_DIR$/Lost2Found.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/library-release/library-release.iml" filepath="$PROJECT_DIR$/library-release/library-release.iml" />
-      <module fileurl="file://$PROJECT_DIR$/Lost2Found/Lost2Found/library-release/library-release.iml" filepath="$PROJECT_DIR$/Lost2Found/Lost2Found/library-release/library-release.iml" />
+      <module fileurl="file://C:\Users\David\Documents\GitHub\Lost2Found\Lost2Found\Lost2Found\Lost2Found\library-release\library-release.iml" filepath="C:\Users\David\Documents\GitHub\Lost2Found\Lost2Found\Lost2Found\Lost2Found\library-release\library-release.iml" />
     </modules>
   </component>
 </project>

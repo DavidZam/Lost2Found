@@ -18,34 +18,28 @@
 
 			$realresult = $sql->bind_result($linea);
 			
-			//$sql->fetch();
 			
-			$rawdata = array();
 			
+			//$rawdata = array();
 
-			//$rawdata = $realresult->fetchAll();
+			$rawdata = $realresult->fetchAll();
 
-			/*while($row = mysqli_fetch_array($result, MYSQL_ASSOC)) {
+			while($row = mysqli_fetch_array($result, MYSQL_ASSOC)) {
 				$rawdata[] = $row;
-			}*/
+			}
 
 			//$correct = $query;
 
-			$sql->fetch();
+			//$sql->fetch();
 
-			while($row = mysqli_fetch_array($result)) {
-                                //foreach($row as $key => $value) {
-				echo "aqui";
+			/*while($row = mysql_fetch_array($query)) {
+                                foreach($row as $key => $value) {
                                     $rawdata['linea'] = utf8_encode($linea);
-                                //}
-                        }
+                                }
+                        }*/
 
 			//var_dump($rawdata);
-
-			/*foreach($row as $key => $value) {
-				$rawdata[] = utf8_encode($row);
-			}*/
-			
+			//$rawdata['linea'] = utf8_encode($linea);
 			//$rawdata['correct'] = $correct;
 
 		        disconnectDB($connection);
