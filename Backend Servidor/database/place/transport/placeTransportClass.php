@@ -6,7 +6,7 @@
 		function select($tipoTte) {
 			$connection = connectDB();
 
-			$sql = mysqli_prepare($connection, "SELECT DISTINCT linea FROM lugar_transporte WHERE tipoTte = ?;");
+			$sql = mysqli_prepare($connection, "SELECT DISTINCT linea FROM lugar_transporte WHERE tipoTte = ?");
 			mysqli_stmt_bind_param($sql, "s", $tipoTte);
 
 			$query = $sql->execute();
@@ -16,40 +16,25 @@
 
 			$result = $sql->store_result();
 
-			$realresult = $sql->bind_result($linea);
-			
-			//$sql->fetch();
+			while($row = $result->fetch_array())    {
+                $rows[] = $row;
+            }
 			
 			$rawdata = array();
-			
 
-			//$rawdata = $realresult->fetchAll();
+			$i = 0;
 
-			/*while($row = mysqli_fetch_array($result, MYSQL_ASSOC)) {
-				$rawdata[] = $row;
-			}*/
+            foreach($rows as $row)    {
+            	$rawdata[$i] = $rows[$i];
+            	 $i++;
+           	}
+            var_dump($rawdata);
 
-			//$correct = $query;
+			$result->close();
 
-			$sql->fetch();
+		    disconnectDB($connection);
 
-			while($row = mysqli_fetch_array($result)) {
-                                //foreach($row as $key => $value) {
-				echo "aqui";
-                                    $rawdata['linea'] = utf8_encode($linea);
-                                //}
-                        }
-
-			//var_dump($rawdata);
-
-			/*foreach($row as $key => $value) {
-				$rawdata[] = utf8_encode($row);
-			}*/
-			
-			//$rawdata['correct'] = $correct;
-
-		        disconnectDB($connection);
-	                return $rawdata;
+	        return $rawdata;
 		}
 
 		/**
