@@ -43,7 +43,8 @@ public class FillTransportPlaceActivity extends AppCompatActivity {
         boolean metro = sp.getBoolean("metro", false);
         boolean bus = sp.getBoolean("bus", false);
         if(metro) {
-            new transportDB().execute("metro");
+            String metroText = "metro";
+            new transportDB().execute(metroText);
             /*String[] metroLines =
             ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, metroLines);
             MaterialBetterSpinner materialDesignSpinner = findViewById(R.id.listLines);
