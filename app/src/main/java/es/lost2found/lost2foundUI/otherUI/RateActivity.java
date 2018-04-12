@@ -9,6 +9,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.Html;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
@@ -36,6 +37,13 @@ public class RateActivity extends AppCompatActivity {
         mDrawerLayout = findViewById(R.id.drawer_layout);
 
         NavigationView navView = findViewById(R.id.nav_view);
+
+        String s = "<h2> <font color=#699CFC> ¡Tu valoración cuenta! </font></h2> Nos ayudas a mantener y mejorar el sistema para que siga ayudando a muchas personas.<br><br>" +
+                "Además, colaboras en la difusión de la aplicación y llegar a más gente.<br><br>" +
+                "Es una forma de agradecer lo que te ofrece Lost2Found.<br><br>" +
+                "<h2> <font color=#699CFC> ¿Cómo nos puedes puntuar? </font></h2> Pincha en el siguiente enlace, busca nuestra aplicación y puntúa: http://play.google.com/store/apps";
+        TextView texto = (TextView)findViewById(R.id.textinfo);
+        texto.setText(Html.fromHtml(s));
 
         View headerLayout = navView.getHeaderView(0);
         TextView emailUser = headerLayout.findViewById(R.id.user_mail);

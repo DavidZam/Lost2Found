@@ -9,6 +9,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.Html;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
@@ -38,6 +39,11 @@ public class ContactActivity extends AppCompatActivity {
         NavigationView navView = findViewById(R.id.nav_view);
 
         View headerLayout = navView.getHeaderView(0);
+
+        String s = "Si no has encontrado la información que buscabas o hay algo que no te ha quedado claro, puedes escribirnos a <b>lost2found@gmail.com</b> y nos pondremos en contacto contigo para aclarar todas las dudas que tengas. <br><br><br> <b>¡Gracias por confiar en nosotros!</b>";
+        TextView texto = (TextView)findViewById(R.id.textinfo);
+        texto.setText(Html.fromHtml(s));
+
         TextView emailUser = headerLayout.findViewById(R.id.user_mail);
         TextView nameUser = headerLayout.findViewById(R.id.user_name);
         SharedPreferences spref = getApplicationContext().getSharedPreferences("Login", 0);

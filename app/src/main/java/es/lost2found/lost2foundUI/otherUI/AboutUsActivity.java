@@ -9,6 +9,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.Html;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
@@ -36,6 +37,13 @@ public class AboutUsActivity extends AppCompatActivity {
         mDrawerLayout = findViewById(R.id.drawer_layout);
 
         NavigationView navView = findViewById(R.id.nav_view);
+
+        String s = "<h2> <font color=#699CFC>¿Cuál es nuestra misión? </font></h2> Lost2Found ha sido creado para que las personas puedan recuperar los objetos que hayan perdido, de forma sencilla y rápida.<br><br><br>" +
+                    "<h2> <font color=#699CFC>¿Qué visión tiene Lost2Found? </font></h2> Intentamos hacer un mundo mejor poniendo en contacto a personas para recuperar sus objetos perdidos y, así, ver sonreir a todos los que consiguen dicho objetivo.<br><br><br>" +
+                    "<h2> <font color=#699CFC>¿Cuáles son nuestros valores? </font></h2> Nuestro proyecto se basa en creer en las personas y en sus colaboraciones altruistas. De esta manera Lost2Found se retroalimenta.<br><b>";
+        TextView texto = (TextView)findViewById(R.id.textinfoannounce);
+        texto.setText(Html.fromHtml(s));
+
 
         View headerLayout = navView.getHeaderView(0);
         TextView emailUser = headerLayout.findViewById(R.id.user_mail);

@@ -32,13 +32,15 @@
                 android:id="@+id/textinfo"
                 android:layout_width="match_parent"
                 android:layout_height="348dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
                 android:padding="8sp"
                 android:layout_below="@id/toolbar"
-                android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum eu ipsum felis. Quisque consequat dui eu nibh pharetra vehicula. Nam et nibh ante. Interdum et malesuada fames ac ante ipsum primis in faucibus. Sed at orci volutpat, semper tortor ut, pulvinar nisi. Nam semper luctus cursus. Praesent et lacus sapien. Phasellus congue nibh nec odio posuere, et fermentum turpis pharetra. Proin tincidunt nisl a sagittis luctus. Vivamus ac pharetra massa, vel tempus purus. Sed sagittis posuere sapien sed convallis. Curabitur fermentum et libero vel auctor.
+                android:textSize="16sp"/>
+               <!-- android:text="Si no has encontrado la información que buscabas o hay algo que no te ha quedado claro, puedes escribirnos a lost2found@gmail.com y nos pondremos en contacto contigo para aclarar todas las dudas que tengas."-->
 
-Quisque eget mauris vel tellus ornare mattis a vel nibh. Sed a ornare metus. Suspendisse potenti. Ut sed auctor neque. Aliquam tortor tortor, porta sed purus eget, semper scelerisque urna. Nullam eget lacinia arcu. In nec elementum mauris. Aliquam tempor posuere faucibus. Nulla ac dapibus sem. Curabitur et odio ac dui lobortis rhoncus tempus at ligula. Maecenas convallis est lorem, nec condimentum felis ullamcorper et." />
-
-            <TextView
+           <!-- <TextView
                 android:id="@+id/contactinfo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -47,7 +49,7 @@ Quisque eget mauris vel tellus ornare mattis a vel nibh. Sed a ornare metus. Sus
                 android:layout_centerHorizontal="true"
                 android:layout_marginBottom="44dp"
                 android:text="To contact with lost2found support please write to lost2found@gmail.com"
-                android:textSize="20sp" />
+                android:textSize="20sp" />-->
 
         </RelativeLayout>
 
