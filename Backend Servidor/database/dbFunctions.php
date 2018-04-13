@@ -7,7 +7,7 @@
         $BD = "lost2found";
         $conexion = mysqli_connect($server, $usuario, $pass, $BD);
 
-        return $conexion;
+        return $mysqli;
     } 
 
     // Disconnect to the database.
