@@ -41,7 +41,7 @@ public class RateActivity extends AppCompatActivity {
         String s = "<h2> <font color=#699CFC> ¡Tu valoración cuenta! </font></h2> Nos ayudas a mantener y mejorar el sistema para que siga ayudando a muchas personas.<br><br>" +
                 "Además, colaboras en la difusión de la aplicación y llegar a más gente.<br><br>" +
                 "Es una forma de agradecer lo que te ofrece Lost2Found.<br><br>" +
-                "<h2> <font color=#699CFC> ¿Cómo nos puedes puntuar? </font></h2> Pincha en el siguiente enlace, busca nuestra aplicación y puntúa: http://play.google.com/store/apps";
+                "<h2> <font color=#699CFC> ¿Cómo nos puedes puntuar? </font></h2> Pincha en el siguiente enlace, busca nuestra aplicación y puntúa: <address>http://play.google.com/store/apps</address>";
         TextView texto = (TextView)findViewById(R.id.textinfo);
         texto.setText(Html.fromHtml(s));
 

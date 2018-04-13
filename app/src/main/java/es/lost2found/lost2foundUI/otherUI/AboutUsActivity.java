@@ -44,7 +44,6 @@ public class AboutUsActivity extends AppCompatActivity {
         TextView texto = (TextView)findViewById(R.id.textinfoannounce);
         texto.setText(Html.fromHtml(s));
 
-
         View headerLayout = navView.getHeaderView(0);
         TextView emailUser = headerLayout.findViewById(R.id.user_mail);
         TextView nameUser = headerLayout.findViewById(R.id.user_name);

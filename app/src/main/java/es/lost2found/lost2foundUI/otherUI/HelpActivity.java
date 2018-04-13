@@ -9,6 +9,8 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.Html;
+import android.text.method.ScrollingMovementMethod;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
@@ -36,6 +38,19 @@ public class HelpActivity extends AppCompatActivity {
         mDrawerLayout = findViewById(R.id.drawer_layout);
 
         NavigationView navView = findViewById(R.id.nav_view);
+
+        String s = "<h2> <font color=#699CFC>¿Cómo funciona Lost2Found? </font></h2> &bull; Cuando una persona pierde un objeto lo notifica creando un anuncio de pérdida y rellenando los máximos campos posibles.<br><br>" +
+                "&bull; Otra persona encuentra ese mismo objeto y crea un anuncio de hallazgo, completando todos los campos que le sea posible. <br><br>" +
+                "&bull; Lost2Found cuenta con un algoritmo basado en un sistema de puntos, es decir, ambos anuncios deben tener características iguales y," +
+                " cuantas más se acierten, más puntos se obtiene y podrá ser un posible acierto. <br><br>" +
+                "&bull; La aplicación notificará a ambas personas de una coincidencia de objetos y les otorgará la posibilidad de ponerse en contacto. <br><br>" +
+                "<h2> <font color=#699CFC>¿Puede haber anuncios cuyos procesos coincidan simultáneamente? </font></h2> &bull; Perfectamente. Varios objetos pueden reunir las condiciones necesarias para que sus coincidencias sean similares " +
+                "(objetos parecidos, mismo lugar, fecha y hora). Por eso es imprescindible que los usuarios hablen entre ellos y se aseguren de que el objeto es el correcto.<br>" +
+                "<h2> <font color=#699CFC>¿Cuándo me llegará la notificación? </font></h2> &bull; Tan pronto como ambas partes registren los anuncios de pérdida y hallazgo y nuestro algoritmo haga su magia.<br><b>";
+        TextView texto = (TextView)findViewById(R.id.textComoFunciona);
+        texto.setText(Html.fromHtml(s));
+
+        texto.setMovementMethod(new ScrollingMovementMethod());
 
         View headerLayout = navView.getHeaderView(0);
         TextView emailUser = headerLayout.findViewById(R.id.user_mail);
