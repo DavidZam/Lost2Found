@@ -40,12 +40,12 @@ public class NewAnnounceActivity extends AppCompatActivity {
         setContentView(R.layout.activity_new_announce);
 
         String[] announceType = {"Perdida", "Hallazgo"};
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, announceType);
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_dropdown_item_1line, announceType);
         MaterialBetterSpinner materialDesignSpinner = findViewById(R.id.announce_type);
         materialDesignSpinner.setAdapter(arrayAdapter);
 
         String[] categories = {"Tarjetas Bancarias", "Tarjetas Transporte Publico", "Carteras/Monederos", "Telefonos", "Otros"};
-        ArrayAdapter<String> arrayAdapter2 = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, categories);
+        ArrayAdapter<String> arrayAdapter2 = new ArrayAdapter<>(this, android.R.layout.simple_dropdown_item_1line, categories);
         MaterialBetterSpinner materialDesignSpinner2 = findViewById(R.id.listCategories);
         materialDesignSpinner2.setAdapter(arrayAdapter2);
 

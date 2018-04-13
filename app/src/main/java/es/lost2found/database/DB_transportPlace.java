@@ -87,8 +87,8 @@ public class DB_transportPlace {
         return ret;
     }
 
-    public static String getLines(String transport) {
-        String lines = "";
+    public static String[] getLines(String transport) {
+        String[] lines = new String[13];
         try {
             JSONObject jsonObject = new JSONObject();
             jsonObject.put("tipoTte", transport);
@@ -130,17 +130,11 @@ public class DB_transportPlace {
                 String inputLine;
                 StringBuffer response = new StringBuffer();
 
-                while ((inputLine = in.readLine()) != null)
+                while ((inputLine = in.readLine()) != null) {
                     response.append(inputLine);
+                }
 
-                //JSONObject object = new JSONObject(response.toString());
-                //if(object.getBoolean("correct")) {
-                    //try {
-                        lines = response.toString();
-                    //} catch (Exception e) {
-                        //e.printStackTrace();
-                    //}
-                //}
+                lines = response.toString().split(",");
             } finally {
                 con.disconnect();
             }
