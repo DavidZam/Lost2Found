@@ -1,7 +1,4 @@
-<?php
-	ini_set('display_errors', 1);
-	ini_set('display_startup_errors', 1);
-	error_reporting(E_ALL);
+ç<?php
 	include('../../dbFunctions.php');
 
 	class TransportPlace {
@@ -9,24 +6,30 @@
 		function select($tipoTte) {
 			$connection = connectDB();
 
-			$stmt = $connection->prepare("SELECT DISTINCT linea FROM lugar_transporte WHERE tipoTte = ?");
-			$stmt->bind_param('s', $tipoTte);
+			$sql = mysqli_prepare($connection, "SELECT DISTINCT linea FROM lugar_transporte WHERE tipoTte = ?");
+			mysqli_stmt_bind_param($sql, "s", $tipoTte);
 
-			$stmt->execute();
+			$query = $sql->execute();
+			
+			if(!$query)
+	                die();
 
-			$result = $stmt->get_result();
-
-			while($row = $result->fetch_assoc())    {
-		            $rows[] = $row;
+			$result = $sql->store_result();
+			//echo "0";
+			while($row = mysqli_fetch_array($result, MYSQLI_NUM))    {
+			//echo "1";
+		           
             		}
+			//echo "2";
 			$rawdata = array();
+
 			$i = 0;
 
             		foreach($rows as $row)    {
         	    		$rawdata[$i] = $rows[$i];
 	            		$i++;
            		}
-            		//var_dump($rawdata);
+            		var_dump($rawdata);
 
 			$result->close();
 

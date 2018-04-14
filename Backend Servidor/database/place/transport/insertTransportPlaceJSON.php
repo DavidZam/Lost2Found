@@ -9,8 +9,6 @@
             $station = $jsonencode[0]->stationText;
             $placeId = $jsonencode[0]->idLugar;
 
-	    //var_dump($line);
-	    //var_dump($placeId);
 	    require_once("placeTransportClass.php");
 	    $transportPlaceObject = new TransportPlace();
 	    $transportPlaceObject->insert($line, $station, $placeId);

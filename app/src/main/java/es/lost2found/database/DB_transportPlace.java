@@ -133,7 +133,6 @@ public class DB_transportPlace {
                 while ((inputLine = in.readLine()) != null) {
                     response.append(inputLine);
                 }
-
                 lines = response.toString().split(",");
             } finally {
                 con.disconnect();

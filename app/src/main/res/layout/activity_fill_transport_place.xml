@@ -1,13 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v4.widget.DrawerLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/drawer_layout"
-    android:layout_width="match_parent"
+    android:id="@+id/activity_new_announce"
+    android:layout_width="wrap_content"
     android:layout_height="match_parent"
-    android:theme="@style/Lost2FoundTheme"
-    tools:context=".lost2foundUI.placeUI.transportUI.FillTransportPlaceActivity">
+    tools:layout_editor_absoluteY="25dp">
 
     <RelativeLayout
         android:id="@+id/content_frame"
@@ -34,18 +32,6 @@
             android:orientation="vertical"
             android:padding="16dp">
 
-            <!--<TextView
-                android:id="@+id/fillhelp1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentTop="true"
-                android:layout_marginTop="45dp"
-                android:padding="8sp"
-                android:text="@string/fill_help1"
-                android:textSize="18sp"
-                android:textStyle="italic" />-->
-
             <com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner
                 android:id="@+id/listLines"
                 android:layout_width="match_parent"
@@ -67,90 +53,6 @@
                 android:textColorHint="@color/colorPrimaryText"
                 app:met_floatingLabel="normal" />
 
-            <!--<TextView
-                android:id="@+id/fillhelp2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_below="@+id/fillhelp1"
-                android:layout_marginStart="22dp"
-                android:padding="8sp"
-                android:text="@string/fill_help2"
-                android:textSize="18sp"
-                android:textStyle="italic" />
-
-            <TextView
-                android:id="@+id/fillhelp3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_alignTop="@+id/fillhelp2"
-                android:layout_marginEnd="77dp"
-                android:padding="8sp"
-                android:text="@string/fill_help3"
-                android:textSize="18sp"
-                android:textStyle="italic" />
-
-            <TextView
-                android:id="@+id/fillhelp4"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignBaseline="@+id/fillhelp5"
-                android:layout_alignBottom="@+id/fillhelp5"
-                android:layout_alignStart="@+id/fillhelp2"
-                android:padding="8sp"
-                android:text="@string/fill_help4"
-                android:textSize="18sp"
-                android:textStyle="italic" />
-
-            <TextView
-                android:id="@+id/fillhelp5"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/fillhelp1"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="30dp"
-                android:layout_toEndOf="@+id/fillhelp4"
-                android:padding="8sp"
-                android:text="@string/fill_help5"
-                android:textSize="18sp"
-                android:textStyle="italic" />
-
-            <EditText
-                android:id="@+id/line"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/fillhelp4"
-                android:layout_marginTop="50dp"
-                android:layout_centerHorizontal="true"
-                android:hint="@string/line_text"
-                android:inputType="text"
-                android:textColor="@color/colorPrimaryText"
-                android:textSize="20sp" />
-
-            <EditText
-                android:id="@+id/station"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_centerHorizontal="true"
-                android:layout_marginBottom="165dp"
-                android:hint="@string/station_text"
-                android:inputType="text"
-                android:textColor="@color/colorPrimaryText"
-                android:textSize="20sp" />
-
-            <TextView
-                android:id="@+id/wrong_info"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_above="@+id/confirm_button"
-                android:layout_alignParentStart="true"
-                android:layout_marginBottom="16dp"
-                android:paddingTop="16dp"
-                android:textAlignment="center"
-                android:textColor="@color/errorColor" />-->
-
             <Button
                 android:id="@+id/confirm_button"
                 style="@style/buttonStyle"
@@ -164,4 +66,4 @@
 
     </RelativeLayout>
 
-</android.support.v4.widget.DrawerLayout>
+</android.support.constraint.ConstraintLayout>

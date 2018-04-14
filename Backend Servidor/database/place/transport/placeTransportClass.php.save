@@ -4,30 +4,106 @@
 	class TransportPlace {
 
 		function select($tipoTte) {
-			$connection = connectDB();
 
-			$sql = mysqli_prepare($connection, "SELECT DISTINCT linea FROM lugar_transporte WHERE tipoTte = ?;");
+			$mysqli = new mysqli("localhost", "root", "MissingX", "lost2found");
+
+			if (mysqli_connect_errno()) {
+			    printf("Connect failed: %s\n", mysqli_connect_error());
+			    exit();
+			}
+			$query = "SELECT DISTINCT linea FROM lugar_transporte WHERE tipoTte = 'metro'";
+			$result = $mysqli->query($query);
+
+			while($row = $result->fetch_array())	{
+			    $rows[] = $row;
+			}
+
+			$rawdata = array();
+			$i = 0;
+
+			foreach($rows as $row)    {
+			//var_dump($rows[$i]);
+			    //echo $rawdata["$i"];
+			   var_dump($row[$i]);
+				$rawdata[$i] = $row[$i];
+				echo $rawdata[$i];
+			    //var_dump($rows["$i"]);
+			    //echo $rows[$i];
+			    $i++;
+				echo $i;
+			}
+			//var
+
+			/* free result set */
+			$result->close();
+
+			/* close connection */
+			$mysqli->close();
+
+		}
+
+			/*$connection = connectDB();
+
+			$resultado = mysqli_query($connection, "SELECT DISTINCT linea FROM lugar_transporte WHERE tipoTte = ?");
+			mysqli_stmt_bind_param($sql, "s", $tipoTte);
+			echo "1";
+			var_dump($resultado);
+			printf(mysqli_num_rows($resultado));
+
+			mysqli_free_result($resultado);
+
+			/*$sql = mysqli_prepare($connection, "SELECT DISTINCT linea FROM lugar_transporte WHERE tipoTte = ?");
 			mysqli_stmt_bind_param($sql, "s", $tipoTte);
 
 			$query = $sql->execute();
-					if(!$query)
+
+			if(!$query)
 	                die();
+
 			$result = $sql->store_result();
 
 			$realresult = $sql->bind_result($linea);
 
-			$rawdata = array();
+			/*while($fila = $result->fetch_row()) {
+                               printf ($fila[0], $fila[1]);
+                        }*/
 
-			//$correct = $query;
+
+			/*$rawdata = array();
 
 			$sql->fetch();
-			var_dump($rawdata);
-			$rawdata['linea'] = utf8_encode($linea);
-			//$rawdata['correct'] = $correct;
+
+			for($i = 0; $i < 14; $i++) {
+				//echo $i;
+
+				$rawdata[$i] = utf8_encode($linea);
+			}
 
 		        disconnectDB($connection);
-	                return $rawdata;
-		}
+	                return $rawdata;*/
+		
+
+
+		/*function select($tipoTte) {
+			$connection = connectDB();
+
+			$consulta = "SELECT DISTINCT linea FROM lugar_transporte WHERE tipoTte = $tipoTte";
+
+			if ($resultado = $mysqli->query($consulta)) {
+
+			    /* obtener el array de objetos 
+			    while ($fila = $resultado->fetch_row()) {
+			        printf ("%s (%s)\n", $fila[0], $fila[1]);
+			    }
+
+			    /* liberar el conjunto de resultados
+			    $resultado->close();
+			}
+
+			/* cerrar la conexión 
+			disconnectDB($connection);
+			return $rawdata;
+		}*/
 
 		/**
 		 *	Insert a place in the database.

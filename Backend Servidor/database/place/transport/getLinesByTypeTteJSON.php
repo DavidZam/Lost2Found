@@ -10,6 +10,8 @@
 	    require_once("placeTransportClass.php");
 	    $transportPlaceObject = new TransportPlace();
 	    $transportPlaceLines = $transportPlaceObject->select($tipoTte);
-	    echo json_encode($transportPlaceLines);
+	    $transportPlaceLines = array_column($transportPlaceLines, 'linea');
+	    $utfEncodedArray = array_map("utf8_encode", $transportPlaceLines);
+	    echo json_encode($utfEncodedArray);
 	}
 ?>
