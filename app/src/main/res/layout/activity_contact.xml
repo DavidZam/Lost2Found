@@ -38,18 +38,6 @@
                 android:padding="8sp"
                 android:layout_below="@id/toolbar"
                 android:textSize="16sp"/>
-               <!-- android:text="Si no has encontrado la información que buscabas o hay algo que no te ha quedado claro, puedes escribirnos a lost2found@gmail.com y nos pondremos en contacto contigo para aclarar todas las dudas que tengas."-->
-
-           <!-- <TextView
-                android:id="@+id/contactinfo"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="8sp"
-                android:layout_alignParentBottom="true"
-                android:layout_centerHorizontal="true"
-                android:layout_marginBottom="44dp"
-                android:text="To contact with lost2found support please write to lost2found@gmail.com"
-                android:textSize="20sp" />-->
 
         </RelativeLayout>
 

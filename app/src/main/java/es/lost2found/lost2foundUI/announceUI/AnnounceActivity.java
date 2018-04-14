@@ -25,6 +25,7 @@ import es.lost2found.entities.Announce;
 import es.lost2found.lost2foundUI.chatUI.ChatActivity;
 import es.lost2found.lost2foundUI.loginregisterUI.LoginActivity;
 import es.lost2found.lost2foundUI.otherUI.AboutUsActivity;
+import es.lost2found.lost2foundUI.otherUI.ConfigurationActivity;
 import es.lost2found.lost2foundUI.otherUI.ContactActivity;
 import es.lost2found.lost2foundUI.otherUI.HelpActivity;
 import es.lost2found.lost2foundUI.otherUI.RateActivity;
@@ -81,6 +82,7 @@ public class AnnounceActivity extends AppCompatActivity implements FloatingActio
         final Intent aboutus = new Intent(this, AboutUsActivity.class);
         final Intent help = new Intent(this, HelpActivity.class);
         final Intent rate = new Intent(this, RateActivity.class);
+        final Intent config = new Intent(this, ConfigurationActivity.class);
 
         navView.setNavigationItemSelectedListener(
                 new NavigationView.OnNavigationItemSelectedListener() {
@@ -98,6 +100,8 @@ public class AnnounceActivity extends AppCompatActivity implements FloatingActio
                             startActivity(chat);
                         }else if(menuItem.getItemId()== R.id.nav_contact) {
                             startActivity(contact);
+                        } else if(menuItem.getItemId() == R.id.nav_settings){
+                            startActivity(config);
                         } else if(menuItem.getItemId()== R.id.nav_info) {
                             startActivity(aboutus);
                         } else if(menuItem.getItemId()== R.id.nav_help) {

@@ -52,7 +52,6 @@
         android:text="@string/login_button_text"
         android:onClick="login"
         style="@style/buttonStyle" />
-    <!--android:onClick="login"-->
 
     <TextView
         android:id="@+id/wrong_user"

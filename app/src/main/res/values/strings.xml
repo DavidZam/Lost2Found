@@ -32,6 +32,7 @@
     <string name="image_upload_text">Subir imagen</string>
     <string name="info_announce_text">+ Info</string>
 
+    <string name="config_text">Configuración</string>
     <string name="contact_text">Contáctanos!</string>
     <string name="about_us_text">Sobre nosotros</string>
     <string name="help_text">Ayuda</string>
