@@ -28,6 +28,8 @@ import es.lost2found.lost2foundUI.placeUI.PlaceActivity;
 
 public class FillTransportPlaceActivity extends AppCompatActivity {
 
+    private String[] lines = new String[13];
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,50 +47,36 @@ public class FillTransportPlaceActivity extends AppCompatActivity {
         if(metro) {
             String metroText = "metro";
             new transportDB().execute(metroText);
-            /*String[] metroLines =
-            ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, metroLines);
+            ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, lines);
             MaterialBetterSpinner materialDesignSpinner = findViewById(R.id.listLines);
             materialDesignSpinner.setAdapter(arrayAdapter);
-
-            String[] metroStations = {"Perdida", "Hallazgo"};
-            ArrayAdapter<String> arrayAdapter2 = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, metroStations);
-            MaterialBetterSpinner materialDesignSpinner2 = findViewById(R.id.listStations);
-            materialDesignSpinner2.setAdapter(arrayAdapter2);*/
         } else {
-            if(bus) {
-                new transportDB().execute("bus");
-                /*String[] busLines =
-                ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, busLines);
-                MaterialBetterSpinner materialDesignSpinner = findViewById(R.id.listLines);
-                materialDesignSpinner.setAdapter(arrayAdapter);
-
-                /*String[] busStations = {"Perdida", "Hallazgo"};
-                ArrayAdapter<String> arrayAdapter2 = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, busStations);
-                MaterialBetterSpinner materialDesignSpinner2 = findViewById(R.id.listStations);
-                materialDesignSpinner2.setAdapter(arrayAdapter2);*/
+            if (bus) {
+                String busText = "bus";
+                new transportDB().execute(busText);
             }
         }
     }
 
-    private class transportDB extends AsyncTask<String, Void, String> {
+    private class transportDB extends AsyncTask<String, Void, String[]> {
 
         private ProgressDialog dialog = new ProgressDialog(FillTransportPlaceActivity.this);
 
         @Override
         protected void onPreExecute() {
-            //this.dialog.setMessage("Cargando...");
-            //this.dialog.show();
+            this.dialog.setMessage("Cargando...");
+            this.dialog.show();
         }
 
         @Override
-        protected String doInBackground(String... strings) {
-            return DB_transportPlace.getLines(strings[0]);
+        protected String[] doInBackground(String... strings) {
+           return DB_transportPlace.getLines(strings[0]);
         }
 
         @Override
-        protected void onPostExecute(String result) {
+        protected void onPostExecute(String[] result) {
             this.dialog.dismiss();
-            //processNewAnnounce(result);
+            lines = result;
         }
     }
 

@@ -34,7 +34,7 @@
             android:orientation="vertical"
             android:padding="16dp">
 
-            <TextView
+            <!--<TextView
                 android:id="@+id/fillhelp1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -44,14 +44,13 @@
                 android:padding="8sp"
                 android:text="@string/fill_help1"
                 android:textSize="18sp"
-                android:textStyle="italic" />
+                android:textStyle="italic" />-->
 
             <com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner
                 android:id="@+id/listLines"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
-                android:layout_below="@+id/fillhelp1"
                 android:layout_marginTop="8dp"
                 android:hint="@string/spinner4_placeholder"
                 android:textColorHint="@color/colorPrimaryText"
