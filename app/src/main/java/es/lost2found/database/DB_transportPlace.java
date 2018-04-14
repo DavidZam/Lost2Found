@@ -11,6 +11,7 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
@@ -89,6 +90,7 @@ public class DB_transportPlace {
 
     public static String[] getLines(String transport) {
         String[] lines = new String[13];
+        List<String> listLines = new ArrayList<String>();
         try {
             JSONObject jsonObject = new JSONObject();
             jsonObject.put("tipoTte", transport);
@@ -134,6 +136,11 @@ public class DB_transportPlace {
                     response.append(inputLine);
                 }
                 lines = response.toString().split(",");
+
+                String text = lines[0].replace("[", "");
+                lines[0] = text;
+                String text2 = lines[lines.length-1].replace("]", "");
+                lines[lines.length-1] = text2;
             } finally {
                 con.disconnect();
             }

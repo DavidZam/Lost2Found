@@ -11,8 +11,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Adapter;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner;
@@ -31,9 +35,10 @@ import es.lost2found.lost2foundUI.placeUI.PlaceActivity;
 
 public class FillTransportPlaceActivity extends AppCompatActivity {
 
-    public static String[] lines = new String[13];
-    public static ArrayAdapter<String> arrayAdapter;
-    //public static ArrayList<String> lines;
+    private ArrayList<String> list;
+    private ArrayAdapter<String> arrayAdapter;
+    private MaterialBetterSpinner spinner;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,39 +51,29 @@ public class FillTransportPlaceActivity extends AppCompatActivity {
         ab.setDisplayHomeAsUpEnabled(true);
         ab.setHomeAsUpIndicator(R.drawable.ic_arrow_back);
 
+        list = new ArrayList<>();
+        arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, list);
+        spinner = findViewById(R.id.listLines);
 
-        //materialDesignSpinner.setAdapter(arrayAdapter);
 
         SharedPreferences sp = getApplicationContext().getSharedPreferences("transportButton", 0);
         boolean metro = sp.getBoolean("metro", false);
         boolean bus = sp.getBoolean("bus", false);
+
         if(metro) {
             String metroText = "metro";
-            //new transportDB().execute(metroText);
-            arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, lines);
             new transportDB().execute(metroText);
-            MaterialBetterSpinner materialDesignSpinner = findViewById(R.id.listLines);
-            materialDesignSpinner.setAdapter(arrayAdapter);
-
-            /*MaterialBetterSpinner materialDesignSpinner = findViewById(R.id.listLines);
-            materialDesignSpinner.setAdapter(arrayAdapter);*/
+            spinner.setAdapter(arrayAdapter);
         } else {
             if (bus) {
                 String busText = "bus";
                 new transportDB().execute(busText);
+                spinner.setAdapter(arrayAdapter);
             }
         }
     }
 
     private class transportDB extends AsyncTask<String, String[], String[]> {
-
-        //private ProgressDialog dialog = new ProgressDialog(FillTransportPlaceActivity.this);
-
-        @Override
-        protected void onPreExecute() {
-            //this.dialog.setMessage("Cargando...");
-            //this.dialog.show();
-        }
 
         @Override
         protected String[] doInBackground(String... strings) {
@@ -87,24 +82,13 @@ public class FillTransportPlaceActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(String[] result) {
-            //this.dialog.dismiss();
-
-            //lines = result;
             updateAdapter(result);
         }
     }
 
-    public static void updateAdapter(String[] result){
-        //lines = result;
-        //arrayAdapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_dropdown_item_1line, lines);
-        for(int i = 0; i < 14; i++) {
-            arrayAdapter.add(result[i]);
-        }
-        //return arrayAdapter;
-        //arrayAdapter.addAll(lines);
-        //arrayAdapter.add(lines);
-        //rrayAdapter.notifyDataSetChanged();
-
+    public void updateAdapter(String[] result) {
+        arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, result);
+        spinner.setAdapter(arrayAdapter);
     }
 
     @Override
