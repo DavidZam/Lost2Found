@@ -114,6 +114,11 @@
             android:label="@string/rate_text" />
 
         <activity
+            android:name=".lost2foundUI.otherUI.ConfigurationActivity"
+            android:screenOrientation="portrait"
+            android:label="Configuración" />
+
+        <activity
             android:name=".lost2foundUI.seekerUI.SeekerAnnounceInfoActivity"
             android:parentActivityName=".lost2foundUI.seekerUI.SeekerActivity"
             android:screenOrientation="portrait"
