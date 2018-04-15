@@ -89,6 +89,25 @@
 
 	        disconnectDB($connection);
 	        return $query;
-	    }
+	    	}
+
+		
+		/**
+			Update a user in the database
+		*/
+		function updateName($nombre, $emai){
+		$connection = connectDB();
+		$sql = mysqli_prepare($connection, "UPDATE usuario SET nombre='$nombre' WHERE email='$email'");
+		mysqli_stmt_bind_param($sql, "ss", $nombre, $email);
+		$query = $sql->execute();
+
+		if(!$query)
+			echo "incorrect";
+		else
+			echo "correct";
+
+		disconnectDB($connection);
+		return $query;
+		}
 	}
 ?>

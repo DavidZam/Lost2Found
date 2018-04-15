@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -33,12 +34,13 @@ import es.lost2found.entities.TransportPlace;
 import es.lost2found.lost2foundUI.announceUI.NewAnnounceActivity;
 import es.lost2found.lost2foundUI.placeUI.PlaceActivity;
 
-public class FillTransportPlaceActivity extends AppCompatActivity {
+public class FillTransportPlaceActivity extends AppCompatActivity  { // implements AdapterView.OnItemClickListener
 
-    private ArrayList<String> list;
     private ArrayAdapter<String> arrayAdapter;
     private MaterialBetterSpinner spinner;
-
+    private ArrayAdapter<String> arrayAdapter2;
+    private MaterialBetterSpinner spinner2;
+    private ArrayList<String> list = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,10 +53,14 @@ public class FillTransportPlaceActivity extends AppCompatActivity {
         ab.setDisplayHomeAsUpEnabled(true);
         ab.setHomeAsUpIndicator(R.drawable.ic_arrow_back);
 
-        list = new ArrayList<>();
+        //ArrayList<String> list = new ArrayList<>();
         arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, list);
         spinner = findViewById(R.id.listLines);
+        spinner.setAdapter(arrayAdapter);
 
+        arrayAdapter2 = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, list);
+        spinner2 = findViewById(R.id.listStations);
+        spinner2.setAdapter(arrayAdapter2);
 
         SharedPreferences sp = getApplicationContext().getSharedPreferences("transportButton", 0);
         boolean metro = sp.getBoolean("metro", false);
@@ -62,18 +68,53 @@ public class FillTransportPlaceActivity extends AppCompatActivity {
 
         if(metro) {
             String metroText = "metro";
-            new transportDB().execute(metroText);
-            spinner.setAdapter(arrayAdapter);
+            new linesDB().execute(metroText);
         } else {
             if (bus) {
                 String busText = "bus";
-                new transportDB().execute(busText);
-                spinner.setAdapter(arrayAdapter);
+                new linesDB().execute(busText);
             }
         }
+
+        spinner.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                if(parent.getItemAtPosition(position).toString() != null) {
+                    String choice = parent.getItemAtPosition(position).toString();
+                    AsyncTask<String, String[], String[]> stationsTask = new AsyncTask<String, String[], String[]>() {
+
+                        @Override
+                        protected void onPreExecute() {
+                            /*arrayAdapter2.clear();
+                            //arrayAdapter2.notifyDataSetChanged();
+                            //spinner2.setAdapter(arrayAdapter2); // null
+                            arrayAdapter2.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
+                            spinner2.setAdapter(arrayAdapter2);
+                            spinner2.setSelection(arrayAdapter2.getCount());        //set the hint the default selection so it appears on launch.
+                            spinner2.setOnItemSelectedListener(this);
+                            arrayAdapter2.notifyDataSetChanged();*/
+                        }
+
+                        @Override
+                        protected String[] doInBackground(String... strings) {
+                            return DB_transportPlace.getStations(choice);
+                        }
+
+                        @Override
+                        protected void onPostExecute(String[] result) {
+                            updateAdapter2(result);
+                        } }; // ... your AsyncTask code goes here
+
+                    if (Build.VERSION.SDK_INT>=Build.VERSION_CODES.HONEYCOMB)
+                        stationsTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                    else
+                        stationsTask.execute();
+                }
+            }
+        });
     }
 
-    private class transportDB extends AsyncTask<String, String[], String[]> {
+    private class linesDB extends AsyncTask<String, String[], String[]> {
 
         @Override
         protected String[] doInBackground(String... strings) {
@@ -86,9 +127,27 @@ public class FillTransportPlaceActivity extends AppCompatActivity {
         }
     }
 
+    /*private static class stationsDB extends AsyncTask<String, String[], String[]> {
+
+        @Override
+        protected String[] doInBackground(String... strings) {
+            return DB_transportPlace.getStations(strings[0]);
+        }
+
+        @Override
+        protected void onPostExecute(String[] result) {
+            updateAdapter2(result);
+        }
+    }*/
+
     public void updateAdapter(String[] result) {
         arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, result);
         spinner.setAdapter(arrayAdapter);
+    }
+
+    public void updateAdapter2(String[] result) {
+        arrayAdapter2 = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, result);
+        spinner2.setAdapter(arrayAdapter2);
     }
 
     @Override

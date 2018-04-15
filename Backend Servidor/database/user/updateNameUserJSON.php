@@ -4,11 +4,13 @@
 	    $json = urldecode($json);
 	    $json = str_replace("\\", "",$json);
 	    $jsonencode = json_decode($json);
-	    
-	    $nombre<?php
+
+	    $email = $jsonencode[0]->email;
+	    $nombre = $jsonencode[0]->nombre;
+
 	    require_once("userClass.php");
 	    $userObject = new User();
-	    $user = $userObject->updateName($nombre);
+	    $user = $userObject->updateName($nombre, $email);
 	    echo json_encode($user);
 	}
 ?>

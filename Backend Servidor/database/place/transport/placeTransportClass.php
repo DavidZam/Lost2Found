@@ -6,6 +6,41 @@
 
 	class TransportPlace {
 
+                function selectStation($linea) {
+                        $connection = connectDB();
+
+                        //var_dump($linea);
+			//echo $linea;
+			//echo $linea[12];
+			$lineaText = substr($linea, 11, -3);
+			//$lineaText2 = substr($lineaText, 0, -4);
+			//var_dump($lineaText);
+                        $stmt = $connection->prepare("SELECT DISTINCT estacion FROM lugar_transporte WHERE linea = ?");
+                        $stmt->bind_param('s', $lineaText);
+
+                        $stmt->execute();
+                        //var_dump($stmt);
+                        $result = $stmt->get_result();
+                        //var_dump($result);
+                        while($row = $result->fetch_assoc())    {
+                            $rows[] = $row;
+                        }
+                        $rawdata = array();
+                        $i = 0;
+			//echo $rawdata;
+			//var_dump($rawdata);
+                        foreach($rows as $row)    {
+                                $rawdata[$i] = $rows[$i];
+                                $i++;
+                        }
+                        //var_dump($rawdata);
+
+                        $result->close();
+
+                        disconnectDB($connection);
+                        return $rawdata;
+                }
+
 		function select($tipoTte) {
 			$connection = connectDB();
 
@@ -26,7 +61,6 @@
         	    		$rawdata[$i] = $rows[$i];
 	            		$i++;
            		}
-            		//var_dump($rawdata);
 
 			$result->close();
 

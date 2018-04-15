@@ -39,6 +39,7 @@
                 android:layout_alignParentStart="true"
                 android:layout_marginTop="8dp"
                 android:hint="@string/spinner4_placeholder"
+
                 android:textColorHint="@color/colorPrimaryText"
                 app:met_floatingLabel="normal" />
 
@@ -47,6 +48,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
+
                 android:layout_below="@+id/listLines"
                 android:layout_marginTop="8dp"
                 android:hint="@string/spinner5_placeholder"

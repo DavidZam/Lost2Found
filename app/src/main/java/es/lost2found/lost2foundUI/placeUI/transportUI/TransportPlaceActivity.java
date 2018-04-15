@@ -34,6 +34,7 @@ public class TransportPlaceActivity extends AppCompatActivity implements View.On
         SharedPreferences sp = getSharedPreferences("transportButton", 0);
         SharedPreferences.Editor ed = sp.edit();            // Saved the user login credencials.
         ed.putBoolean("metro", true);
+        ed.putBoolean("bus", false);
         ed.apply();
         Intent intent = new Intent(this, FillTransportPlaceActivity.class);
         startActivity(intent);
@@ -44,6 +45,7 @@ public class TransportPlaceActivity extends AppCompatActivity implements View.On
         SharedPreferences sp = getSharedPreferences("transportButton", 0);
         SharedPreferences.Editor ed = sp.edit();            // Saved the user login credencials.
         ed.putBoolean("bus", true);
+        ed.putBoolean("metro", false);
         ed.apply();
         Intent intent = new Intent(this, FillTransportPlaceActivity.class);
         startActivity(intent);
