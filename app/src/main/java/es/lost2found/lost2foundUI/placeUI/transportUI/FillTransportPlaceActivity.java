@@ -41,6 +41,8 @@ public class FillTransportPlaceActivity extends AppCompatActivity  { // implemen
     private ArrayAdapter<String> arrayAdapter2;
     private MaterialBetterSpinner spinner2;
     private ArrayList<String> list = new ArrayList<>();
+    private String lineChoice = "";
+    private String stationChoice = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,7 +55,6 @@ public class FillTransportPlaceActivity extends AppCompatActivity  { // implemen
         ab.setDisplayHomeAsUpEnabled(true);
         ab.setHomeAsUpIndicator(R.drawable.ic_arrow_back);
 
-        //ArrayList<String> list = new ArrayList<>();
         arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, list);
         spinner = findViewById(R.id.listLines);
         spinner.setAdapter(arrayAdapter);
@@ -80,35 +81,19 @@ public class FillTransportPlaceActivity extends AppCompatActivity  { // implemen
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 if(parent.getItemAtPosition(position).toString() != null) {
-                    String choice = parent.getItemAtPosition(position).toString();
-                    AsyncTask<String, String[], String[]> stationsTask = new AsyncTask<String, String[], String[]>() {
-
-                        @Override
-                        protected void onPreExecute() {
-                            /*arrayAdapter2.clear();
-                            //arrayAdapter2.notifyDataSetChanged();
-                            //spinner2.setAdapter(arrayAdapter2); // null
-                            arrayAdapter2.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
-                            spinner2.setAdapter(arrayAdapter2);
-                            spinner2.setSelection(arrayAdapter2.getCount());        //set the hint the default selection so it appears on launch.
-                            spinner2.setOnItemSelectedListener(this);
-                            arrayAdapter2.notifyDataSetChanged();*/
-                        }
-
-                        @Override
-                        protected String[] doInBackground(String... strings) {
-                            return DB_transportPlace.getStations(choice);
-                        }
-
-                        @Override
-                        protected void onPostExecute(String[] result) {
-                            updateAdapter2(result);
-                        } }; // ... your AsyncTask code goes here
-
+                    lineChoice = parent.getItemAtPosition(position).toString();
                     if (Build.VERSION.SDK_INT>=Build.VERSION_CODES.HONEYCOMB)
-                        stationsTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                        new stationsDB().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, lineChoice);
                     else
-                        stationsTask.execute();
+                        new stationsDB().execute(lineChoice);
+                }
+            }
+        });
+        spinner2.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                if(parent.getItemAtPosition(position).toString() != null) {
+                    stationChoice = parent.getItemAtPosition(position).toString();
                 }
             }
         });
@@ -127,8 +112,7 @@ public class FillTransportPlaceActivity extends AppCompatActivity  { // implemen
         }
     }
 
-    /*private static class stationsDB extends AsyncTask<String, String[], String[]> {
-
+    private class stationsDB extends AsyncTask<String, String[], String[]> {
         @Override
         protected String[] doInBackground(String... strings) {
             return DB_transportPlace.getStations(strings[0]);
@@ -138,7 +122,7 @@ public class FillTransportPlaceActivity extends AppCompatActivity  { // implemen
         protected void onPostExecute(String[] result) {
             updateAdapter2(result);
         }
-    }*/
+    }
 
     public void updateAdapter(String[] result) {
         arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, result);
@@ -159,27 +143,20 @@ public class FillTransportPlaceActivity extends AppCompatActivity  { // implemen
     }
 
     public void saveTransportPlaceData(View view) {
-        /*// Linea
-        EditText line = findViewById(R.id.line);
-        //String lineText = line.getText().toString();
-
-        // Estacion
-        EditText station = findViewById(R.id.station);
-        //String stationText = station.getText().toString();
-
-        /*SharedPreferences sp = getApplicationContext().getSharedPreferences("transportPlace", 0);
+        SharedPreferences sp = getSharedPreferences("transportPlace", 0);
         SharedPreferences.Editor ed = sp.edit();            // Saved the user color choice.
-        ed.putString("lineChoice", lineText);
-        ed.putString("stationChoice", stationText);
-        ed.apply();*//*
-        if(lineText.equalsIgnoreCase("") || stationText.equalsIgnoreCase("")) {
+        ed.putString("lineChoice", lineChoice);
+        ed.putString("stationChoice", stationChoice);
+        ed.apply();
+        if(lineChoice.equalsIgnoreCase("") || stationChoice.equalsIgnoreCase("")) {
             TextView textView = findViewById(R.id.wrong_info);
             textView.setText(textView.getResources().getString(R.string.error_txt2));
         } else
-            new transportPlaceDB().execute(lineText, stationText);*/
+            new getTransportPlaceDB().execute(lineChoice, stationChoice);
+
     }
 
-    private class transportPlaceDB extends AsyncTask<String, Void, TransportPlace> {
+    private class getTransportPlaceDB extends AsyncTask<String, Void, TransportPlace> {
 
         private ProgressDialog dialog = new ProgressDialog(FillTransportPlaceActivity.this);
 
@@ -191,7 +168,7 @@ public class FillTransportPlaceActivity extends AppCompatActivity  { // implemen
 
         @Override
         protected TransportPlace doInBackground(String... strings) {
-            return DB_transportPlace.insertTransportPlace(strings[0], strings[1]);
+            return DB_transportPlace.getTransportPlace(strings[0], strings[1]);
         }
 
         @Override

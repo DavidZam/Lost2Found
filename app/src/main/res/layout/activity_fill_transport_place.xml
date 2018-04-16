@@ -36,10 +36,11 @@
                 android:id="@+id/listLines"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_marginTop="8dp"
-                android:hint="@string/spinner4_placeholder"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
 
+                android:layout_marginTop="40dp"
+                android:hint="@string/spinner4_placeholder"
                 android:textColorHint="@color/colorPrimaryText"
                 app:met_floatingLabel="normal" />
 
@@ -47,13 +48,20 @@
                 android:id="@+id/listStations"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-
-                android:layout_below="@+id/listLines"
-                android:layout_marginTop="8dp"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="130dp"
                 android:hint="@string/spinner5_placeholder"
                 android:textColorHint="@color/colorPrimaryText"
                 app:met_floatingLabel="normal" />
+
+            <TextView
+                android:id="@+id/wrong_info"
+                android:layout_width="351dp"
+                android:layout_height="36dp"
+                android:layout_centerInParent="true"
+                android:textAlignment="center"
+                android:textColor="@color/errorColor" />
 
             <Button
                 android:id="@+id/confirm_button"
