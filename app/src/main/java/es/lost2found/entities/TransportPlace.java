@@ -21,7 +21,7 @@ public class TransportPlace extends Place implements Serializable {
     public TransportPlace(String json) {
         try {
             JSONObject jObject = new JSONObject(json);
-            this.id = jObject.getInt("idLugarTte");
+            this.id = jObject.getInt("id");
             this.tipoTte = jObject.getString("tipoTte");
             this.line = jObject.getString("linea");
             this.station = jObject.getString("estacion");

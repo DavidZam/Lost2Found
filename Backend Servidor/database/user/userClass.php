@@ -95,9 +95,9 @@
 		/**
 			Update a user in the database
 		*/
-		function updateName($nombre, $emai){
+		function updateName($nombre, $email){
 		$connection = connectDB();
-		$sql = mysqli_prepare($connection, "UPDATE usuario SET nombre='$nombre' WHERE email='$email'");
+		$sql = mysqli_prepare($connection, "UPDATE usuario SET nombre=? WHERE email=?");
 		mysqli_stmt_bind_param($sql, "ss", $nombre, $email);
 		$query = $sql->execute();
 

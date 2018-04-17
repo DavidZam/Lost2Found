@@ -34,7 +34,7 @@ import es.lost2found.entities.TransportPlace;
 import es.lost2found.lost2foundUI.announceUI.NewAnnounceActivity;
 import es.lost2found.lost2foundUI.placeUI.PlaceActivity;
 
-public class FillTransportPlaceActivity extends AppCompatActivity  { // implements AdapterView.OnItemClickListener
+public class FillTransportPlaceActivity extends AppCompatActivity {
 
     private ArrayAdapter<String> arrayAdapter;
     private MaterialBetterSpinner spinner;
@@ -179,6 +179,7 @@ public class FillTransportPlaceActivity extends AppCompatActivity  { // implemen
     }
 
     private void processNewTransportPlace(TransportPlace transportPlace) {
+        // PENDIENTE: ASEGURARSE QUE SE METEN VALORES CONSISTENTES EN LOS DOS SPINNER
         Intent intent = new Intent(this, NewAnnounceActivity.class);
         SharedPreferences sp = getSharedPreferences("placeId", 0);
         SharedPreferences.Editor ed = sp.edit();  // Saved the place data filled by the user.
@@ -190,39 +191,5 @@ public class FillTransportPlaceActivity extends AppCompatActivity  { // implemen
         intent.putExtra("transportPlace", transportPlace);
         startActivity(intent);
         finish();
-
-
-        //Intent intent = new Intent(this, AnnounceActivity.class);
-
-        /*SharedPreferences sp = getApplicationContext().getSharedPreferences("Login", 0);
-        String email = sp.getString("email", null);
-        if(email != null) { // Login perform with SharedPreferences credentials.
-            intent.putExtra("user", user);
-            startActivity(intent);
-            finish();
-        }
-        else {              // Login perform without SharedPreferences credentials.
-            if(user != null) {
-                SharedPreferences.Editor ed = sp.edit();            // Saved the user login credencials.
-                ed.putString("email", user.getEmail());
-                ed.putString("name", user.getName());
-                ed.apply();
-
-                intent.putExtra("user", user);
-                startActivity(intent);
-                finish();
-            }
-            else {
-                TextView textView = findViewById(R.id.wrong_user);
-                textView.setText(textView.getResources().getString(R.string.error_txt1));
-            }
-        }*/
     }
-
-    /*public void place(View view) {
-        Intent intent = new Intent(this, PlaceActivity.class);
-        startActivity(intent);
-        finish();
-    }*/
-
 }

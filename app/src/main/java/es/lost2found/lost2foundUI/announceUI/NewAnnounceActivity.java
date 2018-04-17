@@ -12,6 +12,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -20,10 +21,13 @@ import com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
 import es.lost2found.database.DB_announce;
+import es.lost2found.database.DB_transportPlace;
+import es.lost2found.database.DB_typeObject;
 import es.lost2found.entities.Announce;
 import es.lost2found.lost2foundUI.pickerUI.ColorPickerUI;
 import es.lost2found.lost2foundUI.pickerUI.DatePickerUI;
@@ -32,8 +36,11 @@ import es.lost2found.lost2foundUI.pickerUI.TimePickerUI;
 import es.lost2found.lost2foundUI.placeUI.PlaceActivity;
 
 public class NewAnnounceActivity extends AppCompatActivity {
-    //private DrawerLayout mDrawerLayout;
-    private EditText dateText;
+
+    private ArrayAdapter<String> arrayAdapter2;
+    private MaterialBetterSpinner spinner2;
+    private ArrayList<String> list = new ArrayList<>();
+    private String categorie = "";
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,10 +51,19 @@ public class NewAnnounceActivity extends AppCompatActivity {
         MaterialBetterSpinner materialDesignSpinner = findViewById(R.id.announce_type);
         materialDesignSpinner.setAdapter(arrayAdapter);
 
-        String[] categories = {"Tarjetas Bancarias", "Tarjetas Transporte Publico", "Carteras/Monederos", "Telefonos", "Otros"};
-        ArrayAdapter<String> arrayAdapter2 = new ArrayAdapter<>(this, android.R.layout.simple_dropdown_item_1line, categories);
-        MaterialBetterSpinner materialDesignSpinner2 = findViewById(R.id.listCategories);
-        materialDesignSpinner2.setAdapter(arrayAdapter2);
+        arrayAdapter2 = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, list);
+        spinner2 = findViewById(R.id.listCategories);
+        spinner2.setAdapter(arrayAdapter);
+        new categoriesDB().execute();
+
+        spinner2.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                if(parent.getItemAtPosition(position).toString() != null) {
+                    categorie = parent.getItemAtPosition(position).toString();
+                }
+            }
+        });
 
         Toolbar tb = findViewById(R.id.toolbar_center);
         setSupportActionBar(tb);
@@ -55,6 +71,24 @@ public class NewAnnounceActivity extends AppCompatActivity {
         ab.setDisplayHomeAsUpEnabled(true);
         ab.setHomeAsUpIndicator(R.drawable.ic_arrow_back);
 
+    }
+
+    private class categoriesDB extends AsyncTask<String, Void, String[]> {
+
+        @Override
+        protected String[] doInBackground(String... strings) {
+            return DB_typeObject.getCategories();
+        }
+
+        @Override
+        protected void onPostExecute(String[] result) {
+            updateAdapter(result);
+        }
+    }
+
+    public void updateAdapter(String[] result) {
+        arrayAdapter2 = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, result);
+        spinner2.setAdapter(arrayAdapter2);
     }
 
     @Override
@@ -84,9 +118,8 @@ public class NewAnnounceActivity extends AppCompatActivity {
                 .show(this, "dialog");
     }
 
-
     public void saveData(View view) {
-        // Id
+        // Id AUTO_INCREMENT
 
         // TipoAnuncio (Perdida o Hallazgo)
         MaterialBetterSpinner announceTypeSpinner = findViewById(R.id.announce_type);
@@ -104,15 +137,7 @@ public class NewAnnounceActivity extends AppCompatActivity {
         EditText announceLostFoundHourHour = findViewById(R.id.hour_show);
         String announceLostFoundHourHourText = announceLostFoundHourHour.getText().toString();
 
-        // Caducidad ¿? !!
-
-        // Recompensa ¿? !!
-
-        // Imagen ¿? !!
-
-        // Categoria
-        MaterialBetterSpinner announceCategorieSpinner = findViewById(R.id.listCategories);
-        String announceCategorie = announceCategorieSpinner.getText().toString();
+        // Categoria // categorie variable
 
         // Marca
         EditText announceBrand = findViewById(R.id.marca);
@@ -137,14 +162,14 @@ public class NewAnnounceActivity extends AppCompatActivity {
         String userIdext = String.valueOf(userId);
 
         if(announceType.equalsIgnoreCase("") || announceDayText.equalsIgnoreCase("") || announceLostFoundHourHourText.equalsIgnoreCase("")
-                || announceCategorie.equalsIgnoreCase("") || announceBrandText.equalsIgnoreCase("") || announceModelText.equalsIgnoreCase("")
+                || categorie.equalsIgnoreCase("") || announceBrandText.equalsIgnoreCase("") || announceModelText.equalsIgnoreCase("")
                 || colorchoice.equalsIgnoreCase("") || announceDayText.equalsIgnoreCase("")) {
             TextView textView = findViewById(R.id.wrong_information);
             textView.setText(textView.getResources().getString(R.string.error_txt3));
         } else {
             // Para obtener los datos del lugar puede que haya que llamar a otras funciones ya que se divide en transporte, mapa o direccion concreta.
             // Id, TipoAnuncio, HoraActual, DiaAnuncio, HoraPerdidaoHallazgo, Modelo, Marca, Color, idUsuario e idLugar, Categoria (NombreTabla)
-            new announceDB().execute(announceType, currentTimeText, announceDayText, announceLostFoundHourHourText, announceModelText, announceBrandText, colorchoice, userIdext, placeIdText, announceCategorie); // Falta el lugar
+            new announceDB().execute(announceType, currentTimeText, announceDayText, announceLostFoundHourHourText, announceModelText, announceBrandText, colorchoice, userIdext, placeIdText, categorie);
         }
     }
 
@@ -203,10 +228,4 @@ public class NewAnnounceActivity extends AppCompatActivity {
             }
         }*/
     }
-
-    /*public void place(View view) {
-        Intent intent = new Intent(this, PlaceActivity.class);
-        startActivity(intent);
-        finish();
-    }*/
 }

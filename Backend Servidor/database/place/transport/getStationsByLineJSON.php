@@ -6,13 +6,7 @@
 	    $json = $_POST["json"];
 	    $json = urldecode($json);
 	    $json = str_replace("\\", "",$json);
-	    //var_dump($json);
-	    //$jsonencode = json_decode($json);
-            //var_dump($jsonencode);
 
-	    //$linea = $jsonencode[0]->linea;
-	    //$linea = $json[0]->linea;
-	    //$linea = $json;
 	    require_once("placeTransportClass.php");
 	    $transportPlaceObject = new TransportPlace();
 	    $transportPlaceStations = $transportPlaceObject->selectStation($json);

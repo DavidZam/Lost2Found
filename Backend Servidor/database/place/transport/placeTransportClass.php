@@ -9,31 +9,24 @@
                 function selectStation($linea) {
                         $connection = connectDB();
 
-                        //var_dump($linea);
-			//echo $linea;
-			//echo $linea[12];
-			$lineaText = substr($linea, 11, -3);
-			//$lineaText2 = substr($lineaText, 0, -4);
-			//var_dump($lineaText);
+						$lineaText = substr($linea, 11, -3);
                         $stmt = $connection->prepare("SELECT DISTINCT estacion FROM lugar_transporte WHERE linea = ?");
                         $stmt->bind_param('s', $lineaText);
 
                         $stmt->execute();
-                        //var_dump($stmt);
+
                         $result = $stmt->get_result();
-                        //var_dump($result);
+
                         while($row = $result->fetch_assoc())    {
                             $rows[] = $row;
                         }
                         $rawdata = array();
                         $i = 0;
-			//echo $rawdata;
-			//var_dump($rawdata);
+
                         foreach($rows as $row)    {
                                 $rawdata[$i] = $rows[$i];
                                 $i++;
                         }
-                        //var_dump($rawdata);
 
                         $result->close();
 
@@ -66,6 +59,34 @@
 
 		    	disconnectDB($connection);
 	        	return $rawdata;
+		}
+
+		function selectId($linea, $station) {
+			$connection = connectDB();
+
+			$sql = mysqli_prepare($connection, "SELECT * FROM lugar_transporte WHERE linea = ? AND estacion = ?");
+			mysqli_stmt_bind_param($sql, "ss", $linea, $station);
+
+			$query = $sql->execute();
+
+			if(!$query)
+            			die();
+
+			$result = $sql->store_result();
+
+			$realresult = $sql->bind_result($idLugarTte, $tipoTte, $linea, $estacion);
+
+			$rawdata = array();
+
+			$sql->fetch();
+
+			$rawdata['id'] = utf8_encode($idLugarTte);
+			$rawdata['tipoTte'] = utf8_encode($tipoTte);
+			$rawdata['linea'] = utf8_encode($linea);
+			$rawdata['estacion'] = $estacion;
+
+	        	disconnectDB($connection);
+		    	return $rawdata;
 		}
 
 		/**

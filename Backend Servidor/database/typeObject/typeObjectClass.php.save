@@ -1,0 +1,43 @@
+<?php
+        ini_set('display_errors', 1);
+        ini_set('display_startup_errors', 1);
+        error_reporting(E_ALL);
+	include('../dbFunctions.php');
+
+	class typeObject {
+		function select() {
+			$connection = connectDB();
+
+			$sql = mysqli_prepare($connection, "SELECT nombreTabla FROM tipo");
+
+			$query = $sql->execute();
+
+			if(!$query)
+	                    die();
+
+			$result = $sql->store_result();
+
+			$realresult = $sql->bind_result($nombreTabla);
+
+			while($row = $result->fetch_assoc())    {
+                            $rows[] = $row;
+                        }
+                        $rawdata = array();
+                        $i = 0;
+
+                        foreach($rows as $row)    {
+                                $rawdata[$i] = $rows[$i];
+                                $i++;
+                        }
+
+			//$rawdata = array();
+
+			//$sql->fetch();
+
+			//$rawdata['nombreTabla'] = utf8_encode($nombreTabla);
+
+	        	disconnectDB($connection);
+		 	return $rawdata;
+		}
+	}
+?>
