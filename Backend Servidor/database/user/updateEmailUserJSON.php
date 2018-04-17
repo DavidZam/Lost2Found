@@ -10,12 +10,12 @@
 	    $jsonencode = json_decode($json);
 
 	    $email = $jsonencode[0]->email;
-	    $nombre = $jsonencode[0]->nombre;
+	    $id = $jsonencode[0]->id;
 
 	    require_once("userClass.php");
+
 	    $userObject = new User();
-	    $user = $userObject->updateName($nombre, $email);
-		//var_dump($user);
+	    $user = $userObject->updateEmail($email, $id);
 	    json_encode($user);
 	}
 ?>

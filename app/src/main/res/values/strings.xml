@@ -7,7 +7,8 @@
     <string name="color_button_text">Color</string>
     <string name="trasnport_place_button_text">Lugar de transporte</string>
     <string name="underground_transport_button_text">Metro</string>
-    <string name="transport_title_text">Línea y estacion</string>
+    <string name="transport_title_text">Lugar de transporte</string>
+    <string name="concrete_title_text">Lugar concreto</string>
     <string name="bus_transport_button_text">Autobús</string>
     <string name="airport_transport_button_text">Aeropuerto</string>
     <string name="map_button_text">Mapa</string>
@@ -52,6 +53,10 @@
 
     <string name="email_textloginregister">Email</string>
     <string name="brand_text">Marca</string>
+    <string name="street_text">Calle</string>
+    <string name="number_text">Numero</string>
+    <string name="postalcode_text">Codigo Postal</string>
+
     <string name="model_text">Modelo</string>
     <string name="color_text">Color</string>
     <string name="fill_help1">Especifique la linea y estacion donde ha perdido o encontrado el objeto</string>

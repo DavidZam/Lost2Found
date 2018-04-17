@@ -12,8 +12,10 @@ import android.view.View;
 
 import es.lost2found.R;
 import es.lost2found.database.DB_place;
+import es.lost2found.entities.ConcretePlace;
 import es.lost2found.entities.Place;
 import es.lost2found.lost2foundUI.announceUI.AnnounceActivity;
+import es.lost2found.lost2foundUI.placeUI.concretePlaceUI.FillConcretePlaceActivity;
 import es.lost2found.lost2foundUI.placeUI.transportUI.TransportPlaceActivity;
 
 public class PlaceActivity extends AppCompatActivity {
@@ -43,6 +45,12 @@ public class PlaceActivity extends AppCompatActivity {
         finish();
     }
 
+    public void concretePlace(View view) {
+        Intent intent = new Intent(this, FillConcretePlaceActivity.class);
+        startActivity(intent);
+        finish();
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         Intent newannounce = new Intent(this, AnnounceActivity.class);
@@ -51,7 +59,7 @@ public class PlaceActivity extends AppCompatActivity {
         return true;
     }
 
-    public void savePlaceData(View view) {
+    /*public void savePlaceData(View view) {
         // Place de transporte
 
         // Ubicacion del mapa
@@ -82,9 +90,9 @@ public class PlaceActivity extends AppCompatActivity {
             this.dialog.dismiss();
             processNewPlace(result);
         }
-    }
+    }*/
 
-    private void processNewPlace(Place place) {
+    /*private void processNewPlace(Place place) {
         Intent intent = new Intent(this, PlaceActivity.class);
         startActivity(intent);
         finish();
@@ -113,8 +121,8 @@ public class PlaceActivity extends AppCompatActivity {
                 TextView textView = findViewById(R.id.wrong_user);
                 textView.setText(textView.getResources().getString(R.string.error_txt1));
             }
-        }*/
-    }
+        }
+    }*/
 
     /*public void place(View view) {
         Intent intent = new Intent(this, PlaceActivity.class);

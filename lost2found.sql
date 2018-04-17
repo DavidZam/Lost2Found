@@ -251,6 +251,7 @@ CREATE TABLE contiene (
 CREATE TABLE lugar_concreto (
   idLugar int(4) NOT NULL,
   calle varchar(20) NOT NULL,
+  numero int(3) NOT NULL,
   codigoPostal int(5) NOT NULL,
   PRIMARY KEY (idLugar),
   CONSTRAINT fk_idLugar3 FOREIGN KEY (idLugar) REFERENCES lugar (id)

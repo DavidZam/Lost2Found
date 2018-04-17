@@ -153,7 +153,7 @@ public class NewAnnounceActivity extends AppCompatActivity {
 
         // PlaceId
         SharedPreferences sp2 = getApplicationContext().getSharedPreferences("placeId", 0);
-        Integer placeId = sp2.getInt("idLugarTte", 0);
+        Integer placeId = sp2.getInt("idLugar", 0);
         String placeIdText = String.valueOf(placeId);
 
         // UserId

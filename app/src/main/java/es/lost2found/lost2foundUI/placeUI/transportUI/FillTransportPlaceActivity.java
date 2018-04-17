@@ -185,7 +185,7 @@ public class FillTransportPlaceActivity extends AppCompatActivity {
         SharedPreferences.Editor ed = sp.edit();  // Saved the place data filled by the user.
         Integer placeId = transportPlace.getId(); // transportPlace.getId();
 
-        ed.putInt("idLugarTte", placeId); // Comprobar
+        ed.putInt("idLugar", placeId); // Comprobar
         ed.apply();
 
         intent.putExtra("transportPlace", transportPlace);

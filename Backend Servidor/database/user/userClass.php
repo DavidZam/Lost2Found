@@ -93,12 +93,30 @@
 
 		
 		/**
-			Update a user in the database
+			Update a name of user in the database
 		*/
 		function updateName($nombre, $email){
 		$connection = connectDB();
 		$sql = mysqli_prepare($connection, "UPDATE usuario SET nombre=? WHERE email=?");
 		mysqli_stmt_bind_param($sql, "ss", $nombre, $email);
+		$query = $sql->execute();
+
+		if(!$query)
+			echo "incorrect";
+		else
+			echo "correct";
+
+		disconnectDB($connection);
+		return $query;
+		}
+
+		/**
+			Update a email of user in the database
+		*/
+		function updateEmail($email, $id){
+		$connection = connectDB();
+		$sql = mysqli_prepare($connection, "UPDATE usuario SET email=? WHERE id=?");
+		mysqli_stmt_bind_param($sql, "si", $email, $id);
 		$query = $sql->execute();
 
 		if(!$query)

@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_place"
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent">
+
+    <RelativeLayout android:id="@+id/content_frame"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".lost2foundUI.placeUI.concretePlaceUI.FillConcretePlaceActivity"
+        tools:showIn="@layout/activity_concrete_place"
+        android:background="@color/colorSecondaryText">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar_center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Tipos de lugar"
+            android:theme="@style/ToolbarStyle">
+
+        </android.support.v7.widget.Toolbar>
+
+        <RelativeLayout
+            android:id="@+id/concretePlace_layout"
+            android:layout_width="match_parent"
+            android:padding="16dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/toolbar_center"
+            android:orientation="vertical">
+
+            <EditText
+                android:id="@+id/street"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginTop="15dp"
+                android:hint="@string/street_text"
+                android:inputType="text"
+                android:textColor="@color/colorPrimaryText"
+                android:textSize="17sp" />
+
+            <EditText
+                android:id="@+id/number"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/street"
+                android:layout_marginTop="30dp"
+                android:hint="@string/number_text"
+                android:inputType="text"
+                android:textColor="@color/colorPrimaryText"
+                android:textSize="17sp" />
+
+            <EditText
+                android:id="@+id/postalCode"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/number"
+                android:layout_marginTop="30dp"
+                android:hint="@string/postalcode_text"
+                android:inputType="text"
+                android:textColor="@color/colorPrimaryText"
+                android:textSize="17sp" />
+
+            <Button
+                android:id="@+id/confirm_button"
+                style="@style/buttonStyle"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="34dp"
+                android:onClick="saveConcretePlaceData"
+                android:text="@string/confirm_button_text" />
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+
+</android.support.constraint.ConstraintLayout>
