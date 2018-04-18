@@ -43,6 +43,7 @@
     <string name="error_txt2">Introduce la linea y la estacion</string>
     <string name="error_txt3">Completa toda la información</string>
     <string name="error_txt4">Combinación no valida</string>
+    <string name="info_txt">¿Todavía no has creado ningún anuncio?\n\n¡Pulsa en el botón (+) y hazlo ya!</string>
 
     <string name="title_announce_section">Mis anuncios</string>
     <string name="title_chat_section">Mis chats</string>
@@ -92,5 +93,4 @@
     <string name="action_example">Example action</string>
 
     <string name="action_settings">Settings</string>
-
 </resources>

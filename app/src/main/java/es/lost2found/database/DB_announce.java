@@ -26,19 +26,18 @@ public class DB_announce {
     // Server: jcorreas-hp.fdi.ucm.es
     private static String SERVER_PATH = "http://jcorreas-hp.fdi.ucm.es/lost2found/database/announce/";
 
-    /*public static Announce findUserByEmail(String email, String contrasena) {
-        User ret = null;
-
+    public static Integer getNumberAnnounces(String email) {
+        Integer userId = DB_user.getId(email); // Obtenemos el id del usuario en cuestion
+        Integer ret = null;
         try {
             JSONObject jsonObject = new JSONObject();
-            jsonObject.put("email", email);
-            jsonObject.put("contrasena", contrasena);
+            jsonObject.put("id", userId);
 
             List list = new LinkedList();
             list.addAll(Arrays.asList(jsonObject));
             String jsonString = list.toString();
 
-            String urlStr = SERVER_PATH + "getUserByEmailJSON.php";
+            String urlStr = SERVER_PATH + "getNumberUserAnnouncesJSON.php";
             URL url = new URL(urlStr);
 
             HttpURLConnection con = (HttpURLConnection) url.openConnection();
@@ -72,14 +71,83 @@ public class DB_announce {
 
             in.close();
 
-            JSONObject object = new JSONObject(response.toString());
-            if(object.getBoolean("correct"))
-                ret = new User(response.toString());
+            if(Integer.valueOf(response.toString()) >= 0) {
+                ret = Integer.valueOf(response.toString());
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
         return  ret;
-    }*/
+    }
+
+    public static Announce[] getAnnounces(String email, String numberAnnounces) {
+        Integer userId = DB_user.getId(email); // Obtenemos el id del usuario en cuestion
+        Integer numAnnounces = Integer.valueOf(numberAnnounces);
+        Announce[] announcesArray = new Announce[numAnnounces];
+        try {
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("id", userId);
+
+            List list = new LinkedList();
+            list.addAll(Arrays.asList(jsonObject));
+            String jsonString = list.toString();
+
+            String urlStr = SERVER_PATH + "getAnnouncesJSON.php";
+            URL url = new URL(urlStr);
+
+            HttpURLConnection con = (HttpURLConnection) url.openConnection();
+            con.setRequestMethod("POST");
+            con.setRequestProperty("User-Agent", "your user agent");
+            con.setRequestProperty("Accept-Language", "sp,SP;q=0.5");
+
+            String urlParameters = "json=" + jsonString;
+
+            con.setDoOutput(true);
+            DataOutputStream wr = new DataOutputStream(con.getOutputStream());
+            wr.writeBytes(urlParameters);
+            wr.flush();
+            wr.close();
+
+            InputStream instream;
+
+            int status = con.getResponseCode();
+
+            if (status != HttpURLConnection.HTTP_OK)
+                instream = con.getErrorStream();
+            else
+                instream = con.getInputStream();
+
+            BufferedReader in = new BufferedReader(new InputStreamReader(instream));
+            String inputLine;
+            StringBuffer response = new StringBuffer();
+
+            while((inputLine = in.readLine()) != null)
+                response.append(inputLine);
+
+            String res = response.toString();
+            String[] announces = res.split("\\.");
+            String text = announces[0].replace("[", "");
+            announces[0] = text;
+            String text2 = announces[announces.length-1].replace("]", "");
+            announces[announces.length-1] = text2;
+
+            for(int i = 0; i < numAnnounces; i++) {
+                char firstChar = announces[i].charAt(1);
+                if(firstChar == ',') {
+                    announces[i] = announces[i].substring(1, announces[i].length());
+                }
+                Announce announce = new Announce(announces[i]);
+                announcesArray[i] = announce;
+            }
+
+            in.close();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return announcesArray;
+    }
+
     // Id, TipoAnuncio, HoraActual, DiaAnuncio, HoraPerdidaoHallazgo, Modelo, Marca, Color, idUsuario e idLugar, Categoria (NombreTabla)
     public static Announce insertAnnounce(String announceType, String currentTime, String announceDayText, String announceHourText, String model, String brand, String color, String idUser, String idPlace, String announceCategorie) {
         Announce ret = null;

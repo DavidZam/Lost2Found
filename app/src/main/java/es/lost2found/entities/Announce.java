@@ -34,6 +34,30 @@ public class Announce implements Serializable {
         this.color = color;
     }
 
+    /*public Announce(Announce announce) {
+        this.announceType = announce.announceType;
+        this.announceDateText = announce.announceDateText;
+        this.currentTime = announce.currentTime;
+        this.announceHourText = announce.announceHourText;
+        this.announceCategorie = announce.announceCategorie;
+        this.brand = announce.brand;
+        this.model = announce.model;
+        this.color = announce.color;
+    }*/
+
+    public Announce(String announce) {
+        //String announceArray[] = announce.split(",");
+        String announceArray[] = announce.split("\"");
+        this.announceType = announceArray[5];
+        this.currentTime = announceArray[9];
+        this.announceDateText = announceArray[13];
+        this.announceHourText = announceArray[17];
+        this.model = announceArray[21];
+        this.brand = announceArray[25];
+        this.color = announceArray[29];
+        this.announceCategorie = announceArray[37];
+    }
+
     public String getAnnounceType() {
         return this.announceType;
     }

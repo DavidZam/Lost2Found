@@ -1,35 +1,58 @@
 <?php
+	ini_set('display_errors', 1);
+    ini_set('display_startup_errors', 1);
+    error_reporting(E_ALL);
 	include('../dbFunctions.php');
 
 	class Announce {
-		/*
-		function select($email, $password) {
+		
+		function select($id) {
 			$connection = connectDB();
 
-			$sql = mysqli_prepare($connection, "SELECT * FROM usuario WHERE email = ?");
-			mysqli_stmt_bind_param($sql, "s", $email);
+			$sql = mysqli_prepare($connection, "SELECT DISTINCT COUNT(*) FROM anuncio_objeto WHERE idUsuario = ?");
+			mysqli_stmt_bind_param($sql, "s", $id);
 
 			$query = $sql->execute();
 
 			if(!$query)
-            	        die();
+		            	die();
 			$result = $sql->store_result();
-
-			$realresult = $sql->bind_result($id, $email, $name, $passHash);
-
-			$rawdata = array();
-
+			$realresult = $sql->bind_result($numAnnounces);
 			$sql->fetch();
+			
+	        	disconnectDB($connection);
+	        
+		    	return $numAnnounces;
+		}
 
-			$correct = password_verify($password, $passHash);
+		function getAnnounces($id) {
 
-			$rawdata['email'] = utf8_encode($email);
-			$rawdata['name'] = utf8_encode($name);
-			$rawdata['correct'] = $correct;
+			$connection = connectDB();
 
-	                disconnectDB($connection);
-		        return $rawdata;
-		}*/
+			$stmt = $connection->prepare("SELECT DISTINCT * FROM `anuncio_objeto` WHERE idUsuario = ?");
+			$stmt->bind_param('s', $id);
+
+			$stmt->execute();
+
+			$result = $stmt->get_result();
+
+			while($row = $result->fetch_assoc())    {
+		            $rows[] = $row;
+			    $rows[] = ".";
+            		}
+			$rawdata = array();
+			$i = 0;
+
+            		foreach($rows as $row)    {
+        	    		$rawdata[$i] = $rows[$i];
+	            		$i++;
+           		}
+
+			$result->close();
+
+		    	disconnectDB($connection);
+	        	return $rawdata;
+		}
 
 		/**
 		 *	Insert an announce in the database.

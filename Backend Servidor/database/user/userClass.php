@@ -28,7 +28,7 @@
 
 			$rawdata['id'] = utf8_encode($id);
 			$rawdata['email'] = utf8_encode($email);
-			$rawdata['name'] = utf8_encode($name);
+			$rawdata['nombre'] = utf8_encode($name);
 			$rawdata['correct'] = $correct;
 
 	                disconnectDB($connection);
@@ -117,6 +117,26 @@
 		$connection = connectDB();
 		$sql = mysqli_prepare($connection, "UPDATE usuario SET email=? WHERE id=?");
 		mysqli_stmt_bind_param($sql, "si", $email, $id);
+		$query = $sql->execute();
+
+		if(!$query)
+			echo "incorrect";
+		else
+			echo "correct";
+
+		disconnectDB($connection);
+		return $query;
+		}
+	
+	
+	/**
+			Update a password of user in the database
+		*/
+		function updatePassword($pass, $email){
+		$connection = connectDB();
+		$passHash = password_hash($pass, PASSWORD_BCRYPT);
+		$sql = mysqli_prepare($connection, "UPDATE usuario SET contrasena=? WHERE email=?");
+		mysqli_stmt_bind_param($sql, "ss", $email, $passHash);
 		$query = $sql->execute();
 
 		if(!$query)

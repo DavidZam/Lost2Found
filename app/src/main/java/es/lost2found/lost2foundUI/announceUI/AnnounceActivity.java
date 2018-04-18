@@ -2,6 +2,7 @@ package es.lost2found.lost2foundUI.announceUI;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -21,6 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import es.lost2found.R;
+import es.lost2found.database.DB_announce;
 import es.lost2found.entities.Announce;
 import es.lost2found.lost2foundUI.chatUI.ChatActivity;
 import es.lost2found.lost2foundUI.loginregisterUI.LoginActivity;
@@ -35,8 +37,11 @@ import es.lost2found.lost2foundUI.seekerUI.SeekerActivity;
 public class AnnounceActivity extends AppCompatActivity implements FloatingActionButton.OnClickListener {
 
     private DrawerLayout mDrawerLayout;
-    private List<Announce> announceList = new ArrayList<Announce>();
+    private List<Announce> announceList;
     private Integer listElements = 0;
+    private AnnounceViewAdapter adapter;
+    private RecyclerView recyclerView;
+    private Integer numberAnnounces;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,7 +90,6 @@ public class AnnounceActivity extends AppCompatActivity implements FloatingActio
                         mDrawerLayout.closeDrawers();
 
                         // Add code here to update the UI based on the item selected
-
                         if(menuItem.getItemId()== R.id.nav_search) {
                             startActivity(buscar);
                         }else if(menuItem.getItemId()== R.id.nav_chat) {
@@ -134,22 +138,14 @@ public class AnnounceActivity extends AppCompatActivity implements FloatingActio
         );
         */
 
-       // In this example we fill announceList with a function fill_with_data(), in the future we'll do it with the database info
-
-       /*if(announce != null) {
-           announceList.add(announce);
-       }*/
-       //for(int i = 0; i < announceList.size() - 1; i++)
-       //     announceList.add(announce);
-
-        Announce announce = (Announce) getIntent().getSerializableExtra("newAnnounce");
-        RecyclerView recyclerView = findViewById(R.id.announce_recyclerview);
-        AnnounceViewAdapter adapter = new AnnounceViewAdapter(announceList, getApplication());
-        if(announce != null) {
-            announceList.add(listElements, announce);
-            //adapter.insert(listElements, announce);
-            listElements++;
+        if(spref != null) {
+            String userEmail = spref.getString("email", "");
+            new getNumberObjectAnnouncesDB().execute(userEmail); // Devuelve el numero de anuncios del usuario en cuestion
         }
+
+        announceList = new ArrayList<>();
+        adapter = new AnnounceViewAdapter(announceList, getApplication());
+        recyclerView = findViewById(R.id.announce_recyclerview);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
@@ -163,9 +159,57 @@ public class AnnounceActivity extends AppCompatActivity implements FloatingActio
         createAnnounce.setOnClickListener(this);
     }
 
+    private class getNumberObjectAnnouncesDB extends AsyncTask<String, Void, Integer> {
+
+        @Override
+        protected Integer doInBackground(String... strings) {
+            return DB_announce.getNumberAnnounces(strings[0]);
+        }
+
+        @Override
+        protected void onPostExecute(Integer numAnnounce) {
+            processAnnounceScreen(numAnnounce);
+        }
+    }
+
+    public void processAnnounceScreen(Integer numAnnounces) {
+        if (numAnnounces == 0) {
+            TextView noannounces = findViewById(R.id.without_announces);
+            noannounces.setText(noannounces.getResources().getString(R.string.info_txt));
+        } else {
+            TextView noannounces = findViewById(R.id.without_announces);
+            noannounces.setText("");
+            numberAnnounces = numAnnounces;
+            SharedPreferences spref = getApplicationContext().getSharedPreferences("Login", 0);
+            String userEmail = spref.getString("email", "");
+            new getObjectAnnouncesDB().execute(userEmail, String.valueOf(numberAnnounces)); // Devuelve una lista con los anuncios del usuario en cuestion
+        }
+    }
+
+    private class getObjectAnnouncesDB extends AsyncTask<String, Void, Announce[]> {
+
+        @Override
+        protected Announce[] doInBackground(String... strings) {
+            return DB_announce.getAnnounces(strings[0], strings[1]);
+        }
+
+        @Override
+        protected void onPostExecute(Announce[] announces) {
+            updateAdapter(announces, numberAnnounces);
+        }
+    }
+
+    public void updateAdapter(Announce[] announces, Integer numAnnounces) {
+        for(int i = 0; i < numAnnounces; i++) {
+            adapter.insert(listElements, announces[i]);
+            listElements++;
+            recyclerView.setAdapter(adapter);
+            recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        }
+    }
+
     @Override
     public void onClick(View v) {
-        //final Intent newannounce = new Intent(this, NewAnnounceActivity.class);
         final Intent newannounce = new Intent(this, PlaceActivity.class);
         startActivity(newannounce);
         finish();
