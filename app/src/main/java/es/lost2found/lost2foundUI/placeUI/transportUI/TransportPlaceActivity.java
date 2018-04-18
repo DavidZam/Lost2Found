@@ -54,7 +54,6 @@ public class TransportPlaceActivity extends AppCompatActivity implements View.On
 
     @Override
     public void onClick(View v) {
-        //final Intent newannounce = new Intent(this, NewAnnounceActivity.class);
         final Intent intent = new Intent(this, FillTransportPlaceActivity.class);
         startActivity(intent);
         finish();

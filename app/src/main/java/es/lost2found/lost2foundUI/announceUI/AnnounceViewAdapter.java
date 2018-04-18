@@ -15,7 +15,7 @@ import es.lost2found.entities.Announce;
 import es.lost2found.lost2foundUI.announceUI.matchingAnnounceUI.MatchAnnounce;
 
 public class AnnounceViewAdapter extends RecyclerView.Adapter<AnnounceViewHolder>{
-    List<Announce> listAnnounce = Collections.emptyList();
+    List<Announce> listAnnounce;
     Context context;
 
     public AnnounceViewAdapter(List<Announce> listAnnounce, Context context) {
@@ -26,7 +26,7 @@ public class AnnounceViewAdapter extends RecyclerView.Adapter<AnnounceViewHolder
     @Override
     public AnnounceViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         // Inflate the layout and initialize the View Holder
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_annonuce, parent, false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_announce, parent, false);
         AnnounceViewHolder holder = new AnnounceViewHolder(v);
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -66,9 +66,12 @@ public class AnnounceViewAdapter extends RecyclerView.Adapter<AnnounceViewHolder
     @Override
     public void onBindViewHolder(AnnounceViewHolder holder, int position) {
         // Use the provided ChatView_Holder on the onCreateViewHolder method to populate the current row on the RecycleView
-        /*holder.title.setText(listAnnounce.get(position).title);
-        holder.description.setText(listAnnounce.get(position).description);
-        holder.imageView.setImageResource(listAnnounce.get(position).imageId);*/
+        holder.announceType.setText(listAnnounce.get(position).getAnnounceType());
+        holder.announceDateText.setText(listAnnounce.get(position).getAnnounceDateText());
+        holder.announceHourText.setText(listAnnounce.get(position).getAnnounceHourText());
+        holder.brand.setText(listAnnounce.get(position).getBrand());
+        holder.model.setText(listAnnounce.get(position).getModel());
+        holder.color.setText(listAnnounce.get(position).getColor());
         //animate(holder);
     }
 
@@ -83,8 +86,8 @@ public class AnnounceViewAdapter extends RecyclerView.Adapter<AnnounceViewHolder
     }
 
     // Insert a new item (announce) to the RecyclerView on a predefined position
-    public void insert(int position, Announce annonuce) {
-        listAnnounce.add(position, annonuce);
+    public void insert(int position, Announce announce) {
+        listAnnounce.add(position, announce);
         notifyItemInserted(position);
     }
 

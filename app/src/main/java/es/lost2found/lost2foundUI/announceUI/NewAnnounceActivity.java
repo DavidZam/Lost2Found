@@ -24,6 +24,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 import es.lost2found.database.DB_announce;
 import es.lost2found.database.DB_transportPlace;
@@ -196,7 +197,13 @@ public class NewAnnounceActivity extends AppCompatActivity {
     }
 
     private void processNewAnnounce(Announce announce) {
+        //List<Announce> announceList = new ArrayList<Announce>();
+        //announceList.add(announce);
         Intent intent = new Intent(this, AnnounceActivity.class);
+        //Bundle bundle = new Bundle();
+        //bundle.putSerializable("newAnnounce", announce);
+        intent.putExtra("newAnnounce", announce);
+        //intent.putParcelableArrayListExtra("listAnounce", announceList)
         startActivity(intent);
         finish();
 

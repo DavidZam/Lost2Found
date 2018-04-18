@@ -13,27 +13,51 @@ import es.lost2found.R;
 public class AnnounceViewHolder extends RecyclerView.ViewHolder {
 
     CardView cv;
-    TextView title;
-    TextView description;
-    ImageView imageView;
+    //TextView title;
+    //TextView description;
+    //ImageView imageView;
+
+    TextView announceType;
+    TextView announceDateText;
+    TextView announceHourText;
+    //private TextView announceCategorie;
+    TextView brand;
+    TextView model;
+    TextView color;
 
     public AnnounceViewHolder(View itemView) {
         super(itemView);
         cv = (CardView) itemView.findViewById(R.id.cardView);
-        title = (TextView) itemView.findViewById(R.id.title);
-        description = (TextView) itemView.findViewById(R.id.description);
-        imageView = (ImageView) itemView.findViewById(R.id.imageView);
+        announceType = (TextView) itemView.findViewById(R.id.announceType);
+        announceDateText = (TextView) itemView.findViewById(R.id.announceDateText);
+        announceHourText = (TextView) itemView.findViewById(R.id.announceHourText);
+        //announceCategorie = (TextView) itemView.findViewById(R.id.announceCategorie);
+        brand = (TextView) itemView.findViewById(R.id.brand);
+        model = (TextView) itemView.findViewById(R.id.model);
+        color = (TextView) itemView.findViewById(R.id.color);
     }
 
-    public TextView getTitle() {
-        return title;
+    public TextView getAnnounceType() {
+        return announceType;
     }
 
-    public TextView getDescription() {
-        return description;
+    public TextView getAnnounceDateText() {
+        return announceDateText;
     }
 
-    public ImageView getImageView() {
-        return imageView;
+    public TextView getAnnounceHourText() {
+        return announceHourText;
+    }
+
+    public TextView getBrand() {
+        return brand;
+    }
+
+    public TextView getModel() {
+        return model;
+    }
+
+    public TextView getColor() {
+        return color;
     }
 }

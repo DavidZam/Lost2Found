@@ -149,11 +149,10 @@ public class FillTransportPlaceActivity extends AppCompatActivity {
         ed.putString("stationChoice", stationChoice);
         ed.apply();
         if(lineChoice.equalsIgnoreCase("") || stationChoice.equalsIgnoreCase("")) {
-            TextView textView = findViewById(R.id.wrong_info);
+            TextView textView = findViewById(R.id.no_info);
             textView.setText(textView.getResources().getString(R.string.error_txt2));
         } else
             new getTransportPlaceDB().execute(lineChoice, stationChoice);
-
     }
 
     private class getTransportPlaceDB extends AsyncTask<String, Void, TransportPlace> {
@@ -174,22 +173,26 @@ public class FillTransportPlaceActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(TransportPlace result) {
             this.dialog.dismiss();
-            processNewTransportPlace(result);
+            processTransportPlace(result);
         }
     }
 
-    private void processNewTransportPlace(TransportPlace transportPlace) {
-        // PENDIENTE: ASEGURARSE QUE SE METEN VALORES CONSISTENTES EN LOS DOS SPINNER
-        Intent intent = new Intent(this, NewAnnounceActivity.class);
-        SharedPreferences sp = getSharedPreferences("placeId", 0);
-        SharedPreferences.Editor ed = sp.edit();  // Saved the place data filled by the user.
-        Integer placeId = transportPlace.getId(); // transportPlace.getId();
+    private void processTransportPlace(TransportPlace transportPlace) {
+        Integer placeId = transportPlace.getId();
+        if(placeId == null) {
+            TextView textView = findViewById(R.id.wrong_info);
+            textView.setText(textView.getResources().getString(R.string.error_txt4));
+        } else {
+            Intent intent = new Intent(this, NewAnnounceActivity.class);
+            SharedPreferences sp = getSharedPreferences("placeId", 0);
+            SharedPreferences.Editor ed = sp.edit();  // Saved the place data filled by the user.
 
-        ed.putInt("idLugar", placeId); // Comprobar
-        ed.apply();
+            ed.putInt("idLugar", placeId);
+            ed.apply();
 
-        intent.putExtra("transportPlace", transportPlace);
-        startActivity(intent);
-        finish();
+            intent.putExtra("transportPlace", transportPlace);
+            startActivity(intent);
+            finish();
+        }
     }
 }

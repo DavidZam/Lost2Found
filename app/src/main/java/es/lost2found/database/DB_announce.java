@@ -96,7 +96,7 @@ public class DB_announce {
             jsonObject.put("idPlace", idPlace);
             jsonObject.put("announceCategorie", announceCategorie);
 
-            SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy"); // EEE, MMM d, yyyy
+            /*SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy"); // EEE, MMM d, yyyy
             SimpleDateFormat hourFormat = new SimpleDateFormat("h:mm a");
             Date announceDayDate = null;
             Date hourCurrentTime = null;
@@ -107,7 +107,7 @@ public class DB_announce {
                 hourAnnounce = hourFormat.parse(announceHourText);
             } catch(ParseException e) {
                 e.printStackTrace();
-            }
+            }*/
 
             List list = new LinkedList();
             list.addAll(Arrays.asList(jsonObject));
@@ -150,7 +150,7 @@ public class DB_announce {
                     response.append(inputLine);
 
                 if (response.toString().equals("correct"))
-                    ret = new Announce(announceType, hourCurrentTime, announceDayDate, hourAnnounce, model, brand, color, announceCategorie);
+                    ret = new Announce(announceType, currentTime, announceDayText, announceHourText, model, brand, color, announceCategorie);
             } finally {
                 con.disconnect();
             }

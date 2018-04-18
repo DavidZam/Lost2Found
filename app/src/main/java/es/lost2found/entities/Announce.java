@@ -2,35 +2,28 @@ package es.lost2found.entities;
 
 import org.json.JSONObject;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import es.lost2found.R;
 
-public class Announce {
+public class Announce implements Serializable {
 
-    /* public String title;
-    public String description;
-    public int imageId;*/
-
-    // String announceType, String announceDateText, String currentTime, String announceHourText, String announceCategorie, String brand, String model, String color
     public String announceType;
-    public Date announceDateText;
-    public Date currentTime;
-    public Date announceHourText;
+    //public Date announceDateText;
+    public String announceDateText;
+    //public Date currentTime;
+    public String currentTime;
+    //public Date announceHourText;
+    public String announceHourText;
     public String announceCategorie;
     public String brand;
     public String model;
     public String color;
 
-    /*public Announce(String title, String description, int imageId)  {
-        this.title = title;
-        this.description = description;
-        this.imageId = imageId;
-    }*/
-
-    public Announce(String announceType, Date currentTime, Date announceDateText, Date announceHourText, String model, String brand, String color, String announceCategorie) {
+    public Announce(String announceType, String currentTime, String announceDateText, String announceHourText, String model, String brand, String color, String announceCategorie) {
         this.announceType = announceType;
         this.announceDateText = announceDateText;
         this.currentTime = currentTime;
@@ -41,21 +34,33 @@ public class Announce {
         this.color = color;
     }
 
-    /*public Announce(String json) {
-        try {
-            JSONObject jObject = new JSONObject(json);
-            this.announceType = jObject.getString("announceType");
-            this.currentTime = jObject.getString("currentTime");
-            this.announceDateText = jObject.getDate("announceDateText");
-            this.announceHourText = jObject.getString("announceHourText");
-            this.model = jObject.getString("model");
-            this.brand = jObject.getString("brand");
-            this.color = jObject.getString("color");
-            this.announceCategorie = jObject.getString("announceCategorie");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }*/
+    public String getAnnounceType() {
+        return this.announceType;
+    }
+
+    public String getAnnounceDateText() {
+        return this.announceDateText;
+    }
+
+    public String getAnnounceHourText() {
+        return this.announceHourText;
+    }
+
+    public String getAnnounceCategorie() {
+        return this.announceCategorie;
+    }
+
+    public String getBrand() {
+        return this.brand;
+    }
+
+    public String getModel() {
+        return this.model;
+    }
+
+    public String getColor() {
+        return this.color;
+    }
 
     // Faltan los getters y setters
     /*

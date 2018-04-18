@@ -12,7 +12,6 @@ import java.util.List;
 
 import es.lost2found.R;
 import es.lost2found.entities.Announce;
-import es.lost2found.lost2foundUI.announceUI.matchingAnnounceUI.MatchAnnounceInfoActivity;
 
 public class SeekerAnnounceViewAdapter extends RecyclerView.Adapter<SeekerAnnounceViewHolder> {
     List<Announce> listAnnounce = Collections.emptyList();
@@ -26,7 +25,7 @@ public class SeekerAnnounceViewAdapter extends RecyclerView.Adapter<SeekerAnnoun
     @Override
     public SeekerAnnounceViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         // Inflate the layout and initialize the View Holder
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_annonuce, parent, false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_announce, parent, false);
         SeekerAnnounceViewHolder holder = new SeekerAnnounceViewHolder(v);
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {

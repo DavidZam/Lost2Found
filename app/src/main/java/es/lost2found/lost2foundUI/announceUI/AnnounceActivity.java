@@ -35,22 +35,13 @@ import es.lost2found.lost2foundUI.seekerUI.SeekerActivity;
 public class AnnounceActivity extends AppCompatActivity implements FloatingActionButton.OnClickListener {
 
     private DrawerLayout mDrawerLayout;
+    private List<Announce> announceList = new ArrayList<Announce>();
+    private Integer listElements = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_announce);
-
-        /*
-        String restoredUserName = prefs.getString("text", null);
-        if(restoredUserName != null) {
-            String useremail = prefs.getString("email", "No email defined");
-            String username = prefs.getString("nombre", "No name defined");
-            TextView emailUser = findViewById(R.id.user_name);
-            emailUser.setText(useremail);
-            TextView nameUser = findViewById(R.id.user_mail);
-            nameUser.setText(username);
-        }*/
 
         Toolbar tb = findViewById(R.id.toolbar);
         setSupportActionBar(tb);
@@ -65,6 +56,7 @@ public class AnnounceActivity extends AppCompatActivity implements FloatingActio
         TextView emailUser = headerLayout.findViewById(R.id.user_mail);
         TextView nameUser = headerLayout.findViewById(R.id.user_name);
         SharedPreferences spref = getApplicationContext().getSharedPreferences("Login", 0);
+
         if(spref != null) {
             if (spref.contains("email")) {
                 String userEmail = spref.getString("email", "");
@@ -143,12 +135,21 @@ public class AnnounceActivity extends AppCompatActivity implements FloatingActio
         */
 
        // In this example we fill announceList with a function fill_with_data(), in the future we'll do it with the database info
-       /*List<Announce> announceList = new ArrayList<>();
-       Announce announce = new Announce();
-       announce.fill_with_data(announceList);
 
+       /*if(announce != null) {
+           announceList.add(announce);
+       }*/
+       //for(int i = 0; i < announceList.size() - 1; i++)
+       //     announceList.add(announce);
+
+        Announce announce = (Announce) getIntent().getSerializableExtra("newAnnounce");
         RecyclerView recyclerView = findViewById(R.id.announce_recyclerview);
         AnnounceViewAdapter adapter = new AnnounceViewAdapter(announceList, getApplication());
+        if(announce != null) {
+            announceList.add(listElements, announce);
+            //adapter.insert(listElements, announce);
+            listElements++;
+        }
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
@@ -156,7 +157,7 @@ public class AnnounceActivity extends AppCompatActivity implements FloatingActio
         RecyclerView.ItemAnimator itemAnimator = new DefaultItemAnimator();
         itemAnimator.setAddDuration(1000);
         itemAnimator.setRemoveDuration(1000);
-        /*recyclerView.setItemAnimator(itemAnimator);*/
+        recyclerView.setItemAnimator(itemAnimator);
 
         FloatingActionButton createAnnounce = findViewById(R.id.new_announce);
         createAnnounce.setOnClickListener(this);
@@ -169,7 +170,6 @@ public class AnnounceActivity extends AppCompatActivity implements FloatingActio
         startActivity(newannounce);
         finish();
     }
-
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -192,8 +192,6 @@ public class AnnounceActivity extends AppCompatActivity implements FloatingActio
         startActivity(intent);
         finish();
     }
-
-
 
     /**
      *

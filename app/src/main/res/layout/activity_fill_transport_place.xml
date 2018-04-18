@@ -56,10 +56,20 @@
                 app:met_floatingLabel="normal" />
 
             <TextView
-                android:id="@+id/wrong_info"
+                android:id="@+id/no_info"
                 android:layout_width="351dp"
                 android:layout_height="36dp"
                 android:layout_centerInParent="true"
+                android:textAlignment="center"
+                android:textColor="@color/errorColor" />
+
+            <TextView
+                android:id="@+id/wrong_info"
+                android:layout_width="351dp"
+                android:layout_height="36dp"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="189dp"
                 android:textAlignment="center"
                 android:textColor="@color/errorColor" />
 
