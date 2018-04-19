@@ -14,7 +14,7 @@ public class Announce implements Serializable {
     public String announceType;
     //public Date announceDateText;
     public String announceDateText;
-    //public Date currentTime;
+    //public String currentTime;
     public String currentTime;
     //public Date announceHourText;
     public String announceHourText;
@@ -69,6 +69,8 @@ public class Announce implements Serializable {
     public String getAnnounceHourText() {
         return this.announceHourText;
     }
+
+    public String getCurrentTime() { return this.currentTime; }
 
     public String getAnnounceCategorie() {
         return this.announceCategorie;

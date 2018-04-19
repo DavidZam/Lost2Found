@@ -131,8 +131,9 @@ public class NewAnnounceActivity extends AppCompatActivity {
         String announceDayText = announceDay.getText().toString();
 
         // Hora actual (de creacion del anuncio) FALTA capturar hora actual con date()) actualhour
-        Date currentTime = Calendar.getInstance().getTime();
-        String currentTimeText = String.valueOf(currentTime);
+        String actualHour = new SimpleDateFormat("HH:mm").format(Calendar.getInstance().getTime());
+        //Date currentTime = Calendar.getInstance().getTime();
+        //String currentTimeText = String.valueOf(currentTime);
 
         // Hora de la pérdida o hallazgo
         EditText announceLostFoundHourHour = findViewById(R.id.hour_show);
@@ -170,7 +171,7 @@ public class NewAnnounceActivity extends AppCompatActivity {
         } else {
             // Para obtener los datos del lugar puede que haya que llamar a otras funciones ya que se divide en transporte, mapa o direccion concreta.
             // Id, TipoAnuncio, HoraActual, DiaAnuncio, HoraPerdidaoHallazgo, Modelo, Marca, Color, idUsuario e idLugar, Categoria (NombreTabla)
-            new announceDB().execute(announceType, currentTimeText, announceDayText, announceLostFoundHourHourText, announceModelText, announceBrandText, colorchoice, userIdext, placeIdText, categorie);
+            new announceDB().execute(announceType, actualHour, announceDayText, announceLostFoundHourHourText, announceModelText, announceBrandText, colorchoice, userIdext, placeIdText, categorie);
         }
     }
 
