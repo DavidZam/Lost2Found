@@ -52,7 +52,7 @@
             android:layout_height="wrap_content"
             android:layout_toEndOf="@+id/announceType"
             android:layout_marginTop="10sp"
-            android:layout_marginStart="30sp"
+            android:layout_marginStart="20sp"
             android:textSize="15sp"
             android:text="17/04/18" />
 
@@ -63,7 +63,7 @@
             android:layout_toEndOf="@+id/announceDateText"
             android:layout_marginTop="10sp"
             android:textSize="15sp"
-            android:layout_marginStart="15sp"
+            android:layout_marginStart="10sp"
             android:text="20:50" />
 
         <TextView
