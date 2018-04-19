@@ -105,8 +105,6 @@ CREATE TABLE anuncio_objeto (
   horaAnuncio date NOT NULL,
   diaAnuncio date NOT NULL,
   horaPerdidaHallazgo date NOT NULL,
-  modelo varchar(20) DEFAULT NULL,
-  marca varchar(20) DEFAULT NULL,
   color varchar(20) DEFAULT NULL,
   idUsuario int(4) NOT NULL,
   idLugar int(4) NOT NULL,
@@ -150,7 +148,7 @@ CREATE TABLE matching (
 -- Estructura de tabla para la tabla `tarjeta_bancaria`
 --
 
-CREATE TABLE tarjeta_bancaria (
+CREATE TABLE `Tarjeta bancaria` (
   idObjeto int(4) NOT NULL,
   banco varchar(10) DEFAULT NULL,
   datosPropietario varchar(30) DEFAULT NULL,
@@ -164,11 +162,9 @@ CREATE TABLE tarjeta_bancaria (
 -- Estructura de tabla para la tabla `tarjeta_transporte`
 --
 
-CREATE TABLE tarjeta_transporte (
+CREATE TABLE `Tarjeta transporte` (
   idObjeto int(4) NOT NULL,
-  numTarjeta int(10) DEFAULT NULL,
   datosPropietario varchar(30) DEFAULT NULL,
-  contenido varchar(20) DEFAULT NULL,
   PRIMARY KEY (idObjeto),
   CONSTRAINT fk_idObjeto2 FOREIGN KEY (idObjeto) REFERENCES anuncio_objeto (id)  
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -179,8 +175,9 @@ CREATE TABLE tarjeta_transporte (
 -- Estructura de tabla para la tabla `cartera`
 --
 
-CREATE TABLE cartera (
+CREATE TABLE Cartera (
   idObjeto int(4) NOT NULL,
+  marca varchar(20) DEFAULT NULL,
   documentacion text,
   PRIMARY KEY (idObjeto),
   CONSTRAINT fk_idObjeto3 FOREIGN KEY (idObjeto) REFERENCES anuncio_objeto (id) 
@@ -192,10 +189,12 @@ CREATE TABLE cartera (
 -- Estructura de tabla para la tabla `telefono`
 --
 
-CREATE TABLE telefono (
+CREATE TABLE Telefono (
   idObjeto int(4) NOT NULL,
-  tara varchar(10) DEFAULT NULL,
+  marca varchar(20) DEFAULT NULL,
+  modelo varchar(20) DEFAULT NULL,
   IMEI int(15) DEFAULT NULL,
+  tara varchar(10) DEFAULT NULL,
   PRIMARY KEY (idObjeto),
   CONSTRAINT fk_idObjeto4 FOREIGN KEY (idObjeto) REFERENCES anuncio_objeto (id) 
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -206,9 +205,10 @@ CREATE TABLE telefono (
 -- Estructura de tabla para la tabla `otro`
 --
 
-CREATE TABLE otro (
+CREATE TABLE Otro (
   idObjeto int(4) NOT NULL,
-  otro varchar(10) DEFAULT NULL,
+  nombre varchar(10) DEFAULT NULL,
+  descripcion text,
   PRIMARY KEY (idObjeto),
   CONSTRAINT fk_idObjeto5 FOREIGN KEY (idObjeto) REFERENCES anuncio_objeto (id)   
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;

@@ -101,47 +101,22 @@
                 android:textColorHint="@color/colorPrimaryText"
                 app:met_floatingLabel="normal" />
 
-            <EditText
-                android:id="@+id/marca"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5sp"
-                android:layout_marginBottom="5sp"
-                android:layout_below="@id/listCategories"
-                android:hint="@string/brand_text"
-                android:inputType="text"
-                android:textColor="@color/colorPrimaryText"
-                android:textSize="17sp" />
-
-            <EditText
-                android:id="@+id/model"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5sp"
-                android:layout_marginBottom="5sp"
-                android:layout_below="@id/marca"
-                android:hint="@string/model_text"
-                android:inputType="text"
-                android:textColor="@color/colorPrimaryText"
-                android:textSize="17sp" />
-
-            <!--<com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner
-                android:id="@+id/colorSpinner"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_below="@+id/model"
-                android:hint="@string/spinner3_placeholder"
-                android:textColorHint="@color/colorPrimaryText"
-                app:met_floatingLabel="normal" />-->
-
             <Button
                 android:id="@+id/color_button"
                 style="@style/buttonStyle"
-                android:layout_below="@+id/model"
+                android:layout_below="@+id/listCategories"
                 android:layout_marginTop="15sp"
                 android:onClick="showColorPickerDialog"
                 android:text="Color" />
+
+            <es.lost2found.lost2foundUI.pickerUI.ColorView
+                android:id="@+id/color_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/color_button"
+
+                android:layout_marginTop="17dp"
+                android:layout_toStartOf="@+id/hour_button"></es.lost2found.lost2foundUI.pickerUI.ColorView>
 
             <TextView
                 android:id="@+id/wrong_information"
@@ -153,32 +128,6 @@
                 android:textAlignment="center"
                 android:textColor="@color/errorColor" />
 
-            <!--<EditText
-                android:id="@+id/color_show"
-                android:layout_width="119dp"
-                android:layout_height="wrap_content"
-                android:layout_alignBottom="@+id/color_button"
-                android:layout_alignParentStart="true"
-                android:layout_marginStart="114dp"
-                android:inputType="number"
-                android:textAlignment="center" />-->
-
-            <!--<Button
-                android:id="@+id/place_button"
-                style="@style/buttonStyle"
-                android:layout_below="@id/color_button"
-                android:layout_marginTop="15dp"
-                android:onClick="place"
-                android:text="@string/place_button_text" />-->
-
-            <!--<Button
-                android:id="@+id/upload_image"
-                style="@style/buttonStyle"
-                android:layout_below="@id/place_button"
-                android:layout_marginTop="15dp"
-                android:text="@string/image_upload_text" />
-                android:onClick="place"-->
-
             <Button
                 android:id="@+id/create_button"
                 style="@style/buttonStyle"
@@ -186,17 +135,10 @@
                 android:layout_alignParentStart="true"
                 android:layout_marginBottom="12dp"
                 android:onClick="saveData"
-                android:text="@string/create_button_text" />
+                android:text="@string/next2_button_text" />
 
         </RelativeLayout>
 
     </RelativeLayout>
-
-    <android.support.constraint.Guideline
-        android:id="@+id/guideline"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_begin="20dp" />
 
 </android.support.constraint.ConstraintLayout>

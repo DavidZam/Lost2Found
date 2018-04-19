@@ -117,7 +117,16 @@ public class NewAnnounceActivity extends AppCompatActivity {
                 .colorPreset(Color.BLACK)
                 .allowCustom(true)
                 .show(this, "dialog");
+        //View view = findViewById(R.id.color_view);
+        //colorpicker.show(view);
     }
+
+    /*public void setChosenColor() {
+        ColorPickerUI colorpicker = new ColorPickerUI();
+        Color color;
+        View view = findViewById(R.id.color_view);
+        view.setBackgroundColor(color);
+    }*/
 
     public void saveData(View view) {
         // Id AUTO_INCREMENT

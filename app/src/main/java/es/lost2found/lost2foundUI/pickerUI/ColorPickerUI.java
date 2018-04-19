@@ -309,9 +309,10 @@ public class ColorPickerUI extends CustomListDialog<ColorPickerUI> implements Si
         //Button colorBtn = getActivity().findViewById(R.id.color_button);
 
         SharedPreferences sp = getActivity().getApplicationContext().getSharedPreferences("colorBtn", 0);
-        String colorhex = String.valueOf(mSelectedColor);
+        //String colorhex = String.valueOf(mSelectedColor);
         SharedPreferences.Editor ed = sp.edit();            // Saved the user color choice.
-        ed.putString("colorChoice", colorhex);
+        ed.putInt("colorChoice", mSelectedColor);
+        //ed.putString("colorChoice", colorhex);
         ed.apply();
 
         /*EditText color = getActivity().findViewById(R.id.color_show);

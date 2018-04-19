@@ -136,7 +136,7 @@
 		$connection = connectDB();
 		$passHash = password_hash($pass, PASSWORD_BCRYPT);
 		$sql = mysqli_prepare($connection, "UPDATE usuario SET contrasena=? WHERE email=?");
-		mysqli_stmt_bind_param($sql, "ss", $email, $passHash);
+		mysqli_stmt_bind_param($sql, "ss", $passHash, $email);
 		$query = $sql->execute();
 
 		if(!$query)

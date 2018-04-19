@@ -14,6 +14,7 @@
     <string name="map_button_text">Mapa</string>
     <string name="concrete_place_button_text">Dirección concreta</string>
     <string name="create_button_text">Crear</string>
+    <string name="next2_button_text">Continuar</string>
     <string name="confirm_button_text">Confirmar</string>
     <string name="next_button_text">Siguiente</string>
     <string name="contact_button_text">Contactar</string>
@@ -55,12 +56,19 @@
 
     <string name="email_textloginregister">Email</string>
     <string name="brand_text">Marca</string>
+    <string name="documents_text">Documentacion</string>
     <string name="street_text">Calle</string>
     <string name="number_text">Numero</string>
     <string name="postalcode_text">Codigo Postal</string>
 
     <string name="model_text">Modelo</string>
+    <string name="tara_text">Tara</string>
+    <string name="IMEI_text">IMEI</string>
     <string name="color_text">Color</string>
+    <string name="bank_text">Banco</string>
+    <string name="owner_text">Propietario tarjeta</string>
+    <string name="name_text">Nombre</string>
+    <string name="description_text">Descripcion</string>
     <string name="fill_help1">Especifique la linea y estacion donde ha perdido o encontrado el objeto</string>
     <string name="fill_help2">"Linea 2"</string>
     <string name="fill_help3">"Santo Domingo"</string>

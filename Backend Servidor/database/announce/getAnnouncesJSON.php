@@ -14,9 +14,13 @@
 
 	    $announceObject = new Announce();
 	    $announceListObject = $announceObject->getAnnounces($idUser);
-	    //echo json_encode($announceListObject);
-	    //$announceListObject = array_column($announceListObject);
-	    //$utfEncodedArray = array_map("utf8_encode", $transportPlaceLines);
-	    echo json_encode($announceListObject);
+	    //var_dump($announceListObject);
+	    //echo $announceListObject;
+	    /*foreach($announceListObject as $key => $value) {
+		$announceListObject[$key] = utf8_encode((string)$value);
+	    }*/
+	    //$utfEncodedArray = array_map("utf8_encode", $announceListObject);
+	    //$result = json_encode($announceListObject, JSON_UNESCAPED_UNICODE);
+	    echo json_encode($announceListObject, JSON_UNESCAPED_SLASHES);
 	}
 ?>
