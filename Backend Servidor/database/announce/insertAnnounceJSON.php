@@ -9,8 +9,8 @@
             $currentTime = $jsonencode[0]->currentTime;
 	    $announceDateText = $jsonencode[0]->announceDateText;
 	    $announceHourText = $jsonencode[0]->announceHourText;
-            $model = $jsonencode[0]->model;
-	    $brand = $jsonencode[0]->brand;
+            //$model = $jsonencode[0]->model;
+	    //$brand = $jsonencode[0]->brand;
 	    $color = $jsonencode[0]->color;
 	    $idUser = $jsonencode[0]->idUser;
             $idPlace = $jsonencode[0]->idPlace;
@@ -18,6 +18,7 @@
 	
 	    require_once("announceClass.php");
 	    $announceObject = new Announce();
-	    $announceObject->insert($announceType, $currentTime, $announceDateText, $announceHourText, $model, $brand, $color, $idUser, $idPlace, $announceCategorie);
+	    $announceObject->insert($announceType, $currentTime, $announceDateText, $announceHourText, $color, $idUser, $idPlace, $announceCategorie);
+	    // $model, $brand, 
 	}
 ?>

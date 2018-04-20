@@ -65,12 +65,12 @@
 		 *	@param color
 		 *	@param announceCategorie
 		 */
-		function insert($announceType, $currentTime, $announceDateText, $announceHourText, $model, $brand, $color, $idUser, $idPlace, $announceCategorie) {
+		function insert($announceType, $currentTime, $announceDateText, $announceHourText, $color, $idUser, $idPlace, $announceCategorie) { //  $model, $brand,
 	        $connection = connectDB();
 
-		$sql = mysqli_prepare($connection, "INSERT INTO anuncio_objeto (id, tipoAnuncio, horaAnuncio, diaAnuncio, horaPerdidaHallazgo, modelo, marca, color, idUsuario, idLugar, nombreTabla) VALUES (null, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+		$sql = mysqli_prepare($connection, "INSERT INTO anuncio_objeto (id, tipoAnuncio, horaAnuncio, diaAnuncio, horaPerdidaHallazgo, color, idUsuario, idLugar, nombreTabla) VALUES (null, ?, ?, ?, ?, ?, ?, ?, ?)");
 		//var_dump($sql);
-	        mysqli_stmt_bind_param($sql, "sssssssiis", $announceType, $currentTime, $announceDateText, $announceHourText, $model, $brand, $color, $idUser, $idPlace, $announceCategorie);
+	        mysqli_stmt_bind_param($sql, "sssssiis", $announceType, $currentTime, $announceDateText, $announceHourText, $color, $idUser, $idPlace, $announceCategorie); // model, brand
 
 	        $query = $sql->execute();
 		//var_dump($query);

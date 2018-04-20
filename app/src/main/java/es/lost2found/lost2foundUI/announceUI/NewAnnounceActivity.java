@@ -150,17 +150,18 @@ public class NewAnnounceActivity extends AppCompatActivity {
 
         // Categoria // categorie variable
 
-        // Marca
+        /* Marca
         EditText announceBrand = findViewById(R.id.marca);
         String announceBrandText = announceBrand.getText().toString();
 
         // Modelo
         EditText announceModel = findViewById(R.id.model);
-        String announceModelText = announceModel.getText().toString();
+        String announceModelText = announceModel.getText().toString();*/
 
         // Color
         SharedPreferences sp = getApplicationContext().getSharedPreferences("colorBtn", 0);
-        String colorchoice = sp.getString("colorChoice", null);
+        Integer colorchoice = sp.getInt("colorChoice", 0);
+        String colorchoiceText = String.valueOf(colorchoice);
 
         // PlaceId
         SharedPreferences sp2 = getApplicationContext().getSharedPreferences("placeId", 0);
@@ -173,14 +174,14 @@ public class NewAnnounceActivity extends AppCompatActivity {
         String userIdext = String.valueOf(userId);
 
         if(announceType.equalsIgnoreCase("") || announceDayText.equalsIgnoreCase("") || announceLostFoundHourHourText.equalsIgnoreCase("")
-                || categorie.equalsIgnoreCase("") || announceBrandText.equalsIgnoreCase("") || announceModelText.equalsIgnoreCase("")
-                || colorchoice.equalsIgnoreCase("") || announceDayText.equalsIgnoreCase("")) {
-            TextView textView = findViewById(R.id.wrong_information);
+                || categorie.equalsIgnoreCase("") || colorchoiceText.equalsIgnoreCase("") || announceDayText.equalsIgnoreCase("")) {
+            TextView textView = findViewById(R.id.wrong_information); // || announceBrandText.equalsIgnoreCase("") || announceModelText.equalsIgnoreCase("")
             textView.setText(textView.getResources().getString(R.string.error_txt3));
         } else {
             // Para obtener los datos del lugar puede que haya que llamar a otras funciones ya que se divide en transporte, mapa o direccion concreta.
             // Id, TipoAnuncio, HoraActual, DiaAnuncio, HoraPerdidaoHallazgo, Modelo, Marca, Color, idUsuario e idLugar, Categoria (NombreTabla)
-            new announceDB().execute(announceType, actualHour, announceDayText, announceLostFoundHourHourText, announceModelText, announceBrandText, colorchoice, userIdext, placeIdText, categorie);
+            new announceDB().execute(announceType, actualHour, announceDayText, announceLostFoundHourHourText, colorchoiceText, userIdext, placeIdText, categorie);
+            // announceModelText, announceBrandText,
         }
     }
 
@@ -196,7 +197,7 @@ public class NewAnnounceActivity extends AppCompatActivity {
 
         @Override
         protected Announce doInBackground(String... strings) {
-            return DB_announce.insertAnnounce(strings[0], strings[1], strings[2], strings[3], strings[4], strings[5], strings[6], strings[7], strings[8], strings[9]);
+            return DB_announce.insertAnnounce(strings[0], strings[1], strings[2], strings[3], strings[4], strings[5], strings[6], strings[7]);
         }
 
         @Override

@@ -19,18 +19,18 @@ public class Announce implements Serializable {
     //public Date announceHourText;
     public String announceHourText;
     public String announceCategorie;
-    public String brand;
-    public String model;
+    //public String brand;
+    //public String model;
     public String color;
 
-    public Announce(String announceType, String currentTime, String announceDateText, String announceHourText, String model, String brand, String color, String announceCategorie) {
+    public Announce(String announceType, String currentTime, String announceDateText, String announceHourText, String color, String announceCategorie) { // String model, String brand,
         this.announceType = announceType;
         this.announceDateText = announceDateText;
         this.currentTime = currentTime;
         this.announceHourText = announceHourText;
         this.announceCategorie = announceCategorie;
-        this.brand = brand;
-        this.model = model;
+        //this.brand = brand;
+        //this.model = model;
         this.color = color;
     }
 
@@ -52,10 +52,10 @@ public class Announce implements Serializable {
         this.currentTime = announceArray[9];
         this.announceDateText = announceArray[13];
         this.announceHourText = announceArray[17];
-        this.model = announceArray[21];
-        this.brand = announceArray[25];
-        this.color = announceArray[29];
-        this.announceCategorie = announceArray[37];
+        //this.model = announceArray[21];
+        //this.brand = announceArray[25];
+        //this.color = announceArray[29];
+        this.announceCategorie = announceArray[29];
     }
 
     public String getAnnounceType() {
@@ -76,13 +76,13 @@ public class Announce implements Serializable {
         return this.announceCategorie;
     }
 
-    public String getBrand() {
+    /*public String getBrand() {
         return this.brand;
     }
 
     public String getModel() {
         return this.model;
-    }
+    }*/
 
     public String getColor() {
         return this.color;

@@ -39,7 +39,7 @@ public class AnnounceViewHolder extends RecyclerView.ViewHolder {
         currentTime = (TextView) itemView.findViewById(R.id.currentTime);
         announceCategorie = (TextView) itemView.findViewById(R.id.categorieAnnounce);
         //brand = (TextView) itemView.findViewById(R.id.brand);
-        model = (TextView) itemView.findViewById(R.id.model);
+        //model = (TextView) itemView.findViewById(R.id.model);
         //color = (TextView) itemView.findViewById(R.id.color);
     }
 

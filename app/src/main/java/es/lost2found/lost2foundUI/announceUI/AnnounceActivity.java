@@ -37,7 +37,7 @@ import es.lost2found.lost2foundUI.seekerUI.SeekerActivity;
 public class AnnounceActivity extends AppCompatActivity implements FloatingActionButton.OnClickListener {
 
     private DrawerLayout mDrawerLayout;
-    private List<Announce> announceList;
+    //private List<Announce> announceList;
     private Integer listElements = 0;
     private AnnounceViewAdapter adapter;
     private RecyclerView recyclerView;
@@ -143,7 +143,7 @@ public class AnnounceActivity extends AppCompatActivity implements FloatingActio
             new getNumberObjectAnnouncesDB().execute(userEmail); // Devuelve el numero de anuncios del usuario en cuestion
         }
 
-        announceList = new ArrayList<>();
+        List<Announce> announceList = new ArrayList<>();
         adapter = new AnnounceViewAdapter(announceList, getApplication());
         recyclerView = findViewById(R.id.announce_recyclerview);
         recyclerView.setAdapter(adapter);
