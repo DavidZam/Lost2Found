@@ -27,10 +27,6 @@ import es.lost2found.lost2foundUI.chatUI.ChatActivity;
 import es.lost2found.lost2foundUI.loginregisterUI.LoginActivity;
 import es.lost2found.lost2foundUI.seekerUI.SeekerActivity;
 
-/**
- * Created by Usuario on 13/04/2018.
- */
-
 public class ConfigurationActivity extends AppCompatActivity {
 
     private DrawerLayout mDrawerLayout;

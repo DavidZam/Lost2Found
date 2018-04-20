@@ -71,7 +71,6 @@ public class NewAnnounceActivity extends AppCompatActivity {
         ActionBar ab = getSupportActionBar();
         ab.setDisplayHomeAsUpEnabled(true);
         ab.setHomeAsUpIndicator(R.drawable.ic_arrow_back);
-
     }
 
     private class categoriesDB extends AsyncTask<String, Void, String[]> {
@@ -120,13 +119,6 @@ public class NewAnnounceActivity extends AppCompatActivity {
         //View view = findViewById(R.id.color_view);
         //colorpicker.show(view);
     }
-
-    /*public void setChosenColor() {
-        ColorPickerUI colorpicker = new ColorPickerUI();
-        Color color;
-        View view = findViewById(R.id.color_view);
-        view.setBackgroundColor(color);
-    }*/
 
     public void saveData(View view) {
         // Id AUTO_INCREMENT
@@ -208,17 +200,18 @@ public class NewAnnounceActivity extends AppCompatActivity {
     }
 
     private void processNewAnnounce(Announce announce) {
-        //List<Announce> announceList = new ArrayList<Announce>();
-        //announceList.add(announce);
         Intent intent = new Intent(this, AnnounceActivity.class);
-        //Bundle bundle = new Bundle();
-        //bundle.putSerializable("newAnnounce", announce);
         intent.putExtra("newAnnounce", announce);
-        //intent.putParcelableArrayListExtra("listAnounce", announceList)
         startActivity(intent);
         finish();
 
-        // El anuncio se crea, falta mostrarlo en la pagina inicial en el Recycler View.
+
+        /*if(categorie.equals("Cartera")) {
+            Intent intent = new Intent(this, AnnounceActivity.class);
+            intent.putExtra("newAnnounce", announce);
+            startActivity(intent);
+            finish();
+        }*/
 
         //Intent intent = new Intent(this, AnnounceActivity.class);
 
