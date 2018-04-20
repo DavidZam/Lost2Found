@@ -79,7 +79,7 @@ public class LoginActivity extends AppCompatActivity {
                 Integer userId = user.getId();
                 ed.putInt("userId", userId);
                 ed.putString("email", user.getEmail());
-                ed.putString("name", user.getName());
+                ed.putString("nombre", user.getName());
                 ed.apply();
 
                 intent.putExtra("user", user);

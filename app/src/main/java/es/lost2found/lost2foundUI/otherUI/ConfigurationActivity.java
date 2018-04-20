@@ -2,6 +2,7 @@ package es.lost2found.lost2foundUI.otherUI;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -19,6 +20,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import es.lost2found.R;
+import es.lost2found.database.DB_user;
+import es.lost2found.entities.User;
 import es.lost2found.lost2foundUI.announceUI.AnnounceActivity;
 import es.lost2found.lost2foundUI.chatUI.ChatActivity;
 import es.lost2found.lost2foundUI.loginregisterUI.LoginActivity;
@@ -33,6 +36,8 @@ public class ConfigurationActivity extends AppCompatActivity {
     private DrawerLayout mDrawerLayout;
     private View headerLayout;
     private String nombreActual, emailActual;
+    private String cambiado = "false";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,8 +67,8 @@ public class ConfigurationActivity extends AppCompatActivity {
                 emailUser.setText(userEmail);
                 emailActual = emailUser.getText().toString();
             }
-            if (spref.contains("name")) {
-                String userName = spref.getString("name", "");
+            if (spref.contains("nombre")) {
+                String userName = spref.getString("nombre", "");
                 nameUser.setText(userName);
                 nombreActual = nameUser.getText().toString();
             }
@@ -72,6 +77,7 @@ public class ConfigurationActivity extends AppCompatActivity {
         final Intent home = new Intent(this, AnnounceActivity.class);
         final Intent buscar = new Intent(this, SeekerActivity.class);
         final Intent contact = new Intent(this, ContactActivity.class);
+        final Intent aboutus = new Intent(this, AboutUsActivity.class);
         final Intent chat = new Intent(this, ChatActivity.class);
         final Intent help = new Intent(this, HelpActivity.class);
         final Intent rate = new Intent(this, RateActivity.class);
@@ -98,6 +104,8 @@ public class ConfigurationActivity extends AppCompatActivity {
                             startActivity(help);
                         }else if(menuItem.getItemId()== R.id.nav_feedback) {
                             startActivity(rate);
+                        } else if(menuItem.getItemId() == R.id.nav_info) {
+                            startActivity(aboutus);
                         } else if(menuItem.getItemId()== R.id.nav_logout) {
                             logoutUser();
                         }
@@ -105,7 +113,7 @@ public class ConfigurationActivity extends AppCompatActivity {
                     }
                 }
         );
-        navView.setCheckedItem(R.id.nav_info);
+        navView.setCheckedItem(R.id.nav_settings);
 
     }
 
@@ -136,10 +144,15 @@ public class ConfigurationActivity extends AppCompatActivity {
 
         builder.setPositiveButton("Cambiar", (dialog, which) -> {
             String nombre = etInput.getText().toString();
+            new updateName().execute(nombre, emailActual);
+
             Toast.makeText(this, "Nuevo nombre: "+nombre, Toast.LENGTH_SHORT).show();
+
+            nombreActual = nombre;
         });
 
         builder.create().show();
+
     }
 
     private void createAndDisplayDialogEmail() {
@@ -169,7 +182,15 @@ public class ConfigurationActivity extends AppCompatActivity {
 
         builder.setPositiveButton("Cambiar", (dialog, which) -> {
             String email = etInput.getText().toString();
-            Toast.makeText(this, "Nuevo email: "+email, Toast.LENGTH_SHORT).show();
+
+            new updateEmail().execute(nombreActual, email, emailActual);
+
+            /*if(cambiado == "true") {
+                Toast.makeText(this, "Nuevo email: " + email, Toast.LENGTH_SHORT).show();
+                emailActual = email;
+            }else{
+                Toast.makeText(this, "¡Error! Inténtalo de nuevo.", Toast.LENGTH_SHORT).show();
+            }*/
         });
 
         builder.create().show();
@@ -179,7 +200,8 @@ public class ConfigurationActivity extends AppCompatActivity {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         LinearLayout layout       = new LinearLayout(this);
         TextView tvMessage        = new TextView(this);
-        final EditText etInput    = new EditText(this);
+        EditText etInput    = new EditText(this);
+        EditText etInput2    = new EditText(this);
 
         tvMessage.setText("Introduce tu nueva contraseña:");
         tvMessage.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16f);
@@ -187,9 +209,12 @@ public class ConfigurationActivity extends AppCompatActivity {
         layout.setOrientation(LinearLayout.VERTICAL);
         layout.addView(tvMessage);
         layout.addView(etInput);
+        layout.addView(etInput2);
         layout.setPadding(50, 40, 50, 10);
 
         builder.setView(layout);
+
+
 
         builder.setNegativeButton("Cancelar", (dialog, which) -> {
             Toast.makeText(this, "No has hecho cambios", Toast.LENGTH_SHORT).show();
@@ -197,11 +222,86 @@ public class ConfigurationActivity extends AppCompatActivity {
         });
 
         builder.setPositiveButton("Cambiar", (dialog, which) -> {
-            Toast.makeText(this, "Contraseña cambiada", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(this, "Contraseña cambiada", Toast.LENGTH_SHORT).show();
+            String pass = etInput.getText().toString();
+            String repass = etInput2.getText().toString();
+
+            if(pass.equals(repass))
+                new updatePassword().execute(pass, emailActual, nombreActual);
+            else
+                Toast.makeText(this, "Las contraseñas no coinciden. Inténtalo de nuevo.", Toast.LENGTH_SHORT).show();
         });
 
         builder.create().show();
     }
+
+    private class updateName extends AsyncTask<String, Void, User> {
+
+        @Override
+        protected User doInBackground(String... strings) {
+            return DB_user.updateNameUser(strings[0], strings[1]);
+        }
+
+        @Override
+        protected void onPostExecute(User result) {
+            processUpdate(result);
+        }
+    }
+
+    private class updateEmail extends AsyncTask<String, Void, User> {
+        @Override
+        protected User doInBackground(String... strings) {
+
+            boolean userExists = DB_user.checkIfEmailAlreadyExists(strings[1]);
+
+            if(!userExists){
+                //cambiado = "true";
+                return DB_user.updateEmailUser(strings[0], strings[1], strings[2]);
+
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(User result) {
+
+            processUpdate(result);
+        }
+    }
+
+    private class updatePassword extends AsyncTask<String, Void, User> {
+        @Override
+        protected User doInBackground(String... strings) {
+
+            return DB_user.updatePasswordUser(strings[0], strings[1], strings[2]);
+        }
+
+        @Override
+        protected void onPostExecute(User result) {
+
+            processUpdate(result);
+        }
+    }
+
+    private void processUpdate(User user) {
+        Intent intent = new Intent(this, ConfigurationActivity.class);
+
+        SharedPreferences sp = getApplicationContext().getSharedPreferences("Login", 0);
+
+        if(user != null) {
+            SharedPreferences.Editor ed = sp.edit();
+            Integer userId = user.getId();
+            ed.putInt("userId", userId);
+            ed.putString("email", user.getEmail());
+            ed.putString("nombre", user.getName());
+            ed.apply();
+
+            intent.putExtra("user", user);
+            startActivity(intent);
+            finish();
+        }
+    }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -218,7 +318,7 @@ public class ConfigurationActivity extends AppCompatActivity {
         SharedPreferences sp = getSharedPreferences("Login", 0);
         SharedPreferences.Editor ed = sp.edit();
         ed.putString("email", null);
-        ed.putString("name", null);
+        ed.putString("nombre", null);
         ed.apply();
 
         Intent intent = new Intent(this, LoginActivity.class);

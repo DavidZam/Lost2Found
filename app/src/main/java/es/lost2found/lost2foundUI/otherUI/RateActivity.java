@@ -54,8 +54,8 @@ public class RateActivity extends AppCompatActivity {
                 String userEmail = spref.getString("email", "");
                 emailUser.setText(userEmail);
             }
-            if (spref.contains("name")) {
-                String userName = spref.getString("name", "");
+            if (spref.contains("nombre")) {
+                String userName = spref.getString("nombre", "");
                 nameUser.setText(userName);
             }
         }

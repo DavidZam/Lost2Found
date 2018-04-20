@@ -196,6 +196,59 @@ public class DB_user {
         return userExists;
     }
 
+    public static boolean checkIfEmailAlreadyExists(String email) {
+        boolean userExists = false;
+
+        try {
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("email", email);
+
+            List list = new LinkedList();
+            list.addAll(Arrays.asList(jsonObject));
+            String jsonString = list.toString();
+
+            String urlStr = SERVER_PATH + "checkIfUserExists.php";
+            URL url = new URL(urlStr);
+
+            HttpURLConnection con = (HttpURLConnection) url.openConnection();
+            con.setRequestMethod("POST");
+            con.setRequestProperty("User-Agent", "your user agent");
+            con.setRequestProperty("Accept-Language", "sp,SP;q=0.5");
+
+            String urlParameters = "json=" + jsonString;
+
+            con.setDoOutput(true);
+            DataOutputStream wr = new DataOutputStream(con.getOutputStream());
+            wr.writeBytes(urlParameters);
+            wr.flush();
+            wr.close();
+
+            InputStream instream;
+
+            int status = con.getResponseCode();
+
+            if (status != HttpURLConnection.HTTP_OK)
+                instream = con.getErrorStream();
+            else
+                instream = con.getInputStream();
+
+            BufferedReader in = new BufferedReader(new InputStreamReader(instream));
+            String inputLine;
+            StringBuffer response = new StringBuffer();
+
+            while((inputLine = in.readLine()) != null)
+                response.append(inputLine);
+
+            in.close();
+
+            if(response.toString().equals("exists"))
+                userExists = true;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return userExists;
+    }
+
     public static Integer getId(String email) {
         Integer id = 0;
         try {
@@ -257,6 +310,164 @@ public class DB_user {
             e.printStackTrace();
         }
         return id;
+    }
+
+    public static User updateNameUser(String nombre, String email) {
+        User ret = null;
+        try {
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("nombre", nombre);
+            jsonObject.put("email", email);
+
+            List list = new LinkedList();
+            list.addAll(Arrays.asList(jsonObject));
+            String jsonString = list.toString();
+
+            String urlStr = SERVER_PATH + "updateNameUserJSON.php";
+            URL url = new URL(urlStr);
+
+            HttpURLConnection con = (HttpURLConnection) url.openConnection();
+            con.setRequestMethod("POST");
+            con.setRequestProperty("User-Agent", "your user agent");
+            con.setRequestProperty("Accept-Language", "sp,SP;q=0.5");
+
+            String urlParameters = "json=" + jsonString;
+
+            con.setDoOutput(true);
+            DataOutputStream wr = new DataOutputStream(con.getOutputStream());
+            wr.writeBytes(urlParameters);
+            wr.flush();
+            wr.close();
+
+            InputStream instream;
+
+            int status = con.getResponseCode();
+
+            if (status != HttpURLConnection.HTTP_OK)
+                instream = con.getErrorStream();
+            else
+                instream = con.getInputStream();
+
+            BufferedReader in = new BufferedReader(new InputStreamReader(instream));
+            String inputLine;
+            StringBuffer response = new StringBuffer();
+
+            while((inputLine = in.readLine()) != null)
+                response.append(inputLine);
+
+            if (response.toString().equals("correct"))
+                ret = new User(getId(email), email, nombre, null);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return  ret;
+    }
+
+    public static User updatePasswordUser(String pass, String email, String nombre){
+        User ret = null;
+        try {
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("nombre", nombre);
+            jsonObject.put("email", email);
+            jsonObject.put("contrasena", pass);
+
+            List list = new LinkedList();
+            list.addAll(Arrays.asList(jsonObject));
+            String jsonString = list.toString();
+
+            String urlStr = SERVER_PATH + "updatePasswordUserJSON.php";
+            URL url = new URL(urlStr);
+
+            HttpURLConnection con = (HttpURLConnection) url.openConnection();
+            con.setRequestMethod("POST");
+            con.setRequestProperty("User-Agent", "your user agent");
+            con.setRequestProperty("Accept-Language", "sp,SP;q=0.5");
+
+            String urlParameters = "json=" + jsonString;
+
+            con.setDoOutput(true);
+            DataOutputStream wr = new DataOutputStream(con.getOutputStream());
+            wr.writeBytes(urlParameters);
+            wr.flush();
+            wr.close();
+
+            InputStream instream;
+
+            int status = con.getResponseCode();
+
+            if (status != HttpURLConnection.HTTP_OK)
+                instream = con.getErrorStream();
+            else
+                instream = con.getInputStream();
+
+            BufferedReader in = new BufferedReader(new InputStreamReader(instream));
+            String inputLine;
+            StringBuffer response = new StringBuffer();
+
+            while((inputLine = in.readLine()) != null)
+                response.append(inputLine);
+
+            if (response.toString().equals("correct"))
+                ret = new User(getId(email), email, nombre, pass);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return ret;
+    }
+
+    public static User updateEmailUser(String nombre, String email, String emailAntiguo) {
+        User ret = null;
+        try {
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("email", email);
+            jsonObject.put("id", getId(emailAntiguo));
+
+            List list = new LinkedList();
+            list.addAll(Arrays.asList(jsonObject));
+            String jsonString = list.toString();
+
+            String urlStr = SERVER_PATH + "updateEmailUserJSON.php";
+            URL url = new URL(urlStr);
+
+            HttpURLConnection con = (HttpURLConnection) url.openConnection();
+            con.setRequestMethod("POST");
+            con.setRequestProperty("User-Agent", "your user agent");
+            con.setRequestProperty("Accept-Language", "sp,SP;q=0.5");
+
+            String urlParameters = "json=" + jsonString;
+
+            con.setDoOutput(true);
+            DataOutputStream wr = new DataOutputStream(con.getOutputStream());
+            wr.writeBytes(urlParameters);
+            wr.flush();
+            wr.close();
+
+            InputStream instream;
+
+            int status = con.getResponseCode();
+
+            if (status != HttpURLConnection.HTTP_OK)
+                instream = con.getErrorStream();
+            else
+                instream = con.getInputStream();
+
+            BufferedReader in = new BufferedReader(new InputStreamReader(instream));
+            String inputLine;
+            StringBuffer response = new StringBuffer();
+
+            while((inputLine = in.readLine()) != null)
+                response.append(inputLine);
+
+            if (response.toString().equals("correct"))
+                ret = new User(getId(email), email, nombre, null);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return  ret;
     }
 
 }

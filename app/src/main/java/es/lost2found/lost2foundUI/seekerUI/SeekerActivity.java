@@ -68,8 +68,8 @@ public class SeekerActivity extends AppCompatActivity {
                 String userEmail = spref.getString("email", "");
                 emailUser.setText(userEmail);
             }
-            if (spref.contains("name")) {
-                String userName = spref.getString("name", "");
+            if (spref.contains("nombre")) {
+                String userName = spref.getString("nombre", "");
                 nameUser.setText(userName);
             }
         }
@@ -147,7 +147,7 @@ public class SeekerActivity extends AppCompatActivity {
         SharedPreferences sp = getSharedPreferences("Login", 0);
         SharedPreferences.Editor ed = sp.edit();
         ed.putString("email", null);
-        ed.putString("name", null);
+        ed.putString("nombre", null);
         ed.apply();
 
         Intent intent = new Intent(this, LoginActivity.class);

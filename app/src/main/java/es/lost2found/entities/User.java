@@ -26,7 +26,7 @@ public class User implements Serializable {
         try {
             JSONObject jObject = new JSONObject(json);
             this.email = jObject.getString("email");
-            this.name = jObject.getString("name");
+            this.name = jObject.getString("nombre");
             this.password = "";
 
         } catch (Exception e) {
