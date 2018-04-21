@@ -19,8 +19,6 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
-
-//import com.jaredrummler.materialspinner.MaterialSpinner;
 import com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner;
 
 import java.util.ArrayList;
@@ -29,7 +27,6 @@ import java.util.List;
 import es.lost2found.R;
 import es.lost2found.database.DB_announce;
 import es.lost2found.entities.Announce;
-import es.lost2found.lost2foundUI.announceUI.AnnounceViewAdapter;
 import es.lost2found.lost2foundUI.announceUI.AnnounceActivity;
 import es.lost2found.lost2foundUI.chatUI.ChatActivity;
 import es.lost2found.lost2foundUI.loginregisterUI.LoginActivity;
@@ -47,14 +44,22 @@ public class SeekerActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private Integer numberAnnounces;
 
+    MaterialBetterSpinner categoriaSeleccionada;
+    MaterialBetterSpinner tipoAnuncionSeleccionado;
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_seeker);
 
         String[] categorias = {"Tarjetas Bancarias", "Tarjetas Transporte Público", "Carteras/Monederos", "Teléfonos", "Otros"};
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, categorias);
-        MaterialBetterSpinner materialDesignSpinner = (MaterialBetterSpinner) findViewById(R.id.listaCategorias);
-        materialDesignSpinner.setAdapter(arrayAdapter);
+        categoriaSeleccionada = (MaterialBetterSpinner) findViewById(R.id.listaCategorias);
+        categoriaSeleccionada.setAdapter(arrayAdapter);
+
+        String[] tipo = {"Pérdida", "Hallazgo"};
+        ArrayAdapter<String> arrayAdapter2 = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, tipo);
+        tipoAnuncionSeleccionado = (MaterialBetterSpinner) findViewById(R.id.tipoAnuncio);
+        tipoAnuncionSeleccionado.setAdapter(arrayAdapter2);
 
         //Menú
         Toolbar tb = findViewById(R.id.toolbar);
@@ -142,7 +147,12 @@ public class SeekerActivity extends AppCompatActivity {
         /*recyclerView.setItemAnimator(itemAnimator);*/
 
 
-        new getNumberObjectAnnouncesDB().execute(); ////////////////////////////////PENSAR QUÉ SE LE PASA
+        if(categoriaSeleccionada.toString().equalsIgnoreCase("") || tipoAnuncionSeleccionado.toString().equalsIgnoreCase("")){
+            TextView textView = findViewById(R.id.wrong_information);
+            textView.setText("Debes seleccionar la categoría del objeto y el tipo de anuncio");
+        }else{
+            new getNumberObjectAnnouncesDB().execute(categoriaSeleccionada.getText().toString(), tipoAnuncionSeleccionado.getText().toString()); ////////////////////////////////PENSAR QUÉ SE LE PASA
+        }
 
         List<Announce> announceList = new ArrayList<>();
         adapter = new SeekerAnnounceViewAdapter(announceList, getApplication());
@@ -162,7 +172,7 @@ public class SeekerActivity extends AppCompatActivity {
 
         @Override
         protected Integer doInBackground(String... strings) {
-            return DB_announce.getNumberAnnounces(strings[0]);
+            return DB_announce.getNumberSeekerAnnounces(strings[0], strings[1]);
         }
 
         @Override
@@ -179,10 +189,7 @@ public class SeekerActivity extends AppCompatActivity {
             TextView noannounces = findViewById(R.id.without_search);
             noannounces.setText("");
             numberAnnounces = numAnnounces;
-            //SharedPreferences spref = getApplicationContext().getSharedPreferences("Login", 0);
-            //String userEmail = spref.getString("email", "");
-           // new getObjectAnnouncesDB().execute(userEmail, String.valueOf(numberAnnounces));
-            new getObjectAnnouncesDB().execute(); ////////////////////// PENSAR QUÉ SE LE PASA
+            new getObjectAnnouncesDB().execute(categoriaSeleccionada.getText().toString(), tipoAnuncionSeleccionado.getText().toString(), String.valueOf(numberAnnounces));
         }
     }
 
@@ -190,7 +197,7 @@ public class SeekerActivity extends AppCompatActivity {
 
         @Override
         protected Announce[] doInBackground(String... strings) {
-            return DB_announce.getAnnounces(strings[0], strings[1]);
+            return DB_announce.getAnnouncesSeeker(strings[0], strings[1], strings[2]);
         }
 
         @Override

@@ -11,28 +11,57 @@ import es.lost2found.R;
 public class SeekerAnnounceViewHolder extends RecyclerView.ViewHolder {
 
     CardView cv;
-    TextView title;
-    TextView description;
-    ImageView imageView;
+    TextView announceType;
+    TextView announceDateText;
+    TextView announceHourText;
+    TextView currentTime;
+    ImageView categorieIcon;
+    TextView announceCategorie;
+    TextView brand;
+    TextView model;
+    TextView color;
 
     public SeekerAnnounceViewHolder(View itemView) {
         super(itemView);
         cv = (CardView) itemView.findViewById(R.id.cardView);
-        title = (TextView) itemView.findViewById(R.id.title);
-        description = (TextView) itemView.findViewById(R.id.description);
-        imageView = (ImageView) itemView.findViewById(R.id.imageView);
+        categorieIcon = (ImageView) itemView.findViewById(R.id.imageView);
+        announceType = (TextView) itemView.findViewById(R.id.announceType);
+        announceDateText = (TextView) itemView.findViewById(R.id.announceDateText);
+        announceHourText = (TextView) itemView.findViewById(R.id.announceHourText);
+        currentTime = (TextView) itemView.findViewById(R.id.currentTime);
+        announceCategorie = (TextView) itemView.findViewById(R.id.categorieAnnounce);
     }
 
-    public TextView getTitle() {
-        return title;
+    public TextView getAnnounceType() {
+        return announceType;
     }
 
-    public TextView getDescription() {
-        return description;
+    public TextView getAnnounceDateText() {
+        return announceDateText;
     }
 
-    public ImageView getImageView() {
-        return imageView;
+    public TextView getAnnounceHourText() {
+        return announceHourText;
+    }
+
+    public TextView getCurrentTime() {
+        return currentTime;
+    }
+
+    public TextView getAnnounceCategorie() {
+        return announceCategorie;
+    }
+
+    public TextView getBrand() {
+        return brand;
+    }
+
+    public TextView getModel() {
+        return model;
+    }
+
+    public TextView getColor() {
+        return color;
     }
 
 }

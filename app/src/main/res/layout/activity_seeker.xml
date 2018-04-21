@@ -40,11 +40,20 @@
             android:hint="@string/spinner_placeholder"
             android:textColorHint="@color/colorPrimaryText"
             app:met_floatingLabel="normal" />
+        <com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner
+            android:id="@+id/tipoAnuncio"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="7dp"
+            android:layout_below="@+id/listaCategorias"
+            android:hint="Tipo"
+            android:textColorHint="@color/colorPrimaryText"
+            app:met_floatingLabel="normal" />
 
         <android.support.v7.widget.RecyclerView
             xmlns:android="http://schemas.android.com/apk/res/android"
             android:id="@+id/search_recyclerview"
-            android:layout_below="@+id/listaCategorias"
+            android:layout_below="@+id/tipoAnuncio"
             android:scrollbars="vertical"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />

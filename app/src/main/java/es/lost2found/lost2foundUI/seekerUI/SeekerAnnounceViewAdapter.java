@@ -14,7 +14,7 @@ import es.lost2found.R;
 import es.lost2found.entities.Announce;
 
 public class SeekerAnnounceViewAdapter extends RecyclerView.Adapter<SeekerAnnounceViewHolder> {
-    List<Announce> listAnnounce = Collections.emptyList();
+    List<Announce> listAnnounce;
     Context context;
 
     public SeekerAnnounceViewAdapter(List<Announce> listAnnounce, Context context) {
@@ -43,11 +43,28 @@ public class SeekerAnnounceViewAdapter extends RecyclerView.Adapter<SeekerAnnoun
 
     @Override
     public void onBindViewHolder(SeekerAnnounceViewHolder holder, int position) {
+
         // Use the provided ChatView_Holder on the onCreateViewHolder method to populate the current row on the RecycleView
         /*holder.title.setText(listAnnounce.get(position).title);
         holder.description.setText(listAnnounce.get(position).description);
         holder.imageView.setImageResource(listAnnounce.get(position).imageId);*/
         //animate(holder);
+
+        holder.announceType.setText(listAnnounce.get(position).getAnnounceType());
+        holder.announceDateText.setText(listAnnounce.get(position).getAnnounceDateText());
+        holder.announceHourText.setText(listAnnounce.get(position).getAnnounceHourText());
+        holder.currentTime.setText(listAnnounce.get(position).getCurrentTime());
+        holder.announceCategorie.setText(listAnnounce.get(position).getAnnounceCategorie());
+
+        if(listAnnounce.get(position).announceCategorie.equals("Telefono")) {
+            holder.categorieIcon.setImageResource(R.drawable.ic_phone_android);
+        } else if(listAnnounce.get(position).announceCategorie.equals("Cartera")) {
+            holder.categorieIcon.setImageResource(R.drawable.ic_wallet);
+        } else if(listAnnounce.get(position).announceCategorie.equals("Tarjeta bancaria") || listAnnounce.get(position).announceCategorie.equals("Tarjeta transporte")) {
+            holder.categorieIcon.setImageResource(R.drawable.ic_card);
+        } else if(listAnnounce.get(position).announceCategorie.equals("Otro")) {
+            holder.categorieIcon.setImageResource(R.drawable.ic_other);
+        }
     }
 
     @Override
