@@ -47,10 +47,19 @@
             android:layout_below="@+id/listaCategorias"
             android:scrollbars="vertical"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-             />
+            android:layout_height="match_parent" />
         <!-- android:clickable="true"
             android:focusable="true" -->
+        <TextView
+            android:id="@+id/without_search"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/toolbar"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="165dp"
+            android:textAlignment="center"
+            android:textColor="@color/colorPrimary"
+            android:textSize="20sp" />
 
     </RelativeLayout>
 

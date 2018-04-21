@@ -2,7 +2,9 @@ package es.lost2found.lost2foundUI.seekerUI;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -25,6 +27,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import es.lost2found.R;
+import es.lost2found.database.DB_announce;
 import es.lost2found.entities.Announce;
 import es.lost2found.lost2foundUI.announceUI.AnnounceViewAdapter;
 import es.lost2found.lost2foundUI.announceUI.AnnounceActivity;
@@ -39,6 +42,10 @@ import es.lost2found.lost2foundUI.otherUI.RateActivity;
 
 public class SeekerActivity extends AppCompatActivity {
     private DrawerLayout mDrawerLayout;
+    private SeekerAnnounceViewAdapter adapter;
+    private Integer listElements = 0;
+    private RecyclerView recyclerView;
+    private Integer numberAnnounces;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -133,7 +140,75 @@ public class SeekerActivity extends AppCompatActivity {
         itemAnimator.setAddDuration(1000);
         itemAnimator.setRemoveDuration(1000);
         /*recyclerView.setItemAnimator(itemAnimator);*/
+
+
+        new getNumberObjectAnnouncesDB().execute(); ////////////////////////////////PENSAR QUÉ SE LE PASA
+
+        List<Announce> announceList = new ArrayList<>();
+        adapter = new SeekerAnnounceViewAdapter(announceList, getApplication());
+        recyclerView = findViewById(R.id.search_recyclerview);
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        // Adding a ItemAnimator to the RecyclerView (Optional)
+        RecyclerView.ItemAnimator itemAnimator = new DefaultItemAnimator();
+        itemAnimator.setAddDuration(1000);
+        itemAnimator.setRemoveDuration(1000);
+        recyclerView.setItemAnimator(itemAnimator);
+
     }
+
+    private class getNumberObjectAnnouncesDB extends AsyncTask<String, Void, Integer> {
+
+        @Override
+        protected Integer doInBackground(String... strings) {
+            return DB_announce.getNumberAnnounces(strings[0]);
+        }
+
+        @Override
+        protected void onPostExecute(Integer numAnnounce) {
+            processAnnounceScreen(numAnnounce);
+        }
+    }
+
+    public void processAnnounceScreen(Integer numAnnounces) {
+        if (numAnnounces == 0) {
+            TextView noannounces = findViewById(R.id.without_search);
+            noannounces.setText("No hay objetos que cumplan con tu búsqueda");
+        } else {
+            TextView noannounces = findViewById(R.id.without_search);
+            noannounces.setText("");
+            numberAnnounces = numAnnounces;
+            //SharedPreferences spref = getApplicationContext().getSharedPreferences("Login", 0);
+            //String userEmail = spref.getString("email", "");
+           // new getObjectAnnouncesDB().execute(userEmail, String.valueOf(numberAnnounces));
+            new getObjectAnnouncesDB().execute(); ////////////////////// PENSAR QUÉ SE LE PASA
+        }
+    }
+
+    private class getObjectAnnouncesDB extends AsyncTask<String, Void, Announce[]> {
+
+        @Override
+        protected Announce[] doInBackground(String... strings) {
+            return DB_announce.getAnnounces(strings[0], strings[1]);
+        }
+
+        @Override
+        protected void onPostExecute(Announce[] announces) {
+            updateAdapter(announces, numberAnnounces);
+        }
+    }
+
+    public void updateAdapter(Announce[] announces, Integer numAnnounces) {
+        for(int i = 0; i < numAnnounces; i++) {
+            adapter.insert(listElements, announces[i]);
+            listElements++;
+            recyclerView.setAdapter(adapter);
+            recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        }
+    }
+
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
