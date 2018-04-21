@@ -140,6 +140,33 @@
             android:screenOrientation="portrait"
             android:label="Open Data" />
 
+        <activity
+            android:name=".lost2foundUI.typeObjectUI.WalletActivity"
+            android:screenOrientation="portrait"
+            android:label="Cartera" />
+
+        <activity
+            android:name=".lost2foundUI.typeObjectUI.PhoneActivity"
+            android:screenOrientation="portrait"
+            android:label="Telefono" />
+
+        <activity
+            android:name=".lost2foundUI.typeObjectUI.BankCardActivity"
+            android:screenOrientation="portrait"
+            android:label="Tarjeta bancaria" />
+
+        <activity
+            android:name=".lost2foundUI.typeObjectUI.TransportCardActivity"
+            android:screenOrientation="portrait"
+            android:label="Tarjeta de transporte" />
+
+        <activity
+            android:name=".lost2foundUI.typeObjectUI.OtherObjectActivity"
+            android:screenOrientation="portrait"
+            android:label="Otro" />
+
+
+
     </application>
 
 </manifest>

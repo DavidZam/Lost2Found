@@ -35,6 +35,11 @@ import es.lost2found.lost2foundUI.pickerUI.DatePickerUI;
 import es.lost2found.R;
 import es.lost2found.lost2foundUI.pickerUI.TimePickerUI;
 import es.lost2found.lost2foundUI.placeUI.PlaceActivity;
+import es.lost2found.lost2foundUI.typeObjectUI.BankCardActivity;
+import es.lost2found.lost2foundUI.typeObjectUI.OtherObjectActivity;
+import es.lost2found.lost2foundUI.typeObjectUI.PhoneActivity;
+import es.lost2found.lost2foundUI.typeObjectUI.TransportCardActivity;
+import es.lost2found.lost2foundUI.typeObjectUI.WalletActivity;
 
 public class NewAnnounceActivity extends AppCompatActivity {
 
@@ -142,14 +147,6 @@ public class NewAnnounceActivity extends AppCompatActivity {
 
         // Categoria // categorie variable
 
-        /* Marca
-        EditText announceBrand = findViewById(R.id.marca);
-        String announceBrandText = announceBrand.getText().toString();
-
-        // Modelo
-        EditText announceModel = findViewById(R.id.model);
-        String announceModelText = announceModel.getText().toString();*/
-
         // Color
         SharedPreferences sp = getApplicationContext().getSharedPreferences("colorBtn", 0);
         Integer colorchoice = sp.getInt("colorChoice", 0);
@@ -170,10 +167,8 @@ public class NewAnnounceActivity extends AppCompatActivity {
             TextView textView = findViewById(R.id.wrong_information); // || announceBrandText.equalsIgnoreCase("") || announceModelText.equalsIgnoreCase("")
             textView.setText(textView.getResources().getString(R.string.error_txt3));
         } else {
-            // Para obtener los datos del lugar puede que haya que llamar a otras funciones ya que se divide en transporte, mapa o direccion concreta.
             // Id, TipoAnuncio, HoraActual, DiaAnuncio, HoraPerdidaoHallazgo, Modelo, Marca, Color, idUsuario e idLugar, Categoria (NombreTabla)
             new announceDB().execute(announceType, actualHour, announceDayText, announceLostFoundHourHourText, colorchoiceText, userIdext, placeIdText, categorie);
-            // announceModelText, announceBrandText,
         }
     }
 
@@ -200,43 +195,27 @@ public class NewAnnounceActivity extends AppCompatActivity {
     }
 
     private void processNewAnnounce(Announce announce) {
-        Intent intent = new Intent(this, AnnounceActivity.class);
-        intent.putExtra("newAnnounce", announce);
-        startActivity(intent);
-        finish();
-
-
-        /*if(categorie.equals("Cartera")) {
-            Intent intent = new Intent(this, AnnounceActivity.class);
-            intent.putExtra("newAnnounce", announce);
+        if(categorie.equals("Cartera")) {
+            Intent intent = new Intent(this, WalletActivity.class);
+            intent.putExtra("categorie", categorie);
             startActivity(intent);
-            finish();
-        }*/
-
-        //Intent intent = new Intent(this, AnnounceActivity.class);
-
-        /*SharedPreferences sp = getApplicationContext().getSharedPreferences("Login", 0);
-        String email = sp.getString("email", null);
-        if(email != null) { // Login perform with SharedPreferences credentials.
-            intent.putExtra("user", user);
+        } else if(categorie.equals("Telefono")) {
+            Intent intent = new Intent(this, PhoneActivity.class);
+            intent.putExtra("categorie", categorie);
             startActivity(intent);
-            finish();
+        } else if(categorie.equals("Tarjeta bancaria")) {
+            Intent intent = new Intent(this, BankCardActivity.class);
+            intent.putExtra("categorie", categorie);
+            startActivity(intent);
+        } else if(categorie.equals("Tarjeta transporte")) {
+            Intent intent = new Intent(this, TransportCardActivity.class);
+            intent.putExtra("categorie", categorie);
+            startActivity(intent);
+        } else if(categorie.equals("Otro")) {
+            Intent intent = new Intent(this, OtherObjectActivity.class);
+            intent.putExtra("categorie", categorie);
+            startActivity(intent);
         }
-        else {              // Login perform without SharedPreferences credentials.
-            if(user != null) {
-                SharedPreferences.Editor ed = sp.edit();            // Saved the user login credencials.
-                ed.putString("email", user.getEmail());
-                ed.putString("name", user.getName());
-                ed.apply();
-
-                intent.putExtra("user", user);
-                startActivity(intent);
-                finish();
-            }
-            else {
-                TextView textView = findViewById(R.id.wrong_user);
-                textView.setText(textView.getResources().getString(R.string.error_txt1));
-            }
-        }*/
+        finish();
     }
 }

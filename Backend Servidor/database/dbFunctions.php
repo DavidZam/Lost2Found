@@ -6,7 +6,7 @@
         $pass = "MissingX";
         $BD = "lost2found";
         $conexion = mysqli_connect($server, $usuario, $pass, $BD);
-
+	mysqli_set_charset($conexion, "UTF8");
 	return $conexion;
     } 
 
