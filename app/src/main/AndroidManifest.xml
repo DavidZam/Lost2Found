@@ -53,8 +53,7 @@
         <activity
             android:name=".lost2foundUI.announceUI.NewAnnounceActivity"
             android:screenOrientation="portrait"
-            android:label="@string/new_announce_text"
-            />
+            android:label="@string/new_announce_text" />
 
         <activity
             android:name=".lost2foundUI.announceUI.AnnounceActivity"
@@ -135,6 +134,11 @@
             android:parentActivityName=".lost2foundUI.placeUI.PlaceActivity"
             android:screenOrientation="portrait"
             android:label="@string/concrete_title_text" />
+
+        <activity
+            android:name=".lost2foundUI.openDataUI.OpenDataActivity"
+            android:screenOrientation="portrait"
+            android:label="Open Data" />
 
     </application>
 

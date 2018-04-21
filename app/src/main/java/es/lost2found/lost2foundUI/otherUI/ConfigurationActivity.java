@@ -77,6 +77,7 @@ public class ConfigurationActivity extends AppCompatActivity {
         final Intent chat = new Intent(this, ChatActivity.class);
         final Intent help = new Intent(this, HelpActivity.class);
         final Intent rate = new Intent(this, RateActivity.class);
+        final Intent openData = new Intent(this, ConfigurationActivity.class);
 
         navView.setNavigationItemSelectedListener(
                 new NavigationView.OnNavigationItemSelectedListener() {
@@ -96,6 +97,8 @@ public class ConfigurationActivity extends AppCompatActivity {
                             startActivity(contact);
                         } else if(menuItem.getItemId()== R.id.nav_chat) {
                             startActivity(chat);
+                        } else if(menuItem.getItemId()== R.id.nav_open_data) {
+                            startActivity(openData);
                         } else if(menuItem.getItemId()== R.id.nav_help) {
                             startActivity(help);
                         }else if(menuItem.getItemId()== R.id.nav_feedback) {

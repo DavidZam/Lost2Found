@@ -67,6 +67,7 @@ public class RateActivity extends AppCompatActivity {
         final Intent contact = new Intent(this, ContactActivity.class);
         final Intent help = new Intent(this, HelpActivity.class);
         final Intent config = new Intent(this, ConfigurationActivity.class);
+        final Intent openData = new Intent(this, ConfigurationActivity.class);
 
         navView.setNavigationItemSelectedListener(
                 new NavigationView.OnNavigationItemSelectedListener() {
@@ -90,7 +91,9 @@ public class RateActivity extends AppCompatActivity {
                             startActivity(config);
                         } else if(menuItem.getItemId()== R.id.nav_contact) {
                             startActivity(contact);
-                        }else if(menuItem.getItemId()== R.id.nav_help) {
+                        }else if(menuItem.getItemId()== R.id.nav_open_data) {
+                            startActivity(openData);
+                        } else if(menuItem.getItemId()== R.id.nav_help) {
                             startActivity(help);
                         } else if(menuItem.getItemId()== R.id.nav_logout) {
                             logoutUser();
