@@ -17,7 +17,9 @@ public class OpenDataActivity extends AppCompatActivity {
         WebView webView = (WebView) this.findViewById(R.id.webview);
         webView.loadUrl("https://ressources.data.sncf.com/explore/dataset/objets-trouves-gares/?sort=date&q=T%C3%A9l%C3%A9phone+Portable+Paris+Montparnasse");
 
-        Toast.makeText(OpenDataActivity.this, "Cargando...", Toast.LENGTH_SHORT).show();
+        Toast t = Toast.makeText(OpenDataActivity.this, "Cargando...", Toast.LENGTH_SHORT);
+        t.setDuration(Toast.LENGTH_LONG);
+        t.show();
 
         webView.setWebViewClient(new WebViewClient());
         WebSettings webSettings = webView.getSettings();
