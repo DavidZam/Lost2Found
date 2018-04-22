@@ -172,10 +172,11 @@ public class SeekerActivity extends AppCompatActivity implements FloatingActionB
             recyclerView.setAdapter(adapter);
             recyclerView.setLayoutManager(new LinearLayoutManager(this));
         }
-        
-        if(categoriaSeleccionada.toString().equalsIgnoreCase("") || tipoAnuncionSeleccionado.toString().equalsIgnoreCase("")){
-            TextView textView = findViewById(R.id.wrong_information);
+
+        if(categoriaSeleccionada.getText().toString().equalsIgnoreCase("") || tipoAnuncionSeleccionado.getText().toString().equalsIgnoreCase("")){
+            TextView textView = findViewById(R.id.without_search);
             textView.setText("Debes seleccionar la categoría del objeto y el tipo de anuncio");
+
         }else{
 
             String cat = cambiarNombreCategoria();
@@ -264,17 +265,6 @@ public class SeekerActivity extends AppCompatActivity implements FloatingActionB
             recyclerView.setLayoutManager(new LinearLayoutManager(this));
         }
     }
-
-    private void deleteOldAnnounces(Announce[] announces, Integer numAnnounces) {
-        for(int i = 0; i < numAnnounces; i++) {
-            adapter.remove(announces[i]);
-            listElements++;
-            recyclerView.setAdapter(adapter);
-            recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        }
-    }
-
-
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

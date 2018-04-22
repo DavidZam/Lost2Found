@@ -31,6 +31,7 @@ public class SeekerAnnounceViewAdapter extends RecyclerView.Adapter<SeekerAnnoun
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 //View itemView = v.findViewById(R.id.activity_concrete_chat);
                 Context context = v.getContext();
                 Intent intent = new Intent(context, SeekerAnnounceInfoActivity.class);

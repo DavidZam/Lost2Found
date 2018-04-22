@@ -34,6 +34,7 @@ public class Announce implements Serializable {
         this.color = color;
     }
 
+
     /*public Announce(Announce announce) {
         this.announceType = announce.announceType;
         this.announceDateText = announce.announceDateText;
@@ -74,6 +75,30 @@ public class Announce implements Serializable {
 
     public String getAnnounceCategorie() {
         return this.announceCategorie;
+    }
+
+    public void setAnnounceType(String announceType) {
+        this.announceType = announceType;
+    }
+
+    public void setAnnounceDateText(String announceDateText) {
+        this.announceDateText = announceDateText;
+    }
+
+    public void setCurrentTime(String currentTime) {
+        this.currentTime = currentTime;
+    }
+
+    public void setAnnounceHourText(String announceHourText) {
+        this.announceHourText = announceHourText;
+    }
+
+    public void setAnnounceCategorie(String announceCategorie) {
+        this.announceCategorie = announceCategorie;
+    }
+
+    public void setColor(String color) {
+        this.color = color;
     }
 
     /*public String getBrand() {

@@ -33,10 +33,7 @@
             <TextView
                 android:id="@+id/textinfoannounce"
                 android:layout_width="match_parent"
-                android:layout_height="372dp"
-                android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum eu ipsum felis. Quisque consequat dui eu nibh pharetra vehicula. Nam et nibh ante. Interdum et malesuada fames ac ante ipsum primis in faucibus. Sed at orci volutpat, semper tortor ut, pulvinar nisi. Nam semper luctus cursus. Praesent et lacus sapien. Phasellus congue nibh nec odio posuere, et fermentum turpis pharetra. Proin tincidunt nisl a sagittis luctus. Vivamus ac pharetra massa, vel tempus purus. Sed sagittis posuere sapien sed convallis. Curabitur fermentum et libero vel auctor.
-
-Quisque eget mauris vel tellus ornare mattis a vel nibh. Sed a ornare metus. Suspendisse potenti. Ut sed auctor neque. Aliquam tortor tortor, porta sed purus eget, semper scelerisque urna. Nullam eget lacinia arcu. In nec elementum mauris. Aliquam tempor posuere faucibus. Nulla ac dapibus sem. Curabitur et odio ac dui lobortis rhoncus tempus at ligula. Maecenas convallis est lorem, nec condimentum felis ullamcorper et." />
+                android:layout_height="372dp" />
 
             <ImageView
                 android:id="@+id/imageinfoannounce"
