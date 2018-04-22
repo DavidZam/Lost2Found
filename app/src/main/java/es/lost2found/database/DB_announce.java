@@ -244,7 +244,7 @@ public class DB_announce {
             list.addAll(Arrays.asList(jsonObject));
             String jsonString = list.toString();
 
-            String urlStr = SERVER_PATH + "getNumberSeekerAnnouncesJSON.php";//////////FALTA HACER EL ARCHIVO//////////////////////
+            String urlStr = SERVER_PATH + "getNumberSeekerAnnouncesJSON.php";
             URL url = new URL(urlStr);
 
             HttpURLConnection con = (HttpURLConnection) url.openConnection();
@@ -293,14 +293,14 @@ public class DB_announce {
         Announce[] announcesArray = new Announce[numAnnounces];
         try {
             JSONObject jsonObject = new JSONObject();
-            jsonObject.put("tipoAnuncio", categoria);
-            jsonObject.put("nombreTabla", tipo);
+            jsonObject.put("nombreTabla", categoria);
+            jsonObject.put("tipoAnuncio", tipo);
 
             List list = new LinkedList();
             list.addAll(Arrays.asList(jsonObject));
             String jsonString = list.toString();
 
-            String urlStr = SERVER_PATH + "getAnnouncesSeekerJSON.php";////////////////FALTA HACER EL ARCHIVO///////////////////
+            String urlStr = SERVER_PATH + "getAnnouncesSeekerJSON.php";
             URL url = new URL(urlStr);
 
             HttpURLConnection con = (HttpURLConnection) url.openConnection();

@@ -37,7 +37,7 @@ import es.lost2found.lost2foundUI.otherUI.HelpActivity;
 import es.lost2found.lost2foundUI.otherUI.RateActivity;
 
 
-public class SeekerActivity extends AppCompatActivity {
+public class SeekerActivity extends AppCompatActivity implements FloatingActionButton.OnClickListener{
     private DrawerLayout mDrawerLayout;
     private SeekerAnnounceViewAdapter adapter;
     private Integer listElements = 0;
@@ -146,13 +146,8 @@ public class SeekerActivity extends AppCompatActivity {
         itemAnimator.setRemoveDuration(1000);
         /*recyclerView.setItemAnimator(itemAnimator);*/
 
-
-        if(categoriaSeleccionada.toString().equalsIgnoreCase("") || tipoAnuncionSeleccionado.toString().equalsIgnoreCase("")){
-            TextView textView = findViewById(R.id.wrong_information);
-            textView.setText("Debes seleccionar la categoría del objeto y el tipo de anuncio");
-        }else{
-            new getNumberObjectAnnouncesDB().execute(categoriaSeleccionada.getText().toString(), tipoAnuncionSeleccionado.getText().toString()); ////////////////////////////////PENSAR QUÉ SE LE PASA
-        }
+        FloatingActionButton search = findViewById(R.id.search);
+        search.setOnClickListener(this);
 
         List<Announce> announceList = new ArrayList<>();
         adapter = new SeekerAnnounceViewAdapter(announceList, getApplication());
@@ -166,6 +161,49 @@ public class SeekerActivity extends AppCompatActivity {
         itemAnimator.setRemoveDuration(1000);
         recyclerView.setItemAnimator(itemAnimator);
 
+    }
+
+    @Override
+    public void onClick(View v) {
+        if(categoriaSeleccionada.toString().equalsIgnoreCase("") || tipoAnuncionSeleccionado.toString().equalsIgnoreCase("")){
+            TextView textView = findViewById(R.id.wrong_information);
+            textView.setText("Debes seleccionar la categoría del objeto y el tipo de anuncio");
+        }else{
+
+            String cat = cambiarNombreCategoria();
+            String tipoA = cambiarNombreTipo();
+            new getNumberObjectAnnouncesDB().execute(cat, tipoA);
+        }
+    }
+
+    @Override
+    public void onPointerCaptureChanged(boolean hasCapture) {
+
+    }
+
+    private String cambiarNombreCategoria(){
+        String cat;
+        if(categoriaSeleccionada.getText().toString().equals("Tarjetas Bancarias")){
+            cat = "Tarjeta bancaria";
+        }else if(categoriaSeleccionada.getText().toString().equals("Tarjetas Transporte Público")){
+            cat = "Tarjeta transporte";
+        }else if(categoriaSeleccionada.getText().toString().equals("Carteras/Monederos")){
+            cat = "Cartera";
+        }else if(categoriaSeleccionada.getText().toString().equals("Teléfonos")){
+            cat = "Telefono";
+        }else{
+            cat = "Otro";
+        }
+
+        return cat;
+    }
+
+    private String cambiarNombreTipo(){
+        String tipoA = "Hallazgo";
+        if(tipoAnuncionSeleccionado.getText().toString().equals("Pérdida")){
+            tipoA = "Perdida";
+        }
+        return tipoA;
     }
 
     private class getNumberObjectAnnouncesDB extends AsyncTask<String, Void, Integer> {
@@ -184,12 +222,16 @@ public class SeekerActivity extends AppCompatActivity {
     public void processAnnounceScreen(Integer numAnnounces) {
         if (numAnnounces == 0) {
             TextView noannounces = findViewById(R.id.without_search);
-            noannounces.setText("No hay objetos que cumplan con tu búsqueda");
+            noannounces.setText("No hay objetos que cumplan con tus requisitos");
         } else {
             TextView noannounces = findViewById(R.id.without_search);
             noannounces.setText("");
             numberAnnounces = numAnnounces;
-            new getObjectAnnouncesDB().execute(categoriaSeleccionada.getText().toString(), tipoAnuncionSeleccionado.getText().toString(), String.valueOf(numberAnnounces));
+
+            String cat = cambiarNombreCategoria();
+            String tipoA = cambiarNombreTipo();
+
+            new getObjectAnnouncesDB().execute(cat, tipoA, String.valueOf(numberAnnounces));
         }
     }
 
