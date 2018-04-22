@@ -165,6 +165,14 @@ public class SeekerActivity extends AppCompatActivity implements FloatingActionB
 
     @Override
     public void onClick(View v) {
+
+        if(!adapter.listAnnounce.isEmpty()) {
+            adapter.listAnnounce.clear();
+            listElements = 0;
+            recyclerView.setAdapter(adapter);
+            recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        }
+        
         if(categoriaSeleccionada.toString().equalsIgnoreCase("") || tipoAnuncionSeleccionado.toString().equalsIgnoreCase("")){
             TextView textView = findViewById(R.id.wrong_information);
             textView.setText("Debes seleccionar la categoría del objeto y el tipo de anuncio");
@@ -251,6 +259,15 @@ public class SeekerActivity extends AppCompatActivity implements FloatingActionB
     public void updateAdapter(Announce[] announces, Integer numAnnounces) {
         for(int i = 0; i < numAnnounces; i++) {
             adapter.insert(listElements, announces[i]);
+            listElements++;
+            recyclerView.setAdapter(adapter);
+            recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        }
+    }
+
+    private void deleteOldAnnounces(Announce[] announces, Integer numAnnounces) {
+        for(int i = 0; i < numAnnounces; i++) {
+            adapter.remove(announces[i]);
             listElements++;
             recyclerView.setAdapter(adapter);
             recyclerView.setLayoutManager(new LinearLayoutManager(this));
