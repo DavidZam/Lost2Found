@@ -225,37 +225,51 @@ public class DB_transportPlace {
     }
 
     public static String[] getTrainStations() {
-        String OPEN_DATA_URL = "https://ressources.data.sncf.com/api/records/1.0/search/?dataset=objets-trouves-gares&rows=15&sort=date&fields(gc_obo_gare_origine_r_name)";
+        String OPEN_DATA_URL = "https://data.sncf.com/api/records/1.0/search//?dataset=objets-trouves-gares&rows=0&facet=gc_obo_gare_origine_r_name";
         String[] stations = new String[12];
-            // Create connection
-            int timeout = 5000;
-            URL url = null;
-            HttpURLConnection connection = null;
-            JSONObject object = null;
-            InputStream instream = null;
-            try {
-                url = new URL(OPEN_DATA_URL);
-                connection = (HttpURLConnection) url.openConnection();
-                connection.setRequestMethod("GET");
-                connection.setRequestProperty("Content-type", "application/x-www-form-urlencoded");
-                connection.setDoInput(true);
-                connection.setDoOutput(false);
-                connection.connect();
+        String[] realStations = new String[13];
 
-                int status = connection.getResponseCode();
+        int timeout = 5000;
+        URL url = null;
+        HttpURLConnection connection = null;
+        JSONObject object = null;
+        InputStream instream = null;
+        try {
+            url = new URL(OPEN_DATA_URL);
+            connection = (HttpURLConnection) url.openConnection();
+            connection.setRequestMethod("GET");
+            connection.setRequestProperty("Content-type", "application/x-www-form-urlencoded");
+            connection.setDoInput(true);
+            connection.setDoOutput(false);
+            connection.connect();
 
-                if (status != HttpURLConnection.HTTP_OK)
-                    instream = connection.getErrorStream();
-                else
-                    instream = connection.getInputStream();
+            int status = connection.getResponseCode();
 
+            if (status != HttpURLConnection.HTTP_OK)
+                instream = connection.getErrorStream();
+            else
                 instream = connection.getInputStream();
-                BufferedReader bReader = new BufferedReader(new InputStreamReader(instream));
-                String temp, response = "";
-                while((temp = bReader.readLine()) != null) {
-                    response += temp;
+
+            instream = connection.getInputStream();
+            BufferedReader bReader = new BufferedReader(new InputStreamReader(instream));
+            String temp, response = "";
+            while((temp = bReader.readLine()) != null) {
+                response += temp;
+            }
+            stations = response.split("path"); //  + "\"" +  "\\:" + "\""
+            for(int i = 1; i < 13; i++) {
+                if (stations[i].contains("\"")) {
+                    String text = stations[i].replace("\"", "");
+                    stations[i] = text;
                 }
-                object = (JSONObject) new JSONTokener(response).nextValue();
+                if (stations[i].contains(":")) {
+                    String text = stations[i].replace(":", "");
+                    stations[i] = text;
+                }
+            }
+            for(int i = 1; i < 13; i++) {
+                realStations[i] = stations[i].substring(0, stations[i].indexOf(","));
+            }
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -269,6 +283,6 @@ public class DB_transportPlace {
                 connection.disconnect();
             }
         }
-        return stations;
+        return realStations;
     }
 }

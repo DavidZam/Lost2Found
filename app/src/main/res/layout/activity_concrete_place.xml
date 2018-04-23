@@ -67,6 +67,16 @@
                 android:textColor="@color/colorPrimaryText"
                 android:textSize="17sp" />
 
+            <TextView
+                android:id="@+id/no_info"
+                android:layout_width="351dp"
+                android:layout_height="36dp"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="189dp"
+                android:textAlignment="center"
+                android:textColor="@color/errorColor" />
+
             <Button
                 android:id="@+id/confirm_button"
                 style="@style/buttonStyle"

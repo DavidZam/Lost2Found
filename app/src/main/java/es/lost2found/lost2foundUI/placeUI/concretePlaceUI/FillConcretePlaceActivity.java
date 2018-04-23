@@ -11,6 +11,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import es.lost2found.R;
 import es.lost2found.database.DB_concretePlace;
@@ -53,7 +54,11 @@ public class FillConcretePlaceActivity extends AppCompatActivity {
         EditText placePostalCode = findViewById(R.id.postalCode);
         String placePostalCodeText = placePostalCode.getText().toString();
 
-        new insertConcretePlaceDB().execute(placeStreetText, placeNumberText, placePostalCodeText);
+        if(placeStreetText.equalsIgnoreCase("") || placeNumberText.equalsIgnoreCase("") || placePostalCodeText.equalsIgnoreCase("")) {
+            TextView textView = findViewById(R.id.no_info);
+            textView.setText(textView.getResources().getString(R.string.error_txt3));
+        } else
+            new insertConcretePlaceDB().execute(placeStreetText, placeNumberText, placePostalCodeText);
     }
 
     private class insertConcretePlaceDB extends AsyncTask<String, Void, ConcretePlace> {
