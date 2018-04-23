@@ -266,6 +266,7 @@ public class SeekerActivity extends AppCompatActivity implements FloatingActionB
         }
     }
 
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch(item.getItemId()) {
