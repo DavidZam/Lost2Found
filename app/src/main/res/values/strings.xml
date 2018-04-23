@@ -10,6 +10,7 @@
     <string name="transport_title_text">Lugar de transporte</string>
     <string name="concrete_title_text">Lugar concreto</string>
     <string name="bus_transport_button_text">Autobús</string>
+    <string name="train_transport_button_text">Tren</string>
     <string name="airport_transport_button_text">Aeropuerto</string>
     <string name="map_button_text">Mapa</string>
     <string name="concrete_place_button_text">Dirección concreta</string>
@@ -44,6 +45,8 @@
     <string name="error_txt2">Introduce la linea y la estacion</string>
     <string name="error_txt3">Completa todos los campos</string>
     <string name="error_txt4">Combinación no valida</string>
+    <string name="error_txt5">Selecciona la categoría y el tipo de anuncio</string>
+
     <string name="info_txt">¿Todavía no has creado ningún anuncio?\n\n¡Pulsa en el botón (+) y hazlo ya!</string>
 
     <string name="title_announce_section">Mis anuncios</string>

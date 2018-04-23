@@ -130,6 +130,12 @@
             android:label="@string/transport_title_text" />
 
         <activity
+            android:name=".lost2foundUI.placeUI.transportUI.FillTransportTrainPlaceActivity"
+            android:parentActivityName=".lost2foundUI.placeUI.transportUI.TransportPlaceActivity"
+            android:screenOrientation="portrait"
+            android:label="@string/transport_title_text" />
+
+        <activity
             android:name=".lost2foundUI.placeUI.concretePlaceUI.FillConcretePlaceActivity"
             android:parentActivityName=".lost2foundUI.placeUI.PlaceActivity"
             android:screenOrientation="portrait"

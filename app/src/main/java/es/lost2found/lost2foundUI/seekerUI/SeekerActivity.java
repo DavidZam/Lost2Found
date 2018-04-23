@@ -175,7 +175,7 @@ public class SeekerActivity extends AppCompatActivity implements FloatingActionB
 
         if(categoriaSeleccionada.getText().toString().equalsIgnoreCase("") || tipoAnuncionSeleccionado.getText().toString().equalsIgnoreCase("")){
             TextView textView = findViewById(R.id.without_search);
-            textView.setText("Debes seleccionar la categoría del objeto y el tipo de anuncio");
+            textView.setText(textView.getResources().getString(R.string.error_txt5));
 
         }else{
 
