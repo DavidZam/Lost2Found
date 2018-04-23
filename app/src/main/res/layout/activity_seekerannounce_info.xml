@@ -33,16 +33,20 @@
             <TextView
                 android:id="@+id/textinfoannounce"
                 android:layout_width="match_parent"
-                android:layout_height="372dp" />
+                android:textSize="15dp"
+                android:scrollbars="vertical"
+                android:layout_marginLeft="20dp"
+                android:layout_height="372dp"
+                />
 
-            <ImageView
+            <!--<ImageView
                 android:id="@+id/imageinfoannounce"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
                 android:layout_centerHorizontal="true"
                 android:layout_marginBottom="43dp"
-                android:src="@drawable/ic_phone_android" />
+                android:src="@drawable/ic_phone_android" />-->
 
         </RelativeLayout>
 

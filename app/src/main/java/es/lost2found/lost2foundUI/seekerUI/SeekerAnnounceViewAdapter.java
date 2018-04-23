@@ -7,7 +7,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import java.util.Collections;
 import java.util.List;
 
 import es.lost2found.R;
@@ -16,6 +15,7 @@ import es.lost2found.entities.Announce;
 public class SeekerAnnounceViewAdapter extends RecyclerView.Adapter<SeekerAnnounceViewHolder> {
     List<Announce> listAnnounce;
     Context context;
+
 
     public SeekerAnnounceViewAdapter(List<Announce> listAnnounce, Context context) {
         this.listAnnounce = listAnnounce;
@@ -27,17 +27,6 @@ public class SeekerAnnounceViewAdapter extends RecyclerView.Adapter<SeekerAnnoun
         // Inflate the layout and initialize the View Holder
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_announce, parent, false);
         SeekerAnnounceViewHolder holder = new SeekerAnnounceViewHolder(v);
-
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                //View itemView = v.findViewById(R.id.activity_concrete_chat);
-                Context context = v.getContext();
-                Intent intent = new Intent(context, SeekerAnnounceInfoActivity.class);
-                context.startActivity(intent);
-            }
-        });
 
         return holder;
     }
@@ -54,6 +43,7 @@ public class SeekerAnnounceViewAdapter extends RecyclerView.Adapter<SeekerAnnoun
         holder.announceType.setText(listAnnounce.get(position).getAnnounceType());
         holder.announceDateText.setText(listAnnounce.get(position).getAnnounceDateText());
         holder.announceHourText.setText(listAnnounce.get(position).getAnnounceHourText());
+//        holder.color.setText(listAnnounce.get(position).getColor());
         holder.currentTime.setText(listAnnounce.get(position).getCurrentTime());
         holder.announceCategorie.setText(listAnnounce.get(position).getAnnounceCategorie());
 
@@ -66,6 +56,20 @@ public class SeekerAnnounceViewAdapter extends RecyclerView.Adapter<SeekerAnnoun
         } else if(listAnnounce.get(position).announceCategorie.equals("Otro")) {
             holder.categorieIcon.setImageResource(R.drawable.ic_other);
         }
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Context context = v.getContext();
+                Intent intent = new Intent(context, SeekerAnnounceInfoActivity.class);
+
+                Announce announce = listAnnounce.get(position);
+                intent.putExtra("myAnnounce", announce);
+
+                context.startActivity(intent);
+            }
+        });
     }
 
     @Override

@@ -30,6 +30,7 @@ public class SeekerAnnounceViewHolder extends RecyclerView.ViewHolder {
         announceHourText = (TextView) itemView.findViewById(R.id.announceHourText);
         currentTime = (TextView) itemView.findViewById(R.id.currentTime);
         announceCategorie = (TextView) itemView.findViewById(R.id.categorieAnnounce);
+
     }
 
     public TextView getAnnounceType() {
