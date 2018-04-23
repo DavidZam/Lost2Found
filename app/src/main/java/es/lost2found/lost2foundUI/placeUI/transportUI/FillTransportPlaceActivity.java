@@ -70,11 +70,9 @@ public class FillTransportPlaceActivity extends AppCompatActivity {
         if(metro) {
             String metroText = "metro";
             new linesDB().execute(metroText);
-        } else {
-            if (bus) {
+        } else if (bus) {
                 String busText = "bus";
                 new linesDB().execute(busText);
-            }
         }
 
         spinner.setOnItemClickListener(new AdapterView.OnItemClickListener() {

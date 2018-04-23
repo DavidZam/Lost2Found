@@ -67,8 +67,7 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="165dp"
             android:textAlignment="center"
-            android:textColor="@color/colorPrimary"
-            android:textSize="20sp" />
+            android:textColor="@color/errorColor" />
 
     </RelativeLayout>
 
@@ -86,7 +85,7 @@
             android:layout_gravity="bottom|end"
             android:layout_margin="16dp"
             app:backgroundTint="@color/colorPrimary"
-            android:src="@drawable/ic_search"
+            android:src="@drawable/ic_search_white"
             android:clickable="true"
             android:focusable="true"/>
 

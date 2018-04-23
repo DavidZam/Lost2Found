@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".lost2foundUI.placeUI.transportUI.TransportPlaceActivity"
-        tools:showIn="@layout/activity_place"
+        tools:showIn="@layout/activity_fill_transport_place"
         android:background="@color/colorSecondaryText">
 
         <android.support.v7.widget.Toolbar
@@ -49,7 +49,15 @@
                 android:layout_marginBottom="195dp"
                 android:onClick="saveBusClicked"
                 android:text="@string/bus_transport_button_text" />
-            <!--android:onClick="place"-->
+
+            <Button
+                android:id="@+id/train_transport_place_button"
+                style="@style/buttonStyle"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentStart="true"
+                android:layout_marginBottom="80dp"
+                android:onClick="saveTrainClicked"
+                android:text="@string/train_transport_button_text" />
 
             <!--<Button
                 android:id="@+id/airport_transport_place_button"

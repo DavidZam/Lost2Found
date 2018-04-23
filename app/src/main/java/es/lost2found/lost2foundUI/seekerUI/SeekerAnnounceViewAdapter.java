@@ -43,8 +43,12 @@ public class SeekerAnnounceViewAdapter extends RecyclerView.Adapter<SeekerAnnoun
         holder.announceType.setText(listAnnounce.get(position).getAnnounceType());
         holder.announceDateText.setText(listAnnounce.get(position).getAnnounceDateText());
         holder.announceHourText.setText(listAnnounce.get(position).getAnnounceHourText());
+<<<<<<< HEAD
 //        holder.color.setText(listAnnounce.get(position).getColor());
         holder.currentTime.setText(listAnnounce.get(position).getCurrentTime());
+=======
+        //holder.currentTime.setText(listAnnounce.get(position).getCurrentTime());
+>>>>>>> 277575c91dc426c51d7ef1dc78f66fb86d602c0e
         holder.announceCategorie.setText(listAnnounce.get(position).getAnnounceCategorie());
 
         if(listAnnounce.get(position).announceCategorie.equals("Telefono")) {
