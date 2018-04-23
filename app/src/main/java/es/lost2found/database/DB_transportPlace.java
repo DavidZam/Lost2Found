@@ -25,7 +25,6 @@ public class DB_transportPlace {
 
     // Server: jcorreas-hp.fdi.ucm.es
     private static String SERVER_PATH = "http://jcorreas-hp.fdi.ucm.es/lost2found/database/place/transport/";
-    private static String OPEN_DATA_URL = "https://ressources.data.sncf.com/api/records/1.0/search/?dataset=objets-trouves-gares&sort=date&facet=date&facet=gc_obo_type_c&facet=gc_obo_gare_origine_r_name";
 
     public static TransportPlace getTransportPlace(String lineText, String stationText) {
         //Place lugar = DB_place.insertPlace();
@@ -226,23 +225,32 @@ public class DB_transportPlace {
     }
 
     public static String[] getTrainStations() {
-        String[] stations = new String[15];
+        String OPEN_DATA_URL = "https://ressources.data.sncf.com/api/records/1.0/search/?dataset=objets-trouves-gares&rows=15&sort=date&fields(gc_obo_gare_origine_r_name)";
+        String[] stations = new String[12];
             // Create connection
             int timeout = 5000;
             URL url = null;
             HttpURLConnection connection = null;
             JSONObject object = null;
-            InputStream inStream = null;
+            InputStream instream = null;
             try {
                 url = new URL(OPEN_DATA_URL);
                 connection = (HttpURLConnection) url.openConnection();
                 connection.setRequestMethod("GET");
                 connection.setRequestProperty("Content-type", "application/x-www-form-urlencoded");
-                connection.setDoOutput(true);
                 connection.setDoInput(true);
+                connection.setDoOutput(false);
                 connection.connect();
-                inStream = connection.getInputStream();
-                BufferedReader bReader = new BufferedReader(new InputStreamReader(inStream));
+
+                int status = connection.getResponseCode();
+
+                if (status != HttpURLConnection.HTTP_OK)
+                    instream = connection.getErrorStream();
+                else
+                    instream = connection.getInputStream();
+
+                instream = connection.getInputStream();
+                BufferedReader bReader = new BufferedReader(new InputStreamReader(instream));
                 String temp, response = "";
                 while((temp = bReader.readLine()) != null) {
                     response += temp;
@@ -251,9 +259,9 @@ public class DB_transportPlace {
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            if(inStream != null) {
+            if(instream != null) {
                 try {
-                    inStream.close();
+                    instream.close();
                 } catch(IOException ignored) {
                 }
             }

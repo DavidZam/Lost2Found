@@ -34,9 +34,9 @@
             <Button
                 android:id="@+id/metro_transport_place_button"
                 style="@style/buttonStyle"
-                android:layout_above="@+id/bus_transport_place_button"
                 android:layout_alignParentStart="true"
-                android:layout_marginBottom="63dp"
+                android:layout_alignParentTop="true"
+                android:layout_marginTop="69dp"
                 android:onClick="saveMetroClicked"
                 android:text="@string/underground_transport_button_text" />
             <!--android:onClick="place"-->
@@ -44,9 +44,8 @@
             <Button
                 android:id="@+id/bus_transport_place_button"
                 style="@style/buttonStyle"
-                android:layout_alignParentBottom="true"
                 android:layout_alignParentStart="true"
-                android:layout_marginBottom="195dp"
+                android:layout_centerVertical="true"
                 android:onClick="saveBusClicked"
                 android:text="@string/bus_transport_button_text" />
 
@@ -55,7 +54,7 @@
                 style="@style/buttonStyle"
                 android:layout_alignParentBottom="true"
                 android:layout_alignParentStart="true"
-                android:layout_marginBottom="80dp"
+                android:layout_marginBottom="91dp"
                 android:onClick="saveTrainClicked"
                 android:text="@string/train_transport_button_text" />
 
