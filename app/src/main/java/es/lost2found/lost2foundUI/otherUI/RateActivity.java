@@ -18,6 +18,7 @@ import es.lost2found.R;
 import es.lost2found.lost2foundUI.announceUI.AnnounceActivity;
 import es.lost2found.lost2foundUI.chatUI.ChatActivity;
 import es.lost2found.lost2foundUI.loginregisterUI.LoginActivity;
+import es.lost2found.lost2foundUI.openDataUI.OpenDataActivity;
 import es.lost2found.lost2foundUI.seekerUI.SeekerActivity;
 
 public class RateActivity extends AppCompatActivity {
@@ -67,7 +68,7 @@ public class RateActivity extends AppCompatActivity {
         final Intent contact = new Intent(this, ContactActivity.class);
         final Intent help = new Intent(this, HelpActivity.class);
         final Intent config = new Intent(this, ConfigurationActivity.class);
-        final Intent openData = new Intent(this, ConfigurationActivity.class);
+        final Intent openData = new Intent(this, OpenDataActivity.class);
 
         navView.setNavigationItemSelectedListener(
                 new NavigationView.OnNavigationItemSelectedListener() {

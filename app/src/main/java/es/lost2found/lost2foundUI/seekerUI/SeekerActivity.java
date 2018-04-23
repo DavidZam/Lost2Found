@@ -30,6 +30,7 @@ import es.lost2found.entities.Announce;
 import es.lost2found.lost2foundUI.announceUI.AnnounceActivity;
 import es.lost2found.lost2foundUI.chatUI.ChatActivity;
 import es.lost2found.lost2foundUI.loginregisterUI.LoginActivity;
+import es.lost2found.lost2foundUI.openDataUI.OpenDataActivity;
 import es.lost2found.lost2foundUI.otherUI.AboutUsActivity;
 import es.lost2found.lost2foundUI.otherUI.ConfigurationActivity;
 import es.lost2found.lost2foundUI.otherUI.ContactActivity;
@@ -93,7 +94,7 @@ public class SeekerActivity extends AppCompatActivity implements FloatingActionB
         final Intent help = new Intent(this, HelpActivity.class);
         final Intent rate = new Intent(this, RateActivity.class);
         final Intent config = new Intent(this, ConfigurationActivity.class);
-        final Intent openData = new Intent(this, ConfigurationActivity.class);
+        final Intent openData = new Intent(this, OpenDataActivity.class);
 
         navView.setNavigationItemSelectedListener(
                 new NavigationView.OnNavigationItemSelectedListener() {

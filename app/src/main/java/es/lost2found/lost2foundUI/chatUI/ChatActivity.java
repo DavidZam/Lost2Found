@@ -71,7 +71,7 @@ public class ChatActivity extends AppCompatActivity {
         final Intent help = new Intent(this, HelpActivity.class);
         final Intent rate = new Intent(this, RateActivity.class);
         final Intent config = new Intent(this, ConfigurationActivity.class);
-        final Intent openData = new Intent(this, ConfigurationActivity.class);
+        final Intent openData = new Intent(this, OpenDataActivity.class);
         navView.setNavigationItemSelectedListener(
                 new NavigationView.OnNavigationItemSelectedListener() {
 
