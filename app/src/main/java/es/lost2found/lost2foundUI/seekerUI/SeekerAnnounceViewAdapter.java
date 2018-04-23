@@ -2,18 +2,22 @@ package es.lost2found.lost2foundUI.seekerUI;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 
+import java.io.Serializable;
 import java.util.Collections;
 import java.util.List;
 
 import es.lost2found.R;
 import es.lost2found.entities.Announce;
+import es.lost2found.lost2foundUI.typeObjectUI.WalletActivity;
 
-public class SeekerAnnounceViewAdapter extends RecyclerView.Adapter<SeekerAnnounceViewHolder> {
+public class SeekerAnnounceViewAdapter extends RecyclerView.Adapter<SeekerAnnounceViewHolder> implements Serializable {
     List<Announce> listAnnounce;
     Context context;
 
@@ -35,9 +39,21 @@ public class SeekerAnnounceViewAdapter extends RecyclerView.Adapter<SeekerAnnoun
                 //View itemView = v.findViewById(R.id.activity_concrete_chat);
                 Context context = v.getContext();
                 Intent intent = new Intent(context, SeekerAnnounceInfoActivity.class);
+                int clickedposition = (int) v.getTag();
+                Announce announce = listAnnounce.get(clickedposition);
+                intent.putExtra("myAnnounce", announce);
                 context.startActivity(intent);
+
+
             }
         });
+
+        /*holder.itemView.setOnClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+            }
+        });*/
 
         return holder;
     }

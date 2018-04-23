@@ -1,9 +1,11 @@
 package es.lost2found.database;
 
 import org.json.JSONObject;
+import org.json.JSONTokener;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
@@ -23,6 +25,7 @@ public class DB_transportPlace {
 
     // Server: jcorreas-hp.fdi.ucm.es
     private static String SERVER_PATH = "http://jcorreas-hp.fdi.ucm.es/lost2found/database/place/transport/";
+    private static String OPEN_DATA_URL = "https://ressources.data.sncf.com/api/records/1.0/search/?dataset=objets-trouves-gares&sort=date&facet=date&facet=gc_obo_type_c&facet=gc_obo_gare_origine_r_name";
 
     public static TransportPlace getTransportPlace(String lineText, String stationText) {
         //Place lugar = DB_place.insertPlace();
@@ -222,4 +225,42 @@ public class DB_transportPlace {
         return stations;
     }
 
+    public static String[] getTrainStations() {
+        String[] stations = new String[15];
+            // Create connection
+            int timeout = 5000;
+            URL url = null;
+            HttpURLConnection connection = null;
+            JSONObject object = null;
+            InputStream inStream = null;
+            try {
+                url = new URL(OPEN_DATA_URL);
+                connection = (HttpURLConnection) url.openConnection();
+                connection.setRequestMethod("GET");
+                connection.setRequestProperty("Content-type", "application/x-www-form-urlencoded");
+                connection.setDoOutput(true);
+                connection.setDoInput(true);
+                connection.connect();
+                inStream = connection.getInputStream();
+                BufferedReader bReader = new BufferedReader(new InputStreamReader(inStream));
+                String temp, response = "";
+                while((temp = bReader.readLine()) != null) {
+                    response += temp;
+                }
+                object = (JSONObject) new JSONTokener(response).nextValue();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if(inStream != null) {
+                try {
+                    inStream.close();
+                } catch(IOException ignored) {
+                }
+            }
+            if(connection != null) {
+                connection.disconnect();
+            }
+        }
+        return stations;
+    }
 }

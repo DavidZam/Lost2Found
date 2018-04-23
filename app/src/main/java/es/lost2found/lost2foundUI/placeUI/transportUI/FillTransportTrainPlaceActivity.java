@@ -3,7 +3,6 @@ package es.lost2found.lost2foundUI.placeUI.transportUI;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -12,7 +11,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.TextView;
 
 import com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner;
 
@@ -40,39 +38,30 @@ public class FillTransportTrainPlaceActivity extends AppCompatActivity {
         ab.setHomeAsUpIndicator(R.drawable.ic_arrow_back);
 
         arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, list);
-        spinner = findViewById(R.id.listLines);
+        spinner = findViewById(R.id.listStations);
         spinner.setAdapter(arrayAdapter);
 
-        /*SharedPreferences sp = getApplicationContext().getSharedPreferences("transportButton", 0);
-        boolean metro = sp.getBoolean("metro", false);
-        boolean bus = sp.getBoolean("bus", false);
+        new stationsDB().execute();
 
-        if(metro) {
-            String metroText = "metro";
-            new FillTransportPlaceActivity.linesDB().execute(metroText);
-        } else if (bus) {
-            String busText = "bus";
-            new FillTransportPlaceActivity.linesDB().execute(busText);
-        }*/
-
-        spinner.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        /*spinner.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                /*if(parent.getItemAtPosition(position).toString() != null) {
+                if(parent.getItemAtPosition(position).toString() != null) {
                     lineChoice = parent.getItemAtPosition(position).toString();
                     if (Build.VERSION.SDK_INT>=Build.VERSION_CODES.HONEYCOMB)
                         new FillTransportPlaceActivity.stationsDB().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, lineChoice);
                     else
                         new FillTransportPlaceActivity.stationsDB().execute(lineChoice);
-                }*/
+                }
             }
-        });
+        });*/
     }
 
-    private class stationsDB extends AsyncTask<String, String[], String[]> {
+    private class stationsDB extends AsyncTask<Void, String[], String[]> {
+
         @Override
-        protected String[] doInBackground(String... strings) {
-            return DB_transportPlace.getStations(strings[0]);
+        protected String[] doInBackground(Void... params) {
+            return DB_transportPlace.getTrainStations();
         }
 
         @Override
@@ -94,7 +83,7 @@ public class FillTransportTrainPlaceActivity extends AppCompatActivity {
         return true;
     }
 
-    public void saveTransportPlaceData(View view) {
+    /*public void saveTransportPlaceData(View view) {
         SharedPreferences sp = getSharedPreferences("transportPlace", 0);
         SharedPreferences.Editor ed = sp.edit();            // Saved the user color choice.
         ed.putString("stationChoice", stationChoice);
@@ -102,7 +91,48 @@ public class FillTransportTrainPlaceActivity extends AppCompatActivity {
         if(stationChoice.equalsIgnoreCase("")) {
             TextView textView = findViewById(R.id.no_info);
             textView.setText(textView.getResources().getString(R.string.error_txt2));
-        } /*else
-            new FillTransportPlaceActivity.getTransportPlaceDB().execute(lineChoice, stationChoice);*/
+        } else
+            new FillTransportPlaceActivity.getTransportPlaceDB().execute(lineChoice, stationChoice);
     }
+
+    private class getTransportPlaceDB extends AsyncTask<String, Void, TransportPlace> {
+
+        private ProgressDialog dialog = new ProgressDialog(FillTransportPlaceActivity.this);
+
+        @Override
+        protected void onPreExecute() {
+            this.dialog.setMessage("Cargando...");
+            this.dialog.show();
+        }
+
+        @Override
+        protected TransportPlace doInBackground(String... strings) {
+            return DB_transportPlace.getTransportPlace(strings[0], strings[1]);
+        }
+
+        @Override
+        protected void onPostExecute(TransportPlace result) {
+            this.dialog.dismiss();
+            processTransportPlace(result);
+        }
+    }
+
+    private void processTransportPlace(TransportPlace transportPlace) {
+        Integer placeId = transportPlace.getId();
+        if(placeId == null) {
+            TextView textView = findViewById(R.id.wrong_info);
+            textView.setText(textView.getResources().getString(R.string.error_txt4));
+        } else {
+            Intent intent = new Intent(this, NewAnnounceActivity.class);
+            SharedPreferences sp = getSharedPreferences("placeId", 0);
+            SharedPreferences.Editor ed = sp.edit();  // Saved the place data filled by the user.
+
+            ed.putInt("idLugar", placeId);
+            ed.apply();
+
+            intent.putExtra("transportPlace", transportPlace);
+            startActivity(intent);
+            finish();
+        }
+    }*/
 }
