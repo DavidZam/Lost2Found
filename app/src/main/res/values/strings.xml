@@ -43,7 +43,7 @@
 
     <string name="error_txt1">Email o contraseña incorrectos</string>
     <string name="error_txt2">Introduce la linea y la estacion</string>
-    <string name="error_txt3">Completa todos los campos</string>
+    <string name="error_txt3">Completa los campos necesarios</string>
     <string name="error_txt4">Combinación no valida</string>
     <string name="error_txt5">Selecciona la categoría y el tipo de anuncio</string>
 

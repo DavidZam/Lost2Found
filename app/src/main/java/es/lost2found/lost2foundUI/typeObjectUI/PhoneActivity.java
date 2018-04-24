@@ -65,7 +65,7 @@ public class PhoneActivity extends AppCompatActivity {
         EditText announceTara = findViewById(R.id.tara);
         String announceTaraText = announceTara.getText().toString();
 
-        if(announceBrandText.equalsIgnoreCase("") || announceModelText.equalsIgnoreCase("") || announceIMEIText.equalsIgnoreCase("") || announceTaraText.equalsIgnoreCase("")) {
+        if(announceBrandText.equalsIgnoreCase("") || announceModelText.equalsIgnoreCase("")) {
             TextView textView = findViewById(R.id.wrong_information);
             textView.setText(textView.getResources().getString(R.string.error_txt3));
         } else {
