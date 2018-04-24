@@ -1,5 +1,6 @@
 package es.lost2found.lost2foundUI.placeUI.transportUI;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
@@ -11,6 +12,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.TextView;
 
 import com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner;
 
@@ -18,6 +20,8 @@ import java.util.ArrayList;
 
 import es.lost2found.R;
 import es.lost2found.database.DB_transportPlace;
+import es.lost2found.entities.TransportPlace;
+import es.lost2found.lost2foundUI.announceUI.NewAnnounceActivity;
 
 public class FillTransportTrainPlaceActivity extends AppCompatActivity {
 
@@ -43,18 +47,14 @@ public class FillTransportTrainPlaceActivity extends AppCompatActivity {
 
         new stationsDB().execute();
 
-        /*spinner.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        spinner.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 if(parent.getItemAtPosition(position).toString() != null) {
-                    lineChoice = parent.getItemAtPosition(position).toString();
-                    if (Build.VERSION.SDK_INT>=Build.VERSION_CODES.HONEYCOMB)
-                        new FillTransportPlaceActivity.stationsDB().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, lineChoice);
-                    else
-                        new FillTransportPlaceActivity.stationsDB().execute(lineChoice);
+                    stationChoice = parent.getItemAtPosition(position).toString();
                 }
             }
-        });*/
+        });
     }
 
     private class stationsDB extends AsyncTask<Void, String[], String[]> {
@@ -83,7 +83,7 @@ public class FillTransportTrainPlaceActivity extends AppCompatActivity {
         return true;
     }
 
-    /*public void saveTransportPlaceData(View view) {
+    public void saveTransportPlaceData(View view) {
         SharedPreferences sp = getSharedPreferences("transportPlace", 0);
         SharedPreferences.Editor ed = sp.edit();            // Saved the user color choice.
         ed.putString("stationChoice", stationChoice);
@@ -92,12 +92,12 @@ public class FillTransportTrainPlaceActivity extends AppCompatActivity {
             TextView textView = findViewById(R.id.no_info);
             textView.setText(textView.getResources().getString(R.string.error_txt2));
         } else
-            new FillTransportPlaceActivity.getTransportPlaceDB().execute(lineChoice, stationChoice);
+            new newTransportTrainPlaceDB().execute(stationChoice);
     }
 
-    private class getTransportPlaceDB extends AsyncTask<String, Void, TransportPlace> {
+    private class newTransportTrainPlaceDB extends AsyncTask<String, Void, TransportPlace> {
 
-        private ProgressDialog dialog = new ProgressDialog(FillTransportPlaceActivity.this);
+        private ProgressDialog dialog = new ProgressDialog(FillTransportTrainPlaceActivity.this);
 
         @Override
         protected void onPreExecute() {
@@ -107,32 +107,27 @@ public class FillTransportTrainPlaceActivity extends AppCompatActivity {
 
         @Override
         protected TransportPlace doInBackground(String... strings) {
-            return DB_transportPlace.getTransportPlace(strings[0], strings[1]);
+            return DB_transportPlace.insertTransportTrainPlace(strings[0]);
         }
 
         @Override
         protected void onPostExecute(TransportPlace result) {
             this.dialog.dismiss();
-            processTransportPlace(result);
+            processTransportTrainPlace(result);
         }
     }
 
-    private void processTransportPlace(TransportPlace transportPlace) {
-        Integer placeId = transportPlace.getId();
-        if(placeId == null) {
-            TextView textView = findViewById(R.id.wrong_info);
-            textView.setText(textView.getResources().getString(R.string.error_txt4));
-        } else {
-            Intent intent = new Intent(this, NewAnnounceActivity.class);
-            SharedPreferences sp = getSharedPreferences("placeId", 0);
-            SharedPreferences.Editor ed = sp.edit();  // Saved the place data filled by the user.
+    private void processTransportTrainPlace(TransportPlace transportTrainPlace) {
+        Integer placeId = transportTrainPlace.getId();
+        Intent intent = new Intent(this, NewAnnounceActivity.class);
+        SharedPreferences sp = getSharedPreferences("placeId", 0);
+        SharedPreferences.Editor ed = sp.edit();  // Saved the place data filled by the user.
 
-            ed.putInt("idLugar", placeId);
-            ed.apply();
+        ed.putInt("idLugar", placeId);
+        ed.apply();
 
-            intent.putExtra("transportPlace", transportPlace);
-            startActivity(intent);
-            finish();
-        }
-    }*/
+        intent.putExtra("transportPlace", transportTrainPlace);
+        startActivity(intent);
+        finish();
+    }
 }

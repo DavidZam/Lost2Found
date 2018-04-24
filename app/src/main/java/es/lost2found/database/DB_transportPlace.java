@@ -27,8 +27,6 @@ public class DB_transportPlace {
     private static String SERVER_PATH = "http://jcorreas-hp.fdi.ucm.es/lost2found/database/place/transport/";
 
     public static TransportPlace getTransportPlace(String lineText, String stationText) {
-        //Place lugar = DB_place.insertPlace();
-        //Integer idLugar = DB_place.getId(lineText, stationText); // Obtenemos el id de ese lugar
         TransportPlace ret = null;
         try {
             JSONObject jsonObject = new JSONObject();
@@ -41,7 +39,6 @@ public class DB_transportPlace {
 
             jsonString = URLEncoder.encode(jsonString, "UTF-8");
 
-            //String urlStr = SERVER_PATH + "insertTransportPlaceJSON.php";
             String urlStr = SERVER_PATH + "getTransportPlaceIdByLineStationJSON.php";
             URL url = new URL(urlStr);
 
@@ -79,8 +76,8 @@ public class DB_transportPlace {
                 in.close();
 
                 JSONObject object = new JSONObject(response.toString());
-                //if (response.toString().equals("correct"))
-                    ret = new TransportPlace(response.toString());
+
+                ret = new TransportPlace(response.toString());
             } finally {
                 con.disconnect();
             }
@@ -227,7 +224,7 @@ public class DB_transportPlace {
     public static String[] getTrainStations() {
         String OPEN_DATA_URL = "https://data.sncf.com/api/records/1.0/search//?dataset=objets-trouves-gares&rows=0&facet=gc_obo_gare_origine_r_name";
         String[] stations = new String[12];
-        String[] realStations = new String[13];
+        String[] realStations = new String[12];
 
         int timeout = 5000;
         URL url = null;
@@ -267,8 +264,9 @@ public class DB_transportPlace {
                     stations[i] = text;
                 }
             }
-            for(int i = 1; i < 13; i++) {
-                realStations[i] = stations[i].substring(0, stations[i].indexOf(","));
+            for(int i = 0; i < 12; i++) {
+                realStations[i] = stations[i + 1].substring(0, stations[i + 1].indexOf(","));
+                realStations[i] = realStations[i].substring(1, realStations[i].length());
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -284,5 +282,72 @@ public class DB_transportPlace {
             }
         }
         return realStations;
+    }
+
+    public static TransportPlace insertTransportTrainPlace(String estacion) {
+        Place newPlace = DB_place.insertPlace();
+        String placeId = String.valueOf(newPlace.getId());
+        String tipoTte = "tren";
+        String linea = null;
+        TransportPlace trainPlace = null;
+        try {
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("placeId", placeId);
+            jsonObject.put("tipoTte", tipoTte);
+            jsonObject.put("linea", linea);
+            jsonObject.put("estacion", estacion);
+
+
+            List list = new LinkedList();
+            list.addAll(Arrays.asList(jsonObject));
+            String jsonString = list.toString();
+
+            jsonString = URLEncoder.encode(jsonString, "UTF-8");
+
+            String urlStr = SERVER_PATH + "insertTrainStationJSON.php";
+            URL url = new URL(urlStr);
+
+            HttpURLConnection con = (HttpURLConnection) url.openConnection();
+            try {
+                con.setRequestMethod("POST");
+                con.setRequestProperty("User-Agent", "your user agent");
+                con.setRequestProperty("Accept-Language", "sp-SP,sp;q=0.5");
+
+                String urlParameters = "json=" + jsonString;
+
+                con.setDoOutput(true);
+                OutputStream outstream = con.getOutputStream();
+                DataOutputStream wr = new DataOutputStream(outstream);
+                wr.writeBytes(urlParameters);
+                wr.flush();
+                wr.close();
+
+                InputStream instream;
+
+                int status = con.getResponseCode();
+
+                if (status != HttpURLConnection.HTTP_OK)
+                    instream = con.getErrorStream();
+                else
+                    instream = con.getInputStream();
+
+                BufferedReader in = new BufferedReader(new InputStreamReader(instream));
+                String inputLine;
+                StringBuffer response = new StringBuffer();
+
+                while ((inputLine = in.readLine()) != null) {
+                    response.append(inputLine);
+                }
+                Integer id = Integer.valueOf(placeId);
+                if (response.toString().equals("correct"))
+                   trainPlace = new TransportPlace(id, "tren", null, estacion);
+                    trainPlace.setId(id);
+            } finally {
+                con.disconnect();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return trainPlace;
     }
 }
