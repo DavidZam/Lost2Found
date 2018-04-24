@@ -32,29 +32,6 @@ public class SeekerAnnounceViewAdapter extends RecyclerView.Adapter<SeekerAnnoun
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_announce, parent, false);
         SeekerAnnounceViewHolder holder = new SeekerAnnounceViewHolder(v);
 
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                //View itemView = v.findViewById(R.id.activity_concrete_chat);
-                Context context = v.getContext();
-                Intent intent = new Intent(context, SeekerAnnounceInfoActivity.class);
-                int clickedposition = (int) v.getTag();
-                Announce announce = listAnnounce.get(clickedposition);
-                intent.putExtra("myAnnounce", announce);
-                context.startActivity(intent);
-
-
-            }
-        });
-
-        /*holder.itemView.setOnClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-            }
-        });*/
-
         return holder;
     }
 
@@ -82,6 +59,18 @@ public class SeekerAnnounceViewAdapter extends RecyclerView.Adapter<SeekerAnnoun
         } else if(listAnnounce.get(position).announceCategorie.equals("Otro")) {
             holder.categorieIcon.setImageResource(R.drawable.ic_other);
         }
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Context context = v.getContext();
+                Intent intent = new Intent(context, SeekerAnnounceInfoActivity.class);
+
+                Announce announce = listAnnounce.get(position);
+                intent.putExtra("myAnnounce", announce);
+                context.startActivity(intent);
+            }
+        });
     }
 
     @Override

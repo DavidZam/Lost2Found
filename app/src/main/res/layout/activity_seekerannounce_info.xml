@@ -6,12 +6,17 @@
     android:layout_width="wrap_content"
     android:layout_height="match_parent">
 
-    <RelativeLayout android:id="@+id/content_frame"
+    <RelativeLayout
+        android:id="@+id/content_frame"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/colorSecondaryText"
+        android:scrollbars="vertical"
         tools:context=".lost2foundUI.announceUI.matchingAnnounceUI.MatchAnnounceInfoActivity"
-        tools:showIn="@layout/activity_matchannounce_info"
-        android:background="@color/colorSecondaryText">
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="41dp"
+        tools:layout_editor_absoluteY="0dp"
+        tools:showIn="@layout/activity_matchannounce_info">
 
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar_center"
@@ -24,16 +29,18 @@
         <RelativeLayout
             android:id="@+id/login_layout"
             android:layout_width="match_parent"
-            android:padding="16dp"
             android:layout_height="match_parent"
             android:layout_alignParentStart="true"
             android:layout_below="@+id/toolbar_center"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:padding="16dp">
 
             <TextView
                 android:id="@+id/textinfoannounce"
-                android:layout_width="match_parent"
-                android:layout_height="372dp" />
+                android:layout_width="177dp"
+                android:layout_height="44dp"
+                android:layout_alignStart="@+id/divider"
+                android:layout_alignTop="@+id/infoCat" />
 
             <ImageView
                 android:id="@+id/imageinfoannounce"
@@ -41,8 +48,114 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
                 android:layout_centerHorizontal="true"
-                android:layout_marginBottom="43dp"
+                android:layout_marginBottom="28dp"
                 android:src="@drawable/ic_phone_android" />
+
+            <View
+                android:id="@+id/divider"
+                android:layout_width="1dp"
+                android:layout_height="368dp"
+                android:layout_alignTop="@+id/toolbar_center"
+                android:layout_centerHorizontal="true"
+                android:background="?android:attr/listDivider"
+                android:visibility="invisible"
+                tools:ignore="NotSibling" />
+
+            <TextView
+                android:id="@+id/infoCurrent"
+                android:layout_width="129dp"
+                android:layout_height="44dp"
+                android:layout_alignParentTop="true"
+                android:layout_marginTop="27dp"
+                android:layout_toStartOf="@+id/imageinfoannounce"
+                android:text="Hora creación anuncio"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/infoType"
+                android:layout_width="129dp"
+                android:layout_height="44dp"
+                android:layout_centerVertical="true"
+                android:layout_toStartOf="@+id/imageinfoannounce"
+                android:text="Tipo de anuncio"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/type"
+                android:layout_width="177dp"
+                android:layout_height="44dp"
+                android:layout_alignStart="@+id/textinfoannounce"
+                android:layout_centerVertical="true" />
+
+            <TextView
+                android:id="@+id/infoDia"
+                android:layout_width="129dp"
+                android:layout_height="44dp"
+                android:layout_alignParentTop="true"
+                android:layout_marginTop="161dp"
+                android:layout_toStartOf="@+id/imageinfoannounce"
+                android:text="Fecha"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/dia"
+                android:layout_width="177dp"
+                android:layout_height="44dp"
+                android:layout_alignParentTop="true"
+                android:layout_alignStart="@+id/textinfoannounce"
+                android:layout_marginTop="158dp" />
+
+            <TextView
+                android:id="@+id/infoCat"
+                android:layout_width="128dp"
+                android:layout_height="44dp"
+                android:layout_alignParentTop="true"
+                android:layout_marginTop="101dp"
+                android:layout_toStartOf="@+id/imageinfoannounce"
+                android:text="Categoría"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/current"
+                android:layout_width="177dp"
+                android:layout_height="44dp"
+                android:layout_alignParentEnd="true"
+                android:layout_alignTop="@+id/infoCurrent" />
+
+            <TextView
+                android:id="@+id/infoHoraAnuncio"
+                android:layout_width="129dp"
+                android:layout_height="44dp"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="150dp"
+                android:layout_toStartOf="@+id/imageinfoannounce"
+                android:text="Hora"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/horaAnuncio"
+                android:layout_width="177dp"
+                android:layout_height="44dp"
+                android:layout_alignStart="@+id/textinfoannounce"
+                android:layout_alignTop="@+id/infoHoraAnuncio"
+                android:text="TextView" />
+
+            <TextView
+                android:id="@+id/infoColor"
+                android:layout_width="129dp"
+                android:layout_height="44dp"
+                android:layout_above="@+id/imageinfoannounce"
+                android:layout_toStartOf="@+id/imageinfoannounce"
+                android:text="Color"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/textView16"
+                android:layout_width="177dp"
+                android:layout_height="44dp"
+                android:layout_alignStart="@+id/textinfoannounce"
+                android:layout_alignTop="@+id/infoColor"
+                android:text="TextView" />
 
         </RelativeLayout>
 
