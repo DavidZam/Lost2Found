@@ -82,5 +82,55 @@
 	        disconnectDB($connection);
 	        return $query;
 	    }
+		
+		
+		function getNumberSeekerAnnounces($categoria, $tipo) {
+			$connection = connectDB();
+
+			$sql = mysqli_prepare($connection, "SELECT DISTINCT COUNT(*) FROM anuncio_objeto WHERE nombreTabla = ? AND tipoAnuncio = ?");
+			mysqli_stmt_bind_param($sql, "ss", $categoria, $tipo);
+
+			$query = $sql->execute();
+
+			if(!$query)
+		            	die();
+			$result = $sql->store_result();
+			$realresult = $sql->bind_result($numAnnounces);
+			$sql->fetch();
+			
+	        	disconnectDB($connection);
+	        
+		    	return $numAnnounces;
+		}
+		
+		
+		function getAnnouncesSeeker($categoria, $tipo) {
+
+			$connection = connectDB();
+
+			$stmt = $connection->prepare("SELECT DISTINCT * FROM `anuncio_objeto` WHERE nombreTabla = ? AND tipoAnuncio = ?");
+			$stmt->bind_param('ss', $categoria, $tipo);
+
+			$stmt->execute();
+
+			$result = $stmt->get_result();
+
+			while($row = $result->fetch_assoc())    {
+		            $rows[] = $row;
+			    $rows[] = ".";
+            		}
+			$rawdata = array();
+			$i = 0;
+
+            		foreach($rows as $row)    {
+        	    		$rawdata[$i] = $rows[$i];
+	            		$i++;
+           		}
+
+			$result->close();
+
+		    	disconnectDB($connection);
+	        	return $rawdata;
+		}
 	}
 ?>

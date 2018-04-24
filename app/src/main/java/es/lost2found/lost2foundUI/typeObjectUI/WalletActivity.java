@@ -62,7 +62,7 @@ public class WalletActivity extends AppCompatActivity {
         EditText announceDocuments = findViewById(R.id.documents);
         String announceDocumentsText = announceDocuments.getText().toString();
 
-        if(announceBrandText.equalsIgnoreCase("") || announceDocumentsText.equalsIgnoreCase("")) {
+        if(announceBrandText.equalsIgnoreCase("")) {
             TextView textView = findViewById(R.id.wrong_information);
             textView.setText(textView.getResources().getString(R.string.error_txt3));
         } else {
