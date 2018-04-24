@@ -216,9 +216,9 @@ public class DB_announce {
 
                 while ((inputLine = in.readLine()) != null)
                     response.append(inputLine);
-
+                Integer colorInt = Integer.valueOf(color);
                 if (response.toString().equals("correct"))
-                    ret = new Announce(announceType, currentTime, announceDayText, announceHourText, color, announceCategorie);
+                    ret = new Announce(announceType, currentTime, announceDayText, announceHourText, colorInt, announceCategorie);
                     // model, brand,
             } finally {
                 con.disconnect();

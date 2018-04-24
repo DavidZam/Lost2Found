@@ -104,8 +104,10 @@
             <Button
                 android:id="@+id/color_button"
                 style="@style/buttonStyle"
-                android:layout_below="@+id/listCategories"
-                android:layout_marginTop="15sp"
+                android:layout_width="280sp"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/color_view"
+                android:layout_toStartOf="@+id/hour_show"
                 android:onClick="showColorPickerDialog"
                 android:text="Color" />
 
@@ -113,10 +115,10 @@
                 android:id="@+id/color_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/color_button"
-
-                android:layout_marginTop="17dp"
-                android:layout_toStartOf="@+id/hour_button"></es.lost2found.lost2foundUI.pickerUI.ColorView>
+                android:layout_above="@+id/wrong_information"
+                android:layout_alignParentEnd="true"
+                android:layout_marginBottom="22dp"
+                android:background="@drawable/rounded"/>
 
             <TextView
                 android:id="@+id/wrong_information"

@@ -69,10 +69,8 @@ public class AnnounceViewAdapter extends RecyclerView.Adapter<AnnounceViewHolder
         holder.announceType.setText(listAnnounce.get(position).getAnnounceType());
         holder.announceDateText.setText(listAnnounce.get(position).getAnnounceDateText());
         holder.announceHourText.setText(listAnnounce.get(position).getAnnounceHourText());
-        //holder.currentTime.setText(listAnnounce.get(position).getCurrentTime());
-        //holder.brand.setText(listAnnounce.get(position).getBrand());
-        //holder.model.setText(listAnnounce.get(position).getModel());
         holder.announceCategorie.setText(listAnnounce.get(position).getAnnounceCategorie());
+        holder.color.setBackgroundColor(listAnnounce.get(position).getColor());
 
         if(listAnnounce.get(position).announceCategorie.equals("Telefono")) {
             holder.categorieIcon.setImageResource(R.drawable.ic_phone_android);

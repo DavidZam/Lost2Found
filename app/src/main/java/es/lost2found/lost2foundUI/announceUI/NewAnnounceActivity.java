@@ -1,6 +1,7 @@
 package es.lost2found.lost2foundUI.announceUI;
 
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -17,6 +18,7 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.flask.colorpicker.builder.ColorPickerClickListener;
 import com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner;
 
 import java.text.ParseException;
@@ -121,8 +123,6 @@ public class NewAnnounceActivity extends AppCompatActivity {
                 .colorPreset(Color.BLACK)
                 .allowCustom(true)
                 .show(this, "dialog");
-        //View view = findViewById(R.id.color_view);
-        //colorpicker.show(view);
     }
 
     public void saveData(View view) {

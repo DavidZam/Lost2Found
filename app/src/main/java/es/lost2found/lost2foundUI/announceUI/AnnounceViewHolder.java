@@ -1,5 +1,6 @@
 package es.lost2found.lost2foundUI.announceUI;
 
+import android.graphics.Color;
 import android.media.Image;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -27,7 +28,7 @@ public class AnnounceViewHolder extends RecyclerView.ViewHolder {
     TextView announceCategorie;
     TextView brand;
     TextView model;
-    TextView color;
+    View color;
 
     public AnnounceViewHolder(View itemView) {
         super(itemView);
@@ -36,42 +37,7 @@ public class AnnounceViewHolder extends RecyclerView.ViewHolder {
         announceType = (TextView) itemView.findViewById(R.id.announceType);
         announceDateText = (TextView) itemView.findViewById(R.id.announceDateText);
         announceHourText = (TextView) itemView.findViewById(R.id.announceHourText);
-        //currentTime = (TextView) itemView.findViewById(R.id.currentTime);
         announceCategorie = (TextView) itemView.findViewById(R.id.categorieAnnounce);
-        //brand = (TextView) itemView.findViewById(R.id.brand);
-        //model = (TextView) itemView.findViewById(R.id.model);
-        //color = (TextView) itemView.findViewById(R.id.color);
-    }
-
-    public TextView getAnnounceType() {
-        return announceType;
-    }
-
-    public TextView getAnnounceDateText() {
-        return announceDateText;
-    }
-
-    public TextView getAnnounceHourText() {
-        return announceHourText;
-    }
-
-    public TextView getCurrentTime() {
-        return currentTime;
-    }
-
-    public TextView getAnnounceCategorie() {
-        return announceCategorie;
-    }
-
-    public TextView getBrand() {
-        return brand;
-    }
-
-    public TextView getModel() {
-        return model;
-    }
-
-    public TextView getColor() {
-        return color;
+        color = (View) itemView.findViewById(R.id.color_view);
     }
 }

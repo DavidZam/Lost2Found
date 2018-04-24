@@ -30,20 +30,19 @@
             android:id="@+id/announceType"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_marginStart="17dp"
+            android:layout_below="@+id/categorieAnnounce"
+            android:layout_marginStart="18dp"
+            android:layout_marginTop="12dp"
             android:layout_toEndOf="@+id/imageView"
             android:text="Perdida"
-            android:textSize="22sp"
-            android:textStyle="bold" />
+            android:textSize="20sp" />
 
         <TextView
             android:id="@+id/announceDateText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignTop="@+id/announceType"
+            android:layout_alignBaseline="@+id/announceType"
             android:layout_marginStart="180dp"
-            android:layout_marginTop="7dp"
             android:text="17/04/18"
             android:textSize="15sp" />
 
@@ -51,61 +50,29 @@
             android:id="@+id/announceHourText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="260dp"
-            android:layout_marginTop="7dp"
+            android:layout_alignBaseline="@+id/announceDateText"
+            android:layout_marginStart="20dp"
+            android:layout_toEndOf="@+id/announceDateText"
             android:text="20:50"
             android:textSize="15sp" />
-
-        <!--<TextView
-            android:id="@+id/currentTime"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/categorieAnnounce"
-            android:layout_marginStart="260dp"
-            android:text="18:46"
-            android:textSize="14sp" />-->
-
-        <!--<TextView
-            android:id="@+id/brand"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/announceType"
-            android:layout_marginTop="10sp"
-            android:layout_marginStart="45sp"
-            android:textSize="20sp"
-            android:layout_toEndOf="@+id/model"
-            android:text="Apple" />-->
 
         <TextView
             android:id="@+id/categorieAnnounce"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
             android:layout_alignStart="@+id/announceType"
-            android:layout_below="@+id/announceType"
-            android:layout_marginTop="15sp"
             android:text="Telefono"
-            android:textSize="18sp" />
+            android:textSize="22sp"
+            android:textStyle="bold" />
 
-        <!--<TextView
-            android:id="@+id/model"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignStart="@+id/announceType"
-            android:layout_below="@+id/announceType"
-            android:layout_marginTop="14dp"
-            android:text="iPhone X"
-            android:textSize="18sp" />-->
-
-        <!--<TextView
-            android:id="@+id/color"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/announceType"
-            android:layout_toEndOf="@+id/brand"
-            android:layout_marginStart="25sp"
-            android:textSize="20sp"
-            android:layout_marginTop="10sp"
-            android:text="Plateado" />-->
+        <es.lost2found.lost2foundUI.pickerUI.ColorView
+            android:id="@+id/color_view"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_alignBottom="@+id/categorieAnnounce"
+            android:layout_marginStart="280dp"
+            android:background="@color/White"/>
 
     </RelativeLayout>
 
