@@ -184,7 +184,6 @@ public class FillTransportPlaceActivity extends AppCompatActivity {
             Intent intent = new Intent(this, NewAnnounceActivity.class);
             SharedPreferences sp = getSharedPreferences("placeId", 0);
             SharedPreferences.Editor ed = sp.edit();  // Saved the place data filled by the user.
-
             ed.putInt("idLugar", placeId);
             ed.apply();
 

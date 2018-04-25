@@ -92,7 +92,7 @@ public class FillConcretePlaceActivity extends AppCompatActivity {
         ed.putInt("idLugar", placeId); // Comprobar
         ed.apply();
 
-        //intent.putExtra("concretePlace", concretePlace);
+        intent.putExtra("concretePlace", concretePlace);
         startActivity(intent);
         finish();
     }

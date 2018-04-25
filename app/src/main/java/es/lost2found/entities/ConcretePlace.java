@@ -3,7 +3,9 @@ package es.lost2found.entities;
 
 import org.json.JSONObject;
 
-public class ConcretePlace extends Place {
+import java.io.Serializable;
+
+public class ConcretePlace extends Place implements Serializable {
 
     private Integer id;
     private String calle;
@@ -35,5 +37,17 @@ public class ConcretePlace extends Place {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public String getCalle() {
+        return this.calle;
+    }
+
+    public String getNumber() {
+        return this.number;
+    }
+
+    public String getPostalCode() {
+        return this.postalCode;
     }
 }

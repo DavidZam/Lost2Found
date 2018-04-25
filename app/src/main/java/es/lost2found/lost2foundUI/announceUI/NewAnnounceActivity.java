@@ -32,6 +32,9 @@ import es.lost2found.database.DB_announce;
 import es.lost2found.database.DB_transportPlace;
 import es.lost2found.database.DB_typeObject;
 import es.lost2found.entities.Announce;
+import es.lost2found.entities.ConcretePlace;
+import es.lost2found.entities.Place;
+import es.lost2found.entities.TransportPlace;
 import es.lost2found.lost2foundUI.pickerUI.ColorPickerUI;
 import es.lost2found.lost2foundUI.pickerUI.DatePickerUI;
 import es.lost2found.R;
@@ -138,8 +141,6 @@ public class NewAnnounceActivity extends AppCompatActivity {
 
         // Hora actual (de creacion del anuncio) FALTA capturar hora actual con date()) actualhour
         String actualHour = new SimpleDateFormat("HH:mm").format(Calendar.getInstance().getTime());
-        //Date currentTime = Calendar.getInstance().getTime();
-        //String currentTimeText = String.valueOf(currentTime);
 
         // Hora de la pérdida o hallazgo
         EditText announceLostFoundHourHour = findViewById(R.id.hour_show);
@@ -157,18 +158,37 @@ public class NewAnnounceActivity extends AppCompatActivity {
         Integer placeId = sp2.getInt("idLugar", 0);
         String placeIdText = String.valueOf(placeId);
 
+        // Place (TransportPlace or ConcretePlace
+        Object tp = getIntent().getSerializableExtra("transportPlace");
+        Object cp = getIntent().getSerializableExtra("concretePlace");
+        String place = "";
+        if(tp != null) {
+            TransportPlace transportPlace = (TransportPlace) tp;
+            if(((TransportPlace) tp).getTipoTte().equals("metro") || ((TransportPlace) tp).getTipoTte().equals("bus"))
+                place = transportPlace.getTipoTte() + ": " + transportPlace.getLine() + " - " + transportPlace.getStation();
+            else if(((TransportPlace) tp).getTipoTte().equals("tren")) {
+                place = transportPlace.getTipoTte() + ": " + transportPlace.getStation();
+            }
+        } else if(cp != null){
+            ConcretePlace concretePlace = (ConcretePlace) cp;
+            place = concretePlace.getCalle() + ", " + concretePlace.getNumber() + ", " + concretePlace.getPostalCode();
+        }
+
         // UserId
         SharedPreferences sp3 = getApplicationContext().getSharedPreferences("Login", 0);
         Integer userId = sp3.getInt("userId", 0);
         String userIdext = String.valueOf(userId);
+
+        // UserName
+        String userName = sp3.getString("nombre", "");
 
         if(announceType.equalsIgnoreCase("") || announceDayText.equalsIgnoreCase("") || announceLostFoundHourHourText.equalsIgnoreCase("")
                 || categorie.equalsIgnoreCase("") || colorchoiceText.equalsIgnoreCase("") || announceDayText.equalsIgnoreCase("")) {
             TextView textView = findViewById(R.id.wrong_information); // || announceBrandText.equalsIgnoreCase("") || announceModelText.equalsIgnoreCase("")
             textView.setText(textView.getResources().getString(R.string.error_txt3));
         } else {
-            // Id, TipoAnuncio, HoraActual, DiaAnuncio, HoraPerdidaoHallazgo, Modelo, Marca, Color, idUsuario e idLugar, Categoria (NombreTabla)
-            new announceDB().execute(announceType, actualHour, announceDayText, announceLostFoundHourHourText, colorchoiceText, userIdext, placeIdText, categorie);
+            // Id, TipoAnuncio, HoraActual, DiaAnuncio, HoraPerdidaoHallazgo, Modelo, Marca, Color, idUsuario e idLugar, Categoria (NombreTabla), Lugar, Username
+            new announceDB().execute(announceType, actualHour, announceDayText, announceLostFoundHourHourText, colorchoiceText, userIdext, placeIdText, categorie, place, userName);
         }
     }
 
@@ -184,7 +204,7 @@ public class NewAnnounceActivity extends AppCompatActivity {
 
         @Override
         protected Announce doInBackground(String... strings) {
-            return DB_announce.insertAnnounce(strings[0], strings[1], strings[2], strings[3], strings[4], strings[5], strings[6], strings[7]);
+            return DB_announce.insertAnnounce(strings[0], strings[1], strings[2], strings[3], strings[4], strings[5], strings[6], strings[7], strings[8], strings[9]);
         }
 
         @Override

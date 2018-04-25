@@ -116,31 +116,6 @@ public class AnnounceActivity extends AppCompatActivity implements FloatingActio
                 }
         );
         navView.setCheckedItem(R.id.nav_home);
-        /*
-        mDrawerLayout.addDrawerListener(
-                new DrawerLayout.DrawerListener() {
-                    @Override
-                    public void onDrawerSlide(@NonNull View drawerView, float slideOffset) {
-
-                    }
-
-                    @Override
-                    public void onDrawerOpened(@NonNull View drawerView) {
-
-                    }
-
-                    @Override
-                    public void onDrawerClosed(@NonNull View drawerView) {
-
-                    }
-
-                    @Override
-                    public void onDrawerStateChanged(int newState) {
-
-                    }
-                }
-        );
-        */
 
         if(spref != null) {
             String userEmail = spref.getString("email", "");

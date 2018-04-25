@@ -149,7 +149,7 @@ public class DB_announce {
     }
 
     // Id, TipoAnuncio, HoraActual, DiaAnuncio, HoraPerdidaoHallazgo, Modelo, Marca, Color, idUsuario e idLugar, Categoria (NombreTabla)
-    public static Announce insertAnnounce(String announceType, String currentTime, String announceDayText, String announceHourText, String color, String idUser, String idPlace, String announceCategorie) { // String model, String brand,
+    public static Announce insertAnnounce(String announceType, String currentTime, String announceDayText, String announceHourText, String color, String idUser, String idPlace, String announceCategorie, String place, String userName) {
         Announce ret = null;
         try {
             JSONObject jsonObject = new JSONObject();
@@ -218,8 +218,7 @@ public class DB_announce {
                     response.append(inputLine);
                 Integer colorInt = Integer.valueOf(color);
                 if (response.toString().equals("correct"))
-                    ret = new Announce(announceType, currentTime, announceDayText, announceHourText, colorInt, announceCategorie);
-                    // model, brand,
+                    ret = new Announce(announceType, currentTime, announceDayText, announceHourText, colorInt, announceCategorie, place, userName);
             } finally {
                 con.disconnect();
             }

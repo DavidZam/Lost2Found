@@ -10,14 +10,18 @@ public class Announce implements Serializable {
     public String announceHourText;
     public String announceCategorie;
     public int color;
+    public String place;
+    public String userOwner;
 
-    public Announce(String announceType, String currentTime, String announceDateText, String announceHourText, int color, String announceCategorie) { // String model, String brand,
+    public Announce(String announceType, String currentTime, String announceDateText, String announceHourText, int color, String announceCategorie, String place, String userOwner) { // String model, String brand,
         this.announceType = announceType;
         this.announceDateText = announceDateText;
         this.currentTime = currentTime;
         this.announceHourText = announceHourText;
         this.announceCategorie = announceCategorie;
         this.color = color;
+        this.place = place;
+        this.userOwner = userOwner;
     }
 
     public Announce(String announce) {
@@ -75,5 +79,13 @@ public class Announce implements Serializable {
 
     public int getColor() {
         return this.color;
+    }
+
+    public String getPlace() {
+        return this.place;
+    }
+
+    public String getUserOwner() {
+        return this.userOwner;
     }
 }

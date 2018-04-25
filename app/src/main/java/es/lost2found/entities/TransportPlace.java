@@ -18,6 +18,13 @@ public class TransportPlace extends Place implements Serializable {
         this.station = station;
     }
 
+    public TransportPlace(TransportPlace tp) {
+        this.id = tp.getId();
+        this.tipoTte = tp.getTipoTte();
+        this.line = tp.getLine();
+        this.station = tp.getStation();
+    }
+
     public TransportPlace(String json) {
         try {
             JSONObject jObject = new JSONObject(json);
@@ -36,6 +43,10 @@ public class TransportPlace extends Place implements Serializable {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public String getTipoTte() {
+        return this.tipoTte;
     }
 
     public String getLine() {
