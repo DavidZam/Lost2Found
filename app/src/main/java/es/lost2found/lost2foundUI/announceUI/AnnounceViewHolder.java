@@ -16,18 +16,11 @@ import es.lost2found.R;
 public class AnnounceViewHolder extends RecyclerView.ViewHolder {
 
     CardView cv;
-    //TextView title;
-    //TextView description;
-    //ImageView imageView;
-
     TextView announceType;
     TextView announceDateText;
     TextView announceHourText;
-    TextView currentTime;
     ImageView categorieIcon;
     TextView announceCategorie;
-    TextView brand;
-    TextView model;
     TextView owner;
     View color;
 

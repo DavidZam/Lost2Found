@@ -28,6 +28,7 @@ import es.lost2found.R;
 import es.lost2found.database.DB_announce;
 import es.lost2found.entities.Announce;
 import es.lost2found.lost2foundUI.announceUI.AnnounceActivity;
+import es.lost2found.lost2foundUI.announceUI.AnnounceViewAdapter;
 import es.lost2found.lost2foundUI.chatUI.ChatActivity;
 import es.lost2found.lost2foundUI.loginregisterUI.LoginActivity;
 import es.lost2found.lost2foundUI.openDataUI.OpenDataActivity;
@@ -40,7 +41,7 @@ import es.lost2found.lost2foundUI.otherUI.RateActivity;
 
 public class SeekerActivity extends AppCompatActivity implements FloatingActionButton.OnClickListener{
     private DrawerLayout mDrawerLayout;
-    private SeekerAnnounceViewAdapter adapter;
+    private AnnounceViewAdapter adapter;
     private Integer listElements = 0;
     private RecyclerView recyclerView;
     private Integer numberAnnounces;
@@ -150,8 +151,11 @@ public class SeekerActivity extends AppCompatActivity implements FloatingActionB
         FloatingActionButton search = findViewById(R.id.search);
         search.setOnClickListener(this);
 
+        SharedPreferences spref2 = getApplicationContext().getSharedPreferences("Login", 0);
+        String userName = spref2.getString("nombre", "");
         List<Announce> announceList = new ArrayList<>();
-        adapter = new SeekerAnnounceViewAdapter(announceList, getApplication());
+        //adapter = new SeekerAnnounceViewAdapter(announceList, getApplication());
+        adapter = new AnnounceViewAdapter(announceList, getApplication(), userName);
         recyclerView = findViewById(R.id.search_recyclerview);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -166,9 +170,10 @@ public class SeekerActivity extends AppCompatActivity implements FloatingActionB
 
     @Override
     public void onClick(View v) {
+        //List<Announce> listAnnounce = adapter.getListAnnounce();
 
-        if(!adapter.listAnnounce.isEmpty()) {
-            adapter.listAnnounce.clear();
+        if(!adapter.getListAnnounce().isEmpty()) {
+            adapter.getListAnnounce().clear();
             listElements = 0;
             recyclerView.setAdapter(adapter);
             recyclerView.setLayoutManager(new LinearLayoutManager(this));

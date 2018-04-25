@@ -78,9 +78,9 @@
             android:id="@+id/announceOwner"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignStart="@+id/announceHourText"
+            android:layout_marginStart="250dp"
             android:layout_alignTop="@+id/color_view"
-            android:text="David"
+            android:text="Random"
             android:textSize="19sp" />
 
     </RelativeLayout>

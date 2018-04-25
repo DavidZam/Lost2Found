@@ -75,7 +75,9 @@ public class AnnounceViewAdapter extends RecyclerView.Adapter<AnnounceViewHolder
         holder.announceCategorie.setText(listAnnounce.get(position).getAnnounceCategorie());
         holder.color.setBackgroundColor(listAnnounce.get(position).getColor());
 
-        if(listAnnounce.get(position).userOwner.equals(actualUser)) {
+        String userAnnounceOwnerName = listAnnounce.get(position).getUserOwner();
+        if(userAnnounceOwnerName.equals(actualUser)) {
+        //if(listAnnounce.get(position).userOwner.equals(actualUser)) {
             holder.owner.setText("Yo");
         } else {
             holder.owner.setText(listAnnounce.get(position).getUserOwner());
@@ -115,6 +117,10 @@ public class AnnounceViewAdapter extends RecyclerView.Adapter<AnnounceViewHolder
         int position = listAnnounce.indexOf(announce);
         listAnnounce.remove(position);
         notifyItemRemoved(position);
+    }
+
+    public List<Announce> getListAnnounce() {
+        return this.listAnnounce;
     }
 
     /*public void animate(RecyclerView.ViewHolder viewHolder) {

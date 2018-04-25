@@ -38,7 +38,6 @@ import es.lost2found.lost2foundUI.seekerUI.SeekerActivity;
 public class AnnounceActivity extends AppCompatActivity implements FloatingActionButton.OnClickListener {
 
     private DrawerLayout mDrawerLayout;
-    //private List<Announce> announceList;
     private Integer listElements = 0;
     private AnnounceViewAdapter adapter;
     private RecyclerView recyclerView;
