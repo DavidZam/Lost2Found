@@ -71,8 +71,17 @@
             android:layout_width="25dp"
             android:layout_height="25dp"
             android:layout_alignBottom="@+id/categorieAnnounce"
-            android:layout_marginStart="280dp"
-            android:background="@color/White"/>
+            android:layout_marginStart="190dp"
+            android:background="@color/Red"/>
+
+        <TextView
+            android:id="@+id/announceOwner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/announceHourText"
+            android:layout_alignTop="@+id/color_view"
+            android:text="David"
+            android:textSize="19sp" />
 
     </RelativeLayout>
 

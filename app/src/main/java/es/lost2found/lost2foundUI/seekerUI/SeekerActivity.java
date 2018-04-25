@@ -241,7 +241,10 @@ public class SeekerActivity extends AppCompatActivity implements FloatingActionB
             String cat = cambiarNombreCategoria();
             String tipoA = cambiarNombreTipo();
 
-            new getObjectAnnouncesDB().execute(cat, tipoA, String.valueOf(numberAnnounces));
+            SharedPreferences spref = getApplicationContext().getSharedPreferences("Login", 0);
+            String userName = spref.getString("nombre", "");
+
+            new getObjectAnnouncesDB().execute(cat, tipoA, String.valueOf(numberAnnounces), userName);
         }
     }
 
@@ -249,7 +252,7 @@ public class SeekerActivity extends AppCompatActivity implements FloatingActionB
 
         @Override
         protected Announce[] doInBackground(String... strings) {
-            return DB_announce.getAnnouncesSeeker(strings[0], strings[1], strings[2]);
+            return DB_announce.getAnnouncesSeeker(strings[0], strings[1], strings[2], strings[3]);
         }
 
         @Override

@@ -80,7 +80,7 @@ public class DB_announce {
         return  ret;
     }
 
-    public static Announce[] getAnnounces(String email, String numberAnnounces) {
+    public static Announce[] getAnnounces(String email, String numberAnnounces, String username) {
         Integer userId = DB_user.getId(email); // Obtenemos el id del usuario en cuestion
         Integer numAnnounces = Integer.valueOf(numberAnnounces);
         Announce[] announcesArray = new Announce[numAnnounces];
@@ -136,7 +136,7 @@ public class DB_announce {
                 if(firstChar == ',') {
                     announces[i] = announces[i].substring(1, announces[i].length());
                 }
-                Announce announce = new Announce(announces[i]);
+                Announce announce = new Announce(announces[i], username);
                 announcesArray[i] = announce;
             }
 
@@ -287,7 +287,7 @@ public class DB_announce {
     }
 
     // id, tipoAnuncio, horaActual, diaAnuncio, horaPerdidaoHallazgo, color, idUsuario, idLugar, nombreTabla (categoria)
-    public static Announce[] getAnnouncesSeeker(String categoria, String tipo, String numberAnnounces) {
+    public static Announce[] getAnnouncesSeeker(String categoria, String tipo, String numberAnnounces, String username) {
         Integer numAnnounces = Integer.valueOf(numberAnnounces);
         Announce[] announcesArray = new Announce[numAnnounces];
         try {
@@ -343,7 +343,7 @@ public class DB_announce {
                 if(firstChar == ',') {
                     announces[i] = announces[i].substring(1, announces[i].length());
                 }
-                Announce announce = new Announce(announces[i]);
+                Announce announce = new Announce(announces[i], username);
                 announcesArray[i] = announce;
             }
 

@@ -2,6 +2,7 @@ package es.lost2found.lost2foundUI.announceUI;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,10 +18,12 @@ import es.lost2found.lost2foundUI.announceUI.matchingAnnounceUI.MatchAnnounce;
 public class AnnounceViewAdapter extends RecyclerView.Adapter<AnnounceViewHolder>{
     List<Announce> listAnnounce;
     Context context;
+    String actualUser;
 
-    public AnnounceViewAdapter(List<Announce> listAnnounce, Context context) {
+    public AnnounceViewAdapter(List<Announce> listAnnounce, Context context, String actualUser) {
         this.listAnnounce = listAnnounce;
         this.context = context;
+        this.actualUser = actualUser;
     }
 
     @Override
@@ -72,6 +75,12 @@ public class AnnounceViewAdapter extends RecyclerView.Adapter<AnnounceViewHolder
         holder.announceCategorie.setText(listAnnounce.get(position).getAnnounceCategorie());
         holder.color.setBackgroundColor(listAnnounce.get(position).getColor());
 
+        if(listAnnounce.get(position).userOwner.equals(actualUser)) {
+            holder.owner.setText("Yo");
+        } else {
+            holder.owner.setText(listAnnounce.get(position).getUserOwner());
+        }
+
         if(listAnnounce.get(position).announceCategorie.equals("Telefono")) {
             holder.categorieIcon.setImageResource(R.drawable.ic_phone_android);
         } else if(listAnnounce.get(position).announceCategorie.equals("Cartera")) {
@@ -81,7 +90,6 @@ public class AnnounceViewAdapter extends RecyclerView.Adapter<AnnounceViewHolder
         } else if(listAnnounce.get(position).announceCategorie.equals("Otro")) {
             holder.categorieIcon.setImageResource(R.drawable.ic_other);
         }
-        //holder.categorieIcon.setImageResource(R.drawable.ic);
 
         //animate(holder);
     }

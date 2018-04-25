@@ -122,8 +122,10 @@ public class AnnounceActivity extends AppCompatActivity implements FloatingActio
             new getNumberObjectAnnouncesDB().execute(userEmail); // Devuelve el numero de anuncios del usuario en cuestion
         }
 
+        SharedPreferences spref2 = getApplicationContext().getSharedPreferences("Login", 0);
+        String userName = spref2.getString("nombre", "");
         List<Announce> announceList = new ArrayList<>();
-        adapter = new AnnounceViewAdapter(announceList, getApplication());
+        adapter = new AnnounceViewAdapter(announceList, getApplication(), userName);
         recyclerView = findViewById(R.id.announce_recyclerview);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -161,7 +163,8 @@ public class AnnounceActivity extends AppCompatActivity implements FloatingActio
             numberAnnounces = numAnnounces;
             SharedPreferences spref = getApplicationContext().getSharedPreferences("Login", 0);
             String userEmail = spref.getString("email", "");
-            new getObjectAnnouncesDB().execute(userEmail, String.valueOf(numberAnnounces)); // Devuelve una lista con los anuncios del usuario en cuestion
+            String userName = spref.getString("nombre", "");
+            new getObjectAnnouncesDB().execute(userEmail, String.valueOf(numberAnnounces), userName); // Devuelve una lista con los anuncios del usuario en cuestion
         }
     }
 
@@ -169,7 +172,7 @@ public class AnnounceActivity extends AppCompatActivity implements FloatingActio
 
         @Override
         protected Announce[] doInBackground(String... strings) {
-            return DB_announce.getAnnounces(strings[0], strings[1]);
+            return DB_announce.getAnnounces(strings[0], strings[1], strings[2]);
         }
 
         @Override

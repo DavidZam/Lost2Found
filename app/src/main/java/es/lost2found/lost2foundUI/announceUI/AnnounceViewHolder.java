@@ -28,6 +28,7 @@ public class AnnounceViewHolder extends RecyclerView.ViewHolder {
     TextView announceCategorie;
     TextView brand;
     TextView model;
+    TextView owner;
     View color;
 
     public AnnounceViewHolder(View itemView) {
@@ -38,6 +39,7 @@ public class AnnounceViewHolder extends RecyclerView.ViewHolder {
         announceDateText = (TextView) itemView.findViewById(R.id.announceDateText);
         announceHourText = (TextView) itemView.findViewById(R.id.announceHourText);
         announceCategorie = (TextView) itemView.findViewById(R.id.categorieAnnounce);
+        owner = (TextView) itemView.findViewById(R.id.announceOwner);
         color = (View) itemView.findViewById(R.id.color_view);
     }
 }
