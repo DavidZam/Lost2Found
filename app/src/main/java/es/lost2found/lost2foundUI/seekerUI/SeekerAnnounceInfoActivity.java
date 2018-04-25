@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -46,7 +47,7 @@ public class SeekerAnnounceInfoActivity extends AppCompatActivity {
         TextView infoHora = (TextView) findViewById(R.id.infoHoraAnuncio);
         TextView hora = (TextView) findViewById(R.id.horaAnuncio);
         TextView infoColor = (TextView) findViewById(R.id.infoColor);
-        TextView color = (TextView) findViewById(R.id.color);
+        View color = (View) findViewById(R.id.color_view);
 
         String c = "<h4> <font color=#699CFC>"+ a.announceCategorie +" </font></h4><br>";
         cat.setText(Html.fromHtml(c));
@@ -63,6 +64,8 @@ public class SeekerAnnounceInfoActivity extends AppCompatActivity {
 
         String h = "<h4> <font color=#699CFC>"+ a.announceHourText +" </font></h4><br>";
         hora.setText(Html.fromHtml(h));
+
+        color.setBackgroundColor(a.color);
 
        /* String col = "<h4> <font color=#699CFC>"+ a.color +" </font></h4><br>";
         color.setText(Html.fromHtml(col));*/

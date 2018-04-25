@@ -19,7 +19,7 @@ public class SeekerAnnounceViewHolder extends RecyclerView.ViewHolder {
     TextView announceCategorie;
     TextView brand;
     TextView model;
-    TextView color;
+    View color;
 
     public SeekerAnnounceViewHolder(View itemView) {
         super(itemView);
@@ -30,6 +30,7 @@ public class SeekerAnnounceViewHolder extends RecyclerView.ViewHolder {
         announceHourText = (TextView) itemView.findViewById(R.id.announceHourText);
         //currentTime = (TextView) itemView.findViewById(R.id.currentTime);
         announceCategorie = (TextView) itemView.findViewById(R.id.categorieAnnounce);
+        color = (View) itemView.findViewById(R.id.color_view);
 
     }
 
@@ -61,7 +62,7 @@ public class SeekerAnnounceViewHolder extends RecyclerView.ViewHolder {
         return model;
     }
 
-    public TextView getColor() {
+    public View getColor() {
         return color;
     }
 
