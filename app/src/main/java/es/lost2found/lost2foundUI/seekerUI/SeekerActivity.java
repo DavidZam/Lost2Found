@@ -41,6 +41,7 @@ import es.lost2found.lost2foundUI.otherUI.RateActivity;
 
 public class SeekerActivity extends AppCompatActivity implements FloatingActionButton.OnClickListener{
     private DrawerLayout mDrawerLayout;
+    //private SeekerAnnounceViewAdapter adapter;
     private AnnounceViewAdapter adapter;
     private Integer listElements = 0;
     private RecyclerView recyclerView;
@@ -170,7 +171,10 @@ public class SeekerActivity extends AppCompatActivity implements FloatingActionB
 
     @Override
     public void onClick(View v) {
-        //List<Announce> listAnnounce = adapter.getListAnnounce();
+        /*
+        if(!adapter.listAnnounce.isEmpty()) {
+            adapter.listAnnounce.clear();
+         */
 
         if(!adapter.getListAnnounce().isEmpty()) {
             adapter.getListAnnounce().clear();
@@ -249,7 +253,9 @@ public class SeekerActivity extends AppCompatActivity implements FloatingActionB
             SharedPreferences spref = getApplicationContext().getSharedPreferences("Login", 0);
             String userName = spref.getString("nombre", "");
 
-            new getObjectAnnouncesDB().execute(cat, tipoA, String.valueOf(numberAnnounces), userName);
+            String place = getIntent().getExtras().getString("place");
+
+            new getObjectAnnouncesDB().execute(cat, tipoA, String.valueOf(numberAnnounces), place);
         }
     }
 

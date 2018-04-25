@@ -57,6 +57,9 @@ public class AnnounceActivity extends AppCompatActivity implements FloatingActio
 
         NavigationView navView = findViewById(R.id.nav_view);
 
+        /*SharedPreferences sp = getApplicationContext().getSharedPreferences("announcePlace", 0);
+        place = sp.getString("place", "");*/
+
         View headerLayout = navView.getHeaderView(0);
         TextView emailUser = headerLayout.findViewById(R.id.user_mail);
         TextView nameUser = headerLayout.findViewById(R.id.user_name);
@@ -92,6 +95,9 @@ public class AnnounceActivity extends AppCompatActivity implements FloatingActio
 
                         // Add code here to update the UI based on the item selected
                         if(menuItem.getItemId()== R.id.nav_search) {
+                            SharedPreferences sp = getApplicationContext().getSharedPreferences("announcePlace", 0);
+                            String place = sp.getString("place", "");
+                            buscar.putExtra("palce", place);
                             startActivity(buscar);
                         }else if(menuItem.getItemId()== R.id.nav_chat) {
                             startActivity(chat);
@@ -162,8 +168,11 @@ public class AnnounceActivity extends AppCompatActivity implements FloatingActio
             numberAnnounces = numAnnounces;
             SharedPreferences spref = getApplicationContext().getSharedPreferences("Login", 0);
             String userEmail = spref.getString("email", "");
-            String userName = spref.getString("nombre", "");
-            new getObjectAnnouncesDB().execute(userEmail, String.valueOf(numberAnnounces), userName); // Devuelve una lista con los anuncios del usuario en cuestion
+
+            SharedPreferences sp = getApplicationContext().getSharedPreferences("announcePlace", 0);
+            String place = sp.getString("place", "");
+
+            new getObjectAnnouncesDB().execute(userEmail, String.valueOf(numberAnnounces), place); // Devuelve una lista con los anuncios del usuario en cuestion
         }
     }
 

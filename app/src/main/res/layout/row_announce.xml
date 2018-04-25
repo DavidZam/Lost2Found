@@ -71,14 +71,14 @@
             android:layout_width="25dp"
             android:layout_height="25dp"
             android:layout_alignBottom="@+id/categorieAnnounce"
-            android:layout_marginStart="190dp"
-            android:background="@color/Red"/>
+            android:layout_alignEnd="@+id/announceHourText"
+            android:background="@color/Red" />
 
         <TextView
             android:id="@+id/announceOwner"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="250dp"
+            android:layout_alignStart="@+id/announceDateText"
             android:layout_alignTop="@+id/color_view"
             android:text="Random"
             android:textSize="19sp" />

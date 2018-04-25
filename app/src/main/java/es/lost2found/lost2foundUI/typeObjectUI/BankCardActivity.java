@@ -1,6 +1,7 @@
 package es.lost2found.lost2foundUI.typeObjectUI;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
@@ -79,6 +80,14 @@ public class BankCardActivity extends AppCompatActivity {
     }
 
     private void showAnnounceScreen(String announce) {
+        SharedPreferences sp = getApplicationContext().getSharedPreferences("announcePlace", 0);
+        String place = sp.getString("place", "");
+
+        SharedPreferences sp2 = getSharedPreferences("announcePlace", 0);
+        SharedPreferences.Editor ed = sp2.edit();            // Saved the user login credencials.
+        ed.putString("place", place);
+        ed.apply();
+
         Intent intent = new Intent(this, AnnounceActivity.class);
         startActivity(intent);
     }

@@ -79,12 +79,19 @@ public class WalletActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(String result) {
-            showAnnounceScreen(result);
+            if(result.equals("correct"))
+            showAnnounceScreen();
         }
     }
 
-    private void showAnnounceScreen(String announce) {
+    private void showAnnounceScreen() {
+        String place = getIntent().getExtras().getString("place");
+        SharedPreferences sp = getSharedPreferences("announcePlace", 0);
+        SharedPreferences.Editor ed = sp.edit();            // Saved the user login credencials.
+        ed.putString("place", place);
+        ed.apply();
         Intent intent = new Intent(this, AnnounceActivity.class);
+        intent.putExtra("place", place);
         startActivity(intent);
     }
 

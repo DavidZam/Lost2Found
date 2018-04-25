@@ -167,7 +167,7 @@ public class DB_typeObject {
     }
 
     public static String insertObject(String objectId, String categorie, String param1, String param2, String param3, String param4) {
-        String newObject = null;
+        String correct = "";
         try {
             JSONObject jsonObject = new JSONObject();
             jsonObject.put("objectId", objectId);
@@ -217,6 +217,7 @@ public class DB_typeObject {
                 while ((inputLine = in.readLine()) != null) {
                     response.append(inputLine);
                 }
+                correct = "correct";
 
             } finally {
                 con.disconnect();
@@ -226,7 +227,7 @@ public class DB_typeObject {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return newObject;
+        return correct;
     }
 
 }

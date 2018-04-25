@@ -16,9 +16,9 @@ import es.lost2found.entities.Announce;
 import es.lost2found.lost2foundUI.announceUI.matchingAnnounceUI.MatchAnnounce;
 
 public class AnnounceViewAdapter extends RecyclerView.Adapter<AnnounceViewHolder>{
-    List<Announce> listAnnounce;
-    Context context;
-    String actualUser;
+    private List<Announce> listAnnounce;
+    private Context context;
+    private String actualUser;
 
     public AnnounceViewAdapter(List<Announce> listAnnounce, Context context, String actualUser) {
         this.listAnnounce = listAnnounce;
@@ -68,7 +68,6 @@ public class AnnounceViewAdapter extends RecyclerView.Adapter<AnnounceViewHolder
 
     @Override
     public void onBindViewHolder(AnnounceViewHolder holder, int position) {
-        // Use the provided ChatView_Holder on the onCreateViewHolder method to populate the current row on the RecycleView
         holder.announceType.setText(listAnnounce.get(position).getAnnounceType());
         holder.announceDateText.setText(listAnnounce.get(position).getAnnounceDateText());
         holder.announceHourText.setText(listAnnounce.get(position).getAnnounceHourText());

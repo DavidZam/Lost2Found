@@ -80,7 +80,7 @@ public class DB_announce {
         return  ret;
     }
 
-    public static Announce[] getAnnounces(String email, String numberAnnounces, String username) {
+    public static Announce[] getAnnounces(String email, String numberAnnounces, String place) {
         Integer userId = DB_user.getId(email); // Obtenemos el id del usuario en cuestion
         Integer numAnnounces = Integer.valueOf(numberAnnounces);
         Announce[] announcesArray = new Announce[numAnnounces];
@@ -134,9 +134,14 @@ public class DB_announce {
             for(int i = 0; i < numAnnounces; i++) {
                 char firstChar = announces[i].charAt(1);
                 if(firstChar == ',') {
-                    announces[i] = announces[i].substring(1, announces[i].length());
+                    announces[i] = announces[i].substring(2, announces[i].length());
                 }
-                Announce announce = new Announce(announces[i], username);
+                JSONObject object = new JSONObject(announces[i]);
+                String idUser =  object.getString("idUsuario");
+                Integer intIdUser = Integer.valueOf(idUser);
+                String userOwner = DB_user.getNameById(intIdUser);
+                Announce announce = new Announce(announces[i], userOwner, place);
+
                 announcesArray[i] = announce;
             }
 
@@ -272,7 +277,7 @@ public class DB_announce {
     }
 
     // id, tipoAnuncio, horaActual, diaAnuncio, horaPerdidaoHallazgo, color, idUsuario, idLugar, nombreTabla (categoria)
-    public static Announce[] getAnnouncesSeeker(String categoria, String tipo, String numberAnnounces, String username) {
+    public static Announce[] getAnnouncesSeeker(String categoria, String tipo, String numberAnnounces, String place) {
         Integer numAnnounces = Integer.valueOf(numberAnnounces);
         Announce[] announcesArray = new Announce[numAnnounces];
         try {
@@ -326,9 +331,13 @@ public class DB_announce {
             for(int i = 0; i < numAnnounces; i++) {
                 char firstChar = announces[i].charAt(1);
                 if(firstChar == ',') {
-                    announces[i] = announces[i].substring(1, announces[i].length());
+                    announces[i] = announces[i].substring(2, announces[i].length());
                 }
-                Announce announce = new Announce(announces[i], username);
+                JSONObject object = new JSONObject(announces[i]);
+                String idUser =  object.getString("idUsuario");
+                Integer intIdUser = Integer.valueOf(idUser);
+                String userOwner = DB_user.getNameById(intIdUser);
+                Announce announce = new Announce(announces[i], userOwner, place);
                 announcesArray[i] = announce;
             }
 

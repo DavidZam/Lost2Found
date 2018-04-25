@@ -174,6 +174,11 @@ public class NewAnnounceActivity extends AppCompatActivity {
             place = concretePlace.getCalle() + ", " + concretePlace.getNumber() + ", " + concretePlace.getPostalCode();
         }
 
+        SharedPreferences sp4 = getSharedPreferences("announcePlace", 0);
+        SharedPreferences.Editor ed = sp4.edit();            // Saved the user login credencials.
+        ed.putString("place", place);
+        ed.apply();
+
         // UserId
         SharedPreferences sp3 = getApplicationContext().getSharedPreferences("Login", 0);
         Integer userId = sp3.getInt("userId", 0);
@@ -216,24 +221,39 @@ public class NewAnnounceActivity extends AppCompatActivity {
 
     private void processNewAnnounce(Announce announce) {
         if(categorie.equals("Cartera")) {
+            SharedPreferences sp = getApplicationContext().getSharedPreferences("announcePlace", 0);
+            String place = sp.getString("place", "");
             Intent intent = new Intent(this, WalletActivity.class);
             intent.putExtra("categorie", categorie);
+            intent.putExtra("place", place);
             startActivity(intent);
         } else if(categorie.equals("Telefono")) {
+            SharedPreferences sp = getApplicationContext().getSharedPreferences("announcePlace", 0);
+            String place = sp.getString("place", "");
             Intent intent = new Intent(this, PhoneActivity.class);
             intent.putExtra("categorie", categorie);
+            intent.putExtra("place", place);
             startActivity(intent);
         } else if(categorie.equals("Tarjeta bancaria")) {
+            SharedPreferences sp = getApplicationContext().getSharedPreferences("announcePlace", 0);
+            String place = sp.getString("place", "");
             Intent intent = new Intent(this, BankCardActivity.class);
             intent.putExtra("categorie", categorie);
+            intent.putExtra("place", place);
             startActivity(intent);
         } else if(categorie.equals("Tarjeta transporte")) {
+            SharedPreferences sp = getApplicationContext().getSharedPreferences("announcePlace", 0);
+            String place = sp.getString("place", "");
             Intent intent = new Intent(this, TransportCardActivity.class);
             intent.putExtra("categorie", categorie);
+            intent.putExtra("place", place);
             startActivity(intent);
         } else if(categorie.equals("Otro")) {
+            SharedPreferences sp = getApplicationContext().getSharedPreferences("announcePlace", 0);
+            String place = sp.getString("place", "");
             Intent intent = new Intent(this, OtherObjectActivity.class);
             intent.putExtra("categorie", categorie);
+            intent.putExtra("place", place);
             startActivity(intent);
         }
         finish();

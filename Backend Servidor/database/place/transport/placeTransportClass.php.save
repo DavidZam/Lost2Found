@@ -87,12 +87,26 @@
 
 	        	disconnectDB($connection);
 		    	return $rawdata;
-		}
-
-	    function insert($placeId, $tipoTte, $linea, $station) {
+		
+	    function insert($line, $station, $placeId) {
 	        $connection = connectDB();
-		$sql = mysqli_prepare($connection, "INSERT INTO lugar_transporte (idLugarTte, tipoTte, linea, estacion) VALUES (?, ?, ?, ?)");
-		mysqli_stmt_bind_param($sql, "isss", $placeId, $tipoTte, $linea, $station);
+		$sql = mysqli_prepare($connection, "INSERT INTO lugar_transporte (idLugarTte, linea, estacion) VALUES (?, ?, ?)");
+		mysqli_stmt_bind_param($sql, "iss", $placeId, $line, $station);
+
+	        $query = $sql->execute();
+	        if(!$query)
+	            echo "incorrect";
+	        else
+	            echo "correct";
+
+	        disconnectDB($connection);
+	        return $query;
+	    }
+
+	    function insertTrainStation($station, $tipoTte) {
+	        $connection = connectDB();
+			$sql = mysqli_prepare($connection, "INSERT INTO lugar_transporte (null, tipoTte, null, estacion) VALUES (?, ?)");
+			mysqli_stmt_bind_param($sql, "ss", $station, $tipoTte);
 
 	        $query = $sql->execute();
 	        if(!$query)

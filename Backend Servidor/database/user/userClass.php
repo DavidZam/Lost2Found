@@ -1,4 +1,7 @@
 <?php
+	ini_set('display_errors', 1);
+    ini_set('display_startup_errors', 1);
+    error_reporting(E_ALL);
 	include('../dbFunctions.php');
 
 	class User {
@@ -63,7 +66,33 @@
                         return $rawdata;
                 }
 
+        function getName($id) {
+            $connection = connectDB();
 
+            $sql = mysqli_prepare($connection, "SELECT nombre FROM usuario WHERE id = ?");
+            mysqli_stmt_bind_param($sql, "s", $id);
+
+            $query = $sql->execute();
+
+            if(!$query)
+            	die();
+
+            $result = $sql->store_result();
+
+            $realresult = $sql->bind_result($name);
+
+            $rawdata = array();
+
+			$correct = $query;
+
+            $sql->fetch();
+
+            $rawdata['name'] = utf8_encode($name);
+			$rawdata['correct'] = $correct;
+
+            disconnectDB($connection);
+            return $rawdata;
+	    }	
 
 		/**
 		 *	Insert a user in the database.
