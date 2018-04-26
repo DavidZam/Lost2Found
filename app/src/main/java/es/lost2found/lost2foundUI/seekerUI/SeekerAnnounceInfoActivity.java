@@ -11,6 +11,7 @@ import android.text.method.ScrollingMovementMethod;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ScrollView;
@@ -22,6 +23,7 @@ import java.util.ArrayList;
 
 import es.lost2found.R;
 import es.lost2found.entities.Announce;
+import es.lost2found.lost2foundUI.announceUI.matchingAnnounceUI.MatchAnnounce;
 
 public class SeekerAnnounceInfoActivity extends AppCompatActivity {
 
@@ -45,6 +47,8 @@ public class SeekerAnnounceInfoActivity extends AppCompatActivity {
         TextView hora = (TextView) findViewById(R.id.hora);
         TextView textoColor = (TextView) findViewById(R.id.colorTexto);
         View color = (View) findViewById(R.id.color_view);
+
+
 
         Announce a = (Announce) getIntent().getSerializableExtra("myAnnounce");
 
@@ -117,6 +121,12 @@ public class SeekerAnnounceInfoActivity extends AppCompatActivity {
         }else{
             image.setImageResource(R.drawable.ic_card);
         }
+    }
+
+    public void matching(View v) {
+        final Intent match = new Intent(this, MatchAnnounce.class);
+        startActivity(match);
+        finish();
     }
 
     @Override

@@ -105,6 +105,7 @@
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
             android:layout_marginBottom="45dp"
+            android:onClick="matching"
             android:text="Buscar coincidencias" />
 
         <es.lost2found.lost2foundUI.pickerUI.ColorView
