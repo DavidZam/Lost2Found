@@ -11,11 +11,10 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/colorSecondaryText"
-        android:scrollbars="vertical"
         tools:context=".lost2foundUI.announceUI.matchingAnnounceUI.MatchAnnounceInfoActivity"
         tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="41dp"
-        tools:layout_editor_absoluteY="0dp"
+        tools:layout_editor_absoluteX="16dp"
+        tools:layout_editor_absoluteY="389dp"
         tools:showIn="@layout/activity_matchannounce_info">
 
         <android.support.v7.widget.Toolbar
@@ -26,137 +25,117 @@
 
         </android.support.v7.widget.Toolbar>
 
-        <RelativeLayout
-            android:id="@+id/login_layout"
+        <ScrollView
+            android:id="@+id/scroll"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_alignParentEnd="true"
             android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
             android:layout_below="@+id/toolbar_center"
-            android:orientation="vertical"
-            android:padding="16dp">
+            android:layout_marginTop="75dp"
+            android:scrollbars="vertical">
 
-            <TextView
-                android:id="@+id/textinfoannounce"
-                android:layout_width="177dp"
-                android:layout_height="44dp"
-                android:layout_alignStart="@+id/divider"
-                android:layout_alignTop="@+id/infoCat" />
-
-            <ImageView
-                android:id="@+id/imageinfoannounce"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:id="@+id/login_layout"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_centerHorizontal="true"
-                android:layout_marginBottom="28dp"
-                android:src="@drawable/ic_phone_android" />
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/toolbar_center"
+                android:orientation="vertical"
+                android:padding="16dp">
 
-            <View
-                android:id="@+id/divider"
-                android:layout_width="1dp"
-                android:layout_height="368dp"
-                android:layout_alignTop="@+id/toolbar_center"
-                android:layout_centerHorizontal="true"
-                android:background="?android:attr/listDivider"
-                android:visibility="invisible"
-                tools:ignore="NotSibling" />
 
-            <TextView
-                android:id="@+id/infoCurrent"
-                android:layout_width="129dp"
-                android:layout_height="44dp"
-                android:layout_alignParentTop="true"
-                android:layout_marginTop="27dp"
-                android:layout_toStartOf="@+id/imageinfoannounce"
-                android:text="Hora creación anuncio"
-                android:textSize="18sp" />
+                <TextView
+                    android:id="@+id/categoria"
+                    android:layout_width="match_parent"
+                    android:layout_height="46dp"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerHorizontal="true"
+                    android:text="TextView" />
 
-            <TextView
-                android:id="@+id/infoType"
-                android:layout_width="129dp"
-                android:layout_height="44dp"
-                android:layout_centerVertical="true"
-                android:layout_toStartOf="@+id/imageinfoannounce"
-                android:text="Tipo de anuncio"
-                android:textSize="18sp" />
+                <TextView
+                    android:id="@+id/tipo"
+                    android:layout_width="match_parent"
+                    android:layout_height="46dp"
+                    android:layout_below="@+id/categoria"
+                    android:layout_centerHorizontal="true"
+                    android:text="TextView" />
 
-            <TextView
-                android:id="@+id/type"
-                android:layout_width="177dp"
-                android:layout_height="44dp"
-                android:layout_alignStart="@+id/textinfoannounce"
-                android:layout_centerVertical="true" />
+                <TextView
+                    android:id="@+id/dia"
+                    android:layout_width="match_parent"
+                    android:layout_height="46dp"
+                    android:layout_below="@+id/tipo"
+                    android:layout_centerHorizontal="true"
+                    android:text="TextView" />
 
-            <TextView
-                android:id="@+id/infoDia"
-                android:layout_width="129dp"
-                android:layout_height="44dp"
-                android:layout_alignParentTop="true"
-                android:layout_marginTop="161dp"
-                android:layout_toStartOf="@+id/imageinfoannounce"
-                android:text="Fecha"
-                android:textSize="18sp" />
+                <TextView
+                    android:id="@+id/hora"
+                    android:layout_width="match_parent"
+                    android:layout_height="46dp"
+                    android:layout_below="@+id/dia"
+                    android:layout_centerHorizontal="true"
+                    android:text="TextView" />
 
-            <TextView
-                android:id="@+id/dia"
-                android:layout_width="177dp"
-                android:layout_height="44dp"
-                android:layout_alignParentTop="true"
-                android:layout_alignStart="@+id/textinfoannounce"
-                android:layout_marginTop="158dp" />
+                <TextView
+                    android:id="@+id/lugar"
+                    android:layout_width="match_parent"
+                    android:layout_height="64dp"
+                    android:layout_below="@+id/hora"
+                    android:layout_centerHorizontal="true"
+                    android:text="TextView" />
 
-            <TextView
-                android:id="@+id/infoCat"
-                android:layout_width="128dp"
-                android:layout_height="44dp"
-                android:layout_alignParentTop="true"
-                android:layout_marginTop="101dp"
-                android:layout_toStartOf="@+id/imageinfoannounce"
-                android:text="Categoría"
-                android:textSize="18sp" />
+                <TextView
+                    android:id="@+id/usuario"
+                    android:layout_width="match_parent"
+                    android:layout_height="46dp"
+                    android:layout_below="@+id/lugar"
+                    android:layout_centerHorizontal="true"
+                    android:text="TextView" />
 
-            <TextView
-                android:id="@+id/current"
-                android:layout_width="177dp"
-                android:layout_height="44dp"
-                android:layout_alignStart="@+id/textinfoannounce"
-                android:layout_alignTop="@+id/infoCurrent" />
+            </LinearLayout>
+        </ScrollView>
 
-            <TextView
-                android:id="@+id/infoHoraAnuncio"
-                android:layout_width="129dp"
-                android:layout_height="44dp"
-                android:layout_alignParentBottom="true"
-                android:layout_marginBottom="150dp"
-                android:layout_toStartOf="@+id/imageinfoannounce"
-                android:text="Hora"
-                android:textSize="18sp" />
+        <Button
+            android:id="@+id/match"
+            style="@style/buttonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="45dp"
+            android:text="Buscar coincidencias" />
 
-            <TextView
-                android:id="@+id/horaAnuncio"
-                android:layout_width="177dp"
-                android:layout_height="44dp"
-                android:layout_alignStart="@+id/textinfoannounce"
-                android:layout_alignTop="@+id/infoHoraAnuncio" />
+        <es.lost2found.lost2foundUI.pickerUI.ColorView
+            android:id="@+id/color_view"
+            android:layout_width="31dp"
+            android:layout_height="19dp"
+            android:layout_alignTop="@+id/colorTexto"
+            android:layout_toEndOf="@+id/colorTexto"
+            android:background="@drawable/rounded">
 
-            <TextView
-                android:id="@+id/infoColor"
-                android:layout_width="129dp"
-                android:layout_height="44dp"
-                android:layout_above="@+id/imageinfoannounce"
-                android:layout_toStartOf="@+id/imageinfoannounce"
-                android:text="Color"
-                android:textSize="18sp" />
+        </es.lost2found.lost2foundUI.pickerUI.ColorView>
 
-            <es.lost2found.lost2foundUI.pickerUI.ColorView
-                android:id="@+id/color_view"
-                android:layout_width="42dp"
-                android:layout_height="34dp"
-                android:layout_below="@+id/divider"
-                android:layout_toEndOf="@+id/imageinfoannounce"
-                android:background="@color/White" />
+        <TextView
+            android:id="@+id/colorTexto"
+            android:layout_width="64dp"
+            android:layout_height="27dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignTop="@+id/imageinfoannounce"
+            android:layout_marginStart="18dp"
+            android:text="c"
+            android:textAllCaps="false"
+            android:textSize="16sp" />
 
-        </RelativeLayout>
+        <ImageView
+            android:id="@+id/imageinfoannounce"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="123dp"
+            android:src="@drawable/ic_phone_android" />
 
     </RelativeLayout>
 

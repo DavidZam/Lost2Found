@@ -14,6 +14,7 @@ import java.util.List;
 import es.lost2found.R;
 import es.lost2found.entities.Announce;
 import es.lost2found.lost2foundUI.announceUI.matchingAnnounceUI.MatchAnnounce;
+import es.lost2found.lost2foundUI.seekerUI.SeekerAnnounceInfoActivity;
 
 public class AnnounceViewAdapter extends RecyclerView.Adapter<AnnounceViewHolder>{
     private List<Announce> listAnnounce;
@@ -32,7 +33,7 @@ public class AnnounceViewAdapter extends RecyclerView.Adapter<AnnounceViewHolder
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_announce, parent, false);
         AnnounceViewHolder holder = new AnnounceViewHolder(v);
 
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
+       /* holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //View itemView = v.findViewById(R.id.activity_concrete_chat);
@@ -40,7 +41,7 @@ public class AnnounceViewAdapter extends RecyclerView.Adapter<AnnounceViewHolder
                 Intent intent = new Intent(context, MatchAnnounce.class);
                 context.startActivity(intent);
             }
-        });
+        });*/
 
 
         /*
@@ -91,6 +92,18 @@ public class AnnounceViewAdapter extends RecyclerView.Adapter<AnnounceViewHolder
         } else if(listAnnounce.get(position).announceCategorie.equals("Otro")) {
             holder.categorieIcon.setImageResource(R.drawable.ic_other);
         }
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Context context = v.getContext();
+                Intent intent = new Intent(context, SeekerAnnounceInfoActivity.class);
+
+                Announce announce = listAnnounce.get(position);
+                intent.putExtra("myAnnounce", announce);
+                context.startActivity(intent);
+            }
+        });
 
         //animate(holder);
     }

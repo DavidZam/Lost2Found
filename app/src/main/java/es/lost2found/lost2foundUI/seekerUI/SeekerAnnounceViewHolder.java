@@ -1,4 +1,4 @@
-package es.lost2found.lost2foundUI.seekerUI;
+/*package es.lost2found.lost2foundUI.seekerUI;
 
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -36,9 +36,9 @@ public class SeekerAnnounceViewHolder extends RecyclerView.ViewHolder {
 
     public TextView getAnnounceType() {
         return announceType;
-    }
+    }*/
 
-    public TextView getAnnounceDateText() {
+   /* public TextView getAnnounceDateText() {
         return announceDateText;
     }
 
@@ -67,3 +67,4 @@ public class SeekerAnnounceViewHolder extends RecyclerView.ViewHolder {
     }
 
 }
+*/

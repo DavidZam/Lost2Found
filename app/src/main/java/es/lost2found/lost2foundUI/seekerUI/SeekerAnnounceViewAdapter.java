@@ -1,4 +1,4 @@
-package es.lost2found.lost2foundUI.seekerUI;
+/*package es.lost2found.lost2foundUI.seekerUI;
 
 import android.content.Context;
 import android.content.Intent;
@@ -43,7 +43,7 @@ public class SeekerAnnounceViewAdapter extends RecyclerView.Adapter<SeekerAnnoun
         holder.description.setText(listAnnounce.get(position).description);
         holder.imageView.setImageResource(listAnnounce.get(position).imageId);*/
         //animate(holder);
-
+/*
         holder.announceType.setText(listAnnounce.get(position).getAnnounceType());
         holder.announceDateText.setText(listAnnounce.get(position).getAnnounceDateText());
         holder.announceHourText.setText(listAnnounce.get(position).getAnnounceHourText());
@@ -97,3 +97,4 @@ public class SeekerAnnounceViewAdapter extends RecyclerView.Adapter<SeekerAnnoun
         notifyItemRemoved(position);
     }
 }
+*/
