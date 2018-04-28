@@ -67,7 +67,7 @@ public class MatchAnnounceViewAdapter extends RecyclerView.Adapter<AnnounceViewH
     public void onBindViewHolder(AnnounceViewHolder holder, int position) {
 
         holder.getAnnounceType().setText(listAnnounce.get(position).getAnnounceType());
-        holder.getAnnounceDateText().setText(listAnnounce.get(position).getAnnounceDateText());
+        holder.getAnnounceDateText().setText(listAnnounce.get(position).DDMMYYYY());
         holder.getAnnounceHourText().setText(listAnnounce.get(position).getAnnounceHourText());
         holder.getAnnounceCategorie().setText(listAnnounce.get(position).getAnnounceCategorie());
         holder.getColor().setBackgroundColor(listAnnounce.get(position).getColor());
@@ -94,10 +94,10 @@ public class MatchAnnounceViewAdapter extends RecyclerView.Adapter<AnnounceViewH
             @Override
             public void onClick(View v) {
                 Context context = v.getContext();
-                Intent intent = new Intent(context, SeekerAnnounceInfoActivity.class);
+                Intent intent = new Intent(context, MatchAnnounceInfoActivity.class);
 
                 Announce announce = listAnnounce.get(position);
-                intent.putExtra("myAnnounce", announce);
+                intent.putExtra("matchAnnounce", announce);
                 context.startActivity(intent);
             }
         });

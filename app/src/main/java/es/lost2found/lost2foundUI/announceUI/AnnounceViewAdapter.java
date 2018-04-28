@@ -59,7 +59,7 @@ public class AnnounceViewAdapter extends RecyclerView.Adapter<AnnounceViewHolder
     @Override
     public void onBindViewHolder(AnnounceViewHolder holder, int position) {
         holder.announceType.setText(listAnnounce.get(position).getAnnounceType());
-        holder.announceDateText.setText(listAnnounce.get(position).getAnnounceDateText());
+        holder.announceDateText.setText(listAnnounce.get(position).DDMMYYYY());
         holder.announceHourText.setText(listAnnounce.get(position).getAnnounceHourText());
         holder.announceCategorie.setText(listAnnounce.get(position).getAnnounceCategorie());
         holder.color.setBackgroundColor(listAnnounce.get(position).getColor());

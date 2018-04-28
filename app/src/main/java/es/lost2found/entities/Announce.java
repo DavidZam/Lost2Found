@@ -41,7 +41,7 @@ public class Announce implements Serializable {
         return this.announceType;
     }
 
-    private String DDMMYYYY(){
+    public String DDMMYYYY(){
         String anio = "", mes = "", dia = "";
 
         int ini = 0;
@@ -61,12 +61,13 @@ public class Announce implements Serializable {
             ++ini;
         }
 
-        announceDateText = (dia + "/" + mes + "/" + anio);
-        return announceDateText;
+        /*announceDateText = (dia + "/" + mes + "/" + anio);
+        return announceDateText;*/
+        return (dia + "/" + mes + "/" + anio);
     }
 
     public String getAnnounceDateText() {
-        return DDMMYYYY();
+        return announceDateText;
     }
 
     public String getAnnounceHourText() {

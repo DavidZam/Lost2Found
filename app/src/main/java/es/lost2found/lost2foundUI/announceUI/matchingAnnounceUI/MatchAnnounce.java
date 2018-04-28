@@ -72,7 +72,7 @@ public class MatchAnnounce extends AppCompatActivity {
             recyclerView.setLayoutManager(new LinearLayoutManager(this));
         }
 
-        new getNumberObjectAnnouncesDB().execute(userEmail, a.announceCategorie, a.announceType); ///////////////////PONER PARAMETROS
+        new getNumberObjectAnnouncesDB().execute(userEmail, a.announceCategorie, a.announceType, a.announceDateText); ///////////////////PONER PARAMETROS
 
 
         // In this example we fill announceList with a function fill_with_data(), in the future we'll do it with the database info
@@ -98,7 +98,7 @@ public class MatchAnnounce extends AppCompatActivity {
 
         @Override
         protected Integer doInBackground(String... strings) {
-            return DB_announce.getNumberMatchAnnounces(strings[0], strings[1], strings[2]);
+            return DB_announce.getNumberMatchAnnounces(strings[0], strings[1], strings[2], strings[3]);
         }
 
         @Override
@@ -122,7 +122,7 @@ public class MatchAnnounce extends AppCompatActivity {
             String place = sp.getString("place", "");
 
             /////////////////////////////////////////////////MIRAR PARÁMETROS
-            new getObjectAnnouncesDB().execute(userEmail, a.announceCategorie, a.announceType, String.valueOf(numberAnnounces), place);
+            new getObjectAnnouncesDB().execute(userEmail, a.announceCategorie, a.announceType, String.valueOf(numberAnnounces), place, a.announceDateText);
         }
     }
 
@@ -130,7 +130,7 @@ public class MatchAnnounce extends AppCompatActivity {
 
         @Override
         protected Announce[] doInBackground(String... strings) {
-            return DB_announce.getAnnouncesMatch(strings[0], strings[1], strings[2], strings[3], strings[4]);
+            return DB_announce.getAnnouncesMatch(strings[0], strings[1], strings[2], strings[3], strings[4], strings[5]);
         }
 
         @Override

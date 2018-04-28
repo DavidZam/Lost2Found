@@ -352,7 +352,7 @@ public class DB_announce {
 
 
     ///////////////////////////////MATCH///////////////////////////////////////
-    public static Integer getNumberMatchAnnounces(String email, String categoria, String tipo) {
+    public static Integer getNumberMatchAnnounces(String email, String categoria, String tipo, String dia) {
         Integer userId = DB_user.getId(email);
         Integer ret = null;
         try {
@@ -361,6 +361,7 @@ public class DB_announce {
             jsonObject.put("id", userId);
             jsonObject.put("nombreTabla", categoria);
             jsonObject.put("tipoAnuncio", tipo);
+            jsonObject.put("diaAnuncio", dia);
 
             List list = new LinkedList();
             list.addAll(Arrays.asList(jsonObject));
@@ -409,7 +410,7 @@ public class DB_announce {
         return  ret;
     }
 
-    public static Announce[] getAnnouncesMatch(String email, String categoria, String tipo, String numberAnnounces, String place) {
+    public static Announce[] getAnnouncesMatch(String email, String categoria, String tipo, String numberAnnounces, String place, String dia) {
         Integer numAnnounces = Integer.valueOf(numberAnnounces);
         Integer userId = DB_user.getId(email);
         Announce[] announcesArray = new Announce[numAnnounces];
@@ -418,6 +419,7 @@ public class DB_announce {
             jsonObject.put("id", userId);
             jsonObject.put("nombreTabla", categoria);
             jsonObject.put("tipoAnuncio", tipo);
+            jsonObject.put("diaAnuncio", dia);
 
             List list = new LinkedList();
             list.addAll(Arrays.asList(jsonObject));

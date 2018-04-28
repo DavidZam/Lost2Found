@@ -17,7 +17,7 @@ import es.lost2found.lost2foundUI.announceUI.AnnounceViewAdapter;
 import es.lost2found.lost2foundUI.announceUI.matchingAnnounceUI.MatchAnnounce;
 
 public class SeekerAnnounceInfoActivity extends AppCompatActivity {
-    Announce a;
+    private Announce a;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,7 +46,7 @@ public class SeekerAnnounceInfoActivity extends AppCompatActivity {
         String t = "<h4> <font color=#699CFC> Tipo: </font>"+ a.announceType +" </h4><br>";
         type.setText(Html.fromHtml(t));
 
-        String d = "<h4> <font color=#699CFC> Día: </font>"+ a.announceDateText +" </h4><br>";
+        String d = "<h4> <font color=#699CFC> Día: </font>"+ a.DDMMYYYY() +" </h4><br>";
         dia.setText(Html.fromHtml(d));
 
         String h = "<h4> <font color=#699CFC> Hora: </font>"+ a.announceHourText +" </h4><br>";
