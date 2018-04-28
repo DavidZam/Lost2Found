@@ -25,6 +25,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -128,6 +129,29 @@ public class NewAnnounceActivity extends AppCompatActivity {
                 .show(this, "dialog");
     }
 
+    private String YYYYMMDD(String diaMesAnio){
+        String anio = "", mes = "", dia = "";
+
+        int ini = 0;
+
+        while(diaMesAnio.charAt(ini) != '/'){
+            dia += diaMesAnio.charAt(ini);
+            ++ini;
+        }
+        ++ini;
+        while(diaMesAnio.charAt(ini) != '/'){
+            mes += diaMesAnio.charAt(ini);
+            ++ini;
+        }
+        ++ini;
+        while(ini <= diaMesAnio.length()-1){
+            anio += diaMesAnio.charAt(ini);
+            ++ini;
+        }
+
+        return (anio + "/" + mes + "/" + dia);
+    }
+
     public void saveData(View view) {
         // Id AUTO_INCREMENT
 
@@ -137,7 +161,15 @@ public class NewAnnounceActivity extends AppCompatActivity {
 
         // Dia anuncio
         EditText announceDay = findViewById(R.id.date_show);
-        String announceDayText = announceDay.getText().toString();
+        String announceDayText;// = announceDay.getText().toString();
+
+
+        //Invertimos la fecha para que se guarde en la BD como YYYY/MM/DD
+
+        String diaMesAnio = announceDay.getText().toString();
+        announceDayText = YYYYMMDD(diaMesAnio);
+
+
 
         // Hora actual (de creacion del anuncio) FALTA capturar hora actual con date()) actualhour
         String actualHour = new SimpleDateFormat("HH:mm").format(Calendar.getInstance().getTime());

@@ -33,17 +33,6 @@ public class AnnounceViewAdapter extends RecyclerView.Adapter<AnnounceViewHolder
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_announce, parent, false);
         AnnounceViewHolder holder = new AnnounceViewHolder(v);
 
-       /* holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //View itemView = v.findViewById(R.id.activity_concrete_chat);
-                Context context = v.getContext();
-                Intent intent = new Intent(context, MatchAnnounce.class);
-                context.startActivity(intent);
-            }
-        });*/
-
-
         /*
         holder.itemView.setOnClickListener(new View.OnClickListener() {
         @Override

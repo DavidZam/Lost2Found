@@ -171,10 +171,6 @@ public class SeekerActivity extends AppCompatActivity implements FloatingActionB
 
     @Override
     public void onClick(View v) {
-        /*
-        if(!adapter.listAnnounce.isEmpty()) {
-            adapter.listAnnounce.clear();
-         */
 
         if(!adapter.getListAnnounce().isEmpty()) {
             adapter.getListAnnounce().clear();

@@ -41,8 +41,32 @@ public class Announce implements Serializable {
         return this.announceType;
     }
 
+    private String DDMMYYYY(){
+        String anio = "", mes = "", dia = "";
+
+        int ini = 0;
+
+        while(announceDateText.charAt(ini) != '/'){
+            anio += announceDateText.charAt(ini);
+            ++ini;
+        }
+        ++ini;
+        while(announceDateText.charAt(ini) != '/'){
+            mes += announceDateText.charAt(ini);
+            ++ini;
+        }
+        ++ini;
+        while(ini <= announceDateText.length()-1){
+            dia += announceDateText.charAt(ini);
+            ++ini;
+        }
+
+        announceDateText = (dia + "/" + mes + "/" + anio);
+        return announceDateText;
+    }
+
     public String getAnnounceDateText() {
-        return this.announceDateText;
+        return DDMMYYYY();
     }
 
     public String getAnnounceHourText() {

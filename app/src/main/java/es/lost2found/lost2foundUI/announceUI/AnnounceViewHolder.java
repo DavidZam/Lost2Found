@@ -35,4 +35,32 @@ public class AnnounceViewHolder extends RecyclerView.ViewHolder {
         owner = (TextView) itemView.findViewById(R.id.announceOwner);
         color = (View) itemView.findViewById(R.id.color_view);
     }
+
+    public TextView getAnnounceType() {
+        return announceType;
+    }
+
+    public TextView getAnnounceDateText() {
+        return announceDateText;
+    }
+
+    public TextView getAnnounceHourText() {
+        return announceHourText;
+    }
+
+    public ImageView getCategorieIcon() {
+        return categorieIcon;
+    }
+
+    public TextView getAnnounceCategorie() {
+        return announceCategorie;
+    }
+
+    public TextView getOwner() {
+        return owner;
+    }
+
+    public View getColor() {
+        return color;
+    }
 }

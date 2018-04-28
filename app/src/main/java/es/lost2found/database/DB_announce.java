@@ -350,4 +350,136 @@ public class DB_announce {
     }
 
 
+
+    ///////////////////////////////MATCH///////////////////////////////////////
+    public static Integer getNumberMatchAnnounces(String email, String categoria, String tipo) {
+        Integer userId = DB_user.getId(email);
+        Integer ret = null;
+        try {
+            JSONObject jsonObject = new JSONObject();
+
+            jsonObject.put("id", userId);
+            jsonObject.put("nombreTabla", categoria);
+            jsonObject.put("tipoAnuncio", tipo);
+
+            List list = new LinkedList();
+            list.addAll(Arrays.asList(jsonObject));
+            String jsonString = list.toString();
+
+            String urlStr = SERVER_PATH + "getNumberMatchAnnouncesJSON.php";
+            URL url = new URL(urlStr);
+
+            HttpURLConnection con = (HttpURLConnection) url.openConnection();
+            con.setRequestMethod("POST");
+            con.setRequestProperty("User-Agent", "your user agent");
+            con.setRequestProperty("Accept-Language", "sp,SP;q=0.5");
+
+            String urlParameters = "json=" + jsonString;
+
+            con.setDoOutput(true);
+            DataOutputStream wr = new DataOutputStream(con.getOutputStream());
+            wr.writeBytes(urlParameters);
+            wr.flush();
+            wr.close();
+
+            InputStream instream;
+
+            int status = con.getResponseCode();
+
+            if (status != HttpURLConnection.HTTP_OK)
+                instream = con.getErrorStream();
+            else
+                instream = con.getInputStream();
+
+            BufferedReader in = new BufferedReader(new InputStreamReader(instream));
+            String inputLine;
+            StringBuffer response = new StringBuffer();
+
+            while((inputLine = in.readLine()) != null)
+                response.append(inputLine);
+
+            in.close();
+
+            if(Integer.valueOf(response.toString()) >= 0) {
+                ret = Integer.valueOf(response.toString());
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return  ret;
+    }
+
+    public static Announce[] getAnnouncesMatch(String email, String categoria, String tipo, String numberAnnounces, String place) {
+        Integer numAnnounces = Integer.valueOf(numberAnnounces);
+        Integer userId = DB_user.getId(email);
+        Announce[] announcesArray = new Announce[numAnnounces];
+        try {
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("id", userId);
+            jsonObject.put("nombreTabla", categoria);
+            jsonObject.put("tipoAnuncio", tipo);
+
+            List list = new LinkedList();
+            list.addAll(Arrays.asList(jsonObject));
+            String jsonString = list.toString();
+
+            String urlStr = SERVER_PATH + "getAnnouncesMatchJSON.php";
+            URL url = new URL(urlStr);
+
+            HttpURLConnection con = (HttpURLConnection) url.openConnection();
+            con.setRequestMethod("POST");
+            con.setRequestProperty("User-Agent", "your user agent");
+            con.setRequestProperty("Accept-Language", "sp,SP;q=0.5");
+
+            String urlParameters = "json=" + jsonString;
+
+            con.setDoOutput(true);
+            DataOutputStream wr = new DataOutputStream(con.getOutputStream());
+            wr.writeBytes(urlParameters);
+            wr.flush();
+            wr.close();
+
+            InputStream instream;
+
+            int status = con.getResponseCode();
+
+            if (status != HttpURLConnection.HTTP_OK)
+                instream = con.getErrorStream();
+            else
+                instream = con.getInputStream();
+
+            BufferedReader in = new BufferedReader(new InputStreamReader(instream));
+            String inputLine;
+            StringBuffer response = new StringBuffer();
+
+            while((inputLine = in.readLine()) != null)
+                response.append(inputLine);
+
+            String res = response.toString();
+            String[] announces = res.split("\\.");
+            String text = announces[0].replace("[", "");
+            announces[0] = text;
+            String text2 = announces[announces.length-1].replace("]", "");
+            announces[announces.length-1] = text2;
+
+            for(int i = 0; i < numAnnounces; i++) {
+                char firstChar = announces[i].charAt(1);
+                if(firstChar == ',') {
+                    announces[i] = announces[i].substring(2, announces[i].length());
+                }
+                JSONObject object = new JSONObject(announces[i]);
+                String idUser =  object.getString("idUsuario");
+                Integer intIdUser = Integer.valueOf(idUser);
+                String userOwner = DB_user.getNameById(intIdUser);
+                Announce announce = new Announce(announces[i], userOwner, place);
+                announcesArray[i] = announce;
+            }
+
+            in.close();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return announcesArray;
+    }
 }

@@ -1,32 +1,23 @@
 package es.lost2found.lost2foundUI.seekerUI;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
-import android.text.method.ScrollingMovementMethod;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.ListView;
-import android.widget.ScrollView;
 import android.widget.TextView;
-
-import com.flask.colorpicker.ColorPickerView;
-
-import java.util.ArrayList;
 
 import es.lost2found.R;
 import es.lost2found.entities.Announce;
+import es.lost2found.lost2foundUI.announceUI.AnnounceViewAdapter;
 import es.lost2found.lost2foundUI.announceUI.matchingAnnounceUI.MatchAnnounce;
 
 public class SeekerAnnounceInfoActivity extends AppCompatActivity {
-
+    Announce a;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,7 +25,6 @@ public class SeekerAnnounceInfoActivity extends AppCompatActivity {
 
         Toolbar tb = findViewById(R.id.toolbar_center);
         setSupportActionBar(tb);
-        //ScrollView scroll = findViewById(R.id.scroll);
         ActionBar ab = getSupportActionBar();
         ab.setDisplayHomeAsUpEnabled(true);
         ab.setHomeAsUpIndicator(R.drawable.ic_arrow_back);
@@ -48,9 +38,7 @@ public class SeekerAnnounceInfoActivity extends AppCompatActivity {
         TextView textoColor = (TextView) findViewById(R.id.colorTexto);
         View color = (View) findViewById(R.id.color_view);
 
-
-
-        Announce a = (Announce) getIntent().getSerializableExtra("myAnnounce");
+        a = (Announce) getIntent().getSerializableExtra("myAnnounce");
 
         String c = "<h4> <font color=#699CFC> Categoría: </font>"+ a.announceCategorie +" </h4><br>";
         cat.setText(Html.fromHtml(c));
@@ -67,7 +55,7 @@ public class SeekerAnnounceInfoActivity extends AppCompatActivity {
         String l = "<h4> <font color=#699CFC> Lugar: </font>"+ a.place +" </h4><br>";
         lugar.setText(Html.fromHtml(l));
 
-        String u = "<h4> <font color=#699CFC> Propietario: </font>"+ a.userOwner +" </h4><br>";
+        String u = "<h4> <font color=#699CFC> Creador del anuncio: </font>"+ a.userOwner +" </h4><br>";
         usuario.setText(Html.fromHtml(u));
 
         String col = "<h4> <font color=#699CFC> Color: </font> </h4><br>";
@@ -75,9 +63,21 @@ public class SeekerAnnounceInfoActivity extends AppCompatActivity {
 
         color.setBackgroundColor(a.color);
 
+        ImageView image = findViewById(R.id.imageinfoannounce);
+
+        if(a.announceCategorie.equals("Telefono")){
+            image.setImageResource(R.drawable.ic_phone_android);
+        }else if(a.announceCategorie.equals("Cartera")){
+            image.setImageResource(R.drawable.ic_wallet);
+        }else if(a.announceCategorie.equals("Otro")){
+            image.setImageResource(R.drawable.ic_other);
+        }else{
+            image.setImageResource(R.drawable.ic_card);
+        }
 
 
-       /* String col = "<h4> <font color=#699CFC>"+ a.color +" </font></h4><br>";
+
+         /* String col = "<h4> <font color=#699CFC>"+ a.color +" </font></h4><br>";
         color.setText(Html.fromHtml(col));*/
 
 
@@ -110,28 +110,21 @@ public class SeekerAnnounceInfoActivity extends AppCompatActivity {
         texto.setText(Html.fromHtml(s));
         texto.setMovementMethod(new ScrollingMovementMethod());
 */
-        ImageView image = findViewById(R.id.imageinfoannounce);
 
-        if(a.announceCategorie.equals("Telefono")){
-            image.setImageResource(R.drawable.ic_phone_android);
-        }else if(a.announceCategorie.equals("Cartera")){
-            image.setImageResource(R.drawable.ic_wallet);
-        }else if(a.announceCategorie.equals("Otro")){
-            image.setImageResource(R.drawable.ic_other);
-        }else{
-            image.setImageResource(R.drawable.ic_card);
-        }
+
+
     }
 
     public void matching(View v) {
         final Intent match = new Intent(this, MatchAnnounce.class);
+        match.putExtra("match", a);
         startActivity(match);
         finish();
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        Intent seeker = new Intent(this, SeekerActivity.class);
+        Intent seeker = new Intent(this, AnnounceViewAdapter.class);
         startActivity(seeker);
         finish();
         return true;
