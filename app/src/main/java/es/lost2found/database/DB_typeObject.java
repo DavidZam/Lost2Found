@@ -11,6 +11,7 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
@@ -18,6 +19,8 @@ import java.util.List;
 import es.lost2found.entities.TypeObject;
 
 public class DB_typeObject {
+
+    public static List<Integer>listaIdsAnuncios = new ArrayList<>();
 
     // Server: jcorreas-hp.fdi.ucm.es
     private static String SERVER_PATH = "http://jcorreas-hp.fdi.ucm.es/lost2found/database/typeObject/";
@@ -229,5 +232,75 @@ public class DB_typeObject {
         }
         return correct;
     }
+
+
+    // Obtiene la marca de un telefono a partir de su id
+    /*public static String getMarcaTlf(Integer id) {
+        String marca = null;
+
+        try {
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("idObjeto", id);
+
+            List list = new LinkedList();
+            list.addAll(Arrays.asList(jsonObject));
+            String jsonString = list.toString();
+
+            //jsonString = URLEncoder.encode(jsonString, "UTF-8");
+
+            String urlStr = SERVER_PATH + "getMarcaTelefonoJSON.php";
+            URL url = new URL(urlStr);
+
+            HttpURLConnection con = (HttpURLConnection) url.openConnection();
+            try {
+                con.setRequestMethod("POST");
+                con.setRequestProperty("User-Agent", "your user agent");
+                con.setRequestProperty("Accept-Language", "sp-SP,sp;q=0.5");
+
+                String urlParameters = "json=" + jsonString;
+
+                con.setDoOutput(true);
+                OutputStream outstream = con.getOutputStream();
+                DataOutputStream wr = new DataOutputStream(outstream);
+                wr.writeBytes(urlParameters);
+                wr.flush();
+                wr.close();
+
+                InputStream instream;
+
+                int status = con.getResponseCode();
+
+                if (status != HttpURLConnection.HTTP_OK)
+                    instream = con.getErrorStream();
+                else
+                    instream = con.getInputStream();
+
+                BufferedReader in = new BufferedReader(new InputStreamReader(instream));///////////////FALLA///////////
+                String inputLine;
+                StringBuffer response = new StringBuffer();
+
+                while ((inputLine = in.readLine()) != null)
+                    response.append(inputLine);
+
+                JSONObject object = new JSONObject(response.toString());
+                if(object.getBoolean("correct")) {
+                    try {
+                        marca = object.getString("marca");
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+
+            } finally {
+                con.disconnect();
+            }
+        } catch(MalformedURLException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return marca;
+    }
+    */
 
 }

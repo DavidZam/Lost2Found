@@ -1,6 +1,6 @@
 package es.lost2found.lost2foundUI.announceUI.matchingAnnounceUI;
 
-import android.content.Context;
+
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
@@ -13,7 +13,6 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -22,9 +21,6 @@ import java.util.List;
 import es.lost2found.R;
 import es.lost2found.database.DB_announce;
 import es.lost2found.entities.Announce;
-import es.lost2found.lost2foundUI.announceUI.AnnounceActivity;
-import es.lost2found.lost2foundUI.announceUI.AnnounceViewAdapter;
-import es.lost2found.lost2foundUI.chatUI.chatConcreteUI.ChatConcrete;
 import es.lost2found.lost2foundUI.seekerUI.SeekerAnnounceInfoActivity;
 
 public class MatchAnnounce extends AppCompatActivity {
@@ -72,7 +68,14 @@ public class MatchAnnounce extends AppCompatActivity {
             recyclerView.setLayoutManager(new LinearLayoutManager(this));
         }
 
-        new getNumberObjectAnnouncesDB().execute(userEmail, a.announceCategorie, a.announceType, a.announceDateText); ///////////////////PONER PARAMETROS
+
+        /*if(a.announceCategorie.equals("Telefono")){
+
+            String marca = DB_typeObject.getMarcaTlf(a.getIdAnuncio()); //// consulta que me da la marca del objeto telefono
+        }*/
+
+
+        new getNumberObjectAnnouncesDB().execute(userEmail, a.announceCategorie, a.announceType, a.announceDateText, String.valueOf(a.getIdAnuncio()));
 
 
         // In this example we fill announceList with a function fill_with_data(), in the future we'll do it with the database info
@@ -93,12 +96,11 @@ public class MatchAnnounce extends AppCompatActivity {
     }
 
 
-
     private class getNumberObjectAnnouncesDB extends AsyncTask<String, Void, Integer> {
 
         @Override
         protected Integer doInBackground(String... strings) {
-            return DB_announce.getNumberMatchAnnounces(strings[0], strings[1], strings[2], strings[3]);
+            return DB_announce.getNumberMatchAnnounces(strings[0], strings[1], strings[2], strings[3], strings[4]);
         }
 
         @Override
@@ -121,7 +123,7 @@ public class MatchAnnounce extends AppCompatActivity {
             SharedPreferences sp = getApplicationContext().getSharedPreferences("announcePlace", 0);
             String place = sp.getString("place", "");
 
-            /////////////////////////////////////////////////MIRAR PARÁMETROS
+
             new getObjectAnnouncesDB().execute(userEmail, a.announceCategorie, a.announceType, String.valueOf(numberAnnounces), place, a.announceDateText);
         }
     }

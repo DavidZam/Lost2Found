@@ -12,6 +12,7 @@ public class Announce implements Serializable {
     public int color;
     public String place;
     public String userOwner;
+    private Integer idAnuncio;
 
     public Announce(String announceType, String currentTime, String announceDateText, String announceHourText, int color, String announceCategorie, String place, String userOwner) {
         this.announceType = announceType;
@@ -24,7 +25,7 @@ public class Announce implements Serializable {
         this.userOwner = userOwner;
     }
 
-    public Announce(String announce, String userOwner, String place) {
+    public Announce(String announce, String userOwner, String place, Integer id) {
         String announceArray[] = announce.split("\"");
         this.announceType = announceArray[5];
         this.currentTime = announceArray[9];
@@ -35,6 +36,11 @@ public class Announce implements Serializable {
         this.announceCategorie = announceArray[29];
         this.userOwner = userOwner;
         this.place = place;
+        idAnuncio = id;
+    }
+
+    public Integer getIdAnuncio() {
+        return idAnuncio;
     }
 
     public String getAnnounceType() {

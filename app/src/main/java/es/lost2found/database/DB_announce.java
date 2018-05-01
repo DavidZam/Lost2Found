@@ -1,5 +1,7 @@
 package es.lost2found.database;
 
+import android.content.Intent;
+
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
@@ -20,6 +22,7 @@ import java.util.List;
 
 import es.lost2found.entities.Announce;
 import es.lost2found.entities.User;
+import es.lost2found.lost2foundUI.announceUI.matchingAnnounceUI.MatchAnnounceViewAdapter;
 
 public class DB_announce {
 
@@ -138,9 +141,15 @@ public class DB_announce {
                 }
                 JSONObject object = new JSONObject(announces[i]);
                 String idUser =  object.getString("idUsuario");
+                String idAnuncio = object.getString("id");
+                Integer intIdAnuncio = Integer.valueOf(idAnuncio);
+
+                //////HAY QUE CREAR UNA LISTA DE IDs PARA, CUANDO EL USUARIO SELECCIONA UNO, SACAR ESE
+                DB_typeObject.listaIdsAnuncios.add(intIdAnuncio);
+
                 Integer intIdUser = Integer.valueOf(idUser);
                 String userOwner = DB_user.getNameById(intIdUser);
-                Announce announce = new Announce(announces[i], userOwner, place);
+                Announce announce = new Announce(announces[i], userOwner, place, intIdAnuncio);
 
                 announcesArray[i] = announce;
             }
@@ -337,7 +346,9 @@ public class DB_announce {
                 String idUser =  object.getString("idUsuario");
                 Integer intIdUser = Integer.valueOf(idUser);
                 String userOwner = DB_user.getNameById(intIdUser);
-                Announce announce = new Announce(announces[i], userOwner, place);
+                String idAnuncio = object.getString("id");
+                Integer intIdAnuncio = Integer.valueOf(idAnuncio);
+                Announce announce = new Announce(announces[i], userOwner, place, intIdAnuncio);
                 announcesArray[i] = announce;
             }
 
@@ -352,8 +363,9 @@ public class DB_announce {
 
 
     ///////////////////////////////MATCH///////////////////////////////////////
-    public static Integer getNumberMatchAnnounces(String email, String categoria, String tipo, String dia) {
+    public static Integer getNumberMatchAnnounces(String email, String categoria, String tipo, String dia, String idAnuncio) {
         Integer userId = DB_user.getId(email);
+        Integer idObjeto = Integer.valueOf(idAnuncio);
         Integer ret = null;
         try {
             JSONObject jsonObject = new JSONObject();
@@ -362,6 +374,7 @@ public class DB_announce {
             jsonObject.put("nombreTabla", categoria);
             jsonObject.put("tipoAnuncio", tipo);
             jsonObject.put("diaAnuncio", dia);
+            jsonObject.put("idObjeto", idObjeto);
 
             List list = new LinkedList();
             list.addAll(Arrays.asList(jsonObject));
@@ -473,7 +486,9 @@ public class DB_announce {
                 String idUser =  object.getString("idUsuario");
                 Integer intIdUser = Integer.valueOf(idUser);
                 String userOwner = DB_user.getNameById(intIdUser);
-                Announce announce = new Announce(announces[i], userOwner, place);
+                String idAnuncio = object.getString("id");
+                Integer intIdAnuncio = Integer.valueOf(idAnuncio);
+                Announce announce = new Announce(announces[i], userOwner, place, intIdAnuncio);
                 announcesArray[i] = announce;
             }
 
