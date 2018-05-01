@@ -13,7 +13,7 @@ import android.widget.TextView;
 
 import es.lost2found.R;
 import es.lost2found.entities.Announce;
-import es.lost2found.lost2foundUI.announceUI.AnnounceViewAdapter;
+import es.lost2found.lost2foundUI.announceUI.AnnounceActivity;
 import es.lost2found.lost2foundUI.announceUI.matchingAnnounceUI.MatchAnnounce;
 
 public class SeekerAnnounceInfoActivity extends AppCompatActivity {
@@ -124,8 +124,22 @@ public class SeekerAnnounceInfoActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        Intent seeker = new Intent(this, AnnounceViewAdapter.class);
-        startActivity(seeker);
+        Bundle bundle = getIntent().getExtras();
+        String parentAct = bundle.getString("parentAct");
+        if(parentAct != null) {
+            if(parentAct.equals("announce")) {
+                Intent announce = new Intent(this, AnnounceActivity.class);
+                startActivity(announce);
+            } else if(parentAct.equals("seeker")) {
+                Intent seeker = new Intent(this, SeekerActivity.class);
+                String place = getIntent().getExtras().getString("place");
+                getIntent().putExtra("place", place);
+                startActivity(seeker);
+            }
+        } else {
+            Intent announce = new Intent(this, AnnounceActivity.class);
+            startActivity(announce);
+        }
         finish();
         return true;
     }

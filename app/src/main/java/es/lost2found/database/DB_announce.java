@@ -83,7 +83,7 @@ public class DB_announce {
         return  ret;
     }
 
-    public static Announce[] getAnnounces(String email, String numberAnnounces, String place) {
+    public static Announce[] getAnnounces(String email, String numberAnnounces) {
         Integer userId = DB_user.getId(email); // Obtenemos el id del usuario en cuestion
         Integer numAnnounces = Integer.valueOf(numberAnnounces);
         Announce[] announcesArray = new Announce[numAnnounces];
@@ -143,6 +143,10 @@ public class DB_announce {
                 String idUser =  object.getString("idUsuario");
                 String idAnuncio = object.getString("id");
                 Integer intIdAnuncio = Integer.valueOf(idAnuncio);
+
+                String idLugar = object.getString("idLugar");
+                Integer intIdLugar = Integer.valueOf(idLugar);
+                String place = DB_place.getPlaceNameById(intIdLugar);
 
                 //////HAY QUE CREAR UNA LISTA DE IDs PARA, CUANDO EL USUARIO SELECCIONA UNO, SACAR ESE
                 DB_typeObject.listaIdsAnuncios.add(intIdAnuncio);
@@ -286,7 +290,7 @@ public class DB_announce {
     }
 
     // id, tipoAnuncio, horaActual, diaAnuncio, horaPerdidaoHallazgo, color, idUsuario, idLugar, nombreTabla (categoria)
-    public static Announce[] getAnnouncesSeeker(String categoria, String tipo, String numberAnnounces, String place) {
+    public static Announce[] getAnnouncesSeeker(String categoria, String tipo, String numberAnnounces) {
         Integer numAnnounces = Integer.valueOf(numberAnnounces);
         Announce[] announcesArray = new Announce[numAnnounces];
         try {
@@ -346,6 +350,9 @@ public class DB_announce {
                 String idUser =  object.getString("idUsuario");
                 Integer intIdUser = Integer.valueOf(idUser);
                 String userOwner = DB_user.getNameById(intIdUser);
+                String idLugar = object.getString("idLugar");
+                Integer intIdLugar = Integer.valueOf(idLugar);
+                String place = DB_place.getPlaceNameById(intIdLugar);
                 String idAnuncio = object.getString("id");
                 Integer intIdAnuncio = Integer.valueOf(idAnuncio);
                 Announce announce = new Announce(announces[i], userOwner, place, intIdAnuncio);

@@ -74,6 +74,8 @@ public class SeekerActivity extends AppCompatActivity implements FloatingActionB
 
         NavigationView navView = findViewById(R.id.nav_view);
 
+        SharedPreferences sp = getApplicationContext().getSharedPreferences("announcePlace", 0);
+
         View headerLayout = navView.getHeaderView(0);
         TextView emailUser = headerLayout.findViewById(R.id.user_mail);
         TextView nameUser = headerLayout.findViewById(R.id.user_name);
@@ -155,8 +157,8 @@ public class SeekerActivity extends AppCompatActivity implements FloatingActionB
         SharedPreferences spref2 = getApplicationContext().getSharedPreferences("Login", 0);
         String userName = spref2.getString("nombre", "");
         List<Announce> announceList = new ArrayList<>();
-        //adapter = new SeekerAnnounceViewAdapter(announceList, getApplication());
-        adapter = new AnnounceViewAdapter(announceList, getApplication(), userName);
+        String parentName = this.getClass().getSimpleName();
+        adapter = new AnnounceViewAdapter(announceList, getApplication(), userName, parentName);
         recyclerView = findViewById(R.id.search_recyclerview);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -246,12 +248,13 @@ public class SeekerActivity extends AppCompatActivity implements FloatingActionB
             String cat = cambiarNombreCategoria();
             String tipoA = cambiarNombreTipo();
 
-            SharedPreferences spref = getApplicationContext().getSharedPreferences("Login", 0);
-            String userName = spref.getString("nombre", "");
+            //SharedPreferences spref = getApplicationContext().getSharedPreferences("Login", 0);
+            //String userName = spref.getString("nombre", "");
 
-            String place = getIntent().getExtras().getString("place");
+            //SharedPreferences sp = getApplicationContext().getSharedPreferences("announcePlace", 0);
+            //String place = sp.getString("place", "");
 
-            new getObjectAnnouncesDB().execute(cat, tipoA, String.valueOf(numberAnnounces), place);
+            new getObjectAnnouncesDB().execute(cat, tipoA, String.valueOf(numberAnnounces));
         }
     }
 
@@ -259,7 +262,7 @@ public class SeekerActivity extends AppCompatActivity implements FloatingActionB
 
         @Override
         protected Announce[] doInBackground(String... strings) {
-            return DB_announce.getAnnouncesSeeker(strings[0], strings[1], strings[2], strings[3]);
+            return DB_announce.getAnnouncesSeeker(strings[0], strings[1], strings[2]);
         }
 
         @Override

@@ -132,5 +132,69 @@
 		    	disconnectDB($connection);
 	        	return $rawdata;
 		}
+		
+		function getNumberMatchAnnounces($idUser, $categoria, $tipo, $dia, $idObjeto) {
+			$connection = connectDB();
+
+			if($tipo == "Perdida"){
+				$sql = mysqli_prepare($connection, "SELECT DISTINCT COUNT(*) FROM anuncio_objeto, Telefono t1 WHERE idUsuario != ? AND nombreTabla = ? AND tipoAnuncio != ? AND diaAnuncio >= ? AND t1.idObjeto = ? AND t1.marca = (SELECT t2.marca FROM Telefono t2 WHERE t2.idObjeto = ?)");
+				
+			}else{
+				$sql = mysqli_prepare($connection, "SELECT DISTINCT COUNT(*) FROM anuncio_objeto, Telefono t1 WHERE idUsuario != ? AND nombreTabla = ? AND tipoAnuncio != ? AND diaAnuncio <= ? AND t1.idObjeto = ? AND t1.marca = (SELECT t2.marca FROM Telefono t2 WHERE t2.idObjeto = ?)");
+			}
+			
+			
+			mysqli_stmt_bind_param($sql, "ssssss", $idUser, $categoria, $tipo, $dia, $idObjeto, $idObjeto);
+
+			$query = $sql->execute();
+
+			if(!$query)
+		            	die();
+			$result = $sql->store_result();
+			$realresult = $sql->bind_result($numAnnounces);
+			$sql->fetch();
+			
+	        	disconnectDB($connection);
+	        
+		    	return $numAnnounces;
+		}
+		
+		
+		function getAnnouncesMatchJSON($idUser, $categoria, $tipo, $dia) {
+
+			$connection = connectDB();
+
+			if($tipo == 'Perdida'){
+				$stmt = $connection->prepare("SELECT DISTINCT * FROM anuncio_objeto WHERE idUsuario != ? AND nombreTabla = ? AND tipoAnuncio != ? AND diaAnuncio >= ?");
+				
+			}else if($tipo == 'Hallazgo'){
+				$stmt = $connection->prepare("SELECT DISTINCT * FROM anuncio_objeto WHERE idUsuario != ? AND nombreTabla = ? AND tipoAnuncio != ? AND diaAnuncio <= ?");
+			}
+			
+			$stmt->bind_param('ssss', $idUser, $categoria, $tipo, $dia);
+
+			$stmt->execute();
+
+			$result = $stmt->get_result();
+
+			while($row = $result->fetch_assoc())    {
+		            $rows[] = $row;
+			    $rows[] = ".";
+            		}
+			$rawdata = array();
+			$i = 0;
+
+            		foreach($rows as $row)    {
+        	    		$rawdata[$i] = $rows[$i];
+	            		$i++;
+           		}
+
+			$result->close();
+
+		    	disconnectDB($connection);
+	        	return $rawdata;
+		}
+		
+		
 	}
 ?>

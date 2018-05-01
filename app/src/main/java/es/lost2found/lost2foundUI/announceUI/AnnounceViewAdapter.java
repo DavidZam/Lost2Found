@@ -1,5 +1,6 @@
 package es.lost2found.lost2foundUI.announceUI;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -14,17 +15,20 @@ import java.util.List;
 import es.lost2found.R;
 import es.lost2found.entities.Announce;
 import es.lost2found.lost2foundUI.announceUI.matchingAnnounceUI.MatchAnnounce;
+import es.lost2found.lost2foundUI.seekerUI.SeekerActivity;
 import es.lost2found.lost2foundUI.seekerUI.SeekerAnnounceInfoActivity;
 
 public class AnnounceViewAdapter extends RecyclerView.Adapter<AnnounceViewHolder>{
     private List<Announce> listAnnounce;
     private Context context;
     private String actualUser;
+    private String parentAct;
 
-    public AnnounceViewAdapter(List<Announce> listAnnounce, Context context, String actualUser) {
+    public AnnounceViewAdapter(List<Announce> listAnnounce, Context context, String actualUser, String parentAct) {
         this.listAnnounce = listAnnounce;
         this.context = context;
         this.actualUser = actualUser;
+        this.parentAct = parentAct;
     }
 
     @Override
@@ -90,6 +94,12 @@ public class AnnounceViewAdapter extends RecyclerView.Adapter<AnnounceViewHolder
 
                 Announce announce = listAnnounce.get(position);
                 intent.putExtra("myAnnounce", announce);
+
+                if(parentAct.equals(AnnounceActivity.class.getSimpleName())) {
+                    intent.putExtra("parentAct", "announce");
+                } else if(parentAct.equals(SeekerActivity.class.getSimpleName())) {
+                    intent.putExtra("parentAct", "seeker");
+                }
                 context.startActivity(intent);
             }
         });
