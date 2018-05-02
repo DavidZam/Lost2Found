@@ -121,4 +121,9 @@ public class Announce implements Serializable {
     public String getUserOwner() {
         return this.userOwner;
     }
+
+    public Integer getAnnounceId() {
+
+        return this.idAnuncio;
+    }
 }

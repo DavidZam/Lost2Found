@@ -1,6 +1,7 @@
 package es.lost2found.lost2foundUI.seekerUI;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -12,12 +13,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import es.lost2found.R;
+import es.lost2found.database.DB_typeObject;
 import es.lost2found.entities.Announce;
 import es.lost2found.lost2foundUI.announceUI.AnnounceActivity;
 import es.lost2found.lost2foundUI.announceUI.matchingAnnounceUI.MatchAnnounce;
 
 public class SeekerAnnounceInfoActivity extends AppCompatActivity {
     private Announce a;
+    //private String objectData;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,10 +38,14 @@ public class SeekerAnnounceInfoActivity extends AppCompatActivity {
         TextView lugar = (TextView) findViewById(R.id.lugar);
         TextView usuario = (TextView) findViewById(R.id.usuario);
         TextView hora = (TextView) findViewById(R.id.hora);
+        TextView param = (TextView) findViewById(R.id.param);
         TextView textoColor = (TextView) findViewById(R.id.colorTexto);
         View color = (View) findViewById(R.id.color_view);
 
         a = (Announce) getIntent().getSerializableExtra("myAnnounce");
+
+        String idText = String.valueOf(a.getAnnounceId());
+        new getObjectDataFromDB().execute(idText, a.announceCategorie);
 
         String c = "<h4> <font color=#699CFC> Categoría: </font>"+ a.announceCategorie +" </h4><br>";
         cat.setText(Html.fromHtml(c));
@@ -57,6 +64,9 @@ public class SeekerAnnounceInfoActivity extends AppCompatActivity {
 
         String u = "<h4> <font color=#699CFC> Creador del anuncio: </font>"+ a.userOwner +" </h4><br>";
         usuario.setText(Html.fromHtml(u));
+
+        /*String o = "<h4> <font color=#699CFC> Datos del objeto: </font>"+ objectData +" </h4><br>";
+        param.setText(Html.fromHtml(o));*/
 
         String col = "<h4> <font color=#699CFC> Color: </font> </h4><br>";
         textoColor.setText(Html.fromHtml(col));
@@ -113,6 +123,38 @@ public class SeekerAnnounceInfoActivity extends AppCompatActivity {
 
 
 
+    }
+
+    private class getObjectDataFromDB extends AsyncTask<String, Void, String> {
+
+        @Override
+        protected String doInBackground(String... strings) {
+            return DB_typeObject.getDataObjectById(strings[0], strings[1]);
+        }
+
+        @Override
+        protected void onPostExecute(String dataObject) {
+            if(dataObject != null) {
+                TextView param = (TextView) findViewById(R.id.param);
+                String params[] = dataObject.split(",");
+                if(a.announceCategorie.equals("Telefono")){
+                    String o = "<h4> <font color=#699CFC> Datos: </font><br>"+ "Marca: " + params[0] + ", Modelo: " + params[1] + "<br>" +  "tara: " + params[2] +" </h4><br>";
+                    param.setText(Html.fromHtml(o));
+                }else if(a.announceCategorie.equals("Cartera")){
+                    String o = "<h4> <font color=#699CFC> Datos: </font><br>"+ "Marca: " + params[0] + ", Documentacion: " + params[1] +" </h4><br>";
+                    param.setText(Html.fromHtml(o));
+                }else if(a.announceCategorie.equals("Otro")){
+                    String o = "<h4> <font color=#699CFC> Datos: </font><br>"+ "Nombre: " + params[0] + ", Descripcion: " + params[1] +" </h4><br>";
+                    param.setText(Html.fromHtml(o));
+                }else if(a.announceCategorie.equals("Tarjeta bancaria")){
+                    String o = "<h4> <font color=#699CFC> Datos: </font><br>"+ "Banco: " + params[0] + ", Propietario: " + params[1] +" </h4><br>";
+                    param.setText(Html.fromHtml(o));
+                }else if(a.announceCategorie.equals("Tarjeta transporte")){
+                    String o = "<h4> <font color=#699CFC> Datos: </font><br>"+ "Propietario: " + params[0] +" </h4><br>";
+                    param.setText(Html.fromHtml(o));
+                }
+            }
+        }
     }
 
     public void matching(View v) {

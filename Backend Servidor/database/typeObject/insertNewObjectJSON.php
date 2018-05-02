@@ -14,10 +14,9 @@
 	    $param1 = $jsonencode[0]->param1;
 	    $param2 = $jsonencode[0]->param2;
             $param3 = $jsonencode[0]->param3;
-	    $param4 = $jsonencode[0]->param4;
 
 	    require_once("typeObjectClass.php");
 	    $newObjectObject = new typeObject();
-	    $newObjectObject->insert($objectId, $categorie, $param1, $param2, $param3, $param4);
+	    $newObjectObject->insert($objectId, $categorie, $param1, $param2, $param3);
 	}
 ?>

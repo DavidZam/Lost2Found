@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import es.lost2found.R;
 import es.lost2found.database.DB_typeObject;
+import es.lost2found.entities.Announce;
 import es.lost2found.lost2foundUI.announceUI.AnnounceActivity;
 
 public class BankCardActivity extends AppCompatActivity {
@@ -70,7 +71,7 @@ public class BankCardActivity extends AppCompatActivity {
 
         @Override
         protected String doInBackground(String... strings) {
-            return DB_typeObject.insertObject(strings[0], strings[1], strings[2], strings[3], strings[4], strings[5]);
+            return DB_typeObject.insertObject(strings[0], strings[1], strings[2], strings[3], strings[4]);
         }
 
         @Override

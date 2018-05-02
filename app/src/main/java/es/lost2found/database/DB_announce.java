@@ -148,12 +148,16 @@ public class DB_announce {
                 Integer intIdLugar = Integer.valueOf(idLugar);
                 String place = DB_place.getPlaceNameById(intIdLugar);
 
+                /*String idObjeto = object.getString("id");
+                Integer intIdObjeto = Integer.valueOf(idObjeto);
+                String param = DB_typeObject.getObjectInfoById(intIdObjeto);*/
+
                 //////HAY QUE CREAR UNA LISTA DE IDs PARA, CUANDO EL USUARIO SELECCIONA UNO, SACAR ESE
                 DB_typeObject.listaIdsAnuncios.add(intIdAnuncio);
 
                 Integer intIdUser = Integer.valueOf(idUser);
                 String userOwner = DB_user.getNameById(intIdUser);
-                Announce announce = new Announce(announces[i], userOwner, place, intIdAnuncio);
+                Announce announce = new Announce(announces[i], userOwner, place, intIdAnuncio); // , param)
 
                 announcesArray[i] = announce;
             }
@@ -169,6 +173,7 @@ public class DB_announce {
     // Id, TipoAnuncio, HoraActual, DiaAnuncio, HoraPerdidaoHallazgo, Modelo, Marca, Color, idUsuario e idLugar, Categoria (NombreTabla)
     public static Announce insertAnnounce(String announceType, String currentTime, String announceDayText, String announceHourText, String color, String idUser, String idPlace, String announceCategorie, String place, String userName) {
         Announce ret = null;
+        String param = "";
         try {
             JSONObject jsonObject = new JSONObject();
             jsonObject.put("announceType", announceType);
@@ -221,7 +226,7 @@ public class DB_announce {
                     response.append(inputLine);
                 Integer colorInt = Integer.valueOf(color);
                 if (response.toString().equals("correct"))
-                    ret = new Announce(announceType, currentTime, announceDayText, announceHourText, colorInt, announceCategorie, place, userName);
+                    ret = new Announce(announceType, currentTime, announceDayText, announceHourText, colorInt, announceCategorie, place, userName); // , param
             } finally {
                 con.disconnect();
             }
@@ -355,7 +360,10 @@ public class DB_announce {
                 String place = DB_place.getPlaceNameById(intIdLugar);
                 String idAnuncio = object.getString("id");
                 Integer intIdAnuncio = Integer.valueOf(idAnuncio);
-                Announce announce = new Announce(announces[i], userOwner, place, intIdAnuncio);
+                /*String idObjeto = object.getString("id");
+                Integer intIdObjeto = Integer.valueOf(idObjeto);
+                String param = DB_typeObject.getObjectInfoById(intIdObjeto);*/
+                Announce announce = new Announce(announces[i], userOwner, place, intIdAnuncio); // , param
                 announcesArray[i] = announce;
             }
 
@@ -495,7 +503,10 @@ public class DB_announce {
                 String userOwner = DB_user.getNameById(intIdUser);
                 String idAnuncio = object.getString("id");
                 Integer intIdAnuncio = Integer.valueOf(idAnuncio);
-                Announce announce = new Announce(announces[i], userOwner, place, intIdAnuncio);
+                /*String idObjeto = object.getString("id");
+                Integer intIdObjeto = Integer.valueOf(idObjeto);
+                String param = DB_typeObject.getObjectInfoById(intIdObjeto);*/
+                Announce announce = new Announce(announces[i], userOwner, place, intIdAnuncio); // , param
                 announcesArray[i] = announce;
             }
 

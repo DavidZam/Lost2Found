@@ -94,6 +94,14 @@
                     android:layout_centerHorizontal="true"
                     android:text="TextView" />
 
+                <TextView
+                    android:id="@+id/param"
+                    android:layout_width="match_parent"
+                    android:layout_height="66dp"
+                    android:layout_below="@+id/usuario"
+                    android:layout_centerHorizontal="true"
+                    android:text="TextView" />
+
             </LinearLayout>
         </ScrollView>
 
@@ -106,6 +114,7 @@
             android:layout_centerHorizontal="true"
             android:layout_marginBottom="45dp"
             android:onClick="matching"
+            android:padding="8sp"
             android:text="Buscar coincidencias" />
 
         <es.lost2found.lost2foundUI.pickerUI.ColorView
@@ -125,13 +134,14 @@
             android:layout_alignParentStart="true"
             android:layout_alignTop="@+id/imageinfoannounce"
             android:layout_marginStart="18dp"
+            android:layout_marginTop="8sp"
             android:text="c"
             android:textAllCaps="false"
             android:textSize="16sp" />
 
         <ImageView
             android:id="@+id/imageinfoannounce"
-            android:layout_width="wrap_content"
+            android:layout_width="50sp"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
