@@ -41,7 +41,7 @@ public class AnnounceActivity extends AppCompatActivity implements FloatingActio
     private Integer listElements = 0;
     private AnnounceViewAdapter adapter;
     private RecyclerView recyclerView;
-    private Integer numberAnnounces;
+    private Integer userNumberAnnounces;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,9 +56,6 @@ public class AnnounceActivity extends AppCompatActivity implements FloatingActio
         mDrawerLayout = findViewById(R.id.drawer_layout);
 
         NavigationView navView = findViewById(R.id.nav_view);
-
-        /*SharedPreferences sp = getApplicationContext().getSharedPreferences("announcePlace", 0);
-        place = sp.getString("place", "");*/
 
         View headerLayout = navView.getHeaderView(0);
         TextView emailUser = headerLayout.findViewById(R.id.user_mail);
@@ -136,12 +133,6 @@ public class AnnounceActivity extends AppCompatActivity implements FloatingActio
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        // Adding a ItemAnimator to the RecyclerView (Optional)
-        RecyclerView.ItemAnimator itemAnimator = new DefaultItemAnimator();
-        itemAnimator.setAddDuration(1000);
-        itemAnimator.setRemoveDuration(1000);
-        recyclerView.setItemAnimator(itemAnimator);
-
         FloatingActionButton createAnnounce = findViewById(R.id.new_announce);
         createAnnounce.setOnClickListener(this);
     }
@@ -166,14 +157,11 @@ public class AnnounceActivity extends AppCompatActivity implements FloatingActio
         } else {
             TextView noannounces = findViewById(R.id.without_announces);
             noannounces.setText("");
-            numberAnnounces = numAnnounces;
+            userNumberAnnounces = numAnnounces;
             SharedPreferences spref = getApplicationContext().getSharedPreferences("Login", 0);
             String userEmail = spref.getString("email", "");
 
-            //SharedPreferences sp = getApplicationContext().getSharedPreferences("announcePlace", 0);
-            //String place = sp.getString("place", "");
-
-            new getObjectAnnouncesDB().execute(userEmail, String.valueOf(numberAnnounces)); // Devuelve una lista con los anuncios del usuario en cuestion
+            new getObjectAnnouncesDB().execute(userEmail, String.valueOf(userNumberAnnounces)); // Devuelve una lista con los anuncios del usuario en cuestion
         }
     }
 
@@ -186,7 +174,7 @@ public class AnnounceActivity extends AppCompatActivity implements FloatingActio
 
         @Override
         protected void onPostExecute(Announce[] announces) {
-            updateAdapter(announces, numberAnnounces);
+            updateAdapter(announces, userNumberAnnounces);
         }
     }
 
@@ -194,9 +182,9 @@ public class AnnounceActivity extends AppCompatActivity implements FloatingActio
         for(int i = 0; i < numAnnounces; i++) {
             adapter.insert(listElements, announces[i]);
             listElements++;
-            recyclerView.setAdapter(adapter);
-            recyclerView.setLayoutManager(new LinearLayoutManager(this));
         }
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
 
     @Override
@@ -226,38 +214,5 @@ public class AnnounceActivity extends AppCompatActivity implements FloatingActio
         Intent intent = new Intent(this, LoginActivity.class);
         startActivity(intent);
         finish();
-    }
-
-    /**
-     *
-     * @param view
-     */
-    public void announce(View view) {
-        /*EditText editText = (EditText) findViewById(R.id.email);
-        String name = editText.getText().toString();
-
-        editText = (EditText) findViewById(R.id.name);
-        String email= editText.getText().toString();
-
-        editText = (EditText) findViewById(R.id.password);
-        String pass = editText.getText().toString();
-
-        editText = (EditText) findViewById(R.id.repassword);
-        String confirmPass = editText.getText().toString();
-
-        String role = "Student";
-
-        if(name.equalsIgnoreCase("") || email.equalsIgnoreCase("") || pass.equalsIgnoreCase("") || confirmPass.equalsIgnoreCase("")) {
-            this.msgerror = "Please, complete all the fields.";
-            TextView textView = (TextView) findViewById(R.id.user_already_exists);
-            textView.setText(this.msgerror);
-        }
-        else if(!pass.equals(confirmPass)) {
-            this.msgerror = "Passwords doesn't match.";
-            TextView textView = (TextView) findViewById(R.id.user_already_exists);
-            textView.setText(this.msgerror);
-        }
-        //else
-        //new RegisterDB().execute(email, pass, name, role);*/
     }
 }

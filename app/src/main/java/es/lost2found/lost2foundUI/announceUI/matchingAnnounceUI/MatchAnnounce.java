@@ -31,6 +31,7 @@ public class MatchAnnounce extends AppCompatActivity {
     private RecyclerView recyclerView;
     private Announce a;
     private Announce oldAnnounce;
+    private String objectDataParam;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,7 +72,8 @@ public class MatchAnnounce extends AppCompatActivity {
         }
 
         a = (Announce) getIntent().getSerializableExtra("match");
-        new getNumberObjectAnnouncesDB().execute(userEmail, a.announceCategorie, a.announceType, a.announceDateText, String.valueOf(a.getIdAnuncio()));
+        objectDataParam = getIntent().getStringExtra("paramData");
+        new getNumberObjectAnnouncesDB().execute(userEmail, a.announceCategorie, a.announceType, a.announceDateText, String.valueOf(a.getIdAnuncio()), objectDataParam);
     }
 
 
@@ -79,7 +81,7 @@ public class MatchAnnounce extends AppCompatActivity {
 
         @Override
         protected Integer doInBackground(String... strings) {
-            return DB_announce.getNumberMatchAnnounces(strings[0], strings[1], strings[2], strings[3], strings[4]);
+            return DB_announce.getNumberMatchAnnounces(strings[0], strings[1], strings[2], strings[3], strings[4], strings[5]);
         }
 
         @Override

@@ -20,7 +20,7 @@ import es.lost2found.lost2foundUI.announceUI.matchingAnnounceUI.MatchAnnounce;
 
 public class SeekerAnnounceInfoActivity extends AppCompatActivity {
     private Announce a;
-    //private String objectData;
+    private String objectDataParam;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -100,20 +100,31 @@ public class SeekerAnnounceInfoActivity extends AppCompatActivity {
                 TextView param = (TextView) findViewById(R.id.param);
                 String params[] = dataObject.split(",");
                 if(a.announceCategorie.equals("Telefono")){
-                    String o = "<h4> <font color=#699CFC> Datos: </font><br>"+ "Marca: " + params[0] + ", Modelo: " + params[1] + "<br>" +  "tara: " + params[2] +" </h4><br>";
-                    param.setText(Html.fromHtml(o));
+                    if(params[2].equalsIgnoreCase(" ")) {
+                        String o = "<h4> <font color=#699CFC> Datos: </font><br>"+ "Marca: " + params[0] + ", Modelo: " + params[1] +" </h4><br>";
+                        param.setText(Html.fromHtml(o));
+                        objectDataParam = params[0]; // Guardamos la marca del telefono
+                    } else {
+                        String o = "<h4> <font color=#699CFC> Datos: </font><br>"+ "Marca: " + params[0] + ", Modelo: " + params[1] + "<br>" +  "tara: " + params[2] +" </h4><br>";
+                        param.setText(Html.fromHtml(o));
+                        objectDataParam = params[0]; // Guardamos la marca del telefono
+                    }
                 }else if(a.announceCategorie.equals("Cartera")){
                     String o = "<h4> <font color=#699CFC> Datos: </font><br>"+ "Marca: " + params[0] + ", Documentacion: " + params[1] +" </h4><br>";
                     param.setText(Html.fromHtml(o));
+                    objectDataParam = params[0]; // Guardamos la marca de la cartera
                 }else if(a.announceCategorie.equals("Otro")){
                     String o = "<h4> <font color=#699CFC> Datos: </font><br>"+ "Nombre: " + params[0] + ", Descripcion: " + params[1] +" </h4><br>";
                     param.setText(Html.fromHtml(o));
+                    objectDataParam = params[0]; // Guardamos el nombre del objeto (otro)
                 }else if(a.announceCategorie.equals("Tarjeta bancaria")){
                     String o = "<h4> <font color=#699CFC> Datos: </font><br>"+ "Banco: " + params[0] + ", Propietario: " + params[1] +" </h4><br>";
                     param.setText(Html.fromHtml(o));
+                    objectDataParam = params[1]; // Guardamos el propietario de la tarjeta
                 }else if(a.announceCategorie.equals("Tarjeta transporte")){
                     String o = "<h4> <font color=#699CFC> Datos: </font><br>"+ "Propietario: " + params[0] +" </h4><br>";
                     param.setText(Html.fromHtml(o));
+                    objectDataParam = params[0]; // Guardamos el propietario de la tarjeta
                 }
             }
         }
@@ -121,6 +132,7 @@ public class SeekerAnnounceInfoActivity extends AppCompatActivity {
 
     public void matching(View v) {
         final Intent match = new Intent(this, MatchAnnounce.class);
+        match.putExtra("paramData", objectDataParam);// Pasamos el atributo concreto determinante del objeto
         match.putExtra("oldAnnounce", true);
         match.putExtra("match", a);
         startActivity(match);
@@ -134,6 +146,8 @@ public class SeekerAnnounceInfoActivity extends AppCompatActivity {
         if(parentAct != null) {
             if(parentAct.equals("announce")) {
                 Intent announce = new Intent(this, AnnounceActivity.class);
+                Announce an = (Announce) getIntent().getSerializableExtra("myAnnounce");
+                announce.putExtra("announce", an);
                 startActivity(announce);
             } else if(parentAct.equals("seeker")) {
                 Intent seeker = new Intent(this, SeekerActivity.class);
