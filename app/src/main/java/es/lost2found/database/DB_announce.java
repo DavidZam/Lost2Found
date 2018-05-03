@@ -374,11 +374,8 @@ public class DB_announce {
 
 
     ///////////////////////////////MATCH///////////////////////////////////////
-<<<<<<< HEAD
-    public static Integer getNumberMatchAnnounces(String email, String categoria, String tipo, String dia, String idAnuncio, String param) {
-=======
     public static Integer getNumberMatchAnnounces(String email, String categoria, String tipo, String dia, String idAnuncio, String determinante) {
->>>>>>> 587105646d074ff288d088b1f709308a5310dcbc
+
         Integer userId = DB_user.getId(email);
         Integer idObjeto = Integer.valueOf(idAnuncio);
         Integer ret = null;
@@ -389,13 +386,9 @@ public class DB_announce {
             jsonObject.put("nombreTabla", categoria);
             jsonObject.put("tipoAnuncio", tipo);
             jsonObject.put("diaAnuncio", dia);
-<<<<<<< HEAD
             jsonObject.put("idObjeto", idObjeto);
-            jsonObject.put("param", param);
-=======
             //jsonObject.put("idObjeto", idObjeto);
             jsonObject.put("param", determinante);
->>>>>>> 587105646d074ff288d088b1f709308a5310dcbc
 
             List list = new LinkedList();
             list.addAll(Arrays.asList(jsonObject));
