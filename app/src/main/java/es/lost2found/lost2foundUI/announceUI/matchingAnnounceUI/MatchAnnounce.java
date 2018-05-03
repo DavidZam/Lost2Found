@@ -57,9 +57,7 @@ public class MatchAnnounce extends AppCompatActivity {
         itemAnimator.setRemoveDuration(1000);
         recyclerView.setItemAnimator(itemAnimator);
 
-
         a = (Announce) getIntent().getSerializableExtra("match");
-
 
         if(!adapter.getListAnnounce().isEmpty()) {
             adapter.getListAnnounce().clear();
@@ -68,31 +66,7 @@ public class MatchAnnounce extends AppCompatActivity {
             recyclerView.setLayoutManager(new LinearLayoutManager(this));
         }
 
-
-        /*if(a.announceCategorie.equals("Telefono")){
-
-            String marca = DB_typeObject.getMarcaTlf(a.getIdAnuncio()); //// consulta que me da la marca del objeto telefono
-        }*/
-
-
         new getNumberObjectAnnouncesDB().execute(userEmail, a.announceCategorie, a.announceType, a.announceDateText, String.valueOf(a.getIdAnuncio()));
-
-
-        // In this example we fill announceList with a function fill_with_data(), in the future we'll do it with the database info
-        /*List<Announce> announceList = new ArrayList<>();
-        Announce announce = new Announce();
-        announce.fill_with_data(announceList);
-
-        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.match_announce_reyclerview);
-        MatchAnnounceViewAdapter adapter = new MatchAnnounceViewAdapter(announceList, getApplication());
-        recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-
-        // Adding a ItemAnimator to the RecyclerView (Optional)
-        RecyclerView.ItemAnimator itemAnimator = new DefaultItemAnimator();
-        itemAnimator.setAddDuration(1000);
-        itemAnimator.setRemoveDuration(1000);
-        /*recyclerView.setItemAnimator(itemAnimator);*/
     }
 
 
@@ -112,7 +86,7 @@ public class MatchAnnounce extends AppCompatActivity {
     public void processAnnounceScreen(Integer numAnnounces) {
         if (numAnnounces == 0) {
             TextView noannounces = findViewById(R.id.without_match);
-            noannounces.setText("De momento no hay objetos similares en nuestra aplicación. Prueba más tarde.");
+            noannounces.setText(noannounces.getResources().getString(R.string.info_txt2));
         } else {
             TextView noannounces = findViewById(R.id.without_match);
             noannounces.setText("");
@@ -123,7 +97,6 @@ public class MatchAnnounce extends AppCompatActivity {
             SharedPreferences sp = getApplicationContext().getSharedPreferences("announcePlace", 0);
             String place = sp.getString("place", "");
 
-
             new getObjectAnnouncesDB().execute(userEmail, a.announceCategorie, a.announceType, String.valueOf(numberAnnounces), place, a.announceDateText);
         }
     }
@@ -132,11 +105,13 @@ public class MatchAnnounce extends AppCompatActivity {
 
         @Override
         protected Announce[] doInBackground(String... strings) {
+            // El error esta en el DB_announce
             return DB_announce.getAnnouncesMatch(strings[0], strings[1], strings[2], strings[3], strings[4], strings[5]);
         }
 
         @Override
         protected void onPostExecute(Announce[] announces) {
+            //if(announces.length <= listElements)
             updateAdapter(announces, numberAnnounces);
         }
     }
@@ -150,29 +125,6 @@ public class MatchAnnounce extends AppCompatActivity {
         }
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     public void moreinfoannounce(View view) {
         Intent intent = new Intent(this, MatchAnnounceInfoActivity.class);
         startActivity(intent);
@@ -182,6 +134,7 @@ public class MatchAnnounce extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         Intent announceInfo = new Intent(this, SeekerAnnounceInfoActivity.class);
+        announceInfo.putExtra("myAnnounce", a);
         startActivity(announceInfo);
         finish();
         return true;

@@ -54,12 +54,12 @@ public class SeekerActivity extends AppCompatActivity implements FloatingActionB
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_seeker);
 
-        String[] categorias = {"Tarjetas Bancarias", "Tarjetas Transporte Público", "Carteras/Monederos", "Teléfonos", "Otros"};
+        String[] categorias = {"Cartera", "Telefono", "Tarjeta bancaria", "Tarjeta transporte", "Otro"};
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, categorias);
         categoriaSeleccionada = (MaterialBetterSpinner) findViewById(R.id.listaCategorias);
         categoriaSeleccionada.setAdapter(arrayAdapter);
 
-        String[] tipo = {"Pérdida", "Hallazgo"};
+        String[] tipo = {"Perdida", "Hallazgo"};
         ArrayAdapter<String> arrayAdapter2 = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, tipo);
         tipoAnuncionSeleccionado = (MaterialBetterSpinner) findViewById(R.id.tipoAnuncio);
         tipoAnuncionSeleccionado.setAdapter(arrayAdapter2);
@@ -187,8 +187,10 @@ public class SeekerActivity extends AppCompatActivity implements FloatingActionB
 
         }else{
 
-            String cat = cambiarNombreCategoria();
-            String tipoA = cambiarNombreTipo();
+            //String cat = cambiarNombreCategoria();
+            //String tipoA = cambiarNombreTipo();
+            String cat = categoriaSeleccionada.getText().toString();
+            String tipoA = tipoAnuncionSeleccionado.getText().toString();
             new getNumberObjectAnnouncesDB().execute(cat, tipoA);
         }
     }
@@ -198,15 +200,15 @@ public class SeekerActivity extends AppCompatActivity implements FloatingActionB
 
     }
 
-    private String cambiarNombreCategoria(){
+    /*private String cambiarNombreCategoria(){
         String cat;
-        if(categoriaSeleccionada.getText().toString().equals("Tarjetas Bancarias")){
+        if(categoriaSeleccionada.getText().toString().equals("Tarjeta bancaria")){
             cat = "Tarjeta bancaria";
-        }else if(categoriaSeleccionada.getText().toString().equals("Tarjetas Transporte Público")){
+        }else if(categoriaSeleccionada.getText().toString().equals("Tarjeta transporte")){
             cat = "Tarjeta transporte";
-        }else if(categoriaSeleccionada.getText().toString().equals("Carteras/Monederos")){
+        }else if(categoriaSeleccionada.getText().toString().equals("Cartera")){
             cat = "Cartera";
-        }else if(categoriaSeleccionada.getText().toString().equals("Teléfonos")){
+        }else if(categoriaSeleccionada.getText().toString().equals("Telefono")){
             cat = "Telefono";
         }else{
             cat = "Otro";
@@ -217,11 +219,11 @@ public class SeekerActivity extends AppCompatActivity implements FloatingActionB
 
     private String cambiarNombreTipo(){
         String tipoA = "Hallazgo";
-        if(tipoAnuncionSeleccionado.getText().toString().equals("Pérdida")){
+        if(tipoAnuncionSeleccionado.getText().toString().equals("Perdida")){
             tipoA = "Perdida";
         }
         return tipoA;
-    }
+    }*/
 
     private class getNumberObjectAnnouncesDB extends AsyncTask<String, Void, Integer> {
 
@@ -245,8 +247,11 @@ public class SeekerActivity extends AppCompatActivity implements FloatingActionB
             noannounces.setText("");
             numberAnnounces = numAnnounces;
 
-            String cat = cambiarNombreCategoria();
-            String tipoA = cambiarNombreTipo();
+            String cat = categoriaSeleccionada.getText().toString();
+            String tipoA = tipoAnuncionSeleccionado.getText().toString();
+
+            //String cat = cambiarNombreCategoria();
+            //String tipoA = cambiarNombreTipo();
 
             //SharedPreferences spref = getApplicationContext().getSharedPreferences("Login", 0);
             //String userName = spref.getString("nombre", "");
@@ -279,7 +284,6 @@ public class SeekerActivity extends AppCompatActivity implements FloatingActionB
             recyclerView.setLayoutManager(new LinearLayoutManager(this));
         }
     }
-
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

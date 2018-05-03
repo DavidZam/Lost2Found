@@ -89,6 +89,7 @@ public class MatchAnnounceInfoActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         Intent matchannounce = new Intent(this, MatchAnnounce.class);
+        matchannounce.putExtra("match", a);
         startActivity(matchannounce);
         finish();
         return true;
