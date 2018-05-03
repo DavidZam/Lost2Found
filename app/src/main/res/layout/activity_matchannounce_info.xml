@@ -24,12 +24,12 @@
         <ScrollView
             android:id="@+id/scroll"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="464dp"
             android:layout_alignParentEnd="true"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
             android:layout_below="@+id/toolbar_center"
-            android:layout_marginTop="75dp"
+            android:paddingTop="75dp"
             android:scrollbars="vertical">
 
             <LinearLayout
@@ -37,10 +37,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
-                android:layout_below="@+id/toolbar_center"
+                android:layout_below="@+id/scroll"
                 android:orientation="vertical"
                 android:padding="16dp">
-
 
                 <TextView
                     android:id="@+id/categoria"
@@ -90,50 +89,68 @@
                     android:layout_centerHorizontal="true"
                     android:text="TextView" />
 
+                <TextView
+                    android:id="@+id/param"
+                    android:layout_width="match_parent"
+                    android:layout_height="64dp"
+                    android:layout_below="@+id/usuario"
+                    android:layout_centerHorizontal="true"
+                    android:text="TextView" />
+
             </LinearLayout>
         </ScrollView>
 
-        <Button
-            android:id="@+id/contactar"
-            style="@style/buttonStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
+
+        <RelativeLayout
+            android:layout_width="351dp"
+            android:layout_height="101dp"
+            android:layout_below="@+id/scroll"
             android:layout_centerHorizontal="true"
-            android:layout_marginBottom="45dp"
-            android:onClick="contactar"
-            android:text="Contactar" />
+            android:layout_marginTop="2dp">
 
-        <es.lost2found.lost2foundUI.pickerUI.ColorView
-            android:id="@+id/color_view"
-            android:layout_width="31dp"
-            android:layout_height="19dp"
-            android:layout_alignTop="@+id/colorTexto"
-            android:layout_toEndOf="@+id/colorTexto"
-            android:background="@drawable/rounded">
+            <Button
+                android:id="@+id/contactar"
+                style="@style/buttonStyle"
+                android:layout_width="186dp"
+                android:layout_height="37dp"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="16dp"
+                android:onClick="contactar"
+                android:padding="8sp"
+                android:text="Contactar"
+                android:textSize="14sp" />
 
-        </es.lost2found.lost2foundUI.pickerUI.ColorView>
+            <TextView
+                android:id="@+id/colorTexto"
+                android:layout_width="74dp"
+                android:layout_height="27dp"
+                android:layout_alignParentTop="true"
+                android:layout_toStartOf="@+id/match"
+                android:text="c"
+                android:textAllCaps="false"
+                android:textSize="16sp" />
 
-        <TextView
-            android:id="@+id/colorTexto"
-            android:layout_width="64dp"
-            android:layout_height="27dp"
-            android:layout_alignParentStart="true"
-            android:layout_alignTop="@+id/imageinfoannounce"
-            android:layout_marginStart="18dp"
-            android:text="c"
-            android:textAllCaps="false"
-            android:textSize="16sp" />
+            <es.lost2found.lost2foundUI.pickerUI.ColorView
+                android:id="@+id/color_view"
+                android:layout_width="30dp"
+                android:layout_height="29dp"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginStart="90dp"
+                android:background="@drawable/rounded"
+                android:visibility="visible">
 
-        <ImageView
-            android:id="@+id/imageinfoannounce"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginBottom="123dp"
-            android:src="@drawable/ic_phone_android" />
+            </es.lost2found.lost2foundUI.pickerUI.ColorView>
 
+            <ImageView
+                android:id="@+id/imageinfoannounce"
+                android:layout_width="wrap_content"
+                android:layout_height="38dp"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:src="@drawable/ic_phone_android" />
+        </RelativeLayout>
         </RelativeLayout>
 
 </android.support.constraint.ConstraintLayout>

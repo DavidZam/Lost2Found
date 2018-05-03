@@ -13,16 +13,11 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
 import es.lost2found.entities.Announce;
-import es.lost2found.entities.User;
-import es.lost2found.lost2foundUI.announceUI.matchingAnnounceUI.MatchAnnounceViewAdapter;
 
 public class DB_announce {
 
@@ -154,6 +149,7 @@ public class DB_announce {
 
                 //////HAY QUE CREAR UNA LISTA DE IDs PARA, CUANDO EL USUARIO SELECCIONA UNO, SACAR ESE
                 DB_typeObject.listaIdsAnuncios.add(intIdAnuncio);
+
 
                 Integer intIdUser = Integer.valueOf(idUser);
                 String userOwner = DB_user.getNameById(intIdUser);
