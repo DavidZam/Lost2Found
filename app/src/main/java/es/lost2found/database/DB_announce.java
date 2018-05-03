@@ -139,8 +139,6 @@ public class DB_announce {
                 String idAnuncio = object.getString("id");
                 Integer intIdAnuncio = Integer.valueOf(idAnuncio);
 
-<<<<<<< HEAD
-=======
                 String idLugar = object.getString("idLugar");
                 Integer intIdLugar = Integer.valueOf(idLugar);
                 String place = DB_place.getPlaceNameById(intIdLugar);
@@ -152,7 +150,7 @@ public class DB_announce {
                 //////HAY QUE CREAR UNA LISTA DE IDs PARA, CUANDO EL USUARIO SELECCIONA UNO, SACAR ESE
                 DB_typeObject.listaIdsAnuncios.add(intIdAnuncio);
 
->>>>>>> cacded06666afaad814853537446bb49e0903e66
+
                 Integer intIdUser = Integer.valueOf(idUser);
                 String userOwner = DB_user.getNameById(intIdUser);
                 Announce announce = new Announce(announces[i], userOwner, place, intIdAnuncio); // , param)
