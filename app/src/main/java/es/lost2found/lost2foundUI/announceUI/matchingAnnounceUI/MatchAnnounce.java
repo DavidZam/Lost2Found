@@ -68,13 +68,6 @@ public class MatchAnnounce extends AppCompatActivity {
             recyclerView.setLayoutManager(new LinearLayoutManager(this));
         }
 
-
-        /*if(a.announceCategorie.equals("Telefono")){
-
-            String marca = DB_typeObject.getMarcaTlf(a.getIdAnuncio()); //// consulta que me da la marca del objeto telefono
-        }*/
-
-
         new getNumberObjectAnnouncesDB().execute(userEmail, a.announceCategorie, a.announceType, a.announceDateText, String.valueOf(a.getIdAnuncio()));
 
 
@@ -149,29 +142,6 @@ public class MatchAnnounce extends AppCompatActivity {
             recyclerView.setLayoutManager(new LinearLayoutManager(this));
         }
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     public void moreinfoannounce(View view) {
         Intent intent = new Intent(this, MatchAnnounceInfoActivity.class);
