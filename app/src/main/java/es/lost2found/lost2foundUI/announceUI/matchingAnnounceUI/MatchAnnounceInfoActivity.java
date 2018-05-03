@@ -94,8 +94,13 @@ public class MatchAnnounceInfoActivity extends AppCompatActivity {
                 TextView param = (TextView) findViewById(R.id.param);
                 String params[] = dataObject.split(",");
                 if(a.announceCategorie.equals("Telefono")){
-                    String o = "<h4> <font color=#699CFC> Datos: </font><br>"+ "Marca: " + params[0] + ", Modelo: " + params[1] + "<br>" +  "tara: " + params[2] +" </h4><br>";
-                    param.setText(Html.fromHtml(o));
+                    if(params[2].equalsIgnoreCase(" ")) {
+                        String o = "<h4> <font color=#699CFC> Datos: </font><br>"+ "Marca: " + params[0] + ", Modelo: " + params[1] +" </h4><br>";
+                        param.setText(Html.fromHtml(o));
+                    } else {
+                        String o = "<h4> <font color=#699CFC> Datos: </font><br>"+ "Marca: " + params[0] + ", Modelo: " + params[1] + "<br>" +  "tara: " + params[2] +" </h4><br>";
+                        param.setText(Html.fromHtml(o));
+                    }
                 }else if(a.announceCategorie.equals("Cartera")){
                     String o = "<h4> <font color=#699CFC> Datos: </font><br>"+ "Marca: " + params[0] + ", Documentacion: " + params[1] +" </h4><br>";
                     param.setText(Html.fromHtml(o));
@@ -122,10 +127,14 @@ public class MatchAnnounceInfoActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         Intent matchannounce = new Intent(this, MatchAnnounce.class);
-        matchannounce.putExtra("match", a);
+        //matchannounce.putExtra("match", a);
         matchannounce.putExtra("back", true);
         Announce oldAnnounce = (Announce) getIntent().getSerializableExtra("oldAnnounce");
-        matchannounce.putExtra("oldAnnounce", oldAnnounce);
+        //matchannounce.putExtra("oldAnnounce", oldAnnounce);
+        matchannounce.putExtra("match", oldAnnounce);
+        matchannounce.putExtra("oldAnnounce", true);
+        String atrDeterminante = getIntent().getStringExtra("atributoDeterminante");
+        matchannounce.putExtra("atributoDeterminante", atrDeterminante);
         startActivity(matchannounce);
         finish();
         return true;

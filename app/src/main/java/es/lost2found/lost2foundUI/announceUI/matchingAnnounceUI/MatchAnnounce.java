@@ -55,16 +55,20 @@ public class MatchAnnounce extends AppCompatActivity {
             atributoDeterminante = getIntent().getStringExtra("atributoDeterminante");
         }
 
-        adapter = new MatchAnnounceViewAdapter(announceList, getApplication(), userEmail, oldAnnounce);
+        /*if(getIntent().getBooleanExtra("back", false)) {
+            atributoDeterminante = getIntent().getStringExtra("atributoDeterminante");
+        }*/
+
+        adapter = new MatchAnnounceViewAdapter(announceList, getApplication(), userEmail, oldAnnounce, atributoDeterminante);
         recyclerView = findViewById(R.id.match_announce_reyclerview);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        // Adding a ItemAnimator to the RecyclerView (Optional)
+        /* Adding a ItemAnimator to the RecyclerView (Optional)
         RecyclerView.ItemAnimator itemAnimator = new DefaultItemAnimator();
         itemAnimator.setAddDuration(1000);
         itemAnimator.setRemoveDuration(1000);
-        recyclerView.setItemAnimator(itemAnimator);
+        recyclerView.setItemAnimator(itemAnimator);*/
 
         if(!adapter.getListAnnounce().isEmpty()) {
             adapter.getListAnnounce().clear();
@@ -75,7 +79,6 @@ public class MatchAnnounce extends AppCompatActivity {
 
         a = (Announce) getIntent().getSerializableExtra("match");
         new getNumberObjectAnnouncesDB().execute(userEmail, a.announceCategorie, a.announceType, a.announceDateText, String.valueOf(a.getIdAnuncio()), atributoDeterminante);
-
     }
 
 
@@ -126,25 +129,17 @@ public class MatchAnnounce extends AppCompatActivity {
 
     public void updateAdapter(Announce[] announces, Integer numAnnounces) {
         for(int i = 0; i < numAnnounces; i++) {
-            if(!getIntent().getBooleanExtra("back", false)) {
+            //if(!getIntent().getBooleanExtra("back", false)) {
                 adapter.insert(listElements, announces[i]);
                 listElements++;
-            } else {
-                adapter.insert(listElements, a);
-                listElements++;
-            }
+            //} else {
+                //adapter.insert(listElements, a);
+                //listElements++;
+            //}
             recyclerView.setAdapter(adapter);
             recyclerView.setLayoutManager(new LinearLayoutManager(this));
         }
     }
-
-   /*public void moreinfoannounce(View view) {
-        Intent intent = new Intent(this, MatchAnnounceInfoActivity.class);
-        intent.putExtra("myAnnounce", a);
-        intent.putExtra("oldAnnounce", oldAnnounce);
-        startActivity(intent);
-        finish();
-    }*/
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

@@ -23,12 +23,14 @@ public class MatchAnnounceViewAdapter extends RecyclerView.Adapter<AnnounceViewH
     private Context context;
     private String actualUser;
     private Announce oldAnnounce;
+    private String atrDeterminante;
 
-    public MatchAnnounceViewAdapter(List<Announce> listAnnounce, Context context, String actualUser, Announce oldAnnounce) {
+    public MatchAnnounceViewAdapter(List<Announce> listAnnounce, Context context, String actualUser, Announce oldAnnounce, String atrDeterminante) {
         this.listAnnounce = listAnnounce;
         this.context = context;
         this.actualUser = actualUser;
         this.oldAnnounce = oldAnnounce;
+        this.atrDeterminante = atrDeterminante;
     }
 
     @Override
@@ -101,6 +103,7 @@ public class MatchAnnounceViewAdapter extends RecyclerView.Adapter<AnnounceViewH
                 Announce announce = listAnnounce.get(position);
                 intent.putExtra("myAnnounce", announce);
                 intent.putExtra("oldAnnounce", oldAnnounce);
+                intent.putExtra("atributoDeterminante", atrDeterminante);
                 context.startActivity(intent);
             }
         });
