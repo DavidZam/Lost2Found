@@ -31,7 +31,11 @@ public class MatchAnnounce extends AppCompatActivity {
     private RecyclerView recyclerView;
     private Announce a;
     private Announce oldAnnounce;
+<<<<<<< HEAD
     private String objectDataParam;
+=======
+    private String atributoDeterminante;
+>>>>>>> 587105646d074ff288d088b1f709308a5310dcbc
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +55,7 @@ public class MatchAnnounce extends AppCompatActivity {
 
         if(getIntent().getBooleanExtra("oldAnnounce", false)) {
             oldAnnounce = (Announce) getIntent().getSerializableExtra("match");
+            atributoDeterminante = getIntent().getStringExtra("atributoDeterminante");
         }
 
         adapter = new MatchAnnounceViewAdapter(announceList, getApplication(), userEmail, oldAnnounce);
@@ -72,8 +77,12 @@ public class MatchAnnounce extends AppCompatActivity {
         }
 
         a = (Announce) getIntent().getSerializableExtra("match");
+<<<<<<< HEAD
         objectDataParam = getIntent().getStringExtra("paramData");
         new getNumberObjectAnnouncesDB().execute(userEmail, a.announceCategorie, a.announceType, a.announceDateText, String.valueOf(a.getIdAnuncio()), objectDataParam);
+=======
+        new getNumberObjectAnnouncesDB().execute(userEmail, a.announceCategorie, a.announceType, a.announceDateText, String.valueOf(a.getIdAnuncio()), atributoDeterminante);
+>>>>>>> 587105646d074ff288d088b1f709308a5310dcbc
     }
 
 
@@ -104,7 +113,7 @@ public class MatchAnnounce extends AppCompatActivity {
             SharedPreferences sp = getApplicationContext().getSharedPreferences("announcePlace", 0);
             String place = sp.getString("place", "");
 
-            new getObjectAnnouncesDB().execute(userEmail, a.announceCategorie, a.announceType, String.valueOf(numberAnnounces), place, a.announceDateText);
+            new getObjectAnnouncesDB().execute(userEmail, a.announceCategorie, a.announceType, String.valueOf(numberAnnounces), place, a.announceDateText, atributoDeterminante);
         }
     }
 
@@ -113,7 +122,7 @@ public class MatchAnnounce extends AppCompatActivity {
         @Override
         protected Announce[] doInBackground(String... strings) {
             // El error esta en el DB_announce
-            return DB_announce.getAnnouncesMatch(strings[0], strings[1], strings[2], strings[3], strings[4], strings[5]);
+            return DB_announce.getAnnouncesMatch(strings[0], strings[1], strings[2], strings[3], strings[4], strings[5], strings[6]);
         }
 
         @Override
