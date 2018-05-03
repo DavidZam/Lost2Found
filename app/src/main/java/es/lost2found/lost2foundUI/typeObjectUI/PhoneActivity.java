@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import es.lost2found.R;
 import es.lost2found.database.DB_typeObject;
+import es.lost2found.entities.Announce;
 import es.lost2found.lost2foundUI.announceUI.AnnounceActivity;
 
 public class PhoneActivity extends AppCompatActivity {
@@ -58,9 +59,9 @@ public class PhoneActivity extends AppCompatActivity {
         EditText announceModel = findViewById(R.id.model);
         String announceModelText = announceModel.getText().toString();
 
-        // IMEI
+        /* IMEI
         EditText announceIMEI = findViewById(R.id.IMEI);
-        String announceIMEIText = announceIMEI.getText().toString();
+        String announceIMEIText = announceIMEI.getText().toString();*/
 
         // tara
         EditText announceTara = findViewById(R.id.tara);
@@ -70,7 +71,7 @@ public class PhoneActivity extends AppCompatActivity {
             TextView textView = findViewById(R.id.wrong_information);
             textView.setText(textView.getResources().getString(R.string.error_txt3));
         } else {
-            new saveObjectDB().execute(objectIdText, categorie, announceBrandText, announceModelText, announceIMEIText, announceTaraText);
+            new saveObjectDB().execute(objectIdText, categorie, announceBrandText, announceModelText, announceTaraText); //  announceIMEIText
         }
     }
 
@@ -78,7 +79,7 @@ public class PhoneActivity extends AppCompatActivity {
 
         @Override
         protected String doInBackground(String... strings) {
-            return DB_typeObject.insertObject(strings[0], strings[1], strings[2], strings[3], strings[4], strings[5]);
+            return DB_typeObject.insertObject(strings[0], strings[1], strings[2], strings[3], strings[4]);
         }
 
         @Override

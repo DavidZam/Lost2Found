@@ -62,21 +62,69 @@
             return $rawdata;
         }
 
-        function insert($objectId, $categorie, $param1, $param2, $param3, $param4) {
+        function getData($id, $announceCategorie) {
+            $connection = connectDB();
+
+            $sql = mysqli_prepare($connection, "SELECT * FROM `$announceCategorie` WHERE idObjeto = ?");
+            mysqli_stmt_bind_param($sql, "s", $id);
+
+            $query = $sql->execute();
+
+            if(!$query)
+                die();
+
+            $result = $sql->store_result();
+	    if(strcmp($announceCategorie, "Tarjeta transporte") == 0) {
+		$realresult = $sql->bind_result($id, $param1);
+
+		$sql->fetch();
+                $rawdata = array();
+                $rawdata['param1'] = $param1;
+
+            } else if(strcmp($announceCategorie, "Telefono") == 0) {
+		$realresult = $sql->bind_result($id, $param1, $param2, $param3);
+
+		$sql->fetch();
+                $rawdata = array();
+                $rawdata['param1'] = $param1;
+		$rawdata['param2'] = $param2;
+		$rawdata['param3'] = $param3;
+            } else {
+		$realresult = $sql->bind_result($id, $param1, $param2);
+		$sql->fetch();
+                $rawdata = array();
+		$rawdata['param1'] = $param1;
+		$rawdata['param2'] = $param2;
+            }
+            //$sql->fetch();
+
+            //$rawdata = array();
+
+            $correct = $query;
+
+            //$rawdata['param1'] = $param1;
+            //$rawdata['param2'] = $param2;
+            $rawdata['correct'] = $correct;
+
+            disconnectDB($connection);
+            return $rawdata;
+        }
+
+        function insert($objectId, $categorie, $param1, $param2, $param3) {
             $connection = connectDB();
 
             if(strcmp($categorie, "Tarjeta transporte") == 0) {
                 $sql = mysqli_prepare($connection, "INSERT INTO `$categorie` (idObjeto, datosPropietario) VALUES (?, ?)");
                 mysqli_stmt_bind_param($sql, "ss", $objectId, $param1);
             } else if(strcmp($categorie, "Telefono") == 0) {
-                $sql = mysqli_prepare($connection, "INSERT INTO $categorie (idObjeto, marca, modelo, IMEI, tara) VALUES (?, ?, ?, ?, ?)");
-                mysqli_stmt_bind_param($sql, "sssss", $objectId, $param1, $param2, $param3, $param4);
+                $sql = mysqli_prepare($connection, "INSERT INTO $categorie (idObjeto, marca, modelo, tara) VALUES (?, ?, ?, ?)");
+                mysqli_stmt_bind_param($sql, "ssss", $objectId, $param1, $param2, $param3);
             } else {
 		//$param2 = utf8_encode($param2);
 		//var_dump($param2);
-		var_dump($objectId);
-		var_dump($param1);
-		var_dump($param2);
+		//var_dump($objectId);
+		//var_dump($param1);
+		//var_dump($param2);
                 $sql = mysqli_prepare($connection, "INSERT INTO `$categorie` VALUES (?, ?, ?)");
                 mysqli_stmt_bind_param($sql, "sss", $objectId, $param1, $param2);
             }
@@ -91,5 +139,7 @@
             disconnectDB($connection);
             return $query;
         }
+		
+		
 	}
 ?>

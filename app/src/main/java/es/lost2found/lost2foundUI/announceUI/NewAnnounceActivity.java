@@ -256,6 +256,7 @@ public class NewAnnounceActivity extends AppCompatActivity {
             SharedPreferences sp = getApplicationContext().getSharedPreferences("announcePlace", 0);
             String place = sp.getString("place", "");
             Intent intent = new Intent(this, WalletActivity.class);
+            intent.putExtra("announce", announce);
             intent.putExtra("categorie", categorie);
             intent.putExtra("place", place);
             startActivity(intent);
@@ -263,6 +264,7 @@ public class NewAnnounceActivity extends AppCompatActivity {
             SharedPreferences sp = getApplicationContext().getSharedPreferences("announcePlace", 0);
             String place = sp.getString("place", "");
             Intent intent = new Intent(this, PhoneActivity.class);
+            intent.putExtra("announce", announce);
             intent.putExtra("categorie", categorie);
             intent.putExtra("place", place);
             startActivity(intent);
@@ -270,6 +272,7 @@ public class NewAnnounceActivity extends AppCompatActivity {
             SharedPreferences sp = getApplicationContext().getSharedPreferences("announcePlace", 0);
             String place = sp.getString("place", "");
             Intent intent = new Intent(this, BankCardActivity.class);
+            intent.putExtra("announce", announce);
             intent.putExtra("categorie", categorie);
             intent.putExtra("place", place);
             startActivity(intent);
@@ -277,6 +280,7 @@ public class NewAnnounceActivity extends AppCompatActivity {
             SharedPreferences sp = getApplicationContext().getSharedPreferences("announcePlace", 0);
             String place = sp.getString("place", "");
             Intent intent = new Intent(this, TransportCardActivity.class);
+            intent.putExtra("announce", announce);
             intent.putExtra("categorie", categorie);
             intent.putExtra("place", place);
             startActivity(intent);
@@ -284,6 +288,7 @@ public class NewAnnounceActivity extends AppCompatActivity {
             SharedPreferences sp = getApplicationContext().getSharedPreferences("announcePlace", 0);
             String place = sp.getString("place", "");
             Intent intent = new Intent(this, OtherObjectActivity.class);
+            intent.putExtra("announce", announce);
             intent.putExtra("categorie", categorie);
             intent.putExtra("place", place);
             startActivity(intent);

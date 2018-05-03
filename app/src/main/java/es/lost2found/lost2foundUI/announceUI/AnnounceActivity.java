@@ -97,7 +97,7 @@ public class AnnounceActivity extends AppCompatActivity implements FloatingActio
                         if(menuItem.getItemId()== R.id.nav_search) {
                             SharedPreferences sp = getApplicationContext().getSharedPreferences("announcePlace", 0);
                             String place = sp.getString("place", "");
-                            buscar.putExtra("palce", place);
+                            buscar.putExtra("place", place);
                             startActivity(buscar);
                         }else if(menuItem.getItemId()== R.id.nav_chat) {
                             startActivity(chat);
@@ -130,7 +130,8 @@ public class AnnounceActivity extends AppCompatActivity implements FloatingActio
         SharedPreferences spref2 = getApplicationContext().getSharedPreferences("Login", 0);
         String userName = spref2.getString("nombre", "");
         List<Announce> announceList = new ArrayList<>();
-        adapter = new AnnounceViewAdapter(announceList, getApplication(), userName);
+        String parentName = this.getClass().getSimpleName();
+        adapter = new AnnounceViewAdapter(announceList, getApplication(), userName, parentName);
         recyclerView = findViewById(R.id.announce_recyclerview);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -169,10 +170,10 @@ public class AnnounceActivity extends AppCompatActivity implements FloatingActio
             SharedPreferences spref = getApplicationContext().getSharedPreferences("Login", 0);
             String userEmail = spref.getString("email", "");
 
-            SharedPreferences sp = getApplicationContext().getSharedPreferences("announcePlace", 0);
-            String place = sp.getString("place", "");
+            //SharedPreferences sp = getApplicationContext().getSharedPreferences("announcePlace", 0);
+            //String place = sp.getString("place", "");
 
-            new getObjectAnnouncesDB().execute(userEmail, String.valueOf(numberAnnounces), place); // Devuelve una lista con los anuncios del usuario en cuestion
+            new getObjectAnnouncesDB().execute(userEmail, String.valueOf(numberAnnounces)); // Devuelve una lista con los anuncios del usuario en cuestion
         }
     }
 
@@ -180,7 +181,7 @@ public class AnnounceActivity extends AppCompatActivity implements FloatingActio
 
         @Override
         protected Announce[] doInBackground(String... strings) {
-            return DB_announce.getAnnounces(strings[0], strings[1], strings[2]);
+            return DB_announce.getAnnounces(strings[0], strings[1]);
         }
 
         @Override

@@ -89,7 +89,7 @@ public class DB_place {
 
             jsonString = URLEncoder.encode(jsonString, "UTF-8");
 
-            String urlStr = SERVER_PATH + "getPlaceByIdJSON.php";
+            String urlStr = SERVER_PATH + "getPlaceIdJSON.php";
             URL url = new URL(urlStr);
 
             HttpURLConnection con = (HttpURLConnection) url.openConnection();
@@ -138,6 +138,77 @@ public class DB_place {
             e.printStackTrace();
         }
         return id;
+    }
+
+    public static String getPlaceNameById(int id) {
+        String name = "";
+        try {
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("id", id);
+
+            List list = new LinkedList();
+            list.addAll(Arrays.asList(jsonObject));
+            String jsonString = list.toString();
+
+            jsonString = URLEncoder.encode(jsonString, "UTF-8");
+
+            String urlStr = SERVER_PATH + "getPlaceNameByIdJSON.php";
+            URL url = new URL(urlStr);
+
+            HttpURLConnection con = (HttpURLConnection) url.openConnection();
+            try {
+                con.setRequestMethod("POST");
+                con.setRequestProperty("User-Agent", "your user agent");
+                con.setRequestProperty("Accept-Language", "sp-SP,sp;q=0.5");
+
+                String urlParameters = "json=" + jsonString;
+
+                con.setDoOutput(true);
+                OutputStream outstream = con.getOutputStream();
+                DataOutputStream wr = new DataOutputStream(outstream);
+                wr.writeBytes(urlParameters);
+                wr.flush();
+                wr.close();
+
+                InputStream instream;
+
+                int status = con.getResponseCode();
+
+                if (status != HttpURLConnection.HTTP_OK)
+                    instream = con.getErrorStream();
+                else
+                    instream = con.getInputStream();
+
+                BufferedReader in = new BufferedReader(new InputStreamReader(instream));
+                String inputLine;
+                StringBuffer response = new StringBuffer();
+
+                while ((inputLine = in.readLine()) != null)
+                    response.append(inputLine);
+
+                JSONObject object = new JSONObject(response.toString());
+                if(object.getBoolean("correct")) {
+                    try {
+                        String param1 = object.getString("param1");
+                        if((object.toString().contains("param2"))) {
+                            String param2 = object.getString("param2");
+                            String param3 = object.getString("param3");
+                            name = param1 + ": " + param2 + ", " + param3;
+                        } else {
+                            String param3 = object.getString("param3");
+                            name = param1 + ": " + param3;
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            } finally {
+                con.disconnect();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return name;
     }
 
 }
