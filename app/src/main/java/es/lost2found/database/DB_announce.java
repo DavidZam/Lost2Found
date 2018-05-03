@@ -374,7 +374,7 @@ public class DB_announce {
 
 
     ///////////////////////////////MATCH///////////////////////////////////////
-    public static Integer getNumberMatchAnnounces(String email, String categoria, String tipo, String dia, String idAnuncio) {
+    public static Integer getNumberMatchAnnounces(String email, String categoria, String tipo, String dia, String idAnuncio, String determinante) {
         Integer userId = DB_user.getId(email);
         Integer idObjeto = Integer.valueOf(idAnuncio);
         Integer ret = null;
@@ -385,7 +385,8 @@ public class DB_announce {
             jsonObject.put("nombreTabla", categoria);
             jsonObject.put("tipoAnuncio", tipo);
             jsonObject.put("diaAnuncio", dia);
-            jsonObject.put("idObjeto", idObjeto);
+            //jsonObject.put("idObjeto", idObjeto);
+            jsonObject.put("param", determinante);
 
             List list = new LinkedList();
             list.addAll(Arrays.asList(jsonObject));
@@ -434,8 +435,9 @@ public class DB_announce {
         return  ret;
     }
 
-    public static Announce[] getAnnouncesMatch(String email, String categoria, String tipo, String numberAnnounces, String place, String dia) {
+    public static Announce[] getAnnouncesMatch(String email, String categoria, String tipo, String numberAnnounces, String place, String dia, String determinante) {
         Integer numAnnounces = Integer.valueOf(numberAnnounces);
+        //Integer idObjeto = Integer.valueOf(idAnun);
         Integer userId = DB_user.getId(email);
         Announce[] announcesArray = new Announce[numAnnounces];
         try {
@@ -444,6 +446,9 @@ public class DB_announce {
             jsonObject.put("nombreTabla", categoria);
             jsonObject.put("tipoAnuncio", tipo);
             jsonObject.put("diaAnuncio", dia);
+            jsonObject.put("param", determinante);
+            //jsonObject.put("idObjeto", idObjeto);
+           // jsonObject.put("param", determinante);
 
             List list = new LinkedList();
             list.addAll(Arrays.asList(jsonObject));

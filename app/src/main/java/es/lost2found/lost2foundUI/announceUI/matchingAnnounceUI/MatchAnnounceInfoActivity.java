@@ -3,8 +3,6 @@ package es.lost2found.lost2foundUI.announceUI.matchingAnnounceUI;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v4.app.NavUtils;
-import android.support.v4.app.TaskStackBuilder;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -18,7 +16,6 @@ import es.lost2found.R;
 import es.lost2found.database.DB_typeObject;
 import es.lost2found.entities.Announce;
 import es.lost2found.lost2foundUI.chatUI.chatConcreteUI.ChatConcrete;
-import es.lost2found.lost2foundUI.seekerUI.SeekerAnnounceInfoActivity;
 
 public class MatchAnnounceInfoActivity extends AppCompatActivity {
     private Announce a;
