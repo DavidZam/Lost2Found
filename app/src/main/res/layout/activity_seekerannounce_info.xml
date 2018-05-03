@@ -28,20 +28,18 @@
         <ScrollView
             android:id="@+id/scroll"
             android:layout_width="match_parent"
-            android:layout_height="464dp"
+            android:layout_height="407dp"
             android:layout_alignParentEnd="true"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
             android:layout_below="@+id/toolbar_center"
-            android:paddingTop="75dp"
+            android:layout_marginTop="57dp"
             android:scrollbars="vertical">
 
             <LinearLayout
                 android:id="@+id/login_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_below="@+id/scroll"
                 android:orientation="vertical"
                 android:padding="16dp">
 

@@ -62,7 +62,7 @@
 
         <activity
             android:name=".lost2foundUI.announceUI.matchingAnnounceUI.MatchAnnounce"
-            android:parentActivityName=".lost2foundUI.announceUI.AnnounceActivity"
+            android:parentActivityName=".lost2foundUI.seekerUI.SeekerAnnounceInfoActivity"
             android:screenOrientation="portrait"
             android:label="@string/title_matchannounce_section" >
         </activity>

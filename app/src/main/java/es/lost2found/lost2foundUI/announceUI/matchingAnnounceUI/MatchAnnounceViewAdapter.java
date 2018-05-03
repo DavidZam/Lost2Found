@@ -22,11 +22,13 @@ public class MatchAnnounceViewAdapter extends RecyclerView.Adapter<AnnounceViewH
     private List<Announce> listAnnounce = Collections.emptyList();
     private Context context;
     private String actualUser;
+    private Announce oldAnnounce;
 
-    public MatchAnnounceViewAdapter(List<Announce> listAnnounce, Context context, String actualUser) {
+    public MatchAnnounceViewAdapter(List<Announce> listAnnounce, Context context, String actualUser, Announce oldAnnounce) {
         this.listAnnounce = listAnnounce;
         this.context = context;
         this.actualUser = actualUser;
+        this.oldAnnounce = oldAnnounce;
     }
 
     @Override
@@ -97,7 +99,8 @@ public class MatchAnnounceViewAdapter extends RecyclerView.Adapter<AnnounceViewH
                 Intent intent = new Intent(context, MatchAnnounceInfoActivity.class);
 
                 Announce announce = listAnnounce.get(position);
-                intent.putExtra("matchAnnounce", announce);
+                intent.putExtra("myAnnounce", announce);
+                intent.putExtra("oldAnnounce", oldAnnounce);
                 context.startActivity(intent);
             }
         });

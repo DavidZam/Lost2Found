@@ -30,6 +30,7 @@ public class MatchAnnounce extends AppCompatActivity {
     private MatchAnnounceViewAdapter adapter;
     private RecyclerView recyclerView;
     private Announce a;
+    private Announce oldAnnounce;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +47,12 @@ public class MatchAnnounce extends AppCompatActivity {
         SharedPreferences spref2 = getApplicationContext().getSharedPreferences("Login", 0);
         String userEmail = spref2.getString("email", "");
         List<Announce> announceList = new ArrayList<>();
-        adapter = new MatchAnnounceViewAdapter(announceList, getApplication(), userEmail);
+
+        if(getIntent().getBooleanExtra("oldAnnounce", false)) {
+            oldAnnounce = (Announce) getIntent().getSerializableExtra("match");
+        }
+
+        adapter = new MatchAnnounceViewAdapter(announceList, getApplication(), userEmail, oldAnnounce);
         recyclerView = findViewById(R.id.match_announce_reyclerview);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -57,8 +63,6 @@ public class MatchAnnounce extends AppCompatActivity {
         itemAnimator.setRemoveDuration(1000);
         recyclerView.setItemAnimator(itemAnimator);
 
-        a = (Announce) getIntent().getSerializableExtra("match");
-
         if(!adapter.getListAnnounce().isEmpty()) {
             adapter.getListAnnounce().clear();
             listElements = 0;
@@ -66,6 +70,7 @@ public class MatchAnnounce extends AppCompatActivity {
             recyclerView.setLayoutManager(new LinearLayoutManager(this));
         }
 
+        a = (Announce) getIntent().getSerializableExtra("match");
         new getNumberObjectAnnouncesDB().execute(userEmail, a.announceCategorie, a.announceType, a.announceDateText, String.valueOf(a.getIdAnuncio()));
     }
 
@@ -111,30 +116,40 @@ public class MatchAnnounce extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(Announce[] announces) {
-            //if(announces.length <= listElements)
             updateAdapter(announces, numberAnnounces);
         }
     }
 
     public void updateAdapter(Announce[] announces, Integer numAnnounces) {
         for(int i = 0; i < numAnnounces; i++) {
-            adapter.insert(listElements, announces[i]);
-            listElements++;
+            if(!getIntent().getBooleanExtra("back", false)) {
+                adapter.insert(listElements, announces[i]);
+                listElements++;
+            } else {
+                adapter.insert(listElements, a);
+                listElements++;
+            }
             recyclerView.setAdapter(adapter);
             recyclerView.setLayoutManager(new LinearLayoutManager(this));
         }
     }
 
-    public void moreinfoannounce(View view) {
+   /*public void moreinfoannounce(View view) {
         Intent intent = new Intent(this, MatchAnnounceInfoActivity.class);
+        intent.putExtra("myAnnounce", a);
+        intent.putExtra("oldAnnounce", oldAnnounce);
         startActivity(intent);
         finish();
-    }
+    }*/
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         Intent announceInfo = new Intent(this, SeekerAnnounceInfoActivity.class);
-        announceInfo.putExtra("myAnnounce", a);
+        if(oldAnnounce == null) {
+            oldAnnounce = (Announce) getIntent().getSerializableExtra("oldAnnounce");
+        }
+        announceInfo.putExtra("oldAnnounce", oldAnnounce);
+        announceInfo.putExtra("back", true);
         startActivity(announceInfo);
         finish();
         return true;
