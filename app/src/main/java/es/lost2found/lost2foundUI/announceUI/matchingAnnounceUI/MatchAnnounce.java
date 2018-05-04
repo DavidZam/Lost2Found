@@ -98,8 +98,7 @@ public class MatchAnnounce extends AppCompatActivity {
             SharedPreferences spref = getApplicationContext().getSharedPreferences("Login", 0);
             String userEmail = spref.getString("email", "");
 
-            SharedPreferences sp = getApplicationContext().getSharedPreferences("announcePlace", 0);
-            String place = sp.getString("place", "");
+            String place = ""; // Se calcula en la llamada getAnnouncesMatch() de la AsyncTask getObjectAnnouncesDB
 
             new getObjectAnnouncesDB().execute(userEmail, a.announceCategorie, a.announceType, String.valueOf(numberAnnounces), place, a.announceDateText, atributoDeterminante);
         }
@@ -109,7 +108,6 @@ public class MatchAnnounce extends AppCompatActivity {
 
         @Override
         protected Announce[] doInBackground(String... strings) {
-            // El error esta en el DB_announce
             return DB_announce.getAnnouncesMatch(strings[0], strings[1], strings[2], strings[3], strings[4], strings[5], strings[6]);
         }
 
@@ -120,9 +118,6 @@ public class MatchAnnounce extends AppCompatActivity {
     }
 
     public void updateAdapter(Announce[] announces, Integer numAnnounces) {
-        /*if(a != null) {
-            color1 = a.getColor();
-        }*/
         int color1;
         int color2 = Color.TRANSPARENT;
         Announce oldAnnounce = (Announce) getIntent().getSerializableExtra("match");
@@ -191,13 +186,4 @@ public class MatchAnnounce extends AppCompatActivity {
 
         return percentage;
     }
-
-    /**
-     *
-     * @param view
-     */
-    public void matchingAnnounce(View view) {
-
-    }
-
 }

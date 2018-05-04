@@ -79,9 +79,9 @@ public class MatchAnnounceInfoActivity extends AppCompatActivity {
         double colorPercentageValue = Double.valueOf(colorPercentageText);
         if(colorPercentageValue >= 70) {
             colorPercentage.setTextColor(getResources().getColor(R.color.ForestGreen));
-        } else if(colorPercentageValue < 70 && colorPercentageValue >= 40) {
+        } else if(colorPercentageValue < 70 && colorPercentageValue >= 20) {
             colorPercentage.setTextColor(getResources().getColor(R.color.Coral));
-        } else if(colorPercentageValue < 40) {
+        } else if(colorPercentageValue < 20) {
             colorPercentage.setTextColor(getResources().getColor(R.color.FireBrick));
         }
 
