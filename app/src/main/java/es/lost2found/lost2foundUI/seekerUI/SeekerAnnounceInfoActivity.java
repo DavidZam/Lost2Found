@@ -111,9 +111,15 @@ public class SeekerAnnounceInfoActivity extends AppCompatActivity {
                         atributoDeterminante = params[0];
                     }
                 }else if(a.announceCategorie.equals("Cartera")){
-                    String o = "<h4> <font color=#699CFC> Datos: </font><br>"+ "Marca: " + params[0] + ", Documentacion: " + params[1] +" </h4><br>";
-                    param.setText(Html.fromHtml(o));
-                    atributoDeterminante = params[0];
+                    if(params[1].equalsIgnoreCase(" ")) {
+                        String o = "<h4> <font color=#699CFC> Datos: </font><br>"+ "Marca: " + params[0] +" </h4><br>";
+                        param.setText(Html.fromHtml(o));
+                        atributoDeterminante = params[0];
+                    } else {
+                        String o = "<h4> <font color=#699CFC> Datos: </font><br>"+ "Marca: " + params[0] + ", Documentacion: " + params[1] +" </h4><br>";
+                        param.setText(Html.fromHtml(o));
+                        atributoDeterminante = params[0];
+                    }
                 }else if(a.announceCategorie.equals("Otro")){
                     String o = "<h4> <font color=#699CFC> Datos: </font><br>"+ "Nombre: " + params[0] + ", Descripcion: " + params[1] +" </h4><br>";
                     param.setText(Html.fromHtml(o));

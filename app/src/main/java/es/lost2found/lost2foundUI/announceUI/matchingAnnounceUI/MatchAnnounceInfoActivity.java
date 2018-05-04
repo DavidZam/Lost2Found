@@ -102,8 +102,13 @@ public class MatchAnnounceInfoActivity extends AppCompatActivity {
                         param.setText(Html.fromHtml(o));
                     }
                 }else if(a.announceCategorie.equals("Cartera")){
-                    String o = "<h4> <font color=#699CFC> Datos: </font><br>"+ "Marca: " + params[0] + ", Documentacion: " + params[1] +" </h4><br>";
-                    param.setText(Html.fromHtml(o));
+                    if(params[1].equalsIgnoreCase(" ")) {
+                        String o = "<h4> <font color=#699CFC> Datos: </font><br>"+ "Marca: " + params[0] +" </h4><br>";
+                        param.setText(Html.fromHtml(o));
+                    } else {
+                        String o = "<h4> <font color=#699CFC> Datos: </font><br>"+ "Marca: " + params[0] + ", Documentacion: " + params[1] +" </h4><br>";
+                        param.setText(Html.fromHtml(o));
+                    }
                 }else if(a.announceCategorie.equals("Otro")){
                     String o = "<h4> <font color=#699CFC> Datos: </font><br>"+ "Nombre: " + params[0] + ", Descripcion: " + params[1] +" </h4><br>";
                     param.setText(Html.fromHtml(o));
