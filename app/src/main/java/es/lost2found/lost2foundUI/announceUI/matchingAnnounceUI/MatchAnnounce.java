@@ -3,6 +3,7 @@ package es.lost2found.lost2foundUI.announceUI.matchingAnnounceUI;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
@@ -32,7 +33,6 @@ public class MatchAnnounce extends AppCompatActivity {
     private Announce a;
     private Announce oldAnnounce;
     private String atributoDeterminante;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,6 +78,7 @@ public class MatchAnnounce extends AppCompatActivity {
         }
 
         a = (Announce) getIntent().getSerializableExtra("match");
+
         new getNumberObjectAnnouncesDB().execute(userEmail, a.announceCategorie, a.announceType, a.announceDateText, String.valueOf(a.getIdAnuncio()), atributoDeterminante);
     }
 

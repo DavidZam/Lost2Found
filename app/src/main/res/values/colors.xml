@@ -11,6 +11,7 @@
     <color name="lineChatColor">#dfdfdf</color>
     <color name="btn_logut_bg">#ff6861</color>
 
+    <color name="Transparent">#CCFFFFFF</color>
     <color name="White">#FFFFFF</color>
     <color name="Ivory">#FFFFF0</color>
     <color name="LightYellow">#FFFFE0</color>

@@ -1,8 +1,12 @@
 package es.lost2found.lost2foundUI.announceUI.matchingAnnounceUI;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.ColorSpace;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.annotation.ColorInt;
+import android.support.annotation.NonNull;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -19,6 +23,7 @@ import es.lost2found.lost2foundUI.chatUI.chatConcreteUI.ChatConcrete;
 
 public class MatchAnnounceInfoActivity extends AppCompatActivity {
     private Announce a;
+    private String colorPercentageText;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -79,6 +84,19 @@ public class MatchAnnounceInfoActivity extends AppCompatActivity {
         }else{
             image.setImageResource(R.drawable.ic_card);
         }
+
+        int color1 = Color.TRANSPARENT;
+        int color2 = Color.TRANSPARENT;
+        if(a != null) {
+            color1 = a.getColor();
+        }
+        Announce oldAnnounce = (Announce) getIntent().getSerializableExtra("oldAnnounce");
+        if(oldAnnounce != null) {
+            color2 = oldAnnounce.getColor();
+        }
+        double colorPercentage = getColorPercentage(color1, color2);
+        String colorPercentajeDouble = String.valueOf(colorPercentage);
+        colorPercentageText = colorPercentajeDouble.substring(0, 5);
     }
 
     private class getObjectDataFromDB extends AsyncTask<String, Void, String> {
@@ -143,5 +161,35 @@ public class MatchAnnounceInfoActivity extends AppCompatActivity {
         startActivity(matchannounce);
         finish();
         return true;
+    }
+
+    public double getColorPercentage(Integer matchAnnounceColorInt, Integer oldAnnounceColorInt) {
+        double maxDistance = 765;
+        double percentageTmp = 0;
+        double percentage = 0;
+
+        double red1 = (matchAnnounceColorInt >> 16) & 0xFF;
+        double green1 = (matchAnnounceColorInt >> 8) & 0xFF;
+        double blue1 = (matchAnnounceColorInt >> 0) & 0xFF;
+
+        double red2 = (oldAnnounceColorInt >> 16) & 0xFF;
+        double green2 = (oldAnnounceColorInt >> 8) & 0xFF;
+        double blue2 = (oldAnnounceColorInt >> 0) & 0xFF;
+
+        double redPowSubtraction = Math.pow(red1 - red2, 2);
+        double greenPowSubtraction = Math.pow(green1 - green2, 2);
+        double bluePowSubtraction = Math.pow(blue1 - blue2, 2);
+        double sumatory = redPowSubtraction + greenPowSubtraction + bluePowSubtraction;
+        double distance = Math.sqrt(sumatory);
+
+        percentageTmp = distance * 100 / maxDistance;
+
+        if(percentageTmp <= 1)
+            percentage = 100;
+        else {
+            percentage = 100 - percentageTmp;
+        }
+
+        return percentage;
     }
 }
