@@ -33,6 +33,7 @@ public class MatchAnnounce extends AppCompatActivity {
     private Announce a;
     private Announce oldAnnounce;
     private String atributoDeterminante;
+    private List<String>  colorPercentagesList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,25 +51,15 @@ public class MatchAnnounce extends AppCompatActivity {
         String userEmail = spref2.getString("email", "");
         List<Announce> announceList = new ArrayList<>();
 
-        if(getIntent().getBooleanExtra("oldAnnounce", false)) {
+        if(getIntent().getBooleanExtra("oldAnnounceSet", false)) {
             oldAnnounce = (Announce) getIntent().getSerializableExtra("match");
             atributoDeterminante = getIntent().getStringExtra("atributoDeterminante");
         }
 
-        /*if(getIntent().getBooleanExtra("back", false)) {
-            atributoDeterminante = getIntent().getStringExtra("atributoDeterminante");
-        }*/
-
-        adapter = new MatchAnnounceViewAdapter(announceList, getApplication(), userEmail, oldAnnounce, atributoDeterminante);
+        adapter = new MatchAnnounceViewAdapter(announceList, getApplication(), userEmail, oldAnnounce, atributoDeterminante, colorPercentagesList);
         recyclerView = findViewById(R.id.match_announce_reyclerview);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-
-        /* Adding a ItemAnimator to the RecyclerView (Optional)
-        RecyclerView.ItemAnimator itemAnimator = new DefaultItemAnimator();
-        itemAnimator.setAddDuration(1000);
-        itemAnimator.setRemoveDuration(1000);
-        recyclerView.setItemAnimator(itemAnimator);*/
 
         if(!adapter.getListAnnounce().isEmpty()) {
             adapter.getListAnnounce().clear();
@@ -129,17 +120,31 @@ public class MatchAnnounce extends AppCompatActivity {
     }
 
     public void updateAdapter(Announce[] announces, Integer numAnnounces) {
+        /*if(a != null) {
+            color1 = a.getColor();
+        }*/
+        int color1;
+        int color2 = Color.TRANSPARENT;
+        Announce oldAnnounce = (Announce) getIntent().getSerializableExtra("match");
+        if(oldAnnounce != null) {
+            color2 = oldAnnounce.getColor();
+        }
+        double colorPercentage;
+        String colorPercentajeDouble;
+        String colorPercentageText;
+        colorPercentagesList = new ArrayList<>();
         for(int i = 0; i < numAnnounces; i++) {
-            //if(!getIntent().getBooleanExtra("back", false)) {
-                adapter.insert(listElements, announces[i]);
-                listElements++;
-            //} else {
-                //adapter.insert(listElements, a);
-                //listElements++;
-            //}
+            color1 = announces[i].getColor();
+            colorPercentage = getColorPercentage(color1, color2);
+            colorPercentajeDouble = String.valueOf(colorPercentage);
+            colorPercentageText = colorPercentajeDouble.substring(0, 5);
+            colorPercentagesList.add(i, colorPercentageText);
+            adapter.insert(listElements, announces[i]);
+            listElements++;
             recyclerView.setAdapter(adapter);
             recyclerView.setLayoutManager(new LinearLayoutManager(this));
         }
+        adapter.setListPercentageColor(colorPercentagesList);
     }
 
     @Override
@@ -153,6 +158,38 @@ public class MatchAnnounce extends AppCompatActivity {
         startActivity(announceInfo);
         finish();
         return true;
+    }
+
+    public double getColorPercentage(Integer matchAnnounceColorInt, Integer oldAnnounceColorInt) {
+        double maxDistance = 765;
+        double percentageTmp = 0;
+        double percentage = 0;
+
+        double red1 = (matchAnnounceColorInt >> 16) & 0xFF;
+        double green1 = (matchAnnounceColorInt >> 8) & 0xFF;
+        double blue1 = (matchAnnounceColorInt >> 0) & 0xFF;
+
+        double red2 = (oldAnnounceColorInt >> 16) & 0xFF;
+        double green2 = (oldAnnounceColorInt >> 8) & 0xFF;
+        double blue2 = (oldAnnounceColorInt >> 0) & 0xFF;
+
+        double redPowSubtraction = Math.pow(red1 - red2, 2);
+        double greenPowSubtraction = Math.pow(green1 - green2, 2);
+        double bluePowSubtraction = Math.pow(blue1 - blue2, 2);
+        double sumatory = redPowSubtraction + greenPowSubtraction + bluePowSubtraction;
+        double distance = Math.sqrt(sumatory);
+
+        percentageTmp = distance * 100 / maxDistance;
+
+        if(percentageTmp <= 1)
+            percentage = 100;
+        else if(percentageTmp < 10){
+            percentage = 100 - percentageTmp;
+        } else {
+            percentage = percentageTmp;
+        }
+
+        return percentage;
     }
 
     /**

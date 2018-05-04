@@ -142,7 +142,7 @@ public class SeekerAnnounceInfoActivity extends AppCompatActivity {
 
     public void matching(View v) {
         final Intent match = new Intent(this, MatchAnnounce.class);
-        match.putExtra("oldAnnounce", true);
+        match.putExtra("oldAnnounceSet", true);
         match.putExtra("match", a);
         match.putExtra("atributoDeterminante", atributoDeterminante);
         startActivity(match);

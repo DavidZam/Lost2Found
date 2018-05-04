@@ -24,13 +24,15 @@ public class MatchAnnounceViewAdapter extends RecyclerView.Adapter<AnnounceViewH
     private String actualUser;
     private Announce oldAnnounce;
     private String atrDeterminante;
+    private List<String>  colorPercentagesList;
 
-    public MatchAnnounceViewAdapter(List<Announce> listAnnounce, Context context, String actualUser, Announce oldAnnounce, String atrDeterminante) {
+    public MatchAnnounceViewAdapter(List<Announce> listAnnounce, Context context, String actualUser, Announce oldAnnounce, String atrDeterminante, List<String>  colorPercentagesList) {
         this.listAnnounce = listAnnounce;
         this.context = context;
         this.actualUser = actualUser;
         this.oldAnnounce = oldAnnounce;
         this.atrDeterminante = atrDeterminante;
+        this.colorPercentagesList = colorPercentagesList;
     }
 
     @Override
@@ -103,22 +105,12 @@ public class MatchAnnounceViewAdapter extends RecyclerView.Adapter<AnnounceViewH
                 Announce announce = listAnnounce.get(position);
                 intent.putExtra("myAnnounce", announce);
                 intent.putExtra("oldAnnounce", oldAnnounce);
+                String percentageColor = colorPercentagesList.get(position);
+                intent.putExtra("percentageColor", percentageColor);
                 intent.putExtra("atributoDeterminante", atrDeterminante);
                 context.startActivity(intent);
             }
         });
-
-
-
-        // Use the provided ChatView_Holder on the onCreateViewHolder method to populate the current row on the RecycleView
-        /*TextView title = holder.getTitle();
-        TextView descr = holder.getDescription();
-        ImageView image = holder.getImageView();
-
-        title.setText(listAnnounce.get(position).title);
-        descr.setText(listAnnounce.get(position).description);
-        image.setImageResource(listAnnounce.get(position).imageId);*/
-        //animate(holder);
     }
 
     @Override
@@ -146,6 +138,10 @@ public class MatchAnnounceViewAdapter extends RecyclerView.Adapter<AnnounceViewH
 
     public List<Announce> getListAnnounce() {
         return this.listAnnounce;
+    }
+
+    public void setListPercentageColor(List<String> listPercentageColor) {
+        this.colorPercentagesList = listPercentageColor;
     }
 
     /*public void animate(RecyclerView.ViewHolder viewHolder) {

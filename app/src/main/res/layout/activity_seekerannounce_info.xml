@@ -126,6 +126,7 @@
                 android:id="@+id/colorTexto"
                 android:layout_width="74dp"
                 android:layout_height="27dp"
+                android:layout_marginTop="2sp"
                 android:layout_alignParentStart="true"
                 android:text="c"
                 android:textAllCaps="false" />

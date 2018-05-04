@@ -44,8 +44,11 @@ public class MatchAnnounceInfoActivity extends AppCompatActivity {
         TextView param = (TextView) findViewById(R.id.param);
         TextView textoColor = (TextView) findViewById(R.id.colorTexto);
         View color = (View) findViewById(R.id.color_view);
+        TextView colorPercentage = (TextView) findViewById(R.id.colorPercentage);
 
         a = (Announce) getIntent().getSerializableExtra("myAnnounce");
+
+        colorPercentageText = getIntent().getStringExtra("percentageColor");
 
         String idText = String.valueOf(a.getAnnounceId());
         new getObjectDataFromDB().execute(idText, a.announceCategorie);
@@ -71,6 +74,17 @@ public class MatchAnnounceInfoActivity extends AppCompatActivity {
         String col = "<h4> <font color=#699CFC> Color: </font> </h4><br>";
         textoColor.setText(Html.fromHtml(col));
 
+        String colorPerc = "<h4>" + colorPercentageText + "%" + "</h4><br>";
+        colorPercentage.setText(Html.fromHtml(colorPerc));
+        double colorPercentageValue = Double.valueOf(colorPercentageText);
+        if(colorPercentageValue >= 70) {
+            colorPercentage.setTextColor(getResources().getColor(R.color.ForestGreen));
+        } else if(colorPercentageValue < 70 && colorPercentageValue >= 40) {
+            colorPercentage.setTextColor(getResources().getColor(R.color.Coral));
+        } else if(colorPercentageValue < 40) {
+            colorPercentage.setTextColor(getResources().getColor(R.color.FireBrick));
+        }
+
         color.setBackgroundColor(a.color);
 
         ImageView image = findViewById(R.id.imageinfoannounce);
@@ -84,19 +98,6 @@ public class MatchAnnounceInfoActivity extends AppCompatActivity {
         }else{
             image.setImageResource(R.drawable.ic_card);
         }
-
-        int color1 = Color.TRANSPARENT;
-        int color2 = Color.TRANSPARENT;
-        if(a != null) {
-            color1 = a.getColor();
-        }
-        Announce oldAnnounce = (Announce) getIntent().getSerializableExtra("oldAnnounce");
-        if(oldAnnounce != null) {
-            color2 = oldAnnounce.getColor();
-        }
-        double colorPercentage = getColorPercentage(color1, color2);
-        String colorPercentajeDouble = String.valueOf(colorPercentage);
-        colorPercentageText = colorPercentajeDouble.substring(0, 5);
     }
 
     private class getObjectDataFromDB extends AsyncTask<String, Void, String> {
@@ -163,7 +164,7 @@ public class MatchAnnounceInfoActivity extends AppCompatActivity {
         return true;
     }
 
-    public double getColorPercentage(Integer matchAnnounceColorInt, Integer oldAnnounceColorInt) {
+    /*public double getColorPercentage(Integer matchAnnounceColorInt, Integer oldAnnounceColorInt) {
         double maxDistance = 765;
         double percentageTmp = 0;
         double percentage = 0;
@@ -191,5 +192,5 @@ public class MatchAnnounceInfoActivity extends AppCompatActivity {
         }
 
         return percentage;
-    }
+    }*/
 }
