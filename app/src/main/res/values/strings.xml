@@ -71,7 +71,7 @@
     <string name="color_text">Color</string>
     <string name="bank_text">Banco</string>
     <string name="owner_text">Propietario tarjeta</string>
-    <string name="name_text">Nombre</string>
+    <string name="name_text">Nombre objeto</string>
     <string name="description_text">Descripcion</string>
     <string name="fill_help1">Especifique la linea y estacion donde ha perdido o encontrado el objeto</string>
     <string name="fill_help2">"Linea 2"</string>
