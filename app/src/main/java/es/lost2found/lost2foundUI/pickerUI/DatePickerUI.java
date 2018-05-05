@@ -28,7 +28,10 @@ public class DatePickerUI extends DialogFragment implements DatePickerDialog.OnD
     public void onDateSet(DatePicker view, int year, int month, int day) {
         // Do something with the date chosen by the user
         EditText date = (EditText) getActivity().findViewById(R.id.date_show);
-        date.setText(view.getDayOfMonth() + "/" + view.getMonth() + "/" + view.getYear());
+        String yearT = String.valueOf(year);
+        String monthT = String.valueOf(month+1);
+        String dayT = String.valueOf(day);
+        date.setText(yearT + "/" + monthT + "/" + dayT);
         date.setTextSize(15);
     }
 
