@@ -127,6 +127,7 @@
                 android:id="@+id/colorTexto"
                 android:layout_width="74dp"
                 android:layout_height="27dp"
+                android:layout_marginTop="2sp"
                 android:layout_alignParentStart="true"
                 android:text="c"
                 android:textAllCaps="false" />
@@ -142,6 +143,16 @@
                 android:visibility="visible">
 
             </es.lost2found.lost2foundUI.pickerUI.ColorView>
+
+            <TextView
+                android:id="@+id/colorPercentage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="40sp"
+                android:layout_alignStart="@+id/color_view"
+                android:layout_marginTop="7sp"
+                android:textSize="11sp"
+                android:textAllCaps="false" />
 
             <ImageView
                 android:id="@+id/imageinfoannounce"

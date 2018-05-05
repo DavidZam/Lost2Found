@@ -16,6 +16,7 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 
+import eltos.simpledialogfragment.color.SimpleColorDialog;
 import eltos.simpledialogfragment.color.SimpleColorWheelDialog;
 import eltos.simpledialogfragment.list.AdvancedAdapter;
 import eltos.simpledialogfragment.list.CustomListDialog;

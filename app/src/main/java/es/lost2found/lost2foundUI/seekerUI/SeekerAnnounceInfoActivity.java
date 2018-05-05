@@ -1,8 +1,11 @@
 package es.lost2found.lost2foundUI.seekerUI;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -144,7 +147,7 @@ public class SeekerAnnounceInfoActivity extends AppCompatActivity {
 
     public void matching(View v) {
         final Intent match = new Intent(this, MatchAnnounce.class);
-        match.putExtra("oldAnnounce", true);
+        match.putExtra("oldAnnounceSet", true);
         match.putExtra("match", a);
         match.putExtra("atributoDeterminante", atributoDeterminante);
         startActivity(match);
@@ -174,5 +177,4 @@ public class SeekerAnnounceInfoActivity extends AppCompatActivity {
         finish();
         return true;
     }
-
 }

@@ -506,9 +506,9 @@ public class DB_announce {
                 String userOwner = DB_user.getNameById(intIdUser);
                 String idAnuncio = object.getString("id");
                 Integer intIdAnuncio = Integer.valueOf(idAnuncio);
-                /*String idObjeto = object.getString("id");
-                Integer intIdObjeto = Integer.valueOf(idObjeto);
-                String param = DB_typeObject.getObjectInfoById(intIdObjeto);*/
+                String idLugar = object.getString("idLugar");
+                Integer intIdLugar = Integer.valueOf(idLugar);
+                place = DB_place.getPlaceNameById(intIdLugar);
                 Announce announce = new Announce(announces[i], userOwner, place, intIdAnuncio); // , param
                 announcesArray[i] = announce;
             }
