@@ -224,7 +224,7 @@ public class DB_transportPlace {
     public static String[] getTrainStations() {
         String OPEN_DATA_URL = "https://data.sncf.com/api/records/1.0/search//?dataset=objets-trouves-gares&rows=0&facet=gc_obo_gare_origine_r_name";
         String[] stations = new String[12];
-        String[] realStations = new String[12];
+        String[] realStations = new String[13];
 
         int timeout = 5000;
         URL url = null;
@@ -268,6 +268,7 @@ public class DB_transportPlace {
                 realStations[i] = stations[i + 1].substring(0, stations[i + 1].indexOf(","));
                 realStations[i] = realStations[i].substring(1, realStations[i].length());
             }
+            realStations[12] = "Otra"; // Comprobar
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
