@@ -378,7 +378,7 @@ public class DB_announce {
 
         Integer userId = DB_user.getId(email);
         Integer idObjeto = Integer.valueOf(idAnuncio);
-        Integer ret = null;
+        Integer ret = 0;
         try {
             JSONObject jsonObject = new JSONObject();
 

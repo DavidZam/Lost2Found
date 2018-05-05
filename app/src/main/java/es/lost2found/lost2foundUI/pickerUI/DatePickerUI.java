@@ -30,11 +30,9 @@ public class DatePickerUI extends DialogFragment implements DatePickerDialog.OnD
         String yearT = String.valueOf(year);
         String monthT = String.valueOf(month+1);
         String dayT = String.valueOf(day);
-<<<<<<< HEAD
+
         date.setText(yearT + "/" + monthT + "/" + dayT);
-=======
         date.setText(dayT + "/" + monthT + "/" + yearT);
->>>>>>> f278fe80b811154d75bfc49e761a4d675fb304cf
         date.setTextSize(15);
     }
 
