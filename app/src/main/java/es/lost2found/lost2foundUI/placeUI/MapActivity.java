@@ -1,10 +1,14 @@
 package es.lost2found.lost2foundUI.placeUI;
 
 import android.Manifest;
+import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentSender;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -14,6 +18,7 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -35,25 +40,28 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
 
 import es.lost2found.R;
+import es.lost2found.database.DB_mapPlace;
+import es.lost2found.entities.ConcretePlace;
+import es.lost2found.entities.MapPlace;
+import es.lost2found.lost2foundUI.announceUI.NewAnnounceActivity;
 
-public class MapActivity extends AppCompatActivity implements OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener { // , LocationListener
+public class MapActivity extends AppCompatActivity implements OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, LocationListener, GoogleMap.OnMapClickListener { // , LocationListener
 
-    private static final int PERMISSION_ACCESS_FINE_LOCATION = 1;
     private final static int CONNECTION_FAILURE_RESOLUTION_REQUEST = 9000;
-    //private LocationRequest mLocationRequest;
     private GoogleApiClient googleApiClient;
     public static final String TAG = MapActivity.class.getSimpleName();
     private LatLng currentLocationMark = new LatLng(40.417101, -3.703283); // Madrid
-    private boolean permissionGranted = false;
     private GoogleMap gMap;
-    private View mapView;
-
+    private LatLng objectLastLocation;
     private FusedLocationProviderClient mFusedLocationClient;
-    //private boolean locationSet = false;
+    public static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
+    LocationManager locationManager;
+    //String provider;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,33 +69,11 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         // Retrieve the content view that renders the map.
         setContentView(R.layout.activity_map);
 
-        mapView = findViewById(R.id.map);
-
         googleApiClient = new GoogleApiClient.Builder(this, this, this).addApi(LocationServices.API).build();
 
-        if (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(MapActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, PERMISSION_ACCESS_FINE_LOCATION);
-            String requiredPermission = "android.permission.ACCESS_FINE_LOCATION";
-            int checkVal = getApplicationContext().checkCallingOrSelfPermission(requiredPermission);
-            if(checkVal == PackageManager.PERMISSION_GRANTED) {
-                permissionGranted = true;
-            }
-        }
-
-        //googleApiClient = new GoogleApiClient.Builder(this).addConnectionCallbacks(this).addOnConnectionFailedListener(this).addApi(LocationServices.API).build();
-
-        // Create the LocationRequest object
-        /*mLocationRequest = LocationRequest.create()
-                .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
-                .setInterval(10 * 1000)        // 10 seconds, in milliseconds
-                .setFastestInterval(1 * 1000); // 1 second, in milliseconds*/
-
-        // Get the SupportMapFragment and request notification
-        // when the map is ready to be used.
+        // Get the SupportMapFragment and request notification when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
-
-        //FusedLocationProviderClient mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
 
         Toolbar tb = findViewById(R.id.toolbar_center);
         setSupportActionBar(tb);
@@ -95,119 +81,193 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         ab.setDisplayHomeAsUpEnabled(true);
         ab.setHomeAsUpIndicator(R.drawable.ic_arrow_back);
 
-        //new askForLocation().execute(); // Asigna un valor a un booleano para comprobar si se tiene el permiso de localizacion
-        //permissionGranted = getIntent().getExtras().getBoolean("permissionGranted");
-        /*if(permissionGranted) {
-            setCurrentLocation(gMap);
-            gMap.addMarker(new MarkerOptions().position(currentLocationMark)).setVisible(true);
-            gMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLocationMark, 15));
-            gMap.animateCamera(CameraUpdateFactory.zoomTo(16), 2000, null);
-        }*/
+        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        //provider = locationManager.getBestProvider(new Criteria(), false);
+        checkLocationPermission();
     }
 
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        outState.putString("WORKAROUND_FOR_BUG_19917_KEY", "WORKAROUND_FOR_BUG_19917_VALUE");
+        super.onSaveInstanceState(outState);
+    }
 
+    public boolean checkLocationPermission() {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) { // Si no tenemos permiso de localizacion
+            // Should we show an explanation?
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_FINE_LOCATION)) { // Solicitamos el permiso con una explicacion
+                // Show an explanation to the user *asynchronously* -- don't block this thread waiting for the user's response! After the user sees the explanation, try again to request the permission.
+                new AlertDialog.Builder(this)
+                        .setTitle("Petición") // R.string.title_location_permission
+                        .setMessage("Activa el GPS si quieres hacer uso de los servicios de localización") // R.string.text_location_permission
+                        .setPositiveButton("Ok", new DialogInterface.OnClickListener() { // R.string.ok
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                //Prompt the user once explanation has been shown  // Al solicitar el permiso se ejecuta el metodo onRequestPermissionsResult()
+                                ActivityCompat.requestPermissions(MapActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, MY_PERMISSIONS_REQUEST_LOCATION);
+                            }
+                        })
+                        .create()
+                        .show();
+            } else { // Solicitamos el permiso sin explicacion
+                // No explanation needed, we can request the permission. // Al solicitar el permiso se ejecuta el metodo onRequestPermissionsResult()
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, MY_PERMISSIONS_REQUEST_LOCATION);
+            }
+            return false;
+        } else { // Si tenemos permiso de localizacion
+            mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+                mFusedLocationClient.getLastLocation()
+                        .addOnSuccessListener(this, new OnSuccessListener<Location>() {
+                            @Override
+                            public void onSuccess(Location location) {
+                                if (location != null) {
+                                    double lat = location.getLatitude();
+                                    double longit = location.getLongitude();
+                                    currentLocationMark = new LatLng(lat, longit);
+                                    gMap.addMarker(new MarkerOptions().position(currentLocationMark)).setVisible(true);
+                                    gMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLocationMark, 15));
+                                    gMap.animateCamera(CameraUpdateFactory.zoomTo(16), 2000, null);
+                                    if (ContextCompat.checkSelfPermission(MapActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+                                        gMap.setMyLocationEnabled(true);
+                                    }
+                                }
+                            }
+                        });
+            }
+            return true;
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case MY_PERMISSIONS_REQUEST_LOCATION: {
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    // permission was granted, yay! Do the location-related task you need to do.
+                    mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
+                    if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+                        mFusedLocationClient.getLastLocation()
+                                .addOnSuccessListener(this, new OnSuccessListener<Location>() {
+                                    @Override
+                                    public void onSuccess(Location location) {
+                                        if (location != null) {
+                                            double lat = location.getLatitude();
+                                            double longit = location.getLongitude();
+                                            currentLocationMark = new LatLng(lat, longit);
+                                            gMap.addMarker(new MarkerOptions().position(currentLocationMark)).setVisible(true);
+                                            gMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLocationMark, 15));
+                                            gMap.animateCamera(CameraUpdateFactory.zoomTo(16), 2000, null);
+                                            if (ContextCompat.checkSelfPermission(MapActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+                                                gMap.setMyLocationEnabled(true);
+                                            }
+                                        }
+                                    }
+                                });
+                    }
+                } else {
+                    // permission denied, boo! Disable the
+                    // functionality that depends on this permission.
+                }
+                return;
+            }
+
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+    }
+
+    @Override
+    public void onLocationChanged(Location location) {
+        Double lat = location.getLatitude();
+        Double lng = location.getLongitude();
+
+        Log.i("Location info: Lat", lat.toString());
+        Log.i("Location info: Lng", lng.toString());
+
+    }
+
+    @Override
+    public void onStatusChanged(String provider, int status, Bundle extras) {
+
+    }
+
+    @Override
+    public void onProviderEnabled(String provider) {
+
+    }
+
+    @Override
+    public void onProviderDisabled(String provider) {
+
+    }
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
         gMap = googleMap;
-
-        if (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-            //gMap.addMarker(new MarkerOptions().position(currentLocationMark)).setVisible(true);
-            gMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLocationMark, 15));
-            gMap.animateCamera(CameraUpdateFactory.zoomTo(14), 2000, null);
-            gMap.setMyLocationEnabled(true);
-        }
-
-            //ActivityCompat.requestPermissions(MapActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, PERMISSION_ACCESS_FINE_LOCATION);
-            //String requiredPermission = "android.permission.ACCESS_FINE_LOCATION";
-            //int checkVal = getApplicationContext().checkCallingOrSelfPermission(requiredPermission);
-            //if(checkVal == PackageManager.PERMISSION_GRANTED) {
-                //permissionGranted = true;
-                //gMap.setMyLocationEnabled(true);
-            //}
-        //} else {
-            //permissionGranted = true;
-            //gMap.setMyLocationEnabled(true);
-        //}
-
-        if(permissionGranted) {
-            setCurrentLocation(gMap);
-
-
-            //gMap.addMarker(new MarkerOptions().position(currentLocationMark)).setVisible(true);
-            //gMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLocationMark, 15));
-            //gMap.animateCamera(CameraUpdateFactory.zoomTo(16), 2000, null);
-        }
-
-        //new askForLocation().execute();
+        //gMap.addMarker(new MarkerOptions().position(currentLocationMark)).setVisible(true);
+        gMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLocationMark, 15));
+        gMap.animateCamera(CameraUpdateFactory.zoomTo(14), 2000, null);
+        gMap.setOnMapClickListener(this);
     }
 
-    public void setCurrentLocation(GoogleMap googleMap) {
-        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-            mFusedLocationClient.getLastLocation()
-                    .addOnSuccessListener(this, new OnSuccessListener<Location>() {
-                        @Override
-                        public void onSuccess(Location location) {
-                            // Got last known location. In some rare situations this can be null.
-                            if (location != null) {
-                                // Logic to handle location object
-                                double lat = location.getLatitude();
-                                double longit = location.getLongitude();
-                                currentLocationMark = new LatLng(lat, longit);
-                                gMap.addMarker(new MarkerOptions().position(currentLocationMark)).setVisible(true);
-                                gMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLocationMark, 15));
-                                gMap.animateCamera(CameraUpdateFactory.zoomTo(16), 2000, null);
-                            }
-                        }
-                    });
-        }
+    @Override
+    public void onMapClick(LatLng latLng) {
+        objectLastLocation = new LatLng(latLng.latitude, latLng.longitude);
+        gMap.clear();
+        gMap.addMarker(new MarkerOptions().position(objectLastLocation)).setVisible(true);
     }
 
-    /*private class askForLocation extends AsyncTask<Void, Void, Boolean> {
+    public void savePositionChosed(View v) {
+        Double latitud = objectLastLocation.latitude;
+        Double longitud = objectLastLocation.longitude;
+        new insertMapPlaceDB().execute(latitud, longitud);
+    }
+
+    private class insertMapPlaceDB extends AsyncTask<Double, Void, MapPlace> {
+
+        private ProgressDialog dialog = new ProgressDialog(MapActivity.this);
 
         @Override
-        protected Boolean doInBackground(Void... params) {
-            if (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                ActivityCompat.requestPermissions(MapActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, PERMISSION_ACCESS_FINE_LOCATION);
-                String requiredPermission = "android.permission.ACCESS_FINE_LOCATION";
-                int checkVal = getApplicationContext().checkCallingOrSelfPermission(requiredPermission);
-                if(checkVal == PackageManager.PERMISSION_GRANTED) {
-                    permissionGranted = true;
-                    gMap.setMyLocationEnabled(true);
-                }
-            } else {
-                permissionGranted = true;
-                gMap.setMyLocationEnabled(true);
-            }
-            return permissionGranted;
+        protected void onPreExecute() {
+            this.dialog.setMessage("Cargando...");
+            this.dialog.show();
         }
 
         @Override
-        protected void onPostExecute(Boolean permission) {
-                gMap.setOnMyLocationButtonClickListener(new GoogleMap.OnMyLocationButtonClickListener() {
-                    @Override
-                    public boolean onMyLocationButtonClick() {
-                        if(permission) {
-                            setCurrentLocation(gMap);
-                            //gMap.addMarker(new MarkerOptions().position(currentLocationMark)).setVisible(true);
-                            //gMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLocationMark, 15));
-                            //gMap.animateCamera(CameraUpdateFactory.zoomTo(16), 2000, null);
-                        }
-                        return true;
-                    }
-                });
+        protected MapPlace doInBackground(Double... params) {
+            return DB_mapPlace.insertMapPlace(params[0], params[1]);
         }
-    }*/
 
-    /*@Override
-    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-        switch (requestCode) {
-            case PERMISSION_ACCESS_FINE_LOCATION:
-                Toast.makeText(this, "Selecciona en el mapa el lugar de la perdida o hallazgo", Toast.LENGTH_SHORT).show();
-                break;
+        @Override
+        protected void onPostExecute(MapPlace result) {
+            this.dialog.dismiss();
+            processNewMaplace(result);
         }
-    }*/
+    }
+
+    private void processNewMaplace(MapPlace mapPlace) {
+        Intent intent = new Intent(this, NewAnnounceActivity.class);
+        SharedPreferences sp = getSharedPreferences("placeId", 0);
+        SharedPreferences.Editor ed = sp.edit();  // Saved the place data filled by the user.
+        Integer placeId = mapPlace.getId(); // transportPlace.getId();
+
+        ed.putInt("idLugar", placeId); // Comprobar
+        ed.apply();
+
+        intent.putExtra("concretePlace", mapPlace);
+        startActivity(intent);
+        finish();
+    }
 
     @Override
     protected void onStart() {
@@ -223,33 +283,8 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         super.onStop();
     }
 
-    /*@Override
-    protected void onResume() {
-        super.onResume();
-        googleApiClient.connect();
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        if (googleApiClient.isConnected()) {
-            googleApiClient.disconnect();
-        }
-    }*/
-
     @Override
     public void onConnected(Bundle bundle) {
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-            Location location = LocationServices.FusedLocationApi.getLastLocation(googleApiClient);
-            if (location != null) {
-                double lat = location.getLatitude(), lon = location.getLongitude();
-                currentLocationMark = new LatLng(lat, lon);
-                gMap.addMarker(new MarkerOptions().position(currentLocationMark)).setVisible(true);
-                gMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLocationMark, 15));
-                gMap.animateCamera(CameraUpdateFactory.zoomTo(14), 2000, null);
-                gMap.setMyLocationEnabled(true);
-            }
-        }
     }
 
     @Override

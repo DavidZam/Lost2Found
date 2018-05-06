@@ -245,6 +245,20 @@ CREATE TABLE contiene (
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `lugar_mapa`
+--
+
+CREATE TABLE lugar_mapa (
+  idLugar int(4) NOT NULL AUTO_INCREMENT,
+  latitud decimal(10,8) NOT NULL,
+  longitud decimal(11,8) NOT NULL,
+  PRIMARY KEY (idLugar),
+  CONSTRAINT fk_idLugar4 FOREIGN KEY (idLugar) REFERENCES lugar (id)     
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1;
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `lugar_concreto`
 --
 
