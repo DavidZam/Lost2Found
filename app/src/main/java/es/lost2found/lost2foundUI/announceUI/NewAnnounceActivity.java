@@ -1,7 +1,6 @@
 package es.lost2found.lost2foundUI.announceUI;
 
 import android.app.ProgressDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -18,29 +17,21 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.flask.colorpicker.builder.ColorPickerClickListener;
 import com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Collections;
-import java.util.Date;
-import java.util.List;
 
 import es.lost2found.database.DB_announce;
-import es.lost2found.database.DB_transportPlace;
 import es.lost2found.database.DB_typeObject;
 import es.lost2found.entities.Announce;
 import es.lost2found.entities.ConcretePlace;
-import es.lost2found.entities.Place;
 import es.lost2found.entities.TransportPlace;
 import es.lost2found.lost2foundUI.pickerUI.ColorPickerUI;
 import es.lost2found.lost2foundUI.pickerUI.DatePickerUI;
 import es.lost2found.R;
 import es.lost2found.lost2foundUI.pickerUI.TimePickerUI;
-import es.lost2found.lost2foundUI.placeUI.PlaceActivity;
 import es.lost2found.lost2foundUI.typeObjectUI.BankCardActivity;
 import es.lost2found.lost2foundUI.typeObjectUI.OtherObjectActivity;
 import es.lost2found.lost2foundUI.typeObjectUI.PhoneActivity;
@@ -148,6 +139,12 @@ public class NewAnnounceActivity extends AppCompatActivity {
             anio += diaMesAnio.charAt(ini);
             ++ini;
         }
+
+        if(Integer.valueOf(dia) < 10)
+            dia = "0" + dia;
+
+        if(Integer.valueOf(mes) < 10)
+            mes = "0" + mes;
 
         return (anio + "/" + mes + "/" + dia);
     }
