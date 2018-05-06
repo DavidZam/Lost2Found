@@ -119,6 +119,16 @@ public class AnnounceActivity extends AppCompatActivity implements FloatingActio
         );
         navView.setCheckedItem(R.id.nav_home);
 
+        Announce delAnnounce = (Announce) getIntent().getSerializableExtra("delete");
+        if(delAnnounce != null) {
+            //adapter.remove(delAnnounce);
+            //listElements--;
+            //recyclerView.setAdapter(adapter);
+            //recyclerView.setLayoutManager(new LinearLayoutManager(this));
+            String idAnuncio = String.valueOf(delAnnounce.getIdAnuncio());
+            new deleteAnnounceFromDB().execute(idAnuncio, delAnnounce.getAnnounceCategorie());
+        }
+
         if(spref != null) {
             String userEmail = spref.getString("email", "");
             new getNumberObjectAnnouncesDB().execute(userEmail); // Devuelve el numero de anuncios del usuario en cuestion
@@ -135,6 +145,20 @@ public class AnnounceActivity extends AppCompatActivity implements FloatingActio
 
         FloatingActionButton createAnnounce = findViewById(R.id.new_announce);
         createAnnounce.setOnClickListener(this);
+    }
+
+    private class deleteAnnounceFromDB extends AsyncTask<String, Void, Boolean> {
+
+        @Override
+        protected Boolean doInBackground(String... strings) {
+            return DB_announce.deleteAnnounce(strings[0], strings[1]);
+        }
+
+        @Override
+        protected void onPostExecute(Boolean removed) {
+
+            //processAnnounceScreen(numAnnounce);
+        }
     }
 
     private class getNumberObjectAnnouncesDB extends AsyncTask<String, Void, Integer> {

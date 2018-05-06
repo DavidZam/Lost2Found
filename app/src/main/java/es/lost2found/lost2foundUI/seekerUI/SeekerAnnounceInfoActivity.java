@@ -1,6 +1,7 @@
 package es.lost2found.lost2foundUI.seekerUI;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -12,6 +13,7 @@ import android.support.v7.widget.Toolbar;
 import android.text.Html;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -79,6 +81,17 @@ public class SeekerAnnounceInfoActivity extends AppCompatActivity {
         color.setBackgroundColor(a.color);
 
         ImageView image = findViewById(R.id.imageinfoannounce);
+
+        SharedPreferences spref = getApplicationContext().getSharedPreferences("Login", 0);
+        if (spref.contains("nombre")) {
+            String actualUser = spref.getString("nombre", "");
+            if(!actualUser.equals(a.userOwner)) {
+                Button deleteButton = findViewById(R.id.delete);
+                deleteButton.setVisibility(View.GONE);
+            }
+        }
+
+        //String actualUser = getIntent().getStringExtra("actualUser");
 
         if(a.announceCategorie.equals("Telefono")){
             image.setImageResource(R.drawable.ic_phone_android);
@@ -151,6 +164,32 @@ public class SeekerAnnounceInfoActivity extends AppCompatActivity {
         match.putExtra("match", a);
         match.putExtra("atributoDeterminante", atributoDeterminante);
         startActivity(match);
+        finish();
+    }
+
+    public void delete(View v) {
+        // Elimina el anuncio actual
+        Bundle bundle = getIntent().getExtras();
+        String parentAct = bundle.getString("parentAct");
+        if(parentAct != null) {
+            if(parentAct.equals("announce")) {
+                Intent announce = new Intent(this, AnnounceActivity.class);
+                Announce an = (Announce) getIntent().getSerializableExtra("myAnnounce");
+                announce.putExtra("announce", an);
+                announce.putExtra("delete", a);
+                startActivity(announce);
+            } else if(parentAct.equals("seeker")) {
+                Intent seeker = new Intent(this, SeekerActivity.class);
+                String place = getIntent().getExtras().getString("place");
+                getIntent().putExtra("place", place);
+                seeker.putExtra("delete", a);
+                startActivity(seeker);
+            }
+        } else {
+            Intent announce = new Intent(this, AnnounceActivity.class);
+            announce.putExtra("delete", a);
+            startActivity(announce);
+        }
         finish();
     }
 

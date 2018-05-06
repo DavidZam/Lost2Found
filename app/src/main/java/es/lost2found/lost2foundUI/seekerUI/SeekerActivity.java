@@ -154,6 +154,16 @@ public class SeekerActivity extends AppCompatActivity implements FloatingActionB
         FloatingActionButton search = findViewById(R.id.search);
         search.setOnClickListener(this);
 
+        Announce delAnnounce = (Announce) getIntent().getSerializableExtra("delete");
+        if(delAnnounce != null) {
+            //adapter.remove(delAnnounce);
+            //listElements--;
+            //recyclerView.setAdapter(adapter);
+            //recyclerView.setLayoutManager(new LinearLayoutManager(this));
+            String idAnuncio = String.valueOf(delAnnounce.getIdAnuncio());
+            new deleteAnnounceFromDB().execute(idAnuncio, delAnnounce.getAnnounceCategorie());
+        }
+
         SharedPreferences spref2 = getApplicationContext().getSharedPreferences("Login", 0);
         String userName = spref2.getString("nombre", "");
         List<Announce> announceList = new ArrayList<>();
@@ -169,6 +179,20 @@ public class SeekerActivity extends AppCompatActivity implements FloatingActionB
         itemAnimator.setRemoveDuration(1000);
         recyclerView.setItemAnimator(itemAnimator);
 
+    }
+
+    private class deleteAnnounceFromDB extends AsyncTask<String, Void, Boolean> {
+
+        @Override
+        protected Boolean doInBackground(String... strings) {
+            return DB_announce.deleteAnnounce(strings[0], strings[1]);
+        }
+
+        @Override
+        protected void onPostExecute(Boolean removed) {
+
+            //processAnnounceScreen(numAnnounce);
+        }
     }
 
     @Override

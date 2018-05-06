@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import java.util.Collections;
 import java.util.List;
@@ -70,7 +71,6 @@ public class AnnounceViewAdapter extends RecyclerView.Adapter<AnnounceViewHolder
 
         String userAnnounceOwnerName = listAnnounce.get(position).getUserOwner();
         if(userAnnounceOwnerName.equals(actualUser)) {
-        //if(listAnnounce.get(position).userOwner.equals(actualUser)) {
             holder.owner.setText("Yo");
         } else {
             holder.owner.setText(listAnnounce.get(position).getUserOwner());
@@ -97,6 +97,7 @@ public class AnnounceViewAdapter extends RecyclerView.Adapter<AnnounceViewHolder
 
                 if(parentAct.equals(AnnounceActivity.class.getSimpleName())) {
                     intent.putExtra("parentAct", "announce");
+                    intent.putExtra("actualUser", actualUser);
                 } else if(parentAct.equals(SeekerActivity.class.getSimpleName())) {
                     intent.putExtra("parentAct", "seeker");
                 }
