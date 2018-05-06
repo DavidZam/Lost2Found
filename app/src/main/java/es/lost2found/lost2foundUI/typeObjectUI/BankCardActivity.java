@@ -91,6 +91,7 @@ public class BankCardActivity extends AppCompatActivity {
 
         Intent intent = new Intent(this, AnnounceActivity.class);
         startActivity(intent);
+        finish();
     }
 
 }

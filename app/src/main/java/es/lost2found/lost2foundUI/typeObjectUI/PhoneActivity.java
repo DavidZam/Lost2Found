@@ -99,6 +99,7 @@ public class PhoneActivity extends AppCompatActivity {
 
         Intent intent = new Intent(this, AnnounceActivity.class);
         startActivity(intent);
+        finish();
     }
 
 }

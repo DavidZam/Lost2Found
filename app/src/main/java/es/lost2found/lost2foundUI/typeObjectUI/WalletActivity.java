@@ -93,6 +93,7 @@ public class WalletActivity extends AppCompatActivity {
         Intent intent = new Intent(this, AnnounceActivity.class);
         intent.putExtra("place", place);
         startActivity(intent);
+        finish();
     }
 
 }

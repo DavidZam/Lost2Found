@@ -13,6 +13,7 @@ import android.support.v7.widget.Toolbar;
 import android.text.Html;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -88,6 +89,9 @@ public class MatchAnnounceInfoActivity extends AppCompatActivity {
         color.setBackgroundColor(a.color);
 
         ImageView image = findViewById(R.id.imageinfoannounce);
+
+        Button contact = findViewById(R.id.contactar);
+        contact.setText("Contactar con " + a.userOwner);
 
         if(a.announceCategorie.equals("Telefono")){
             image.setImageResource(R.drawable.ic_phone_android);

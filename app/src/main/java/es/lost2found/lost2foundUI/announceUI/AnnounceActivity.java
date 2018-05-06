@@ -215,7 +215,6 @@ public class AnnounceActivity extends AppCompatActivity implements FloatingActio
     public void onClick(View v) {
         final Intent newannounce = new Intent(this, PlaceActivity.class);
         startActivity(newannounce);
-        finish();
     }
 
     @Override
