@@ -91,6 +91,15 @@ public class SeekerAnnounceInfoActivity extends AppCompatActivity {
             }
         }
 
+        Bundle bundle = getIntent().getExtras();
+        String parentAct = bundle.getString("parentAct");
+        if(parentAct != null) {
+            if (parentAct.equals("seeker")) {
+                Button matchButton = findViewById(R.id.match);
+                matchButton.setVisibility(View.GONE);
+            }
+        }
+
         //String actualUser = getIntent().getStringExtra("actualUser");
 
         if(a.announceCategorie.equals("Telefono")){
