@@ -27,6 +27,7 @@ import es.lost2found.database.DB_announce;
 import es.lost2found.database.DB_typeObject;
 import es.lost2found.entities.Announce;
 import es.lost2found.entities.ConcretePlace;
+import es.lost2found.entities.MapPlace;
 import es.lost2found.entities.TransportPlace;
 import es.lost2found.lost2foundUI.pickerUI.ColorPickerUI;
 import es.lost2found.lost2foundUI.pickerUI.DatePickerUI;
@@ -190,6 +191,7 @@ public class NewAnnounceActivity extends AppCompatActivity {
         // Place (TransportPlace or ConcretePlace
         Object tp = getIntent().getSerializableExtra("transportPlace");
         Object cp = getIntent().getSerializableExtra("concretePlace");
+        Object mp = getIntent().getSerializableExtra("mapPlace");
         String place = "";
         if(tp != null) {
             TransportPlace transportPlace = (TransportPlace) tp;
@@ -201,6 +203,11 @@ public class NewAnnounceActivity extends AppCompatActivity {
         } else if(cp != null){
             ConcretePlace concretePlace = (ConcretePlace) cp;
             place = concretePlace.getCalle() + ", " + concretePlace.getNumber() + ", " + concretePlace.getPostalCode();
+        } else if(mp != null) {
+            MapPlace mapPlace = (MapPlace) mp;
+            String latitud = String.valueOf(mapPlace.getLatitud());
+            String longitud = String.valueOf(mapPlace.getLongitud());
+            place = latitud + longitud;
         }
 
         SharedPreferences sp4 = getSharedPreferences("announcePlace", 0);

@@ -192,8 +192,11 @@ public class DB_place {
                         String param1 = object.getString("param1");
                         if((object.toString().contains("param2"))) {
                             String param2 = object.getString("param2");
-                            String param3 = object.getString("param3");
-                            name = param1 + ": " + param2 + ", " + param3;
+                            name = param1 + ", " + param2;
+                            if((object.toString().contains("param3"))) {
+                                String param3 = object.getString("param3");
+                                name = param1 + ": " + param2 + ", " + param3;
+                            }
                         } else {
                             String param3 = object.getString("param3");
                             name = param1 + ": " + param3;

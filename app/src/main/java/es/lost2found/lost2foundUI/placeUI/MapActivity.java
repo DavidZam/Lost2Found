@@ -264,7 +264,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         ed.putInt("idLugar", placeId); // Comprobar
         ed.apply();
 
-        intent.putExtra("concretePlace", mapPlace);
+        intent.putExtra("mapPlace", mapPlace);
         startActivity(intent);
         finish();
     }

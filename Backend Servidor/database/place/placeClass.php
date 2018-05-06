@@ -61,6 +61,7 @@
 
 	    	function getName($id) {
 		$id2 = $id;
+		$id3 = $id;
             	$connection = connectDB();
 
             	$sql = mysqli_prepare($connection, "SELECT * FROM lugar_concreto WHERE idLugar = ?");
@@ -92,13 +93,45 @@
 
                         	$sql2->fetch();
 
-				$rawdata = array();
+				if($sql2->num_rows > 0) {
+					$rawdata = array();
+                                	$correct = $query2;
+                                	$rawdata['param1'] = utf8_encode($param12);
+                                	if(utf8_encode($param22) != null)
+                                        $rawdata['param2'] = utf8_encode($param22);
+                                	$rawdata['param3'] = utf8_encode($param32);
+                                	$rawdata['correct'] = $correct;
+				} else { // Mapa
+					$sql3 = mysqli_prepare($connection, "SELECT * FROM lugar_mapa WHERE idLugar = ?");
+                                	mysqli_stmt_bind_param($sql3, "s", $id3);
+
+                                	$query3 = $sql3->execute();
+
+					if(!$query3)
+                                        die();
+
+                                	$result3 = $sql3->store_result();
+
+                                	$realresult3 = $sql3->bind_result($id3, $param13, $param23);
+
+                                	$sql3->fetch();
+
+					if($sql3->num_rows > 0) {
+                                        $rawdata = array();
+                                        $correct = $query3;
+                                        $rawdata['param1'] = utf8_encode($param13);
+                                        $rawdata['param2'] = utf8_encode($param23);
+                                        $rawdata['correct'] = $correct;
+					}
+				}
+
+				/*$rawdata = array();
 				$correct = $query2;
 				$rawdata['param1'] = utf8_encode($param12);
                         	if(utf8_encode($param22) != null)
                                 	$rawdata['param2'] = utf8_encode($param22);
                         	$rawdata['param3'] = utf8_encode($param32);
-                               	$rawdata['correct'] = $correct;
+                               	$rawdata['correct'] = $correct;*/
                         } else {
 				$rawdata = array();
 				$correct = $query;
