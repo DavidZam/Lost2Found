@@ -12,11 +12,12 @@
 	    $categoria = $jsonencode[0]->nombreTabla;
 		$tipo = $jsonencode[0]->tipoAnuncio;
 		$dia = $jsonencode[0]->diaAnuncio;
+		$determinante = $jsonencode[0]->param;
 
 	    require_once("announceClass.php");
 
 	    $announceObject = new Announce();
-	    $announceListObject = $announceObject->getAnnouncesMatchJSON($idUser, $categoria, $tipo, $dia);
+	    $announceListObject = $announceObject->getAnnouncesMatchJSON($idUser, $categoria, $tipo, $dia, $determinante);
 	    
 	    echo json_encode($announceListObject, JSON_UNESCAPED_SLASHES);
 	}

@@ -83,6 +83,31 @@
 	        return $query;
 	    }
 		
+		function remove($idAnnounce, $announceCategory) {
+			$response = "";
+			$idAnnounce2 = $idAnnounce;
+	        $connection = connectDB();
+
+			$sql = mysqli_prepare($connection, "DELETE FROM `$announceCategory` WHERE idObjeto = ?");
+	        mysqli_stmt_bind_param($sql, "s", $idAnnounce);
+
+	        $query = $sql->execute();
+
+			if($query) {
+	            $sql2 = mysqli_prepare($connection, "DELETE FROM anuncio_objeto WHERE id = ?");
+	        	mysqli_stmt_bind_param($sql2, "s", $idAnnounce2);
+
+	        	$query2 = $sql2->execute();
+	        	if($query2)
+	            $response = "correct";
+	        } else {
+	        	$response = "incorrect";
+	        }	        
+
+	        disconnectDB($connection);
+	        return $response;
+	    }
+
 		
 		function getNumberSeekerAnnounces($categoria, $tipo) {
 			$connection = connectDB();
@@ -133,26 +158,43 @@
 	        	return $rawdata;
 		}
 		
-		function getNumberMatchAnnounces($idUser, $categoria, $tipo, $dia, $idObjeto) {
+		function getNumberMatchAnnounces($idUser, $categoria, $tipo, $dia, $determinante) {
 			$connection = connectDB();
-
+					
+			
 			if($tipo == "Perdida"){
-				$sql = mysqli_prepare($connection, "SELECT DISTINCT COUNT(*) FROM anuncio_objeto, Telefono t1 WHERE idUsuario != ? AND nombreTabla = ? AND tipoAnuncio != ? AND diaAnuncio >= ? AND t1.idObjeto = ? AND t1.marca = (SELECT t2.marca FROM Telefono t2 WHERE t2.idObjeto = ?)");
+				if(strcmp($categoria, "Telefono") == 0 || strcmp($categoria, "Cartera") == 0) {
+					$stmt = mysqli_prepare($connection, "SELECT COUNT(DISTINCT id) FROM anuncio_objeto, `$categoria` WHERE idUsuario != ? AND nombreTabla = ? AND tipoAnuncio != ? AND diaAnuncio >= ? AND id = idObjeto AND marca LIKE CONCAT('%', ?, '%')");
+				}else if(strcmp($categoria, "Otro") == 0) {
+					$stmt = mysqli_prepare($connection, "SELECT COUNT(DISTINCT id) FROM anuncio_objeto, `$categoria` WHERE idUsuario != ? AND nombreTabla = ? AND tipoAnuncio != ? AND diaAnuncio >= ? AND id = idObjeto AND  nombre LIKE CONCAT('%', ?, '%')");
+				}else if(strcmp($categoria, "Tarjeta bancaria") == 0 || strcmp($categoria, "Tarjeta transporte") == 0){
+					$stmt = mysqli_prepare($connection, "SELECT COUNT(DISTINCT id) FROM anuncio_objeto, `$categoria` WHERE idUsuario != ? AND nombreTabla = ? AND tipoAnuncio != ? AND diaAnuncio >= ? AND id = idObjeto AND datosPropietario LIKE CONCAT('%', ?, '%')");
+					$stmt->bind_param("sssss", $idUser, $categoria, $tipo, $dia, $determinante);
+			
+				}
 				
 			}else{
-				$sql = mysqli_prepare($connection, "SELECT DISTINCT COUNT(*) FROM anuncio_objeto, Telefono t1 WHERE idUsuario != ? AND nombreTabla = ? AND tipoAnuncio != ? AND diaAnuncio <= ? AND t1.idObjeto = ? AND t1.marca = (SELECT t2.marca FROM Telefono t2 WHERE t2.idObjeto = ?)");
+				
+				if(strcmp($categoria, "Telefono") == 0 || strcmp($categoria, "Cartera") == 0) {
+					$stmt = mysqli_prepare($connection, "SELECT COUNT(DISTINCT id) FROM anuncio_objeto, `$categoria` WHERE idUsuario != ? AND nombreTabla = ? AND tipoAnuncio != ? AND diaAnuncio <= ? AND id = idObjeto AND marca LIKE CONCAT('%', ?, '%')");
+				}else if(strcmp($categoria, "Otro") == 0) {
+					$stmt = mysqli_prepare($connection, "SELECT COUNT(DISTINCT id) FROM anuncio_objeto, `$categoria` WHERE idUsuario != ? AND nombreTabla = ? AND tipoAnuncio != ? AND diaAnuncio <= ? AND id = idObjeto AND nombre LIKE CONCAT('%', ?, '%')");
+				}else if(strcmp($categoria, "Tarjeta bancaria") == 0 || strcmp($categoria, "Tarjeta transporte") == 0){
+					$stmt = mysqli_prepare($connection, "SELECT COUNT(DISTINCT id) FROM anuncio_objeto, `$categoria` WHERE idUsuario != ? AND nombreTabla = ? AND tipoAnuncio != ? AND diaAnuncio <= ? AND id = idObjeto AND datosPropietario LIKE CONCAT('%', ?, '%')");
+					
+				}
 			}
 			
 			
-			mysqli_stmt_bind_param($sql, "ssssss", $idUser, $categoria, $tipo, $dia, $idObjeto, $idObjeto);
-
-			$query = $sql->execute();
+			mysqli_stmt_bind_param($stmt, "sssss", $idUser, $categoria, $tipo, $dia, $determinante);
+			
+			$query = $stmt->execute();
 
 			if(!$query)
 		            	die();
-			$result = $sql->store_result();
-			$realresult = $sql->bind_result($numAnnounces);
-			$sql->fetch();
+			$result = $stmt->store_result();
+			$realresult = $stmt->bind_result($numAnnounces);
+			$stmt->fetch();
 			
 	        	disconnectDB($connection);
 	        
@@ -160,18 +202,29 @@
 		}
 		
 		
-		function getAnnouncesMatchJSON($idUser, $categoria, $tipo, $dia) {
+		function getAnnouncesMatchJSON($idUser, $categoria, $tipo, $dia, $determinante) {
 
 			$connection = connectDB();
 
 			if($tipo == 'Perdida'){
-				$stmt = $connection->prepare("SELECT DISTINCT * FROM anuncio_objeto WHERE idUsuario != ? AND nombreTabla = ? AND tipoAnuncio != ? AND diaAnuncio >= ?");
-				
+				if(strcmp($categoria, "Telefono") == 0 || strcmp($categoria, "Cartera") == 0) {
+					$stmt = $connection->prepare("SELECT DISTINCT * FROM anuncio_objeto, `$categoria` WHERE idUsuario != ? AND nombreTabla = ? AND tipoAnuncio != ? AND diaAnuncio >= ? AND id = idObjeto AND marca LIKE CONCAT('%', ?, '%')");
+				}else if(strcmp($categoria, "Otro") == 0) {
+					$stmt = $connection->prepare("SELECT DISTINCT * FROM anuncio_objeto, `$categoria` WHERE idUsuario != ? AND nombreTabla = ? AND tipoAnuncio != ? AND diaAnuncio >= ? AND id = idObjeto AND nombre LIKE CONCAT('%', ?, '%')");
+				}else if(strcmp($categoria, "Tarjeta bancaria") == 0 || strcmp($categoria, "Tarjeta transporte") == 0){
+					$stmt = $connection->prepare("SELECT DISTINCT * FROM anuncio_objeto, `$categoria` WHERE idUsuario != ? AND nombreTabla = ? AND tipoAnuncio != ? AND diaAnuncio >= ? AND id = idObjeto AND datosPropietario LIKE CONCAT('%', ?, '%')");
+				}
 			}else if($tipo == 'Hallazgo'){
-				$stmt = $connection->prepare("SELECT DISTINCT * FROM anuncio_objeto WHERE idUsuario != ? AND nombreTabla = ? AND tipoAnuncio != ? AND diaAnuncio <= ?");
+				if(strcmp($categoria, "Telefono") == 0 || strcmp($categoria, "Cartera") == 0) {
+					$stmt = $connection->prepare("SELECT DISTINCT * FROM anuncio_objeto, `$categoria` WHERE idUsuario != ? AND nombreTabla = ? AND tipoAnuncio != ? AND diaAnuncio <= ? AND id = idObjeto AND marca LIKE CONCAT('%', ?, '%')");
+				}else if(strcmp($categoria, "Otro") == 0) {
+					$stmt = $connection->prepare("SELECT DISTINCT * FROM anuncio_objeto, `$categoria` WHERE idUsuario != ? AND nombreTabla = ? AND tipoAnuncio != ? AND diaAnuncio <= ? AND id = idObjeto AND nombre LIKE CONCAT('%', ?, '%')");
+				}else if(strcmp($categoria, "Tarjeta bancaria") == 0 || strcmp($categoria, "Tarjeta transporte") == 0){
+					$stmt = $connection->prepare("SELECT DISTINCT * FROM anuncio_objeto, `$categoria` WHERE idUsuario != ? AND nombreTabla = ? AND tipoAnuncio != ? AND diaAnuncio <= ? AND id = idObjeto AND datosPropietario LIKE CONCAT('%', ?, '%')");
+				}
 			}
 			
-			$stmt->bind_param('ssss', $idUser, $categoria, $tipo, $dia);
+			$stmt->bind_param('sssss', $idUser, $categoria, $tipo, $dia, $determinante);
 
 			$stmt->execute();
 
