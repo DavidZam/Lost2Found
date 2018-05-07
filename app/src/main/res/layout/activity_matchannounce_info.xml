@@ -25,6 +25,25 @@
 
         </android.support.v7.widget.Toolbar>
 
+        <TextView
+            android:id="@+id/distance"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="16sp"
+            android:layout_marginBottom="300dp"
+            android:textAllCaps="false"
+            android:textSize="13sp" />
+
+        <TextView
+            android:id="@+id/hora"
+            android:layout_width="134dp"
+            android:layout_height="46dp"
+            android:layout_marginStart="180sp"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="164dp"
+            android:text="TextView" />
+
         <ScrollView
             android:id="@+id/scroll"
             android:layout_width="match_parent"
@@ -68,14 +87,6 @@
                     android:text="TextView" />
 
                 <TextView
-                    android:id="@+id/hora"
-                    android:layout_width="match_parent"
-                    android:layout_height="46dp"
-                    android:layout_below="@+id/dia"
-                    android:layout_centerHorizontal="true"
-                    android:text="TextView" />
-
-                <TextView
                     android:id="@+id/lugar"
                     android:layout_width="match_parent"
                     android:layout_height="64dp"
@@ -87,6 +98,7 @@
                     android:id="@+id/usuario"
                     android:layout_width="match_parent"
                     android:layout_height="46dp"
+                    android:layout_marginTop="15sp"
                     android:layout_below="@+id/lugar"
                     android:layout_centerHorizontal="true"
                     android:text="TextView" />
@@ -94,7 +106,7 @@
                 <TextView
                     android:id="@+id/param"
                     android:layout_width="354dp"
-                    android:layout_height="65dp"
+                    android:layout_height="90dp"
                     android:layout_below="@+id/usuario"
                     android:layout_centerHorizontal="true"
                     android:text="TextView" />
@@ -105,7 +117,7 @@
 
         <RelativeLayout
             android:layout_width="351dp"
-            android:layout_height="165dp"
+            android:layout_height="185dp"
             android:padding="12dp"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true">

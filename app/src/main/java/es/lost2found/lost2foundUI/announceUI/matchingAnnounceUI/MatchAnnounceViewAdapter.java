@@ -25,14 +25,18 @@ public class MatchAnnounceViewAdapter extends RecyclerView.Adapter<AnnounceViewH
     private Announce oldAnnounce;
     private String atrDeterminante;
     private List<String>  colorPercentagesList;
+    private List<String> distancePercentagesList;
+    private List<String> distancesList;
 
-    public MatchAnnounceViewAdapter(List<Announce> listAnnounce, Context context, String actualUser, Announce oldAnnounce, String atrDeterminante, List<String>  colorPercentagesList) {
+    public MatchAnnounceViewAdapter(List<Announce> listAnnounce, Context context, String actualUser, Announce oldAnnounce, String atrDeterminante, List<String>  colorPercentagesList, List<String>  distancePercentagesList, List<String>  distancesList) {
         this.listAnnounce = listAnnounce;
         this.context = context;
         this.actualUser = actualUser;
         this.oldAnnounce = oldAnnounce;
         this.atrDeterminante = atrDeterminante;
         this.colorPercentagesList = colorPercentagesList;
+        this.distancePercentagesList = distancePercentagesList;
+        this.distancesList = distancesList;
     }
 
     @Override
@@ -106,6 +110,10 @@ public class MatchAnnounceViewAdapter extends RecyclerView.Adapter<AnnounceViewH
                 intent.putExtra("myAnnounce", announce);
                 intent.putExtra("oldAnnounce", oldAnnounce);
                 String percentageColor = colorPercentagesList.get(position);
+                String distance = distancesList.get(position);
+                String percentageDistance = distancePercentagesList.get(position);
+                intent.putExtra("distance", distance);
+                intent.putExtra("percentageDistance", percentageDistance);
                 intent.putExtra("percentageColor", percentageColor);
                 intent.putExtra("atributoDeterminante", atrDeterminante);
                 context.startActivity(intent);
@@ -142,6 +150,14 @@ public class MatchAnnounceViewAdapter extends RecyclerView.Adapter<AnnounceViewH
 
     public void setListPercentageColor(List<String> listPercentageColor) {
         this.colorPercentagesList = listPercentageColor;
+    }
+
+    public void setListPercentageDistance(List<String> listPercentageDistance) {
+        this.distancePercentagesList = listPercentageDistance;
+    }
+
+    public void setListDistance(List<String> listDistance) {
+        this.distancesList = listDistance;
     }
 
     /*public void animate(RecyclerView.ViewHolder viewHolder) {

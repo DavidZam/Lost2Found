@@ -193,8 +193,10 @@ public class NewAnnounceActivity extends AppCompatActivity {
         Object cp = getIntent().getSerializableExtra("concretePlace");
         Object mp = getIntent().getSerializableExtra("mapPlace");
         String place = "";
+        String typlePlace = "";
         if(tp != null) {
             TransportPlace transportPlace = (TransportPlace) tp;
+            typlePlace = "transport";
             if(((TransportPlace) tp).getTipoTte().equals("metro") || ((TransportPlace) tp).getTipoTte().equals("bus"))
                 place = transportPlace.getTipoTte() + ": " + transportPlace.getLine() + " - " + transportPlace.getStation();
             else if(((TransportPlace) tp).getTipoTte().equals("tren")) {
@@ -202,9 +204,11 @@ public class NewAnnounceActivity extends AppCompatActivity {
             }
         } else if(cp != null){
             ConcretePlace concretePlace = (ConcretePlace) cp;
+            typlePlace = "concrete";
             place = concretePlace.getCalle() + ", " + concretePlace.getNumber() + ", " + concretePlace.getPostalCode();
         } else if(mp != null) {
             MapPlace mapPlace = (MapPlace) mp;
+            typlePlace = "map";
             String latitud = String.valueOf(mapPlace.getLatitud());
             String longitud = String.valueOf(mapPlace.getLongitud());
             place = latitud + longitud;
@@ -212,6 +216,7 @@ public class NewAnnounceActivity extends AppCompatActivity {
 
         SharedPreferences sp4 = getSharedPreferences("announcePlace", 0);
         SharedPreferences.Editor ed = sp4.edit();            // Saved the user login credencials.
+        ed.putString("typePlace", typlePlace);
         ed.putString("place", place);
         ed.apply();
 

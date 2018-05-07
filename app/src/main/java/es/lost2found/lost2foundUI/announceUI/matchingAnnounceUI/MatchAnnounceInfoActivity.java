@@ -25,6 +25,8 @@ import es.lost2found.lost2foundUI.chatUI.chatConcreteUI.ChatConcrete;
 public class MatchAnnounceInfoActivity extends AppCompatActivity {
     private Announce a;
     private String colorPercentageText;
+    private String distancePercentageText;
+    private String distanceText;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,10 +48,13 @@ public class MatchAnnounceInfoActivity extends AppCompatActivity {
         TextView textoColor = (TextView) findViewById(R.id.colorTexto);
         View color = (View) findViewById(R.id.color_view);
         TextView colorPercentage = (TextView) findViewById(R.id.colorPercentage);
+        TextView distancePercentage = (TextView) findViewById(R.id.distance);
 
         a = (Announce) getIntent().getSerializableExtra("myAnnounce");
 
         colorPercentageText = getIntent().getStringExtra("percentageColor");
+        distancePercentageText = getIntent().getStringExtra("percentageDistance");
+        distanceText = getIntent().getStringExtra("distance");
 
         String idText = String.valueOf(a.getAnnounceId());
         new getObjectDataFromDB().execute(idText, a.announceCategorie);
@@ -86,6 +91,18 @@ public class MatchAnnounceInfoActivity extends AppCompatActivity {
             colorPercentage.setTextColor(getResources().getColor(R.color.FireBrick));
         }
 
+        String[] distanceTextPrint = distanceText.split("\\.");
+        String distance = "<h4><font color=#699CFC> Cercanía: </font>" + distanceTextPrint[0] + " metros" + "</h4><br>";
+        distancePercentage.setText(Html.fromHtml(distance));
+        double distanceMeterValue = Double.valueOf(distanceText);
+        if(distanceMeterValue <= 400) {
+            distancePercentage.setTextColor(getResources().getColor(R.color.ForestGreen));
+        } else if(distanceMeterValue > 400 && distanceMeterValue <= 700) {
+            distancePercentage.setTextColor(getResources().getColor(R.color.Coral));
+        } else if(distanceMeterValue > 700) {
+            distancePercentage.setTextColor(getResources().getColor(R.color.FireBrick));
+        }
+
         color.setBackgroundColor(a.color);
 
         ImageView image = findViewById(R.id.imageinfoannounce);
@@ -118,10 +135,10 @@ public class MatchAnnounceInfoActivity extends AppCompatActivity {
                 String params[] = dataObject.split(",");
                 if(a.announceCategorie.equals("Telefono")){
                     if(params[2].equalsIgnoreCase(" ")) {
-                        String o = "<h4> <font color=#699CFC> Datos: </font><br>"+ "Marca: " + params[0] + ", Modelo: " + params[1] +" </h4><br>";
+                        String o = "<h4> <font color=#699CFC> Datos: </font><br><br>"+ "Marca: " + params[0] + ", modelo: " + params[1] +" </h4><br>";
                         param.setText(Html.fromHtml(o));
                     } else {
-                        String o = "<h4> <font color=#699CFC> Datos: </font><br>"+ "Marca: " + params[0] + ", Modelo: " + params[1] + "<br>" +  "tara: " + params[2] +" </h4><br>";
+                        String o = "<h4> <font color=#699CFC> Datos: </font><br><br>"+ "Marca: " + params[0] + ", modelo: " + params[1] + "<br>" +  "tara: " + params[2] +" </h4><br>";
                         param.setText(Html.fromHtml(o));
                     }
                 }else if(a.announceCategorie.equals("Cartera")){
@@ -160,41 +177,11 @@ public class MatchAnnounceInfoActivity extends AppCompatActivity {
         Announce oldAnnounce = (Announce) getIntent().getSerializableExtra("oldAnnounce");
         //matchannounce.putExtra("oldAnnounce", oldAnnounce);
         matchannounce.putExtra("match", oldAnnounce);
-        matchannounce.putExtra("oldAnnounce", true);
+        matchannounce.putExtra("oldAnnounceSet", true);
         String atrDeterminante = getIntent().getStringExtra("atributoDeterminante");
         matchannounce.putExtra("atributoDeterminante", atrDeterminante);
         startActivity(matchannounce);
         finish();
         return true;
     }
-
-    /*public double getColorPercentage(Integer matchAnnounceColorInt, Integer oldAnnounceColorInt) {
-        double maxDistance = 765;
-        double percentageTmp = 0;
-        double percentage = 0;
-
-        double red1 = (matchAnnounceColorInt >> 16) & 0xFF;
-        double green1 = (matchAnnounceColorInt >> 8) & 0xFF;
-        double blue1 = (matchAnnounceColorInt >> 0) & 0xFF;
-
-        double red2 = (oldAnnounceColorInt >> 16) & 0xFF;
-        double green2 = (oldAnnounceColorInt >> 8) & 0xFF;
-        double blue2 = (oldAnnounceColorInt >> 0) & 0xFF;
-
-        double redPowSubtraction = Math.pow(red1 - red2, 2);
-        double greenPowSubtraction = Math.pow(green1 - green2, 2);
-        double bluePowSubtraction = Math.pow(blue1 - blue2, 2);
-        double sumatory = redPowSubtraction + greenPowSubtraction + bluePowSubtraction;
-        double distance = Math.sqrt(sumatory);
-
-        percentageTmp = distance * 100 / maxDistance;
-
-        if(percentageTmp <= 1)
-            percentage = 100;
-        else {
-            percentage = 100 - percentageTmp;
-        }
-
-        return percentage;
-    }*/
 }

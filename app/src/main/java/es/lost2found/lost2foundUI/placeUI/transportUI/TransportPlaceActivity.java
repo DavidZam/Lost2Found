@@ -16,7 +16,7 @@ import es.lost2found.entities.TransportPlace;
 import es.lost2found.lost2foundUI.announceUI.NewAnnounceActivity;
 import es.lost2found.lost2foundUI.placeUI.PlaceActivity;
 
-public class TransportPlaceActivity extends AppCompatActivity implements View.OnClickListener { // implements View.OnClickListener
+public class TransportPlaceActivity extends AppCompatActivity { // implements View.OnClickListener
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +39,7 @@ public class TransportPlaceActivity extends AppCompatActivity implements View.On
         ed.apply();
         Intent intent = new Intent(this, FillTransportPlaceActivity.class);
         startActivity(intent);
-        finish();
+        //finish();
     }
 
     public void saveBusClicked(View view) {
@@ -51,7 +51,7 @@ public class TransportPlaceActivity extends AppCompatActivity implements View.On
         ed.apply();
         Intent intent = new Intent(this, FillTransportPlaceActivity.class);
         startActivity(intent);
-        finish();
+        //finish();
     }
 
     public void saveTrainClicked(View view) {
@@ -63,15 +63,15 @@ public class TransportPlaceActivity extends AppCompatActivity implements View.On
         ed.apply();
         Intent intent = new Intent(this, FillTransportTrainPlaceActivity.class);
         startActivity(intent);
-        finish();
+        //finish();
     }
 
-    @Override
+    /*@Override
     public void onClick(View v) {
         final Intent intent = new Intent(this, FillTransportPlaceActivity.class);
         startActivity(intent);
-        finish();
-    }
+        //finish();
+    }*/
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

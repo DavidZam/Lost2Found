@@ -125,6 +125,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                                     double lat = location.getLatitude();
                                     double longit = location.getLongitude();
                                     currentLocationMark = new LatLng(lat, longit);
+                                    objectLastLocation = currentLocationMark;
                                     gMap.addMarker(new MarkerOptions().position(currentLocationMark)).setVisible(true);
                                     gMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLocationMark, 15));
                                     gMap.animateCamera(CameraUpdateFactory.zoomTo(16), 2000, null);
