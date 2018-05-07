@@ -24,12 +24,14 @@ public class AnnounceViewAdapter extends RecyclerView.Adapter<AnnounceViewHolder
     private Context context;
     private String actualUser;
     private String parentAct;
+    private String typePlace;
 
-    public AnnounceViewAdapter(List<Announce> listAnnounce, Context context, String actualUser, String parentAct) {
+    public AnnounceViewAdapter(List<Announce> listAnnounce, Context context, String actualUser, String parentAct, String typePlace) {
         this.listAnnounce = listAnnounce;
         this.context = context;
         this.actualUser = actualUser;
         this.parentAct = parentAct;
+        this.typePlace = typePlace;
     }
 
     @Override
@@ -94,9 +96,6 @@ public class AnnounceViewAdapter extends RecyclerView.Adapter<AnnounceViewHolder
 
                 Announce announce = listAnnounce.get(position);
                 intent.putExtra("myAnnounce", announce);
-
-                //Intent intent2 = ((Activity) context).getIntent();
-                String typePlace = intent.getStringExtra("distance"); // NO FUNCIONA
 
                 if(parentAct.equals(AnnounceActivity.class.getSimpleName())) {
                     intent.putExtra("parentAct", "announce");

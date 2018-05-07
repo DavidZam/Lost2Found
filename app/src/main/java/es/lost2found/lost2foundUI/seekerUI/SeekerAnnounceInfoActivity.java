@@ -27,7 +27,6 @@ public class SeekerAnnounceInfoActivity extends AppCompatActivity {
     private Announce a;
     private String atributoDeterminante;
 
-
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_seekerannounce_info);
@@ -168,10 +167,12 @@ public class SeekerAnnounceInfoActivity extends AppCompatActivity {
     }
 
     public void matching(View v) {
+        String typePlace = getIntent().getExtras().getString("typePlace");
         final Intent match = new Intent(this, MatchAnnounce.class);
         match.putExtra("oldAnnounceSet", true);
         match.putExtra("match", a);
         match.putExtra("atributoDeterminante", atributoDeterminante);
+        match.putExtra("typePlace", typePlace);
         startActivity(match);
         finish();
     }

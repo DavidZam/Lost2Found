@@ -42,6 +42,7 @@ public class AnnounceActivity extends AppCompatActivity implements FloatingActio
     private AnnounceViewAdapter adapter;
     private RecyclerView recyclerView;
     private Integer userNumberAnnounces;
+    private String typePlace;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -138,7 +139,8 @@ public class AnnounceActivity extends AppCompatActivity implements FloatingActio
         String userName = spref2.getString("nombre", "");
         List<Announce> announceList = new ArrayList<>();
         String parentName = this.getClass().getSimpleName();
-        adapter = new AnnounceViewAdapter(announceList, getApplication(), userName, parentName);
+        typePlace = getIntent().getExtras().getString("typePlace");
+        adapter = new AnnounceViewAdapter(announceList, getApplication(), userName, parentName, typePlace);
         recyclerView = findViewById(R.id.announce_recyclerview);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));

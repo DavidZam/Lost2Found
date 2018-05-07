@@ -21,6 +21,7 @@ import java.util.List;
 
 import es.lost2found.R;
 import es.lost2found.database.DB_announce;
+import es.lost2found.database.DB_place;
 import es.lost2found.entities.Announce;
 import es.lost2found.lost2foundUI.seekerUI.SeekerAnnounceInfoActivity;
 
@@ -36,6 +37,9 @@ public class MatchAnnounce extends AppCompatActivity {
     private List<String> colorPercentagesList;
     private List<String> distancePercentagesList;
     private List<String> distancesList;
+    private String typePlace;
+    private String typePlaceOldAnnounce;
+    private String typePlaceMatchAnnounce;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,7 +62,8 @@ public class MatchAnnounce extends AppCompatActivity {
             atributoDeterminante = getIntent().getStringExtra("atributoDeterminante");
         }
 
-        adapter = new MatchAnnounceViewAdapter(announceList, getApplication(), userEmail, oldAnnounce, atributoDeterminante, colorPercentagesList, distancePercentagesList, distancesList);
+        typePlace = getIntent().getExtras().getString("typePlace");
+        adapter = new MatchAnnounceViewAdapter(announceList, getApplication(), userEmail, oldAnnounce, atributoDeterminante, colorPercentagesList, distancePercentagesList, distancesList, typePlace);
         recyclerView = findViewById(R.id.match_announce_reyclerview);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -139,21 +144,35 @@ public class MatchAnnounce extends AppCompatActivity {
         double distanceDouble;
         String distancePercentage;
         colorPercentagesList = new ArrayList<>();
+        try {
+            // Hacer una funcion que dando el id devuelva el idLugar
+            typePlaceOldAnnounce = new getTypePlaceByIdDB().execute(oldAnnounce.getIdAnuncio()).get(); // PASARLE EL idLugar no el id del anuncio!!!!!!
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         for(int i = 0; i < numAnnounces; i++) {
             color1 = announces[i].getColor();
             colorPercentage = getColorPercentage(color1, color2);
             colorPercentajeDouble = String.valueOf(colorPercentage);
             colorPercentageText = colorPercentajeDouble.substring(0, 5);
             colorPercentagesList.add(i, colorPercentageText);
-            coordinates1 = announces[i].getPlace();
-            distanceDouble = getDistance(coordinates1, coordinates2);
-            distanceMetres = String.valueOf(distanceDouble);
-            distanceMetres = distanceMetres.substring(0, 6);
-            distancePercentage = getDistancePercentage(distanceMetres);
-            //distanceMetres = distanceMetres.substring(0, 6);
-            distancePercentagesList.add(i, distancePercentage);
-            distancesList.add(i, distanceMetres);
-
+            try {
+                typePlaceMatchAnnounce = new getTypePlaceByIdDB().execute(announces[i].getIdAnuncio()).get();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            //typePlace = getIntent().getExtras().getString("typePlace");
+            if(typePlaceOldAnnounce != null && typePlaceMatchAnnounce != null) {
+                if(typePlaceOldAnnounce.equals("map") && typePlaceMatchAnnounce.equals("map")) {
+                    coordinates1 = announces[i].getPlace();
+                    distanceDouble = getDistance(coordinates1, coordinates2);
+                    distanceMetres = String.valueOf(distanceDouble);
+                    distanceMetres = distanceMetres.substring(0, 6);
+                    distancePercentage = getDistancePercentage(distanceMetres);
+                    distancePercentagesList.add(i, distancePercentage);
+                    distancesList.add(i, distanceMetres);
+                }
+            }
             adapter.insert(listElements, announces[i]);
             listElements++;
             recyclerView.setAdapter(adapter);
@@ -162,6 +181,14 @@ public class MatchAnnounce extends AppCompatActivity {
         adapter.setListPercentageColor(colorPercentagesList);
         adapter.setListPercentageDistance(distancePercentagesList);
         adapter.setListDistance(distancesList);
+    }
+
+    private class getTypePlaceByIdDB extends AsyncTask<Integer, Void, String> {
+
+        @Override
+        protected String doInBackground(Integer... params) {
+            return DB_place.getTypePlaceById(params[0]);
+        }
     }
 
     @Override

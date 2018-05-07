@@ -27,6 +27,7 @@ public class MatchAnnounceInfoActivity extends AppCompatActivity {
     private String colorPercentageText;
     private String distancePercentageText;
     private String distanceText;
+    private String typePlace;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,6 +56,7 @@ public class MatchAnnounceInfoActivity extends AppCompatActivity {
         colorPercentageText = getIntent().getStringExtra("percentageColor");
         distancePercentageText = getIntent().getStringExtra("percentageDistance");
         distanceText = getIntent().getStringExtra("distance");
+        typePlace = getIntent().getStringExtra("typePlace");
 
         String idText = String.valueOf(a.getAnnounceId());
         new getObjectDataFromDB().execute(idText, a.announceCategorie);
@@ -91,16 +93,20 @@ public class MatchAnnounceInfoActivity extends AppCompatActivity {
             colorPercentage.setTextColor(getResources().getColor(R.color.FireBrick));
         }
 
-        String[] distanceTextPrint = distanceText.split("\\.");
-        String distance = "<h4><font color=#699CFC> Cercanía: </font>" + distanceTextPrint[0] + " metros" + "</h4><br>";
-        distancePercentage.setText(Html.fromHtml(distance));
-        double distanceMeterValue = Double.valueOf(distanceText);
-        if(distanceMeterValue <= 400) {
-            distancePercentage.setTextColor(getResources().getColor(R.color.ForestGreen));
-        } else if(distanceMeterValue > 400 && distanceMeterValue <= 700) {
-            distancePercentage.setTextColor(getResources().getColor(R.color.Coral));
-        } else if(distanceMeterValue > 700) {
-            distancePercentage.setTextColor(getResources().getColor(R.color.FireBrick));
+        if(typePlace != null) {
+            if (typePlace.equals("map")) {
+                String[] distanceTextPrint = distanceText.split("\\.");
+                String distance = "<h4><font color=#699CFC> Cercanía: </font>" + distanceTextPrint[0] + " metros" + "</h4><br>";
+                distancePercentage.setText(Html.fromHtml(distance));
+                double distanceMeterValue = Double.valueOf(distanceText);
+                if (distanceMeterValue <= 400) {
+                    distancePercentage.setTextColor(getResources().getColor(R.color.ForestGreen));
+                } else if (distanceMeterValue > 400 && distanceMeterValue <= 700) {
+                    distancePercentage.setTextColor(getResources().getColor(R.color.Coral));
+                } else if (distanceMeterValue > 700) {
+                    distancePercentage.setTextColor(getResources().getColor(R.color.FireBrick));
+                }
+            }
         }
 
         color.setBackgroundColor(a.color);

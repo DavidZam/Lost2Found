@@ -83,13 +83,14 @@ public class BankCardActivity extends AppCompatActivity {
     private void showAnnounceScreen(String announce) {
         SharedPreferences sp = getApplicationContext().getSharedPreferences("announcePlace", 0);
         String place = sp.getString("place", "");
-
+        String typePlace = getIntent().getExtras().getString("typePlace");
         SharedPreferences sp2 = getSharedPreferences("announcePlace", 0);
         SharedPreferences.Editor ed = sp2.edit();            // Saved the user login credencials.
         ed.putString("place", place);
         ed.apply();
 
         Intent intent = new Intent(this, AnnounceActivity.class);
+        intent.putExtra("typePlace", typePlace);
         startActivity(intent);
         finish();
     }

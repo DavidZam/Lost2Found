@@ -45,7 +45,7 @@ public class NewAnnounceActivity extends AppCompatActivity {
     private MaterialBetterSpinner spinner2;
     private ArrayList<String> list = new ArrayList<>();
     private String categorie = "";
-
+    private String typePlace;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_announce);
@@ -193,10 +193,9 @@ public class NewAnnounceActivity extends AppCompatActivity {
         Object cp = getIntent().getSerializableExtra("concretePlace");
         Object mp = getIntent().getSerializableExtra("mapPlace");
         String place = "";
-        String typlePlace = "";
         if(tp != null) {
             TransportPlace transportPlace = (TransportPlace) tp;
-            typlePlace = "transport";
+            typePlace = "transport";
             if(((TransportPlace) tp).getTipoTte().equals("metro") || ((TransportPlace) tp).getTipoTte().equals("bus"))
                 place = transportPlace.getTipoTte() + ": " + transportPlace.getLine() + " - " + transportPlace.getStation();
             else if(((TransportPlace) tp).getTipoTte().equals("tren")) {
@@ -204,11 +203,11 @@ public class NewAnnounceActivity extends AppCompatActivity {
             }
         } else if(cp != null){
             ConcretePlace concretePlace = (ConcretePlace) cp;
-            typlePlace = "concrete";
+            typePlace = "concrete";
             place = concretePlace.getCalle() + ", " + concretePlace.getNumber() + ", " + concretePlace.getPostalCode();
         } else if(mp != null) {
             MapPlace mapPlace = (MapPlace) mp;
-            typlePlace = "map";
+            typePlace = "map";
             String latitud = String.valueOf(mapPlace.getLatitud());
             String longitud = String.valueOf(mapPlace.getLongitud());
             place = latitud + longitud;
@@ -216,7 +215,6 @@ public class NewAnnounceActivity extends AppCompatActivity {
 
         SharedPreferences sp4 = getSharedPreferences("announcePlace", 0);
         SharedPreferences.Editor ed = sp4.edit();            // Saved the user login credencials.
-        ed.putString("typePlace", typlePlace);
         ed.putString("place", place);
         ed.apply();
 
@@ -267,6 +265,7 @@ public class NewAnnounceActivity extends AppCompatActivity {
             Intent intent = new Intent(this, WalletActivity.class);
             intent.putExtra("announce", announce);
             intent.putExtra("categorie", categorie);
+            intent.putExtra("typePlace", typePlace);
             intent.putExtra("place", place);
             startActivity(intent);
         } else if(categorie.equals("Telefono")) {
@@ -275,6 +274,7 @@ public class NewAnnounceActivity extends AppCompatActivity {
             Intent intent = new Intent(this, PhoneActivity.class);
             intent.putExtra("announce", announce);
             intent.putExtra("categorie", categorie);
+            intent.putExtra("typePlace", typePlace);
             intent.putExtra("place", place);
             startActivity(intent);
         } else if(categorie.equals("Tarjeta bancaria")) {
@@ -283,6 +283,7 @@ public class NewAnnounceActivity extends AppCompatActivity {
             Intent intent = new Intent(this, BankCardActivity.class);
             intent.putExtra("announce", announce);
             intent.putExtra("categorie", categorie);
+            intent.putExtra("typePlace", typePlace);
             intent.putExtra("place", place);
             startActivity(intent);
         } else if(categorie.equals("Tarjeta transporte")) {
@@ -291,6 +292,7 @@ public class NewAnnounceActivity extends AppCompatActivity {
             Intent intent = new Intent(this, TransportCardActivity.class);
             intent.putExtra("announce", announce);
             intent.putExtra("categorie", categorie);
+            intent.putExtra("typePlace", typePlace);
             intent.putExtra("place", place);
             startActivity(intent);
         } else if(categorie.equals("Otro")) {
@@ -299,6 +301,7 @@ public class NewAnnounceActivity extends AppCompatActivity {
             Intent intent = new Intent(this, OtherObjectActivity.class);
             intent.putExtra("announce", announce);
             intent.putExtra("categorie", categorie);
+            intent.putExtra("typePlace", typePlace);
             intent.putExtra("place", place);
             startActivity(intent);
         }

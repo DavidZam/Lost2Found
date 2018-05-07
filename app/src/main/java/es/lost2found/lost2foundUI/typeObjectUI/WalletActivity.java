@@ -86,12 +86,14 @@ public class WalletActivity extends AppCompatActivity {
 
     private void showAnnounceScreen() {
         String place = getIntent().getExtras().getString("place");
+        String typePlace = getIntent().getExtras().getString("typePlace");
         SharedPreferences sp = getSharedPreferences("announcePlace", 0);
         SharedPreferences.Editor ed = sp.edit();            // Saved the user login credencials.
         ed.putString("place", place);
         ed.apply();
         Intent intent = new Intent(this, AnnounceActivity.class);
         intent.putExtra("place", place);
+        intent.putExtra("typePlace", typePlace);
         startActivity(intent);
         finish();
     }

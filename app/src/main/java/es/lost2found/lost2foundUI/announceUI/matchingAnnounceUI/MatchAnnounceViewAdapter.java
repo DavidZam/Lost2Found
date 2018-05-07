@@ -27,8 +27,9 @@ public class MatchAnnounceViewAdapter extends RecyclerView.Adapter<AnnounceViewH
     private List<String>  colorPercentagesList;
     private List<String> distancePercentagesList;
     private List<String> distancesList;
+    private String typePlace;
 
-    public MatchAnnounceViewAdapter(List<Announce> listAnnounce, Context context, String actualUser, Announce oldAnnounce, String atrDeterminante, List<String>  colorPercentagesList, List<String>  distancePercentagesList, List<String>  distancesList) {
+    public MatchAnnounceViewAdapter(List<Announce> listAnnounce, Context context, String actualUser, Announce oldAnnounce, String atrDeterminante, List<String>  colorPercentagesList, List<String>  distancePercentagesList, List<String>  distancesList, String typePlace) {
         this.listAnnounce = listAnnounce;
         this.context = context;
         this.actualUser = actualUser;
@@ -37,6 +38,7 @@ public class MatchAnnounceViewAdapter extends RecyclerView.Adapter<AnnounceViewH
         this.colorPercentagesList = colorPercentagesList;
         this.distancePercentagesList = distancePercentagesList;
         this.distancesList = distancesList;
+        this.typePlace = typePlace;
     }
 
     @Override
@@ -110,10 +112,15 @@ public class MatchAnnounceViewAdapter extends RecyclerView.Adapter<AnnounceViewH
                 intent.putExtra("myAnnounce", announce);
                 intent.putExtra("oldAnnounce", oldAnnounce);
                 String percentageColor = colorPercentagesList.get(position);
-                String distance = distancesList.get(position);
-                String percentageDistance = distancePercentagesList.get(position);
-                intent.putExtra("distance", distance);
-                intent.putExtra("percentageDistance", percentageDistance);
+                if(typePlace != null) {
+                    if (typePlace.equals("map)")) {
+                        String distance = distancesList.get(position);
+                        String percentageDistance = distancePercentagesList.get(position);
+                        intent.putExtra("typePlace", typePlace);
+                        intent.putExtra("distance", distance);
+                        intent.putExtra("percentageDistance", percentageDistance);
+                    }
+                }
                 intent.putExtra("percentageColor", percentageColor);
                 intent.putExtra("atributoDeterminante", atrDeterminante);
                 context.startActivity(intent);

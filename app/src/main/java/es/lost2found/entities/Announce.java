@@ -13,6 +13,7 @@ public class Announce implements Serializable {
     public String place;
     public String userOwner;
     private Integer idAnuncio;
+    private String typePlace;
 
     public Announce(String announceType, String currentTime, String announceDateText, String announceHourText, int color, String announceCategorie, String place, String userOwner) {
         this.announceType = announceType;
@@ -123,7 +124,6 @@ public class Announce implements Serializable {
     }
 
     public Integer getAnnounceId() {
-
         return this.idAnuncio;
     }
 }
