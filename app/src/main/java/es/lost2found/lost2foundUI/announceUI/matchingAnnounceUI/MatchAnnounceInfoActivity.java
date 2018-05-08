@@ -27,7 +27,7 @@ public class MatchAnnounceInfoActivity extends AppCompatActivity {
     private String colorPercentageText;
     private String distancePercentageText;
     private String distanceText;
-    private String typePlace;
+    //private String typePlace;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,7 +56,6 @@ public class MatchAnnounceInfoActivity extends AppCompatActivity {
         colorPercentageText = getIntent().getStringExtra("percentageColor");
         distancePercentageText = getIntent().getStringExtra("percentageDistance");
         distanceText = getIntent().getStringExtra("distance");
-        typePlace = getIntent().getStringExtra("typePlace");
 
         String idText = String.valueOf(a.getAnnounceId());
         new getObjectDataFromDB().execute(idText, a.announceCategorie);
@@ -93,8 +92,10 @@ public class MatchAnnounceInfoActivity extends AppCompatActivity {
             colorPercentage.setTextColor(getResources().getColor(R.color.FireBrick));
         }
 
-        if(typePlace != null) {
-            if (typePlace.equals("map")) {
+        String typePlaceOldAnnounce = getIntent().getStringExtra("typePlaceOldAnnounce");
+        String typePlaceMatchAnnounce = getIntent().getStringExtra("typePlaceMatchAnnounce");
+        if(typePlaceOldAnnounce != null && typePlaceMatchAnnounce != null) {
+            if (typePlaceOldAnnounce.equals("map") && typePlaceMatchAnnounce.equals("map")) { // Si los dos tipos son mapa:
                 String[] distanceTextPrint = distanceText.split("\\.");
                 String distance = "<h4><font color=#699CFC> Cercanía: </font>" + distanceTextPrint[0] + " metros" + "</h4><br>";
                 distancePercentage.setText(Html.fromHtml(distance));

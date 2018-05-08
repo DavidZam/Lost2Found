@@ -17,6 +17,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import es.lost2found.R;
@@ -40,6 +41,10 @@ public class MatchAnnounce extends AppCompatActivity {
     private String typePlace;
     private String typePlaceOldAnnounce;
     private String typePlaceMatchAnnounce;
+    private int placeIdOldAnnounce;
+    private int placeIdMatchAnnounce;
+    private Integer[] oldAnnounceLocation;
+    private Integer[] matchAnnounceLocation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,8 +67,8 @@ public class MatchAnnounce extends AppCompatActivity {
             atributoDeterminante = getIntent().getStringExtra("atributoDeterminante");
         }
 
-        typePlace = getIntent().getExtras().getString("typePlace");
-        adapter = new MatchAnnounceViewAdapter(announceList, getApplication(), userEmail, oldAnnounce, atributoDeterminante, colorPercentagesList, distancePercentagesList, distancesList, typePlace);
+        //typePlace = getIntent().getExtras().getString("typePlace");
+        adapter = new MatchAnnounceViewAdapter(announceList, getApplication(), userEmail, oldAnnounce, atributoDeterminante, colorPercentagesList, distancePercentagesList, distancesList, typePlaceOldAnnounce, typePlaceMatchAnnounce);
         recyclerView = findViewById(R.id.match_announce_reyclerview);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -146,7 +151,9 @@ public class MatchAnnounce extends AppCompatActivity {
         colorPercentagesList = new ArrayList<>();
         try {
             // Hacer una funcion que dando el id devuelva el idLugar
-            typePlaceOldAnnounce = new getTypePlaceByIdDB().execute(oldAnnounce.getIdAnuncio()).get(); // PASARLE EL idLugar no el id del anuncio!!!!!!
+            Integer idOldAnnounce = oldAnnounce.getIdAnuncio();
+            placeIdOldAnnounce = new getPlaceIdByAnnounceIdDB().execute(idOldAnnounce).get();
+            typePlaceOldAnnounce = new getTypePlaceByIdDB().execute(placeIdOldAnnounce).get();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -157,13 +164,13 @@ public class MatchAnnounce extends AppCompatActivity {
             colorPercentageText = colorPercentajeDouble.substring(0, 5);
             colorPercentagesList.add(i, colorPercentageText);
             try {
-                typePlaceMatchAnnounce = new getTypePlaceByIdDB().execute(announces[i].getIdAnuncio()).get();
+                placeIdMatchAnnounce = new getPlaceIdByAnnounceIdDB().execute(announces[i].getIdAnuncio()).get();
+                typePlaceMatchAnnounce = new getTypePlaceByIdDB().execute(placeIdMatchAnnounce).get();
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            //typePlace = getIntent().getExtras().getString("typePlace");
             if(typePlaceOldAnnounce != null && typePlaceMatchAnnounce != null) {
-                if(typePlaceOldAnnounce.equals("map") && typePlaceMatchAnnounce.equals("map")) {
+                if(typePlaceOldAnnounce.equals("map") && typePlaceMatchAnnounce.equals("map")) { // Si los dos son mapa calculamos la distancia
                     coordinates1 = announces[i].getPlace();
                     distanceDouble = getDistance(coordinates1, coordinates2);
                     distanceMetres = String.valueOf(distanceDouble);
@@ -171,6 +178,22 @@ public class MatchAnnounce extends AppCompatActivity {
                     distancePercentage = getDistancePercentage(distanceMetres);
                     distancePercentagesList.add(i, distancePercentage);
                     distancesList.add(i, distanceMetres);
+                } else { // Si alguno o los dos no son mapa:
+                    if(!typePlaceOldAnnounce.equals("map")) {
+                        try {
+                            Integer[] tmpArray = new getLatitudeAndLongitudeByAdress().execute(oldAnnounce.getPlace()).get(); // COMPROBAR QUE SE GUARDA
+                            oldAnnounceLocation = Arrays.copyOf(tmpArray, tmpArray.length);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    if(!typePlaceMatchAnnounce.equals("map")) {
+                        try {
+                            matchAnnounceLocation = new getLatitudeAndLongitudeByAdress().execute(announces[i].getPlace()).get();
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
                 }
             }
             adapter.insert(listElements, announces[i]);
@@ -181,6 +204,8 @@ public class MatchAnnounce extends AppCompatActivity {
         adapter.setListPercentageColor(colorPercentagesList);
         adapter.setListPercentageDistance(distancePercentagesList);
         adapter.setListDistance(distancesList);
+        adapter.setTypePlaceOldAnnounce(typePlaceOldAnnounce);
+        adapter.setTypePlaceMatchAnnounce(typePlaceMatchAnnounce);
     }
 
     private class getTypePlaceByIdDB extends AsyncTask<Integer, Void, String> {
@@ -188,6 +213,29 @@ public class MatchAnnounce extends AppCompatActivity {
         @Override
         protected String doInBackground(Integer... params) {
             return DB_place.getTypePlaceById(params[0]);
+        }
+    }
+
+    private class getPlaceIdByAnnounceIdDB extends AsyncTask<Integer, Void, Integer> {
+
+        @Override
+        protected Integer doInBackground(Integer... params) {
+            return DB_announce.getPlaceIdByAnnounceId(params[0]);
+        }
+    }
+
+    private class getLatitudeAndLongitudeByAdress extends AsyncTask<String, Void, Integer[]> {
+
+        @Override
+        protected Integer[] doInBackground(String... strings) {
+            return DB_place.callGeocodingGoogleMapsApi(strings[0]);
+        }
+
+        @Override
+        protected void onPostExecute(Integer[] latLong) {
+            /*for(int i = 0; i < 1; i++) {
+                oldAnnounceLocation[i] = latLong[i];
+            }*/
         }
     }
 

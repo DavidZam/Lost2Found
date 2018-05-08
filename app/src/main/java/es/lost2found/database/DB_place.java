@@ -1,5 +1,6 @@
 package es.lost2found.database;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
@@ -10,6 +11,7 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
@@ -273,4 +275,95 @@ public class DB_place {
         return typePlace;
     }
 
+    public static Integer[] callGeocodingGoogleMapsApi(String address) {
+        //List<String> addressArray = new ArrayList<String>();
+        String[] addressArray = new String[2];
+        String[] addressArray2 = new String[2];
+        if(address.contains(":")) {
+            addressArray = address.split(":");
+                if(addressArray[1].contains(",")) {
+                    addressArray2 = addressArray[1].split(",");
+                    address = addressArray2[1];
+                } else {
+                    address = addressArray[1];
+                }
+        }
+        if(address.contains(" ")) {
+            address = address.replace(" ", "");
+        }
+        //final String API_KEY = "AIzaSyA6NVXllfUxwrhX0kqaeGD9usn12uY8fgQ";
+        String API_URL = "https://maps.googleapis.com/maps/api/geocode/json?language=es";
+        String typePlace = "";
+        Integer[] location = new Integer[2]; // = new ArrayList<Integer>()
+        try {
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("address", address);
+
+            List list = new LinkedList();
+            list.addAll(Arrays.asList(jsonObject));
+            String jsonString = list.toString();
+
+            jsonString = URLEncoder.encode(jsonString, "UTF-8");
+
+            String parameters = "&address=" + address; // + "&key=" + API_KEY // + "&region=fr"
+            String urlStr = API_URL + parameters;
+            URL url = new URL(urlStr);
+
+            HttpURLConnection con = (HttpURLConnection) url.openConnection();
+            try {
+                con.setRequestMethod("POST");
+                con.setRequestProperty("User-Agent", "your user agent");
+                con.setRequestProperty("Accept-Language", "sp-SP,sp;q=0.5");
+
+                String urlParameters = "json=" + jsonString;
+
+                con.setDoOutput(true);
+                OutputStream outstream = con.getOutputStream();
+                DataOutputStream wr = new DataOutputStream(outstream);
+                wr.writeBytes(urlParameters);
+                wr.flush();
+                wr.close();
+
+                InputStream instream;
+
+                int status = con.getResponseCode();
+
+                if (status != HttpURLConnection.HTTP_OK)
+                    instream = con.getErrorStream();
+                else
+                    instream = con.getInputStream();
+
+                BufferedReader in = new BufferedReader(new InputStreamReader(instream));
+                String inputLine;
+                StringBuffer response = new StringBuffer();
+
+                while ((inputLine = in.readLine()) != null)
+                    response.append(inputLine);
+
+                JSONObject object = new JSONObject(response.toString());
+                if(response.toString().contains("status")) {
+                    String statusResponse = object.getString("status");
+                    if(statusResponse.equals("OK")) {
+                        if(response.toString().contains("results") && response.toString().contains("geometry") ) {
+                            //Object locationObject = object.getJSONObject("location");
+                            JSONArray results = object.getJSONArray("results");
+                            JSONArray formattedAddress = results.getJSONArray(3);
+                            //JSONObject locationArr = results.getJSONObject("location");
+                            //String latitud = results.getStr
+                            //Integer longitud = object.getString("lng");
+                            //Integer latitudInt = Integer.valueOf(latitud);
+                            //Integer longitudInt = Integer.valueOf(longitud);
+                            //location[0] = latitudInt;
+                            //location[1] = longitudInt;
+                        }
+                    }
+                }
+            } finally {
+                con.disconnect();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return location;
+    }
 }

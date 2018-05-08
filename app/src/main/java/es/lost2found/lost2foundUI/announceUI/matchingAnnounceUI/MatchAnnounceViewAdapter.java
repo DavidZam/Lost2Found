@@ -27,9 +27,10 @@ public class MatchAnnounceViewAdapter extends RecyclerView.Adapter<AnnounceViewH
     private List<String>  colorPercentagesList;
     private List<String> distancePercentagesList;
     private List<String> distancesList;
-    private String typePlace;
+    private String typePlaceOldAnnounce;
+    private String typePlaceMatchAnnounce;
 
-    public MatchAnnounceViewAdapter(List<Announce> listAnnounce, Context context, String actualUser, Announce oldAnnounce, String atrDeterminante, List<String>  colorPercentagesList, List<String>  distancePercentagesList, List<String>  distancesList, String typePlace) {
+    public MatchAnnounceViewAdapter(List<Announce> listAnnounce, Context context, String actualUser, Announce oldAnnounce, String atrDeterminante, List<String>  colorPercentagesList, List<String>  distancePercentagesList, List<String>  distancesList, String typePlaceOldAnnounce, String typePlaceMatchAnnounce) {
         this.listAnnounce = listAnnounce;
         this.context = context;
         this.actualUser = actualUser;
@@ -38,7 +39,8 @@ public class MatchAnnounceViewAdapter extends RecyclerView.Adapter<AnnounceViewH
         this.colorPercentagesList = colorPercentagesList;
         this.distancePercentagesList = distancePercentagesList;
         this.distancesList = distancesList;
-        this.typePlace = typePlace;
+        this.typePlaceOldAnnounce = typePlaceOldAnnounce;
+        this.typePlaceMatchAnnounce = typePlaceMatchAnnounce;
     }
 
     @Override
@@ -112,11 +114,12 @@ public class MatchAnnounceViewAdapter extends RecyclerView.Adapter<AnnounceViewH
                 intent.putExtra("myAnnounce", announce);
                 intent.putExtra("oldAnnounce", oldAnnounce);
                 String percentageColor = colorPercentagesList.get(position);
-                if(typePlace != null) {
-                    if (typePlace.equals("map)")) {
+                if(typePlaceOldAnnounce != null && typePlaceMatchAnnounce != null) {
+                    if (typePlaceOldAnnounce.equals("map") && typePlaceMatchAnnounce.equals("map")) {
                         String distance = distancesList.get(position);
                         String percentageDistance = distancePercentagesList.get(position);
-                        intent.putExtra("typePlace", typePlace);
+                        intent.putExtra("typePlaceOldAnnounce", typePlaceOldAnnounce);
+                        intent.putExtra("typePlaceMatchAnnounce", typePlaceMatchAnnounce);
                         intent.putExtra("distance", distance);
                         intent.putExtra("percentageDistance", percentageDistance);
                     }
@@ -165,6 +168,14 @@ public class MatchAnnounceViewAdapter extends RecyclerView.Adapter<AnnounceViewH
 
     public void setListDistance(List<String> listDistance) {
         this.distancesList = listDistance;
+    }
+
+    public void setTypePlaceOldAnnounce(String typePlaceOldAnnounce) {
+        this.typePlaceOldAnnounce = typePlaceOldAnnounce;
+    }
+
+    public void setTypePlaceMatchAnnounce(String typePlaceMatchAnnounce) {
+        this.typePlaceMatchAnnounce = typePlaceMatchAnnounce;
     }
 
     /*public void animate(RecyclerView.ViewHolder viewHolder) {
