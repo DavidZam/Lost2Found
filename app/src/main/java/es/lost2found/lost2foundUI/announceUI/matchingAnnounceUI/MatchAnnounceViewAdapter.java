@@ -9,7 +9,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import es.lost2found.R;
@@ -26,11 +28,12 @@ public class MatchAnnounceViewAdapter extends RecyclerView.Adapter<AnnounceViewH
     private String atrDeterminante;
     private List<String>  colorPercentagesList;
     private List<String> distancePercentagesList;
+    private List<String> matchPercentagesList;
     private List<String> distancesList;
     private String typePlaceOldAnnounce;
     private String typePlaceMatchAnnounce;
 
-    public MatchAnnounceViewAdapter(List<Announce> listAnnounce, Context context, String actualUser, Announce oldAnnounce, String atrDeterminante, List<String>  colorPercentagesList, List<String>  distancePercentagesList, List<String>  distancesList, String typePlaceOldAnnounce, String typePlaceMatchAnnounce) {
+    public MatchAnnounceViewAdapter(List<Announce> listAnnounce, Context context, String actualUser, Announce oldAnnounce, String atrDeterminante, List<String>  colorPercentagesList, List<String>  distancePercentagesList, List<String>  distancesList, String typePlaceOldAnnounce, String typePlaceMatchAnnounce, List<String>  matchPercentagesList) {
         this.listAnnounce = listAnnounce;
         this.context = context;
         this.actualUser = actualUser;
@@ -41,6 +44,7 @@ public class MatchAnnounceViewAdapter extends RecyclerView.Adapter<AnnounceViewH
         this.distancesList = distancesList;
         this.typePlaceOldAnnounce = typePlaceOldAnnounce;
         this.typePlaceMatchAnnounce = typePlaceMatchAnnounce;
+        this.matchPercentagesList = matchPercentagesList;
     }
 
     @Override
@@ -86,9 +90,18 @@ public class MatchAnnounceViewAdapter extends RecyclerView.Adapter<AnnounceViewH
         holder.getAnnounceCategorie().setText(listAnnounce.get(position).getAnnounceCategorie());
         holder.getColor().setBackgroundColor(listAnnounce.get(position).getColor());
 
+        holder.getMatchPercentage().setText(matchPercentagesList.get(position) + "%"); // ¿?
+        double matchPercentageValue = Double.valueOf(matchPercentagesList.get(position));
+        if(matchPercentageValue >= 70) {
+            holder.getMatchPercentage().setTextColor(holder.getMatchPercentage().getResources().getColor(R.color.ForestGreen));
+        } else if(matchPercentageValue < 70 && matchPercentageValue >= 20) {
+            holder.getMatchPercentage().setTextColor(holder.getMatchPercentage().getResources().getColor(R.color.Coral));
+        } else if(matchPercentageValue < 20) {
+            holder.getMatchPercentage().setTextColor(holder.getMatchPercentage().getResources().getColor(R.color.FireBrick));
+        }
+
         String userAnnounceOwnerName = listAnnounce.get(position).getUserOwner();
         if(userAnnounceOwnerName.equals(actualUser)) {
-            //if(listAnnounce.get(position).userOwner.equals(actualUser)) {
             holder.getOwner().setText("Yo");
         } else {
             holder.getOwner().setText(listAnnounce.get(position).getUserOwner());
@@ -115,14 +128,12 @@ public class MatchAnnounceViewAdapter extends RecyclerView.Adapter<AnnounceViewH
                 intent.putExtra("oldAnnounce", oldAnnounce);
                 String percentageColor = colorPercentagesList.get(position);
                 if(typePlaceOldAnnounce != null && typePlaceMatchAnnounce != null) {
-                    //if (typePlaceOldAnnounce.equals("map") && typePlaceMatchAnnounce.equals("map")) {
                         String distance = distancesList.get(position);
                         String percentageDistance = distancePercentagesList.get(position);
                         intent.putExtra("typePlaceOldAnnounce", typePlaceOldAnnounce);
                         intent.putExtra("typePlaceMatchAnnounce", typePlaceMatchAnnounce);
                         intent.putExtra("distance", distance);
                         intent.putExtra("percentageDistance", percentageDistance);
-                    //}
                 }
                 intent.putExtra("percentageColor", percentageColor);
                 intent.putExtra("atributoDeterminante", atrDeterminante);
@@ -176,6 +187,10 @@ public class MatchAnnounceViewAdapter extends RecyclerView.Adapter<AnnounceViewH
 
     public void setTypePlaceMatchAnnounce(String typePlaceMatchAnnounce) {
         this.typePlaceMatchAnnounce = typePlaceMatchAnnounce;
+    }
+
+    public void setListPercentageMatch(List<String> listPercentageMatch) {
+        this.matchPercentagesList = listPercentageMatch;
     }
 
     /*public void animate(RecyclerView.ViewHolder viewHolder) {

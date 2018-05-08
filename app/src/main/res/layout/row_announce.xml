@@ -17,6 +17,14 @@
         android:layout_height="132dp"
         android:padding="16dp">
 
+        <TextView
+            android:id="@+id/matchPercentage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/imageView"
+            android:layout_alignEnd="@+id/announceHourText"
+            android:textAllCaps="false" />
+
         <ImageView
             android:id="@+id/imageView"
             android:layout_width="wrap_content"
@@ -69,8 +77,8 @@
             android:id="@+id/color_view"
             android:layout_width="32dp"
             android:layout_height="29dp"
-            android:layout_alignEnd="@+id/announceOwner"
-            android:layout_alignTop="@+id/categorieAnnounce"
+            android:layout_alignEnd="@+id/matchPercentage"
+            android:layout_alignTop="@+id/announceOwner"
             android:background="@color/Red" />
 
         <TextView

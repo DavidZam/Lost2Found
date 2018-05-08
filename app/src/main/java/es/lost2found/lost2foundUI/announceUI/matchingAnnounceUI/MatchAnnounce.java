@@ -19,6 +19,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import es.lost2found.R;
@@ -38,8 +39,8 @@ public class MatchAnnounce extends AppCompatActivity {
     private String atributoDeterminante;
     private List<String> colorPercentagesList;
     private List<String> distancePercentagesList;
+    private List<String> matchPercentagesList;
     private List<String> distancesList;
-    private String typePlace;
     private String typePlaceOldAnnounce;
     private String typePlaceMatchAnnounce;
     private int placeIdOldAnnounce;
@@ -68,8 +69,7 @@ public class MatchAnnounce extends AppCompatActivity {
             atributoDeterminante = getIntent().getStringExtra("atributoDeterminante");
         }
 
-        //typePlace = getIntent().getExtras().getString("typePlace");
-        adapter = new MatchAnnounceViewAdapter(announceList, getApplication(), userEmail, oldAnnounce, atributoDeterminante, colorPercentagesList, distancePercentagesList, distancesList, typePlaceOldAnnounce, typePlaceMatchAnnounce);
+        adapter = new MatchAnnounceViewAdapter(announceList, getApplication(), userEmail, oldAnnounce, atributoDeterminante, colorPercentagesList, distancePercentagesList, distancesList, typePlaceOldAnnounce, typePlaceMatchAnnounce, matchPercentagesList);
         recyclerView = findViewById(R.id.match_announce_reyclerview);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -160,8 +160,9 @@ public class MatchAnnounce extends AppCompatActivity {
         String colorPercentajeDouble, colorPercentageText;
         distancePercentagesList = new ArrayList<>();
         distancesList = new ArrayList<>();
-        String distanceMetres, distancePercentage;
+        String distanceMetres, distancePercentage = "";
         colorPercentagesList = new ArrayList<>();
+        matchPercentagesList = new ArrayList<>();
         try {
             Integer idOldAnnounce = oldAnnounce.getIdAnuncio(); // Obtenemos el idAnuncio
             placeIdOldAnnounce = new getPlaceIdByAnnounceIdDB().execute(idOldAnnounce).get(); // Funcion que devuelve el idLugar dado el idAnuncio
@@ -235,94 +236,30 @@ public class MatchAnnounce extends AppCompatActivity {
                 }
             }
 
-
-                /*else if(typePlaceOldAnnounce.equals("concrete") && typePlaceMatchAnnounce.equals("concrete") || // Uno map, otro concrete o ambos concrete
-                            typePlaceOldAnnounce.equals("concrete") && typePlaceMatchAnnounce.equals("map") ||
-                                typePlaceOldAnnounce.equals("map") && typePlaceMatchAnnounce.equals("concrete")) {
-                    if(typePlaceOldAnnounce.equals("concrete") && typePlaceMatchAnnounce.equals("concrete")) { // ambos concrete
-                        // Calculo LatLng para ambos
-                        try {
-                            Double[] tmpArray = new getLatitudeAndLongitudeByAdress().execute(oldAnnounce.getPlace(), typePlaceOldAnnounce).get(); // Conseguimos lat y long a partir de address
-                            oldAnnounceLatLng = Arrays.copyOf(tmpArray, tmpArray.length);
-                            Double[] tmpArray2 = new getLatitudeAndLongitudeByAdress().execute(announces[i].getPlace(), typePlaceMatchAnnounce).get(); // Conseguimos lat y long a partir de address
-                            matchAnnounceLatLng = Arrays.copyOf(tmpArray2, tmpArray2.length);
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                        coordinates1 = matchAnnounceLatLng[0] + "," + matchAnnounceLatLng[1];
-                        coordinates2 = oldAnnounceLatLng[0] + "," + oldAnnounceLatLng[1];
-                    } else if(typePlaceOldAnnounce.equals("concrete")) { // OldAnnounce concrete
-                        // Calculo LatLng para oldAnnounce
-                        try {
-                            Double[] tmpArray = new getLatitudeAndLongitudeByAdress().execute(oldAnnounce.getPlace(), typePlaceOldAnnounce).get(); // Conseguimos lat y long a partir de address
-                            oldAnnounceLatLng = Arrays.copyOf(tmpArray, tmpArray.length);
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                        coordinates2 = oldAnnounceLatLng[0] + "," + oldAnnounceLatLng[1];
-                    } else if(typePlaceMatchAnnounce.equals("concrete")) { // matchAnnounce concrete
-                        // Calculo LatLng para matchAnnounce
-                        try {
-                            Double[] tmpArray = new getLatitudeAndLongitudeByAdress().execute(announces[i].getPlace(), typePlaceMatchAnnounce).get(); // Conseguimos lat y long a partir de address
-                            matchAnnounceLatLng = Arrays.copyOf(tmpArray, tmpArray.length);
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                        coordinates1 = matchAnnounceLatLng[0] + "," + matchAnnounceLatLng[1];
-                    }
-                    // Calculo distancia
-                    distanceDouble = getDistance(coordinates1, coordinates2);
-                    distanceMetres = String.valueOf(distanceDouble);
-                    distanceMetres = distanceMetres.substring(0, 6);
-                    distancePercentage = getDistancePercentage(distanceMetres);
-                    distancePercentagesList.add(i, distancePercentage);
-                    distancesList.add(i, distanceMetres);
-                    }
-                } else { // Alguno es transporte
-
-                }*/
-
-
-                /*if(typePlaceOldAnnounce.equals("map") && typePlaceMatchAnnounce.equals("map") || // Ambos son map
-                        typePlaceOldAnnounce.equals("concrete") && typePlaceMatchAnnounce.equals("concrete") || // Ambos son concrete
-                            typePlaceOldAnnounce.equals("map") && typePlaceMatchAnnounce.equals("concrete") || // Uno es map y otro concrete
-                                typePlaceOldAnnounce.equals("concrete") && typePlaceMatchAnnounce.equals("map")) { // Uno es concrete y otro map
-                    coordinates1 = announces[i].getPlace();
-                    distanceDouble = getDistance(coordinates1, coordinates2);
-                    distanceMetres = String.valueOf(distanceDouble);
-                    distanceMetres = distanceMetres.substring(0, 6);
-                    distancePercentage = getDistancePercentage(distanceMetres);
-                    distancePercentagesList.add(i, distancePercentage);
-                    distancesList.add(i, distanceMetres);
-                } else { // En otro caso: alguno es transport
-                    if(!typePlaceOldAnnounce.equals("map")) {
-                        try {
-                            Double[] tmpArray = new getLatitudeAndLongitudeByAdress().execute(oldAnnounce.getPlace()).get(); // Conseguimos lat y long a partir de address
-                            oldAnnounceLatLng = Arrays.copyOf(tmpArray, tmpArray.length);
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                    }
-                    if(!typePlaceMatchAnnounce.equals("map")) {
-                        try {
-                            matchAnnounceLatLng = new getLatitudeAndLongitudeByAdress().execute(announces[i].getPlace()).get();
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }
-            }*/
+            // Calculo del match final a partir de las caracteristicas especificas de los dos objetos, el porcentaje del color y el porcentaje de la distancia:
+            Double distancePercentageInt = Double.valueOf(distancePercentage);
+            String matchPercentaje = getMatchPercentage(distancePercentageInt, colorPercentage, oldAnnounce, announces[i]);
+            String matchPercentajeArray[] = matchPercentaje.split("\\.");
+            if(matchPercentajeArray[1].length() == 1) {
+                matchPercentajeArray[1] = matchPercentajeArray[1] + "0";
+            }
+            matchPercentaje = matchPercentajeArray[0] + "." + matchPercentajeArray[1].substring(0, 2);
+            matchPercentagesList.add(i, matchPercentaje);
 
             adapter.insert(listElements, announces[i]);
             listElements++;
             recyclerView.setAdapter(adapter);
             recyclerView.setLayoutManager(new LinearLayoutManager(this));
         }
+        Collections.sort(matchPercentagesList);
+        Collections.reverse(matchPercentagesList);
+
         adapter.setListPercentageColor(colorPercentagesList);
         adapter.setListPercentageDistance(distancePercentagesList);
         adapter.setListDistance(distancesList);
         adapter.setTypePlaceOldAnnounce(typePlaceOldAnnounce);
         adapter.setTypePlaceMatchAnnounce(typePlaceMatchAnnounce);
+        adapter.setListPercentageMatch(matchPercentagesList);
     }
 
     private class getTypePlaceByIdDB extends AsyncTask<Integer, Void, String> {
@@ -474,5 +411,34 @@ public class MatchAnnounce extends AppCompatActivity {
             percentageText = String.valueOf(percentage);
         }
         return percentageText; // Nos da el porcentaje de aproximación
+    }
+
+    public String getMatchPercentage(Double distancePercentage, Double colorPercentage, Announce oldAnnounce, Announce matchAnnounce) {
+        Double matchPercentageDouble = 0.0;
+
+        // Formula del match...
+        Double colorMultiplier = 0.3;
+        Double distanceMultiplier = 0.6;
+
+        matchPercentageDouble = colorPercentage * colorMultiplier + distancePercentage * distanceMultiplier;
+
+        String oldAnnounceDay = oldAnnounce.getAnnounceDateText().substring(oldAnnounce.getAnnounceDateText().length()-2);
+        Integer oldAnnounceDayInt = Integer.valueOf(oldAnnounceDay);
+        String matchAnnounceDay = matchAnnounce.getAnnounceDateText().substring(matchAnnounce.getAnnounceDateText().length()-2);
+        Integer matchAnnounceDayInt = Integer.valueOf(matchAnnounceDay);
+        // Por cada día más de diferencia se le resta al porcentaje...
+        if(oldAnnounce.getAnnounceType().equals("Perdida")) { // oldAnnounceDayInt <= matchAnnounceDayInt
+            if(oldAnnounceDayInt - matchAnnounceDayInt <= 3) {
+                matchPercentageDouble += 10.0; // Le sumamos 10 al porcentaje si los anuncios tienen 3 dias o menos de diferencia
+            }
+        } else { // oldAnnounceDayInt >= matchAnnounceDayInt
+            if(matchAnnounceDayInt - oldAnnounceDayInt <= 3) {
+                matchPercentageDouble += 10.0; // Le sumamos 10 al porcentaje si los anuncios tienen 3 dias o menos de diferencia
+            }
+        }
+
+        String matchPercentage = String.valueOf(matchPercentageDouble);
+
+        return matchPercentage; // Nos da el porcentaje de match entre los dos anuncios
     }
 }

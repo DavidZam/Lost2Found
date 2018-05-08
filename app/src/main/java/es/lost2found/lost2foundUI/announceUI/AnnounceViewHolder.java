@@ -23,6 +23,7 @@ public class AnnounceViewHolder extends RecyclerView.ViewHolder {
     TextView announceCategorie;
     TextView owner;
     View color;
+    TextView matchPercentage;
 
     public AnnounceViewHolder(View itemView) {
         super(itemView);
@@ -34,6 +35,7 @@ public class AnnounceViewHolder extends RecyclerView.ViewHolder {
         announceCategorie = (TextView) itemView.findViewById(R.id.categorieAnnounce);
         owner = (TextView) itemView.findViewById(R.id.announceOwner);
         color = (View) itemView.findViewById(R.id.color_view);
+        matchPercentage = (TextView) itemView.findViewById(R.id.matchPercentage);
     }
 
     public TextView getAnnounceType() {
@@ -62,5 +64,9 @@ public class AnnounceViewHolder extends RecyclerView.ViewHolder {
 
     public View getColor() {
         return color;
+    }
+
+    public TextView getMatchPercentage() {
+        return matchPercentage;
     }
 }
