@@ -49,7 +49,8 @@ public class MatchAnnounceInfoActivity extends AppCompatActivity {
         TextView textoColor = (TextView) findViewById(R.id.colorTexto);
         View color = (View) findViewById(R.id.color_view);
         TextView colorPercentage = (TextView) findViewById(R.id.colorPercentage);
-        TextView distancePercentage = (TextView) findViewById(R.id.distance);
+        TextView distanceMeters = (TextView) findViewById(R.id.distance);
+        TextView distancePercentage = (TextView) findViewById(R.id.distancePercentage);
 
         a = (Announce) getIntent().getSerializableExtra("myAnnounce");
 
@@ -92,22 +93,33 @@ public class MatchAnnounceInfoActivity extends AppCompatActivity {
             colorPercentage.setTextColor(getResources().getColor(R.color.FireBrick));
         }
 
+        String distancePerc = "<h4>" + distancePercentageText + "%" + "</h4><br>";
+        distancePercentage.setText(Html.fromHtml(distancePerc));
+        double distancePercentageValue = Double.valueOf(distancePercentageText);
+        if(distancePercentageValue >= 70) {
+            distancePercentage.setTextColor(getResources().getColor(R.color.ForestGreen));
+        } else if(distancePercentageValue < 70 && distancePercentageValue >= 20) {
+            distancePercentage.setTextColor(getResources().getColor(R.color.Coral));
+        } else if(distancePercentageValue < 20) {
+            distancePercentage.setTextColor(getResources().getColor(R.color.FireBrick));
+        }
+
         String typePlaceOldAnnounce = getIntent().getStringExtra("typePlaceOldAnnounce");
         String typePlaceMatchAnnounce = getIntent().getStringExtra("typePlaceMatchAnnounce");
         if(typePlaceOldAnnounce != null && typePlaceMatchAnnounce != null) {
-            if (typePlaceOldAnnounce.equals("map") && typePlaceMatchAnnounce.equals("map")) { // Si los dos tipos son mapa:
+            //if (typePlaceOldAnnounce.equals("map") && typePlaceMatchAnnounce.equals("map")) { // Si los dos tipos son mapa:
                 String[] distanceTextPrint = distanceText.split("\\.");
                 String distance = "<h4><font color=#699CFC> Cercanía: </font>" + distanceTextPrint[0] + " metros" + "</h4><br>";
-                distancePercentage.setText(Html.fromHtml(distance));
+                distanceMeters.setText(Html.fromHtml(distance));
                 double distanceMeterValue = Double.valueOf(distanceText);
                 if (distanceMeterValue <= 400) {
-                    distancePercentage.setTextColor(getResources().getColor(R.color.ForestGreen));
+                    distanceMeters.setTextColor(getResources().getColor(R.color.ForestGreen));
                 } else if (distanceMeterValue > 400 && distanceMeterValue <= 700) {
-                    distancePercentage.setTextColor(getResources().getColor(R.color.Coral));
+                    distanceMeters.setTextColor(getResources().getColor(R.color.Coral));
                 } else if (distanceMeterValue > 700) {
-                    distancePercentage.setTextColor(getResources().getColor(R.color.FireBrick));
+                    distanceMeters.setTextColor(getResources().getColor(R.color.FireBrick));
                 }
-            }
+            //}
         }
 
         color.setBackgroundColor(a.color);

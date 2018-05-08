@@ -1,6 +1,7 @@
 package es.lost2found.database;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
@@ -275,26 +276,35 @@ public class DB_place {
         return typePlace;
     }
 
-    public static Integer[] callGeocodingGoogleMapsApi(String address) {
-        //List<String> addressArray = new ArrayList<String>();
+    public static Double[] callGeocodingGoogleMapsApi(String address, String typePlace) {
         String[] addressArray = new String[2];
         String[] addressArray2 = new String[2];
-        if(address.contains(":")) {
-            addressArray = address.split(":");
-                if(addressArray[1].contains(",")) {
+        if(typePlace.equals("concrete")) {
+            if(address.contains(":")) {
+                addressArray = address.split(":");
+                if (addressArray[1].contains(",")) {
+                    addressArray2 = addressArray[1].split(",");
+                }
+                address = addressArray[0] + addressArray2[0];
+            }
+        } else if(typePlace.equals("transport")) {
+            if (address.contains(":")) {
+                addressArray = address.split(":");
+                if (addressArray[1].contains(",")) {
                     addressArray2 = addressArray[1].split(",");
                     address = addressArray2[1];
                 } else {
                     address = addressArray[1];
                 }
+            }
         }
-        if(address.contains(" ")) {
+        if (address.contains(" ")) {
             address = address.replace(" ", "");
         }
         //final String API_KEY = "AIzaSyA6NVXllfUxwrhX0kqaeGD9usn12uY8fgQ";
+        final String SERVER_KEY = "AIzaSyClw9c3Y2GmjjNqlBJqJAcuofhMWMLJ2sE";
         String API_URL = "https://maps.googleapis.com/maps/api/geocode/json?language=es";
-        String typePlace = "";
-        Integer[] location = new Integer[2]; // = new ArrayList<Integer>()
+        Double[] location = new Double[2];
         try {
             JSONObject jsonObject = new JSONObject();
             jsonObject.put("address", address);
@@ -305,7 +315,7 @@ public class DB_place {
 
             jsonString = URLEncoder.encode(jsonString, "UTF-8");
 
-            String parameters = "&address=" + address; // + "&key=" + API_KEY // + "&region=fr"
+            String parameters = "&address=" + address + "&key=" + SERVER_KEY;
             String urlStr = API_URL + parameters;
             URL url = new URL(urlStr);
 
@@ -345,16 +355,19 @@ public class DB_place {
                     String statusResponse = object.getString("status");
                     if(statusResponse.equals("OK")) {
                         if(response.toString().contains("results") && response.toString().contains("geometry") ) {
-                            //Object locationObject = object.getJSONObject("location");
-                            JSONArray results = object.getJSONArray("results");
-                            JSONArray formattedAddress = results.getJSONArray(3);
-                            //JSONObject locationArr = results.getJSONObject("location");
-                            //String latitud = results.getStr
-                            //Integer longitud = object.getString("lng");
-                            //Integer latitudInt = Integer.valueOf(latitud);
-                            //Integer longitudInt = Integer.valueOf(longitud);
-                            //location[0] = latitudInt;
-                            //location[1] = longitudInt;
+                            try {
+                                JSONObject jsonObject2 = new JSONObject(response.toString());
+                                JSONArray results = jsonObject2.getJSONArray("results");
+                                JSONObject jo = results.getJSONObject(0);
+                                JSONObject geometry = jo.getJSONObject("geometry");
+                                JSONObject location2 = geometry.getJSONObject("location");
+                                String lat = location2.optString("lat");
+                                String longit = location2.optString("lng");
+                                location[0] = Double.valueOf(lat);
+                                location[1] = Double.valueOf(longit);
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
                         }
                     }
                 }

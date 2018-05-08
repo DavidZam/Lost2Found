@@ -247,7 +247,32 @@
 		    	disconnectDB($connection);
 	        	return $rawdata;
 		}
-		
+
+		function getPlaceId($id) {
+			$connection = connectDB();
+
+			$sql = mysqli_prepare($connection, "SELECT idLugar FROM anuncio_objeto WHERE id = ?");
+			mysqli_stmt_bind_param($sql, "i", $id);
+
+			$query = $sql->execute();
+
+			if(!$query)
+		        die();
+
+			$result = $sql->store_result();
+			$realresult = $sql->bind_result($placeId);
+			$sql->fetch();
+
+			$rawdata = array();
+                        $correct = $query;
+                        $rawdata['param1'] = utf8_encode($placeId);
+                        $rawdata['correct'] = $correct;
+
+
+	        disconnectDB($connection);
+	        
+		    return $rawdata;
+		}		
 		
 	}
 ?>

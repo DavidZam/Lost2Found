@@ -144,5 +144,82 @@
             	disconnectDB($connection);
             	return $rawdata;
 	    }
+
+	    function getType($id) {
+			$id2 = $id;
+			$id3 = $id;
+            $connection = connectDB();
+
+            $sql = mysqli_prepare($connection, "SELECT * FROM lugar_concreto WHERE idLugar = ?");
+            mysqli_stmt_bind_param($sql, "s", $id);
+
+            $query = $sql->execute();
+
+            if(!$query) {
+            	die();
+            } else {
+
+			$result = $sql->store_result();
+
+			$realresult = $sql->bind_result($id, $param1, $param2, $param3);
+
+            $sql->fetch();
+
+			if($sql->num_rows == 0) { // Transporte
+				$sql2 = mysqli_prepare($connection, "SELECT * FROM lugar_transporte WHERE idLugarTte = ?");
+            	mysqli_stmt_bind_param($sql2, "s", $id2);
+
+            	$query2 = $sql2->execute();
+
+				if(!$query2)
+					die();
+
+            	$result2 = $sql2->store_result();
+
+				$realresult2 = $sql2->bind_result($id2, $param12, $param22, $param32);
+
+                $sql2->fetch();
+
+				if($sql2->num_rows > 0) { // Transporte
+					$typePlace = "transport";
+					$rawdata = array();
+                	$correct = $query2;
+                	$rawdata['param1'] = utf8_encode($typePlace);
+                	$rawdata['correct'] = $correct;
+				} else { // Mapa
+					$sql3 = mysqli_prepare($connection, "SELECT * FROM lugar_mapa WHERE idLugar = ?");
+                    mysqli_stmt_bind_param($sql3, "s", $id3);
+
+                    $query3 = $sql3->execute();
+
+					if(!$query3)
+                        die();
+
+                    $result3 = $sql3->store_result();
+
+                    $realresult3 = $sql3->bind_result($id3, $param13, $param23);
+
+                    $sql3->fetch();
+
+					if($sql3->num_rows > 0) { // Mapa
+						$typePlace = "map";
+                        $rawdata = array();
+                        $correct = $query3;
+                        $rawdata['param1'] = utf8_encode($typePlace);
+                        $rawdata['correct'] = $correct;
+					}
+				}
+            } else {
+            	$typePlace = "concrete";
+				$rawdata = array();
+				$correct = $query;
+				$rawdata['param1'] = utf8_encode($typePlace);
+                $rawdata['correct'] = $correct;
+			}
+		}
+        disconnectDB($connection);
+        return $rawdata;
+	    }
+
 	}
 ?>

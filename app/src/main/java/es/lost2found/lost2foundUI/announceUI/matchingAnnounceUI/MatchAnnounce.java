@@ -1,6 +1,7 @@
 package es.lost2found.lost2foundUI.announceUI.matchingAnnounceUI;
 
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -43,8 +44,8 @@ public class MatchAnnounce extends AppCompatActivity {
     private String typePlaceMatchAnnounce;
     private int placeIdOldAnnounce;
     private int placeIdMatchAnnounce;
-    private Integer[] oldAnnounceLocation;
-    private Integer[] matchAnnounceLocation;
+    private Double[] oldAnnounceLatLng;
+    private Double[] matchAnnounceLatLng;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,6 +89,14 @@ public class MatchAnnounce extends AppCompatActivity {
 
     private class getNumberObjectAnnouncesDB extends AsyncTask<String, Void, Integer> {
 
+        private ProgressDialog dialog = new ProgressDialog(MatchAnnounce.this);
+
+        @Override
+        protected void onPreExecute() {
+            this.dialog.setMessage("Cargando...");
+            this.dialog.show();
+        }
+
         @Override
         protected Integer doInBackground(String... strings) {
             return DB_announce.getNumberMatchAnnounces(strings[0], strings[1], strings[2], strings[3], strings[4], strings[5]);
@@ -95,6 +104,7 @@ public class MatchAnnounce extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(Integer numAnnounce) {
+            this.dialog.dismiss();
             processAnnounceScreen(numAnnounce);
         }
     }
@@ -118,6 +128,14 @@ public class MatchAnnounce extends AppCompatActivity {
 
     private class getObjectAnnouncesDB extends AsyncTask<String, Void, Announce[]> {
 
+        private ProgressDialog dialog = new ProgressDialog(MatchAnnounce.this);
+
+        @Override
+        protected void onPreExecute() {
+            this.dialog.setMessage("Cargando...");
+            this.dialog.show();
+        }
+
         @Override
         protected Announce[] doInBackground(String... strings) {
             return DB_announce.getAnnouncesMatch(strings[0], strings[1], strings[2], strings[3], strings[4], strings[5], strings[6]);
@@ -125,52 +143,56 @@ public class MatchAnnounce extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(Announce[] announces) {
+            this.dialog.dismiss();
             updateAdapter(announces, numberAnnounces);
         }
     }
 
     public void updateAdapter(Announce[] announces, Integer numAnnounces) {
-        int color1;
-        int color2 = Color.TRANSPARENT;
-        String coordinates1;
-        String coordinates2 = "";
+        int color1, color2 = Color.TRANSPARENT;
+        String coordinates1 = "", coordinates2 = "";
         Announce oldAnnounce = (Announce) getIntent().getSerializableExtra("match");
         if(oldAnnounce != null) {
             color2 = oldAnnounce.getColor();
             coordinates2 = oldAnnounce.getPlace();
         }
-
-        double colorPercentage;
-        String colorPercentajeDouble;
-        String colorPercentageText;
+        double colorPercentage, distanceDouble;
+        String colorPercentajeDouble, colorPercentageText;
         distancePercentagesList = new ArrayList<>();
         distancesList = new ArrayList<>();
-        String distanceMetres;
-        double distanceDouble;
-        String distancePercentage;
+        String distanceMetres, distancePercentage;
         colorPercentagesList = new ArrayList<>();
         try {
-            // Hacer una funcion que dando el id devuelva el idLugar
-            Integer idOldAnnounce = oldAnnounce.getIdAnuncio();
-            placeIdOldAnnounce = new getPlaceIdByAnnounceIdDB().execute(idOldAnnounce).get();
-            typePlaceOldAnnounce = new getTypePlaceByIdDB().execute(placeIdOldAnnounce).get();
+            Integer idOldAnnounce = oldAnnounce.getIdAnuncio(); // Obtenemos el idAnuncio
+            placeIdOldAnnounce = new getPlaceIdByAnnounceIdDB().execute(idOldAnnounce).get(); // Funcion que devuelve el idLugar dado el idAnuncio
+            typePlaceOldAnnounce = new getTypePlaceByIdDB().execute(placeIdOldAnnounce).get(); // Funcion que devuelve el tipo de lugar (map, concrete o transport) dado el idLugar
         } catch (Exception e) {
             e.printStackTrace();
         }
-        for(int i = 0; i < numAnnounces; i++) {
+        for(int i = 0; i < numAnnounces; i++) { // Para cada uno de los anuncios que hacen match:
             color1 = announces[i].getColor();
-            colorPercentage = getColorPercentage(color1, color2);
+            colorPercentage = getColorPercentage(color1, color2); // Funcion que obtiene el porcentaje de proximidad de dos colores según la distancia euclidea entre ambos
             colorPercentajeDouble = String.valueOf(colorPercentage);
             colorPercentageText = colorPercentajeDouble.substring(0, 5);
             colorPercentagesList.add(i, colorPercentageText);
             try {
-                placeIdMatchAnnounce = new getPlaceIdByAnnounceIdDB().execute(announces[i].getIdAnuncio()).get();
-                typePlaceMatchAnnounce = new getTypePlaceByIdDB().execute(placeIdMatchAnnounce).get();
+                placeIdMatchAnnounce = new getPlaceIdByAnnounceIdDB().execute(announces[i].getIdAnuncio()).get(); // Funcion que devuelve el idLugar dado el idAnuncio
+                typePlaceMatchAnnounce = new getTypePlaceByIdDB().execute(placeIdMatchAnnounce).get(); // Funcion que devuelve el tipo de lugar (map, concrete o transport) dado el idLugar
             } catch (Exception e) {
                 e.printStackTrace();
             }
             if(typePlaceOldAnnounce != null && typePlaceMatchAnnounce != null) {
-                if(typePlaceOldAnnounce.equals("map") && typePlaceMatchAnnounce.equals("map")) { // Si los dos son mapa calculamos la distancia
+                /* Posibilidades tipo de lugar: Transporte, Concrete o Map
+                    OldAnnounce:     MatchAnnounce:     Cálculo:
+                    Transporte      Transporte          (Cálculo LatLng, Cálculo Distancia)
+                    Concrete        Concrete            (Cálculo LatLng, Cálculo Distancia)
+                    Map             Map                 (Cálculo Distancia)
+                    Transporte      Concrete            (Cálculo LatLng, Cálculo Distancia)
+                    Transporte      Map                 (Cálculo LatLng, Cálculo Distancia)
+                    Concrete        Map                 (Cálculo LatLng, Cálculo Distancia)
+                */
+                if (typePlaceOldAnnounce.equals("map") && typePlaceMatchAnnounce.equals("map")) { // Ambos map:
+                    // Calculo distancia
                     coordinates1 = announces[i].getPlace();
                     distanceDouble = getDistance(coordinates1, coordinates2);
                     distanceMetres = String.valueOf(distanceDouble);
@@ -178,24 +200,119 @@ public class MatchAnnounce extends AppCompatActivity {
                     distancePercentage = getDistancePercentage(distanceMetres);
                     distancePercentagesList.add(i, distancePercentage);
                     distancesList.add(i, distanceMetres);
-                } else { // Si alguno o los dos no son mapa:
+                } else { // Cualquier otro caso menos ambos map:
+                    if(typePlaceOldAnnounce.equals("map")) { // Si oldAnnounce es map
+                        coordinates2 = oldAnnounce.getPlace();
+                    } else { // Si oldAnnounce no es map
+                        // Calculo LatLng para oldAnnounce
+                        try {
+                            Double[] tmpArray = new getLatitudeAndLongitudeByAdress().execute(oldAnnounce.getPlace(), typePlaceOldAnnounce).get(); // Conseguimos lat y long a partir de address
+                            oldAnnounceLatLng = Arrays.copyOf(tmpArray, tmpArray.length);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                        coordinates2 = oldAnnounceLatLng[0] + "," + oldAnnounceLatLng[1];
+                    }
+                    if(typePlaceMatchAnnounce.equals("map")) { // Si matchAnnounce es map:
+                        coordinates1 = announces[i].getPlace();
+                    } else { // Si matchAnnounce no es map
+                        // Calculo LatLng para matchAnnounce
+                        try {
+                            Double[] tmpArray = new getLatitudeAndLongitudeByAdress().execute(announces[i].getPlace(), typePlaceMatchAnnounce).get(); // Conseguimos lat y long a partir de address
+                            matchAnnounceLatLng = Arrays.copyOf(tmpArray, tmpArray.length);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                        coordinates1 = matchAnnounceLatLng[0] + "," + matchAnnounceLatLng[1];
+                    }
+                    // Calculo distancia
+                    distanceDouble = getDistance(coordinates1, coordinates2);
+                    distanceMetres = String.valueOf(distanceDouble);
+                    distanceMetres = distanceMetres.substring(0, 6);
+                    distancePercentage = getDistancePercentage(distanceMetres);
+                    distancePercentagesList.add(i, distancePercentage);
+                    distancesList.add(i, distanceMetres);
+                }
+            }
+
+
+                /*else if(typePlaceOldAnnounce.equals("concrete") && typePlaceMatchAnnounce.equals("concrete") || // Uno map, otro concrete o ambos concrete
+                            typePlaceOldAnnounce.equals("concrete") && typePlaceMatchAnnounce.equals("map") ||
+                                typePlaceOldAnnounce.equals("map") && typePlaceMatchAnnounce.equals("concrete")) {
+                    if(typePlaceOldAnnounce.equals("concrete") && typePlaceMatchAnnounce.equals("concrete")) { // ambos concrete
+                        // Calculo LatLng para ambos
+                        try {
+                            Double[] tmpArray = new getLatitudeAndLongitudeByAdress().execute(oldAnnounce.getPlace(), typePlaceOldAnnounce).get(); // Conseguimos lat y long a partir de address
+                            oldAnnounceLatLng = Arrays.copyOf(tmpArray, tmpArray.length);
+                            Double[] tmpArray2 = new getLatitudeAndLongitudeByAdress().execute(announces[i].getPlace(), typePlaceMatchAnnounce).get(); // Conseguimos lat y long a partir de address
+                            matchAnnounceLatLng = Arrays.copyOf(tmpArray2, tmpArray2.length);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                        coordinates1 = matchAnnounceLatLng[0] + "," + matchAnnounceLatLng[1];
+                        coordinates2 = oldAnnounceLatLng[0] + "," + oldAnnounceLatLng[1];
+                    } else if(typePlaceOldAnnounce.equals("concrete")) { // OldAnnounce concrete
+                        // Calculo LatLng para oldAnnounce
+                        try {
+                            Double[] tmpArray = new getLatitudeAndLongitudeByAdress().execute(oldAnnounce.getPlace(), typePlaceOldAnnounce).get(); // Conseguimos lat y long a partir de address
+                            oldAnnounceLatLng = Arrays.copyOf(tmpArray, tmpArray.length);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                        coordinates2 = oldAnnounceLatLng[0] + "," + oldAnnounceLatLng[1];
+                    } else if(typePlaceMatchAnnounce.equals("concrete")) { // matchAnnounce concrete
+                        // Calculo LatLng para matchAnnounce
+                        try {
+                            Double[] tmpArray = new getLatitudeAndLongitudeByAdress().execute(announces[i].getPlace(), typePlaceMatchAnnounce).get(); // Conseguimos lat y long a partir de address
+                            matchAnnounceLatLng = Arrays.copyOf(tmpArray, tmpArray.length);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                        coordinates1 = matchAnnounceLatLng[0] + "," + matchAnnounceLatLng[1];
+                    }
+                    // Calculo distancia
+                    distanceDouble = getDistance(coordinates1, coordinates2);
+                    distanceMetres = String.valueOf(distanceDouble);
+                    distanceMetres = distanceMetres.substring(0, 6);
+                    distancePercentage = getDistancePercentage(distanceMetres);
+                    distancePercentagesList.add(i, distancePercentage);
+                    distancesList.add(i, distanceMetres);
+                    }
+                } else { // Alguno es transporte
+
+                }*/
+
+
+                /*if(typePlaceOldAnnounce.equals("map") && typePlaceMatchAnnounce.equals("map") || // Ambos son map
+                        typePlaceOldAnnounce.equals("concrete") && typePlaceMatchAnnounce.equals("concrete") || // Ambos son concrete
+                            typePlaceOldAnnounce.equals("map") && typePlaceMatchAnnounce.equals("concrete") || // Uno es map y otro concrete
+                                typePlaceOldAnnounce.equals("concrete") && typePlaceMatchAnnounce.equals("map")) { // Uno es concrete y otro map
+                    coordinates1 = announces[i].getPlace();
+                    distanceDouble = getDistance(coordinates1, coordinates2);
+                    distanceMetres = String.valueOf(distanceDouble);
+                    distanceMetres = distanceMetres.substring(0, 6);
+                    distancePercentage = getDistancePercentage(distanceMetres);
+                    distancePercentagesList.add(i, distancePercentage);
+                    distancesList.add(i, distanceMetres);
+                } else { // En otro caso: alguno es transport
                     if(!typePlaceOldAnnounce.equals("map")) {
                         try {
-                            Integer[] tmpArray = new getLatitudeAndLongitudeByAdress().execute(oldAnnounce.getPlace()).get(); // COMPROBAR QUE SE GUARDA
-                            oldAnnounceLocation = Arrays.copyOf(tmpArray, tmpArray.length);
+                            Double[] tmpArray = new getLatitudeAndLongitudeByAdress().execute(oldAnnounce.getPlace()).get(); // Conseguimos lat y long a partir de address
+                            oldAnnounceLatLng = Arrays.copyOf(tmpArray, tmpArray.length);
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
                     }
                     if(!typePlaceMatchAnnounce.equals("map")) {
                         try {
-                            matchAnnounceLocation = new getLatitudeAndLongitudeByAdress().execute(announces[i].getPlace()).get();
+                            matchAnnounceLatLng = new getLatitudeAndLongitudeByAdress().execute(announces[i].getPlace()).get();
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
                     }
                 }
-            }
+            }*/
+
             adapter.insert(listElements, announces[i]);
             listElements++;
             recyclerView.setAdapter(adapter);
@@ -210,32 +327,64 @@ public class MatchAnnounce extends AppCompatActivity {
 
     private class getTypePlaceByIdDB extends AsyncTask<Integer, Void, String> {
 
+        private ProgressDialog dialog = new ProgressDialog(MatchAnnounce.this);
+
+        @Override
+        protected void onPreExecute() {
+            this.dialog.setMessage("Cargando...");
+            this.dialog.show();
+        }
+
         @Override
         protected String doInBackground(Integer... params) {
             return DB_place.getTypePlaceById(params[0]);
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            this.dialog.dismiss();
         }
     }
 
     private class getPlaceIdByAnnounceIdDB extends AsyncTask<Integer, Void, Integer> {
 
+        private ProgressDialog dialog = new ProgressDialog(MatchAnnounce.this);
+
+        @Override
+        protected void onPreExecute() {
+            this.dialog.setMessage("Cargando...");
+            this.dialog.show();
+        }
+
         @Override
         protected Integer doInBackground(Integer... params) {
             return DB_announce.getPlaceIdByAnnounceId(params[0]);
         }
-    }
-
-    private class getLatitudeAndLongitudeByAdress extends AsyncTask<String, Void, Integer[]> {
 
         @Override
-        protected Integer[] doInBackground(String... strings) {
-            return DB_place.callGeocodingGoogleMapsApi(strings[0]);
+        protected void onPostExecute(Integer result) {
+            this.dialog.dismiss();
+        }
+    }
+
+    private class getLatitudeAndLongitudeByAdress extends AsyncTask<String, Void, Double[]> {
+
+        private ProgressDialog dialog = new ProgressDialog(MatchAnnounce.this);
+
+        @Override
+        protected void onPreExecute() {
+            this.dialog.setMessage("Cargando...");
+            this.dialog.show();
         }
 
         @Override
-        protected void onPostExecute(Integer[] latLong) {
-            /*for(int i = 0; i < 1; i++) {
-                oldAnnounceLocation[i] = latLong[i];
-            }*/
+        protected Double[] doInBackground(String... strings) {
+            return DB_place.callGeocodingGoogleMapsApi(strings[0], strings[1]);
+        }
+
+        @Override
+        protected void onPostExecute(Double[] result) {
+            this.dialog.dismiss();
         }
     }
 

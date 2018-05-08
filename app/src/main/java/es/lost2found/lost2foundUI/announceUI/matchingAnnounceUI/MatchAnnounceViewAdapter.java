@@ -115,14 +115,14 @@ public class MatchAnnounceViewAdapter extends RecyclerView.Adapter<AnnounceViewH
                 intent.putExtra("oldAnnounce", oldAnnounce);
                 String percentageColor = colorPercentagesList.get(position);
                 if(typePlaceOldAnnounce != null && typePlaceMatchAnnounce != null) {
-                    if (typePlaceOldAnnounce.equals("map") && typePlaceMatchAnnounce.equals("map")) {
+                    //if (typePlaceOldAnnounce.equals("map") && typePlaceMatchAnnounce.equals("map")) {
                         String distance = distancesList.get(position);
                         String percentageDistance = distancePercentagesList.get(position);
                         intent.putExtra("typePlaceOldAnnounce", typePlaceOldAnnounce);
                         intent.putExtra("typePlaceMatchAnnounce", typePlaceMatchAnnounce);
                         intent.putExtra("distance", distance);
                         intent.putExtra("percentageDistance", percentageDistance);
-                    }
+                    //}
                 }
                 intent.putExtra("percentageColor", percentageColor);
                 intent.putExtra("atributoDeterminante", atrDeterminante);

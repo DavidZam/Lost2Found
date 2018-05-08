@@ -31,9 +31,17 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_marginStart="16sp"
-            android:layout_marginBottom="300dp"
-            android:textAllCaps="false"
-            android:textSize="13sp" />
+            android:layout_marginBottom="280dp"
+            android:textAllCaps="false" />
+
+        <TextView
+            android:id="@+id/distancePercentage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignEnd="@+id/hora"
+            android:layout_marginTop="268sp"
+            android:layout_marginEnd="55dp"
+            android:textAllCaps="false" />
 
         <TextView
             android:id="@+id/hora"
@@ -44,7 +52,7 @@
             android:layout_marginTop="164dp"
             android:text="TextView" />
 
-        <ScrollView
+        <!--<ScrollView
             android:id="@+id/scroll"
             android:layout_width="match_parent"
             android:layout_height="370dp"
@@ -53,12 +61,13 @@
             android:layout_alignParentTop="true"
             android:layout_below="@+id/toolbar_center"
             android:layout_marginTop="57dp"
-            android:scrollbars="vertical">
+            android:scrollbars="vertical">-->
 
             <LinearLayout
                 android:id="@+id/login_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_below="@+id/toolbar_center"
                 android:orientation="vertical"
                 android:padding="16dp">
 
@@ -98,7 +107,7 @@
                     android:id="@+id/usuario"
                     android:layout_width="match_parent"
                     android:layout_height="46dp"
-                    android:layout_marginTop="15sp"
+                    android:layout_marginTop="35sp"
                     android:layout_below="@+id/lugar"
                     android:layout_centerHorizontal="true"
                     android:text="TextView" />
@@ -112,12 +121,12 @@
                     android:text="TextView" />
 
             </LinearLayout>
-        </ScrollView>
+        <!--</ScrollView>-->
 
 
         <RelativeLayout
             android:layout_width="351dp"
-            android:layout_height="185dp"
+            android:layout_height="155dp"
             android:padding="12dp"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true">
