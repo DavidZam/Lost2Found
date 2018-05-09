@@ -2,28 +2,20 @@ package es.lost2found.lost2foundUI.chatUI.chatConcreteUI;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import es.lost2found.R;
-import es.lost2found.entities.Message;
-import es.lost2found.lost2foundUI.announceUI.NewAnnounceActivity;
 import es.lost2found.lost2foundUI.chatUI.ChatActivity;
 
 public class ChatConcrete extends AppCompatActivity {
     private RecyclerView recyclerView;
-    private RecyclerViewAdapter recyclerViewAdapter;
+    private ChatConcreteViewAdapter chatConcreteViewAdapter;
     private DrawerLayout mDrawerLayout;
 
     @Override
@@ -40,24 +32,24 @@ public class ChatConcrete extends AppCompatActivity {
         mDrawerLayout = findViewById(R.id.chat_concrete_layout);
 
         // In this example we fill listMsg with a function fill_with_data(), in the future we'll do it with the database info
-        List<Message> listMsg = new ArrayList<>();
+        /*List<Message> listMsg = new ArrayList<>();
         Message chat = new Message();
         chat.fill_with_data(listMsg);
 
         recyclerView = (RecyclerView) findViewById(R.id.reyclerview_message_list);
-        recyclerViewAdapter = new RecyclerViewAdapter(this, listMsg);
-        recyclerView.setAdapter(recyclerViewAdapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        chatConcreteViewAdapter = new ChatViewAdapter(this, listMsg);
+        recyclerView.setAdapter(chatConcreteViewAdapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));*/
 
-        /*RecyclerViewAdapter adapter = new RecyclerViewAdapter(getApplication(), listMsg);
+        /*ChatViewAdapter adapter = new ChatViewAdapter(getApplication(), listMsg);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));*/
 
-        // Adding a ItemAnimator to the RecyclerView (Optional)
+        /* Adding a ItemAnimator to the RecyclerView (Optional)
         RecyclerView.ItemAnimator itemAnimator = new DefaultItemAnimator();
         itemAnimator.setAddDuration(1000);
         itemAnimator.setRemoveDuration(1000);
-        /*recyclerView.setItemAnimator(itemAnimator);*/
+        recyclerView.setItemAnimator(itemAnimator);*/
 
     }
 

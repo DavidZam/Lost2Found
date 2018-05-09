@@ -14,20 +14,20 @@ import es.lost2found.R;
 import es.lost2found.entities.Chat;
 import es.lost2found.lost2foundUI.chatUI.chatConcreteUI.ChatConcrete;
 
-public class RecyclerViewAdapter extends RecyclerView.Adapter<ChatView_Holder> {
+public class ChatViewAdapter extends RecyclerView.Adapter<ChatViewHolder> {
     List<Chat> listChat = Collections.emptyList();
     Context context;
 
-    public RecyclerViewAdapter(List<Chat> listChat, Context context) {
+    public ChatViewAdapter(List<Chat> listChat, Context context) {
         this.listChat = listChat;
         this.context = context;
     }
 
     @Override
-    public ChatView_Holder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public ChatViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         // Inflate the layout and initialize the View Holder
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_chat, parent, false);
-        ChatView_Holder holder = new ChatView_Holder(v);
+        ChatViewHolder holder = new ChatViewHolder(v);
 
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -58,11 +58,11 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<ChatView_Holder> {
     }
 
     @Override
-    public void onBindViewHolder(ChatView_Holder holder, int position) {
-        // Use the provided ChatView_Holder on the onCreateViewHolder method to populate the current row on the RecycleView
-        holder.chattitle.setText(listChat.get(position).chattitle);
+    public void onBindViewHolder(ChatViewHolder holder, int position) {
+        // Use the provided ChatViewHolder on the onCreateViewHolder method to populate the current row on the RecycleView
+        /*holder.chattitle.setText(listChat.get(position).chattitle);
         holder.lastmsg.setText(listChat.get(position).lastmsg);
-        holder.chaticon.setImageResource(listChat.get(position).chaticon);
+        holder.chaticon.setImageResource(listChat.get(position).chaticon);*/
 
         //animate(holder);
     }

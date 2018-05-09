@@ -14,14 +14,14 @@ import java.util.List;
 import es.lost2found.R;
 import es.lost2found.entities.Message;
 
-public class RecyclerViewAdapter extends RecyclerView.Adapter {
+public class ChatConcreteViewAdapter extends RecyclerView.Adapter {
     private static final int VIEW_TYPE_MESSAGE_SENT = 1;
     private static final int VIEW_TYPE_MESSAGE_RECEIVED = 2;
 
     List<Message> listMsg = Collections.emptyList();
     Context context;
 
-    public RecyclerViewAdapter(Context context, List<Message> listMsg) {
+    public ChatConcreteViewAdapter(Context context, List<Message> listMsg) {
         this.context = context;
         this.listMsg = listMsg;
     }
@@ -73,14 +73,14 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter {
         Message msg = (Message) listMsg.get(position);
         View_Holder vh = (View_Holder) holder;
         vh.bind(msg);
-        // Use the provided ChatView_Holder on the onCreateViewHolder method to populate the current row on the RecycleView
+        // Use the provided ChatViewHolder on the onCreateViewHolder method to populate the current row on the RecycleView
         /*switch(holder.getItemViewType()) {
             case VIEW_TYPE_MESSAGE_SENT:
-                View_Holder vh = (View_Holder) holder;
+                ChatConcreteViewHolder vh = (ChatConcreteViewHolder) holder;
                 vh.bind(msg);
                 break;
             case VIEW_TYPE_MESSAGE_RECEIVED:
-                View_Holder vh = (View_Holder) holder;
+                ChatConcreteViewHolder vh = (ChatConcreteViewHolder) holder;
                 vh.bind(msg);
         }*/
 

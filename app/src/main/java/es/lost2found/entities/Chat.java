@@ -1,28 +1,44 @@
 package es.lost2found.entities;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.io.Serializable;
 
-import es.lost2found.R;
-
-public class Chat {
+public class Chat implements Serializable {
     public String chattitle;
-    public String lastmsg;
-    public int chaticon;
+    public int idUsuario1;
+    public int idUsuario2;
+    public String lastMsg;
 
-    public Chat() {
-        this.chattitle = "";
-        this.lastmsg = "";
-        this.chaticon = 0;
-    }
-
-    Chat(String chattitle, String lastmsg, int chaticon)  {
+    public Chat(String chattitle, int idUsuario1, int idUsuario2, String lastMsg)  {
         this.chattitle = chattitle;
-        this.lastmsg = lastmsg;
-        this.chaticon = chaticon;
+        this.idUsuario1 = idUsuario1;
+        this.idUsuario2 = idUsuario2;
+        this.lastMsg = lastMsg;
     }
 
-    public List<Chat> fill_with_data(List<Chat> chat) {
+    public Chat(Chat chat) {
+        this.chattitle = chat.getChattitle();
+        this.idUsuario1 = chat.getIdUsuario1();
+        this.idUsuario2 = chat.getIdUsuario2();
+        this.lastMsg = chat.getLastMsg();
+    }
+
+    public String getChattitle() {
+        return chattitle;
+    }
+
+    public int getIdUsuario1() {
+        return idUsuario1;
+    }
+
+    public int getIdUsuario2() {
+        return idUsuario2;
+    }
+
+    public String getLastMsg() {
+        return lastMsg;
+    }
+
+    /*public List<Chat> fill_with_data(List<Chat> chat) {
 
         chat.add(new Chat("Chat1", "Mensaje1", R.drawable.ic_chaticon));
         chat.add(new Chat("Chat2", "Mensaje2", R.drawable.ic_chaticon));
@@ -32,5 +48,5 @@ public class Chat {
         chat.add(new Chat("Chat6", "Mensaje6", R.drawable.ic_chaticon));
 
         return chat;
-    }
+    }*/
 }

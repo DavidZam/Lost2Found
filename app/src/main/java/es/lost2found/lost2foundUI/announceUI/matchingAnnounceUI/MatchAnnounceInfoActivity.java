@@ -18,8 +18,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import es.lost2found.R;
+import es.lost2found.database.DB_chat;
 import es.lost2found.database.DB_typeObject;
+import es.lost2found.database.DB_user;
 import es.lost2found.entities.Announce;
+import es.lost2found.entities.Chat;
 import es.lost2found.lost2foundUI.chatUI.chatConcreteUI.ChatConcrete;
 
 public class MatchAnnounceInfoActivity extends AppCompatActivity {
@@ -183,9 +186,40 @@ public class MatchAnnounceInfoActivity extends AppCompatActivity {
     }
 
     public void contactar(View v) {
-        final Intent contacto = new Intent(this, ChatConcrete.class); ////C: he puesto esta clase por poner
+        Announce oldAnnounce = (Announce) getIntent().getSerializableExtra("oldAnnounce");
+        /* Hacerse una funcion que devuelva si existe el chat ya
+         if(ChatYaExiste()) {
+
+         } else { Si no existe: */
+        // Crear un nuevo chat entre los dos usuarios:
+        String user1Name = oldAnnounce.getUserOwner();
+        String user2Name = a.getUserOwner();
+        String titleChat = "Chat de " + user1Name + " y " + user2Name;
+        try {
+            new createNewChatOnDB().execute(titleChat, user1Name, user2Name);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        // Mostrar el nuevo chat creado en ChatConcrete
+        final Intent contacto = new Intent(this, ChatConcrete.class);
         startActivity(contacto);
         finish();
+    }
+
+    private class createNewChatOnDB extends AsyncTask<String, Void, Chat> {
+
+        @Override
+        protected Chat doInBackground(String... strings) {
+            String user1Id = "";
+            String user2Id = "";
+            try {
+                user1Id = DB_user.getIdByName(strings[1]);
+                user2Id = DB_user.getIdByName(strings[2]);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return DB_chat.createNewChat(strings[0], user1Id, user1Id, "");
+        }
     }
 
     @Override

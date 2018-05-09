@@ -1,12 +1,8 @@
 package es.lost2found.entities;
 
-import android.content.SharedPreferences;
-
 import org.json.JSONObject;
 
 import java.io.Serializable;
-
-import es.lost2found.database.DB_user;
 
 public class User implements Serializable {
 
@@ -58,13 +54,5 @@ public class User implements Serializable {
 
     public void setId(Integer id) {
         this.id = id;
-    }
-
-    @Override
-    public String toString() {
-        return "User{" +
-                "email='" + email + '\'' +
-                ", nombre='" + name + '\'' +
-                '}';
     }
 }

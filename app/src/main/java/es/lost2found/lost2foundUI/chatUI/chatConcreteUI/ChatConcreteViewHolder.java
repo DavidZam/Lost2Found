@@ -8,18 +8,14 @@ import android.widget.TextView;
 import es.lost2found.R;
 import es.lost2found.entities.Message;
 
-/**
- * Created by Becario04 on 16/03/2018.
- */
-
-public class View_Holder extends RecyclerView.ViewHolder {
+public class ChatConcreteViewHolder extends RecyclerView.ViewHolder {
 
     ConstraintLayout cl;
     TextView userSender;
     TextView textMsg;
     TextView hourMsg;
 
-    View_Holder(View itemView) {
+    ChatConcreteViewHolder(View itemView) {
         super(itemView);
         cl = (ConstraintLayout) itemView.findViewById(R.id.concrete_chat_layout);
         userSender = (TextView) itemView.findViewById(R.id.userSender);

@@ -8,14 +8,14 @@ import android.widget.TextView;
 
 import es.lost2found.R;
 
-public class ChatView_Holder extends RecyclerView.ViewHolder {
+public class ChatViewHolder extends RecyclerView.ViewHolder {
 
     CardView cv2;
     TextView chattitle;
     TextView lastmsg;
     ImageView chaticon;
 
-    ChatView_Holder(View itemView) {
+    ChatViewHolder(View itemView) {
         super(itemView);
         cv2 = (CardView) itemView.findViewById(R.id.chat_cardView);
         chattitle = (TextView) itemView.findViewById(R.id.chattitle);

@@ -98,6 +98,11 @@ public class AnnounceActivity extends AppCompatActivity implements FloatingActio
                             buscar.putExtra("place", place);
                             startActivity(buscar);
                         }else if(menuItem.getItemId()== R.id.nav_chat) {
+                            Bundle extras = getIntent().getExtras();
+                            if(extras != null) {
+                                String userEmail = extras.getString("email", "");
+                                chat.putExtra("email", userEmail);
+                            }
                             startActivity(chat);
                         }else if(menuItem.getItemId()== R.id.nav_open_data) {
                             startActivity(openData);

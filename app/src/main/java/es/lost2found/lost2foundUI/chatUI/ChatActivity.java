@@ -107,17 +107,23 @@ public class ChatActivity extends AppCompatActivity {
         );
         navView.setCheckedItem(R.id.nav_chat);
 
-        // In this example we fill listChat with a function fill_with_data(), in the future we'll do it with the database info
+        Bundle extras = getIntent().getExtras();
+        if(extras != null) {
+            String userEmail = extras.getString("email", "");
+            //new getNumberChatsDB().execute(userEmail); // Devuelve el numero de chats del usuario en cuestion
+        }
+
+        /* In this example we fill listChat with a function fill_with_data(), in the future we'll do it with the database info
         List<Chat> listChat = new ArrayList<>();
         Chat chat = new Chat();
         chat.fill_with_data(listChat);
 
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.chat_recyclerview);
-        RecyclerViewAdapter adapter = new RecyclerViewAdapter(listChat, getApplication());
+        ChatViewAdapter adapter = new ChatViewAdapter(listChat, getApplication());
         recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));*/
 
-        // Adding a ItemAnimator to the RecyclerView (Optional)
+        /* Adding a ItemAnimator to the RecyclerView (Optional)
         RecyclerView.ItemAnimator itemAnimator = new DefaultItemAnimator();
         itemAnimator.setAddDuration(1000);
         itemAnimator.setRemoveDuration(1000);

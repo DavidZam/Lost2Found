@@ -66,6 +66,34 @@
                         return $rawdata;
                 }
 
+        function getIdByName($name) {
+                        $connection = connectDB();
+
+                        $sql = mysqli_prepare($connection, "SELECT id FROM usuario WHERE nombre = ?");
+                        mysqli_stmt_bind_param($sql, "s", $name);
+
+                        $query = $sql->execute();
+
+                        if(!$query)
+                        die();
+
+                        $result = $sql->store_result();
+
+                        $realresult = $sql->bind_result($id);
+
+                        $rawdata = array();
+
+			$correct = $query;
+
+                        $sql->fetch();
+
+                        $rawdata['id'] = utf8_encode($id);
+			$rawdata['correct'] = $correct;
+
+                        disconnectDB($connection);
+                        return $rawdata;
+                }
+
         function getName($id) {
             $connection = connectDB();
 
