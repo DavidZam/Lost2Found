@@ -30,18 +30,18 @@
             android:id="@+id/chattitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
+            android:layout_centerVertical="true"
             android:layout_toEndOf="@+id/chaticon"
             android:text="Chat"
-            android:textSize="30sp" />
+            android:textSize="26sp" />
 
-        <TextView
+        <!--<TextView
             android:id="@+id/lastmsg"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/chattitle"
             android:layout_toEndOf="@+id/chaticon"
-            android:text="Ultimo msg" />
+            android:text="Ultimo msg" />-->
 
     </RelativeLayout>
 

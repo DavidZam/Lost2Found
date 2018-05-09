@@ -43,6 +43,7 @@ public class AnnounceActivity extends AppCompatActivity implements FloatingActio
     private RecyclerView recyclerView;
     private Integer userNumberAnnounces;
     private String typePlace;
+    private String userName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,8 +70,9 @@ public class AnnounceActivity extends AppCompatActivity implements FloatingActio
                 emailUser.setText(userEmail);
             }
             if (spref.contains("nombre")) {
-                String userName = spref.getString("nombre", "");
-                nameUser.setText(userName);
+                String userName2 = spref.getString("nombre", "");
+                nameUser.setText(userName2);
+                userName = userName2;
             }
         }
 
@@ -100,8 +102,7 @@ public class AnnounceActivity extends AppCompatActivity implements FloatingActio
                         }else if(menuItem.getItemId()== R.id.nav_chat) {
                             Bundle extras = getIntent().getExtras();
                             if(extras != null) {
-                                String userEmail = extras.getString("email", "");
-                                chat.putExtra("email", userEmail);
+                                chat.putExtra("nombre", userName);
                             }
                             startActivity(chat);
                         }else if(menuItem.getItemId()== R.id.nav_open_data) {

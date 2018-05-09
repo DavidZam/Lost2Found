@@ -30,6 +30,8 @@ public class MatchAnnounceInfoActivity extends AppCompatActivity {
     private String colorPercentageText;
     private String distancePercentageText;
     private String distanceText;
+    private Integer user1Id;
+    private Integer user2Id;
     //private String typePlace;
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -187,21 +189,35 @@ public class MatchAnnounceInfoActivity extends AppCompatActivity {
 
     public void contactar(View v) {
         Announce oldAnnounce = (Announce) getIntent().getSerializableExtra("oldAnnounce");
-        /* Hacerse una funcion que devuelva si existe el chat ya
-         if(ChatYaExiste()) {
-
-         } else { Si no existe: */
-        // Crear un nuevo chat entre los dos usuarios:
         String user1Name = oldAnnounce.getUserOwner();
         String user2Name = a.getUserOwner();
         String titleChat = "Chat de " + user1Name + " y " + user2Name;
+        boolean chatExists = false;
+        Chat chat = new Chat();
         try {
-            new createNewChatOnDB().execute(titleChat, user1Name, user2Name);
+            chatExists = new checkIfChatExistsOnDB().execute(user1Name, user2Name).get(); // funcion que devuelve si existe el chat ya
         } catch (Exception e) {
             e.printStackTrace();
         }
+        if(chatExists) { // Si ya existe:
+            try {
+                chat = new getChatFromDB().execute().get(); // Obtenemos una instancia del chat
+                // Obtenemos los mensajes existentes de ese chat en orden:
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } else { // Si no existe:
+        // Creamos un nuevo chat entre los dos usuarios:
+            try {
+                chat = new createNewChatOnDB().execute(titleChat).get(); // Obtenemos una instancia del nuevo chat
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
         // Mostrar el nuevo chat creado en ChatConcrete
         final Intent contacto = new Intent(this, ChatConcrete.class);
+        contacto.putExtra("chat", chat);
         startActivity(contacto);
         finish();
     }
@@ -210,15 +226,34 @@ public class MatchAnnounceInfoActivity extends AppCompatActivity {
 
         @Override
         protected Chat doInBackground(String... strings) {
-            String user1Id = "";
-            String user2Id = "";
+            return DB_chat.createNewChat(strings[0], user1Id, user2Id); // , ""
+        }
+    }
+
+    private class getChatFromDB extends AsyncTask<Void, Void, Chat> {
+
+        @Override
+        protected Chat doInBackground(Void... params) {
+            return DB_chat.getChat(user1Id, user2Id);
+        }
+    }
+
+    private class checkIfChatExistsOnDB extends AsyncTask<String, Void, Boolean> {
+
+        @Override
+        protected Boolean doInBackground(String... strings) {
             try {
-                user1Id = DB_user.getIdByName(strings[1]);
-                user2Id = DB_user.getIdByName(strings[2]);
+                user1Id = Integer.valueOf(DB_user.getIdByName(strings[0])); // Funcion que dado el nombre del usuario devuelve su id
+                user2Id = Integer.valueOf(DB_user.getIdByName(strings[1])); // Funcion que dado el nombre del usuario devuelve su id
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            return DB_chat.createNewChat(strings[0], user1Id, user1Id, "");
+            return DB_chat.checkIfChatAlreadyExists(user1Id, user2Id) || DB_chat.checkIfChatAlreadyExists(user2Id, user1Id); // Hacemos un OR por si ya existe un chat de User1 y User2 pero al reves
+        }
+
+        @Override
+        protected void onPostExecute(Boolean exists) {
+
         }
     }
 

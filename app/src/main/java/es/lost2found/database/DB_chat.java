@@ -21,14 +21,14 @@ public class DB_chat {
 
     private static String SERVER_PATH = "http://jcorreas-hp.fdi.ucm.es/lost2found/database/chat/";
 
-    public static Chat createNewChat(String chatTitle, String idUser1, String idUser2, String lastMsg) {
+    public static Chat createNewChat(String chatTitle, Integer idUser1, Integer idUser2) { // , String lastMsg
         Chat chat = null;
         try {
             JSONObject jsonObject = new JSONObject();
             jsonObject.put("chatTitle", chatTitle);
             jsonObject.put("idUser1", idUser1);
             jsonObject.put("idUser2", idUser2);
-            jsonObject.put("lastMsg", lastMsg);
+            //jsonObject.put("lastMsg", lastMsg);
 
             List list = new LinkedList();
             list.addAll(Arrays.asList(jsonObject));
@@ -70,10 +70,8 @@ public class DB_chat {
                 while ((inputLine = in.readLine()) != null)
                     response.append(inputLine);
 
-                Integer idUser1Int = Integer.valueOf(idUser1);
-                Integer idUser2Int = Integer.valueOf(idUser2);
                 if (response.toString().equals("correct"))
-                    chat = new Chat(chatTitle, idUser1Int, idUser2Int, lastMsg);
+                    chat = new Chat(chatTitle, idUser1, idUser2); // , lastMsg
             } finally {
                 con.disconnect();
             }
@@ -83,5 +81,264 @@ public class DB_chat {
             e.printStackTrace();
         }
         return chat;
+    }
+
+    public static boolean checkIfChatAlreadyExists(Integer idUser1, Integer idUser2) {
+        boolean chatExists = false;
+
+        try {
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("idUser1", idUser1);
+            jsonObject.put("idUser2", idUser2);
+
+            List list = new LinkedList();
+            list.addAll(Arrays.asList(jsonObject));
+            String jsonString = list.toString();
+
+            String urlStr = SERVER_PATH + "checkIfChatExistsJSON.php";
+            URL url = new URL(urlStr);
+
+            HttpURLConnection con = (HttpURLConnection) url.openConnection();
+            con.setRequestMethod("POST");
+            con.setRequestProperty("User-Agent", "your user agent");
+            con.setRequestProperty("Accept-Language", "sp,SP;q=0.5");
+
+            String urlParameters = "json=" + jsonString;
+
+            con.setDoOutput(true);
+            DataOutputStream wr = new DataOutputStream(con.getOutputStream());
+            wr.writeBytes(urlParameters);
+            wr.flush();
+            wr.close();
+
+            InputStream instream;
+
+            int status = con.getResponseCode();
+
+            if (status != HttpURLConnection.HTTP_OK)
+                instream = con.getErrorStream();
+            else
+                instream = con.getInputStream();
+
+            BufferedReader in = new BufferedReader(new InputStreamReader(instream));
+            String inputLine;
+            StringBuffer response = new StringBuffer();
+
+            while((inputLine = in.readLine()) != null)
+                response.append(inputLine);
+
+            in.close();
+
+            if(response.toString().equals("exists")) {
+                chatExists = true;
+            } else if(response.toString().equals("no exists")) {
+                chatExists = false;
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return chatExists;
+    }
+
+    public static Chat getChat(Integer idUser1, Integer idUser2) {
+        Chat chat = new Chat();
+        try {
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("idUser1", idUser1);
+            jsonObject.put("idUser2", idUser2);
+
+            List list = new LinkedList();
+            list.addAll(Arrays.asList(jsonObject));
+            String jsonString = list.toString();
+
+            jsonString = URLEncoder.encode(jsonString, "UTF-8");
+
+            String urlStr = SERVER_PATH + "getChatJSON.php";
+            URL url = new URL(urlStr);
+
+            HttpURLConnection con = (HttpURLConnection) url.openConnection();
+            try {
+                con.setRequestMethod("POST");
+                con.setRequestProperty("User-Agent", "your user agent");
+                con.setRequestProperty("Accept-Language", "sp-SP,sp;q=0.5");
+
+                String urlParameters = "json=" + jsonString;
+
+                con.setDoOutput(true);
+                OutputStream outstream = con.getOutputStream();
+                DataOutputStream wr = new DataOutputStream(outstream);
+                wr.writeBytes(urlParameters);
+                wr.flush();
+                wr.close();
+
+                InputStream instream;
+
+                int status = con.getResponseCode();
+
+                if (status != HttpURLConnection.HTTP_OK)
+                    instream = con.getErrorStream();
+                else
+                    instream = con.getInputStream();
+
+                BufferedReader in = new BufferedReader(new InputStreamReader(instream));
+                String inputLine;
+                StringBuffer response = new StringBuffer();
+
+                while ((inputLine = in.readLine()) != null)
+                    response.append(inputLine);
+
+                JSONObject object = new JSONObject(response.toString());
+                if(object.getBoolean("correct")) {
+                    try {
+                        chat = new Chat(response.toString());
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            } finally {
+                con.disconnect();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return chat;
+    }
+
+    public static Integer getNumberChats(Integer userId) { // Falta crear en el servidor y comprobar que funciona
+        Integer ret = null;
+        try {
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("id", userId);
+
+            List list = new LinkedList();
+            list.addAll(Arrays.asList(jsonObject));
+            String jsonString = list.toString();
+
+            String urlStr = SERVER_PATH + "getNumberUserChatsJSON.php";
+            URL url = new URL(urlStr);
+
+            HttpURLConnection con = (HttpURLConnection) url.openConnection();
+            con.setRequestMethod("POST");
+            con.setRequestProperty("User-Agent", "your user agent");
+            con.setRequestProperty("Accept-Language", "sp,SP;q=0.5");
+
+            String urlParameters = "json=" + jsonString;
+
+            con.setDoOutput(true);
+            DataOutputStream wr = new DataOutputStream(con.getOutputStream());
+            wr.writeBytes(urlParameters);
+            wr.flush();
+            wr.close();
+
+            InputStream instream;
+
+            int status = con.getResponseCode();
+
+            if (status != HttpURLConnection.HTTP_OK)
+                instream = con.getErrorStream();
+            else
+                instream = con.getInputStream();
+
+            BufferedReader in = new BufferedReader(new InputStreamReader(instream));
+            String inputLine;
+            StringBuffer response = new StringBuffer();
+
+            while((inputLine = in.readLine()) != null)
+                response.append(inputLine);
+
+            in.close();
+
+            if(Integer.valueOf(response.toString()) >= 0) {
+                ret = Integer.valueOf(response.toString());
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return  ret;
+    }
+
+    public static Chat[] getChats(Integer userId, Integer numberChats) { // Falta crear en el servidor y comprobar que funciona
+        Chat[] chatsArray = new Chat[numberChats];
+        try {
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("id", userId);
+
+            List list = new LinkedList();
+            list.addAll(Arrays.asList(jsonObject));
+            String jsonString = list.toString();
+
+            String urlStr = SERVER_PATH + "getChatsJSON.php";
+            URL url = new URL(urlStr);
+
+            HttpURLConnection con = (HttpURLConnection) url.openConnection();
+            con.setRequestMethod("POST");
+            con.setRequestProperty("User-Agent", "your user agent");
+            con.setRequestProperty("Accept-Language", "sp,SP;q=0.5");
+
+            String urlParameters = "json=" + jsonString;
+
+            con.setDoOutput(true);
+            DataOutputStream wr = new DataOutputStream(con.getOutputStream());
+            wr.writeBytes(urlParameters);
+            wr.flush();
+            wr.close();
+
+            InputStream instream;
+
+            int status = con.getResponseCode();
+
+            if (status != HttpURLConnection.HTTP_OK)
+                instream = con.getErrorStream();
+            else
+                instream = con.getInputStream();
+
+            BufferedReader in = new BufferedReader(new InputStreamReader(instream));
+            String inputLine;
+            StringBuffer response = new StringBuffer();
+
+            while((inputLine = in.readLine()) != null)
+                response.append(inputLine);
+
+            /*String res = response.toString();
+            String[] chats = res.split("\\.");
+            String text = chats[0].replace("[", "");
+            chats[0] = text;
+            String text2 = chats[chats.length-1].replace("]", "");
+            chats[chats.length-1] = text2;
+
+            for(int i = 0; i < numberChats; i++) {
+                char firstChar = chats[i].charAt(1);
+                if(firstChar == ',') {
+                    chats[i] = chats[i].substring(2, chats[i].length());
+                }
+                JSONObject object = new JSONObject(chats[i]);
+                String idUser =  object.getString("idUsuario");
+                String idAnuncio = object.getString("id");
+                Integer intIdAnuncio = Integer.valueOf(idAnuncio);
+
+                String idLugar = object.getString("idLugar");
+                Integer intIdLugar = Integer.valueOf(idLugar);
+                String place = DB_place.getPlaceNameById(intIdLugar);
+
+                /*String idObjeto = object.getString("id");
+                Integer intIdObjeto = Integer.valueOf(idObjeto);
+                String param = DB_typeObject.getObjectInfoById(intIdObjeto);
+
+                DB_typeObject.listaIdsAnuncios.add(intIdAnuncio);
+
+                Integer intIdUser = Integer.valueOf(idUser);
+                String userOwner = DB_user.getNameById(intIdUser);
+                Chat chat = new Chat(chats[i], userOwner, place, intIdAnuncio); // , param)
+
+                chatsArray[i] = chat;
+            }*/
+
+            in.close();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return chatsArray;
     }
 }

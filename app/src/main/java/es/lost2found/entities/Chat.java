@@ -1,25 +1,43 @@
 package es.lost2found.entities;
 
+import org.json.JSONObject;
+
 import java.io.Serializable;
 
 public class Chat implements Serializable {
     public String chattitle;
     public int idUsuario1;
     public int idUsuario2;
-    public String lastMsg;
+    //public String lastMsg;
 
-    public Chat(String chattitle, int idUsuario1, int idUsuario2, String lastMsg)  {
+    public Chat(String chattitle, int idUsuario1, int idUsuario2)  { // , String lastMsg
         this.chattitle = chattitle;
         this.idUsuario1 = idUsuario1;
         this.idUsuario2 = idUsuario2;
-        this.lastMsg = lastMsg;
+        //this.lastMsg = lastMsg;
     }
 
     public Chat(Chat chat) {
         this.chattitle = chat.getChattitle();
         this.idUsuario1 = chat.getIdUsuario1();
         this.idUsuario2 = chat.getIdUsuario2();
-        this.lastMsg = chat.getLastMsg();
+        //this.lastMsg = chat.getLastMsg();
+    }
+
+    public Chat(String json) {
+        try {
+            JSONObject jObject = new JSONObject(json);
+            this.chattitle = jObject.getString("nombreChat");
+            this.idUsuario1 = jObject.getInt("idUser1");
+            this.idUsuario2 = jObject.getInt("idUser2");
+            //this.lastMsg = jObject.getString("lastMsg");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public Chat() {
+
     }
 
     public String getChattitle() {
@@ -34,9 +52,9 @@ public class Chat implements Serializable {
         return idUsuario2;
     }
 
-    public String getLastMsg() {
+    /*public String getLastMsg() {
         return lastMsg;
-    }
+    }*/
 
     /*public List<Chat> fill_with_data(List<Chat> chat) {
 

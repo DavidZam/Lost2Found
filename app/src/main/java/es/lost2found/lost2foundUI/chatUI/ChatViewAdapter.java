@@ -59,10 +59,8 @@ public class ChatViewAdapter extends RecyclerView.Adapter<ChatViewHolder> {
 
     @Override
     public void onBindViewHolder(ChatViewHolder holder, int position) {
-        // Use the provided ChatViewHolder on the onCreateViewHolder method to populate the current row on the RecycleView
-        /*holder.chattitle.setText(listChat.get(position).chattitle);
-        holder.lastmsg.setText(listChat.get(position).lastmsg);
-        holder.chaticon.setImageResource(listChat.get(position).chaticon);*/
+        holder.chatTitle.setText(listChat.get(position).getChattitle());
+        holder.chaticon.setImageResource(R.drawable.ic_chaticon);
 
         //animate(holder);
     }

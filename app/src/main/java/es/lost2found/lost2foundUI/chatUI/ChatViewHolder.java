@@ -11,15 +11,23 @@ import es.lost2found.R;
 public class ChatViewHolder extends RecyclerView.ViewHolder {
 
     CardView cv2;
-    TextView chattitle;
-    TextView lastmsg;
+    TextView chatTitle;
+    //TextView lastmsg;
     ImageView chaticon;
 
-    ChatViewHolder(View itemView) {
+    public ChatViewHolder(View itemView) {
         super(itemView);
         cv2 = (CardView) itemView.findViewById(R.id.chat_cardView);
-        chattitle = (TextView) itemView.findViewById(R.id.chattitle);
-        lastmsg = (TextView) itemView.findViewById(R.id.lastmsg);
+        chatTitle = (TextView) itemView.findViewById(R.id.chattitle);
+        //lastmsg = (TextView) itemView.findViewById(R.id.lastmsg);
         chaticon = (ImageView) itemView.findViewById(R.id.chaticon);
+    }
+
+    public TextView getChatTitle() {
+        return this.chatTitle;
+    }
+
+    public ImageView getChaticon() {
+        return this.chaticon;
     }
 }

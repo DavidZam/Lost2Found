@@ -2,6 +2,7 @@ package es.lost2found.lost2foundUI.chatUI;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -20,6 +21,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import es.lost2found.R;
+import es.lost2found.database.DB_chat;
+import es.lost2found.database.DB_user;
 import es.lost2found.entities.Chat;
 import es.lost2found.lost2foundUI.announceUI.AnnounceActivity;
 import es.lost2found.lost2foundUI.loginregisterUI.LoginActivity;
@@ -34,6 +37,11 @@ import es.lost2found.lost2foundUI.seekerUI.SeekerActivity;
 public class ChatActivity extends AppCompatActivity {
 
     private DrawerLayout mDrawerLayout;
+    private Integer userNumberChats;
+    private Integer userId = 0;
+    private Integer listElements = 0;
+    private ChatViewAdapter chatAdapter;
+    private RecyclerView recyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,8 +88,6 @@ public class ChatActivity extends AppCompatActivity {
                         menuItem.setChecked(true);
                         mDrawerLayout.closeDrawers();
 
-                        // Add code here to update the UI based on the item selected
-
                         if(menuItem.getItemId()== R.id.nav_home) {
                             startActivity(home);
                         }else if(menuItem.getItemId()== R.id.nav_search) {
@@ -107,28 +113,67 @@ public class ChatActivity extends AppCompatActivity {
         );
         navView.setCheckedItem(R.id.nav_chat);
 
+        List<Chat> chatList = new ArrayList<>();
+
         Bundle extras = getIntent().getExtras();
         if(extras != null) {
-            String userEmail = extras.getString("email", "");
-            //new getNumberChatsDB().execute(userEmail); // Devuelve el numero de chats del usuario en cuestion
+            String userName = extras.getString("nombre", "");
+            new getNumberChatsDB().execute(userName); // Devuelve el numero de chats del usuario en cuestion
         }
 
-        /* In this example we fill listChat with a function fill_with_data(), in the future we'll do it with the database info
-        List<Chat> listChat = new ArrayList<>();
-        Chat chat = new Chat();
-        chat.fill_with_data(listChat);
+        chatAdapter = new ChatViewAdapter(chatList, getApplication());
+        recyclerView = findViewById(R.id.chat_recyclerview);
+        recyclerView.setAdapter(chatAdapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+    }
 
-        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.chat_recyclerview);
-        ChatViewAdapter adapter = new ChatViewAdapter(listChat, getApplication());
-        recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));*/
+    private class getNumberChatsDB extends AsyncTask<String, Void, Integer> {
 
-        /* Adding a ItemAnimator to the RecyclerView (Optional)
-        RecyclerView.ItemAnimator itemAnimator = new DefaultItemAnimator();
-        itemAnimator.setAddDuration(1000);
-        itemAnimator.setRemoveDuration(1000);
-        /*recyclerView.setItemAnimator(itemAnimator);*/
+        @Override
+        protected Integer doInBackground(String... strings) {
+            userId = Integer.valueOf(DB_user.getIdByName(strings[0])); // Funcion que dado el nombre del usuario devuelve su id
+            return DB_chat.getNumberChats(userId);
+        }
 
+        @Override
+        protected void onPostExecute(Integer numChats) {
+            processChatScreen(numChats);
+        }
+    }
+
+    public void processChatScreen(Integer numChats) {
+        if (numChats == 0) {
+            TextView noannounces = findViewById(R.id.without_chats);
+            noannounces.setText(noannounces.getResources().getString(R.string.info_txt3));
+        } else {
+            TextView noannounces = findViewById(R.id.without_chats);
+            noannounces.setText("");
+            userNumberChats = numChats;
+
+            new getChatsDB().execute(userId, userNumberChats); // Devuelve una lista con los chats del usuario en cuestion
+        }
+    }
+
+    private class getChatsDB extends AsyncTask<Integer, Void, Chat[]> {
+
+        @Override
+        protected Chat[] doInBackground(Integer... params) {
+            return DB_chat.getChats(params[0], params[1]);
+        }
+
+        @Override
+        protected void onPostExecute(Chat[] chats) {
+            updateAdapter(chats, userNumberChats);
+        }
+    }
+
+    public void updateAdapter(Chat[] chats, Integer numChats) {
+        for(int i = 0; i < numChats; i++) {
+            chatAdapter.insert(listElements, chats[i]);
+            listElements++;
+        }
+        recyclerView.setAdapter(chatAdapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
 
     @Override

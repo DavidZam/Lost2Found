@@ -49,6 +49,7 @@
 
     <string name="info_txt">¿Todavía no has creado ningún anuncio?\n\n¡Pulsa en el botón (+) y hazlo ya!</string>
     <string name="info_txt2">"De momento no hay objetos similares en nuestra aplicación. Prueba más tarde."</string>
+    <string name="info_txt3">¿Todavía no tienes ningún chat?\n\n¡Pulsa en el contactar cuando hagas un match y crealo ya!</string>
 
     <string name="title_announce_section">Mis anuncios</string>
     <string name="title_chat_section">Mis chats</string>

@@ -8,21 +8,25 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 import es.lost2found.R;
+import es.lost2found.entities.Chat;
 import es.lost2found.entities.Message;
 
 public class ChatConcreteViewAdapter extends RecyclerView.Adapter {
     private static final int VIEW_TYPE_MESSAGE_SENT = 1;
     private static final int VIEW_TYPE_MESSAGE_RECEIVED = 2;
 
-    List<Message> listMsg = Collections.emptyList();
+    List<Message> listMsg = new ArrayList<>();
     Context context;
+    Chat chat;
 
-    public ChatConcreteViewAdapter(Context context, List<Message> listMsg) {
+    public ChatConcreteViewAdapter(Context context, Chat chat, List<Message> listMsg) {
         this.context = context;
+        this.chat = chat;
         this.listMsg = listMsg;
     }
 
