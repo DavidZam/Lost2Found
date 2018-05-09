@@ -300,12 +300,10 @@ public class DB_chat {
             while((inputLine = in.readLine()) != null)
                 response.append(inputLine);
 
-            /*String res = response.toString();
+            String res = response.toString();
             String[] chats = res.split("\\.");
-            String text = chats[0].replace("[", "");
-            chats[0] = text;
-            String text2 = chats[chats.length-1].replace("]", "");
-            chats[chats.length-1] = text2;
+            chats[0] = chats[0].replace("[", "");
+            chats[chats.length-1] = chats[chats.length-1].replace("]", "");
 
             for(int i = 0; i < numberChats; i++) {
                 char firstChar = chats[i].charAt(1);
@@ -313,26 +311,14 @@ public class DB_chat {
                     chats[i] = chats[i].substring(2, chats[i].length());
                 }
                 JSONObject object = new JSONObject(chats[i]);
-                String idUser =  object.getString("idUsuario");
-                String idAnuncio = object.getString("id");
-                Integer intIdAnuncio = Integer.valueOf(idAnuncio);
+                String chatTitle =  object.getString("nombreChat");
+                Integer idUsuario1 =  object.getInt("idUsuario1");
+                Integer idUsuario2 =  object.getInt("idUsuario2");
 
-                String idLugar = object.getString("idLugar");
-                Integer intIdLugar = Integer.valueOf(idLugar);
-                String place = DB_place.getPlaceNameById(intIdLugar);
-
-                /*String idObjeto = object.getString("id");
-                Integer intIdObjeto = Integer.valueOf(idObjeto);
-                String param = DB_typeObject.getObjectInfoById(intIdObjeto);
-
-                DB_typeObject.listaIdsAnuncios.add(intIdAnuncio);
-
-                Integer intIdUser = Integer.valueOf(idUser);
-                String userOwner = DB_user.getNameById(intIdUser);
-                Chat chat = new Chat(chats[i], userOwner, place, intIdAnuncio); // , param)
+                Chat chat = new Chat(chatTitle, idUsuario1, idUsuario2);
 
                 chatsArray[i] = chat;
-            }*/
+            }
 
             in.close();
 

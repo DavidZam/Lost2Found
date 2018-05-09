@@ -20,14 +20,16 @@ public class ChatConcreteViewAdapter extends RecyclerView.Adapter {
     private static final int VIEW_TYPE_MESSAGE_SENT = 1;
     private static final int VIEW_TYPE_MESSAGE_RECEIVED = 2;
 
-    List<Message> listMsg = new ArrayList<>();
-    Context context;
-    Chat chat;
+    private List<Message> listMsg = new ArrayList<>();
+    private Context context;
+    private Chat chat;
+    //private String otherUserName;
 
-    public ChatConcreteViewAdapter(Context context, Chat chat, List<Message> listMsg) {
+    public ChatConcreteViewAdapter(Context context, Chat chat, List<Message> listMsg) { // , String otherUserName
         this.context = context;
         this.chat = chat;
         this.listMsg = listMsg;
+        //this.otherUserName = otherUserName;
     }
 
     @Override

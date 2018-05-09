@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -15,8 +16,9 @@ import es.lost2found.entities.Chat;
 import es.lost2found.lost2foundUI.chatUI.chatConcreteUI.ChatConcrete;
 
 public class ChatViewAdapter extends RecyclerView.Adapter<ChatViewHolder> {
-    List<Chat> listChat = Collections.emptyList();
-    Context context;
+    private List<Chat> listChat;
+    private Context context;
+    private String chatTitle;
 
     public ChatViewAdapter(List<Chat> listChat, Context context) {
         this.listChat = listChat;
@@ -36,6 +38,7 @@ public class ChatViewAdapter extends RecyclerView.Adapter<ChatViewHolder> {
             //View itemView = v.findViewById(R.id.activity_concrete_chat);
             Context context = v.getContext();
             Intent intent = new Intent(context, ChatConcrete.class);
+            intent.putExtra("chatTitle", chatTitle);
             context.startActivity(intent);
 
             /*
@@ -60,8 +63,8 @@ public class ChatViewAdapter extends RecyclerView.Adapter<ChatViewHolder> {
     @Override
     public void onBindViewHolder(ChatViewHolder holder, int position) {
         holder.chatTitle.setText(listChat.get(position).getChattitle());
-        holder.chaticon.setImageResource(R.drawable.ic_chaticon);
-
+        holder.chaticon.setImageResource(R.drawable.ic_comment);
+        chatTitle = listChat.get(position).getChattitle();
         //animate(holder);
     }
 
@@ -86,6 +89,10 @@ public class ChatViewAdapter extends RecyclerView.Adapter<ChatViewHolder> {
         int position = listChat.indexOf(chat);
         listChat.remove(position);
         notifyItemRemoved(position);
+    }
+
+    public List<Chat> getListChats() {
+        return this.listChat;
     }
 
 }

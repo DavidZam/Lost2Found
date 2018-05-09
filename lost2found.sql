@@ -67,7 +67,7 @@ CREATE TABLE tipo (
 
 CREATE TABLE chat (
   id int(4) NOT NULL AUTO_INCREMENT,
-  nombreChat varchar(20) NOT NULL,
+  nombreChat varchar(100) NOT NULL,
   idUsuario1 int(4) NOT NULL,
   idUsuario2 int(4) NOT NULL,
   PRIMARY KEY (id),

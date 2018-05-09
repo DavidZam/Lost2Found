@@ -218,6 +218,7 @@ public class MatchAnnounceInfoActivity extends AppCompatActivity {
         // Mostrar el nuevo chat creado en ChatConcrete
         final Intent contacto = new Intent(this, ChatConcrete.class);
         contacto.putExtra("chat", chat);
+        contacto.putExtra("chatTitle", titleChat);
         startActivity(contacto);
         finish();
     }

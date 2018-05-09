@@ -18,12 +18,14 @@ import es.lost2found.R;
 import es.lost2found.entities.Chat;
 import es.lost2found.entities.Message;
 import es.lost2found.lost2foundUI.chatUI.ChatActivity;
+import es.lost2found.lost2foundUI.typeObjectUI.OtherObjectActivity;
 
 public class ChatConcrete extends AppCompatActivity {
     private RecyclerView recyclerView;
     private ChatConcreteViewAdapter chatConcreteViewAdapter;
     private DrawerLayout mDrawerLayout;
     private Chat chat;
+    private String chatTitle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,7 +43,10 @@ public class ChatConcrete extends AppCompatActivity {
         Intent intent = getIntent();
         if(intent != null) {
             chat = (Chat) intent.getSerializableExtra("chat");
+            chatTitle = intent.getStringExtra("chatTitle");
         }
+
+        getSupportActionBar().setTitle(chatTitle);
 
         // In this example we fill listMsg with a function fill_with_data(), in the future we'll do it with the database info
         /*List<Message> listMsg = new ArrayList<>();
@@ -54,7 +59,8 @@ public class ChatConcrete extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));*/
 
         List<Message> listMsg = new ArrayList<>();
-        chatConcreteViewAdapter = new ChatConcreteViewAdapter(this, chat, listMsg);
+        chatConcreteViewAdapter = new ChatConcreteViewAdapter(this, chat, listMsg); // otherUserName
+        recyclerView = findViewById(R.id.reyclerview_message_list);
         recyclerView.setAdapter(chatConcreteViewAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 

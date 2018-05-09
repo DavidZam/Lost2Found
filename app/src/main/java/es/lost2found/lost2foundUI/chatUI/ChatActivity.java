@@ -115,10 +115,11 @@ public class ChatActivity extends AppCompatActivity {
 
         List<Chat> chatList = new ArrayList<>();
 
-        Bundle extras = getIntent().getExtras();
-        if(extras != null) {
-            String userName = extras.getString("nombre", "");
-            new getNumberChatsDB().execute(userName); // Devuelve el numero de chats del usuario en cuestion
+        if(spref != null) {
+            if (spref.contains("nombre")) {
+                String userName = spref.getString("nombre", "");
+                new getNumberChatsDB().execute(userName); // Devuelve el numero de chats del usuario en cuestion
+            }
         }
 
         chatAdapter = new ChatViewAdapter(chatList, getApplication());
@@ -149,7 +150,6 @@ public class ChatActivity extends AppCompatActivity {
             TextView noannounces = findViewById(R.id.without_chats);
             noannounces.setText("");
             userNumberChats = numChats;
-
             new getChatsDB().execute(userId, userNumberChats); // Devuelve una lista con los chats del usuario en cuestion
         }
     }
