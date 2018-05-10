@@ -23,6 +23,7 @@ public class DB_message {
 
     public static Message createNewMsg(String msgText, String msgHour, Boolean msgRead, Integer idChat, Integer idUser) {
         Message msg = null;
+        String userName = DB_user.getNameById(idUser);
         try {
             JSONObject jsonObject = new JSONObject();
             jsonObject.put("msgText", msgText);
@@ -72,7 +73,7 @@ public class DB_message {
                     response.append(inputLine);
 
                 if (response.toString().equals("correct"))
-                    msg = new Message(msgText, msgHour, msgRead);
+                    msg = new Message(msgText, msgHour, msgRead, userName);
             } finally {
                 con.disconnect();
             }
@@ -190,11 +191,16 @@ public class DB_message {
                     msgs[i] = msgs[i].substring(2, msgs[i].length());
                 }
                 JSONObject object = new JSONObject(msgs[i]);
-                String msgTxt =  object.getString("msgTxt");
-                String msgHour =  object.getString("msgHour");
-                boolean msgRead =  object.getBoolean("msgRead");
-
-                Message msg = new Message(msgTxt, msgHour, msgRead);
+                String msgTxt =  object.getString("texto");
+                String msgHour =  object.getString("horaMsg");
+                Integer leido = object.getInt("leido");
+                Integer idUser = object.getInt("idUsuario");
+                boolean msgRead = false;
+                if(leido.equals(1)) {
+                    msgRead = true;
+                }
+                String userName = DB_user.getNameById(idUser);
+                Message msg = new Message(msgTxt, msgHour, msgRead, userName);
 
                 msgsArray[i] = msg;
             }

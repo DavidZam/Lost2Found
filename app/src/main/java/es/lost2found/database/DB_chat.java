@@ -16,6 +16,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import es.lost2found.entities.Chat;
+import es.lost2found.entities.Message;
 
 public class DB_chat {
 
@@ -392,4 +393,6 @@ public class DB_chat {
         }
         return idChat;
     }
+
+
 }

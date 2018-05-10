@@ -417,8 +417,8 @@ public class MatchAnnounce extends AppCompatActivity {
         Double matchPercentageDouble = 0.0;
 
         // Formula del match...
-        Double colorMultiplier = 0.3;
-        Double distanceMultiplier = 0.6;
+        Double colorMultiplier = 0.35;
+        Double distanceMultiplier = 0.65;
 
         matchPercentageDouble = colorPercentage * colorMultiplier + distancePercentage * distanceMultiplier;
 
@@ -429,11 +429,11 @@ public class MatchAnnounce extends AppCompatActivity {
         // Por cada día más de diferencia se le resta al porcentaje...
         if(oldAnnounce.getAnnounceType().equals("Perdida")) { // oldAnnounceDayInt <= matchAnnounceDayInt
             if(oldAnnounceDayInt - matchAnnounceDayInt <= 3) {
-                matchPercentageDouble += 10.0; // Le sumamos 10 al porcentaje si los anuncios tienen 3 dias o menos de diferencia
+                matchPercentageDouble += 5.0; // Le sumamos 10 al porcentaje si los anuncios tienen 3 dias o menos de diferencia
             }
         } else { // oldAnnounceDayInt >= matchAnnounceDayInt
             if(matchAnnounceDayInt - oldAnnounceDayInt <= 3) {
-                matchPercentageDouble += 10.0; // Le sumamos 10 al porcentaje si los anuncios tienen 3 dias o menos de diferencia
+                matchPercentageDouble += 5.0; // Le sumamos 10 al porcentaje si los anuncios tienen 3 dias o menos de diferencia
             }
         }
 

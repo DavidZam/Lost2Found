@@ -76,7 +76,7 @@ public class ChatConcrete extends AppCompatActivity {
             // Tambien hay que hacer una funcion que me devuelva un array de msgs
         }
 
-        chatConcreteViewAdapter = new ChatConcreteViewAdapter(this, concreteChat, listMsg, sendButton); // otherUserName
+        chatConcreteViewAdapter = new ChatConcreteViewAdapter(this, concreteChat, listMsg, sendButton, userName); // otherUserName
         recyclerView = findViewById(R.id.reyclerview_message_list);
         recyclerView.setAdapter(chatConcreteViewAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -86,13 +86,13 @@ public class ChatConcrete extends AppCompatActivity {
             public void onClick(View v) { // Creamos un nuevo mensaje // Falta guardar los msgs en la bd
                 try {
                     String msgText = chatbox.getText().toString();
-                    if(!msgText.isEmpty()) { // Si no esta vacio:
-                    // FALTA COMPROBAR QUE EL MENSAJE NO ESTE VACIO!
+                    if(!msgText.isEmpty()) { // Si no esta vacio: // Comprobar
                         msg = new createNewChatMsgOnDB().execute(msgText).get(); // Obtenemos una instancia del nuevo chat
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
+                chatbox.setText("");
             }
         });
     }
