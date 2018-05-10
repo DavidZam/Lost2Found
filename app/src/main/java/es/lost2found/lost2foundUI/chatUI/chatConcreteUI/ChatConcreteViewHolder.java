@@ -15,7 +15,7 @@ public class ChatConcreteViewHolder extends RecyclerView.ViewHolder {
     TextView textMsg;
     TextView hourMsg;
 
-    ChatConcreteViewHolder(View itemView) {
+    public ChatConcreteViewHolder(View itemView) {
         super(itemView);
         cl = (ConstraintLayout) itemView.findViewById(R.id.concrete_chat_layout);
         userSender = (TextView) itemView.findViewById(R.id.userSender);
@@ -23,9 +23,15 @@ public class ChatConcreteViewHolder extends RecyclerView.ViewHolder {
         hourMsg = (TextView) itemView.findViewById(R.id.hourMsg);
     }
 
-    void bind(Message msg) {
-        userSender.setText(msg.getUserSender());
-        textMsg.setText(msg.getTextMsg());
-        hourMsg.setText(msg.getHourMsg());
+    public TextView getUserSender() {
+        return userSender;
+    }
+
+    public TextView getTextMsg() {
+        return textMsg;
+    }
+
+    public TextView getHourMsg() {
+        return hourMsg;
     }
 }

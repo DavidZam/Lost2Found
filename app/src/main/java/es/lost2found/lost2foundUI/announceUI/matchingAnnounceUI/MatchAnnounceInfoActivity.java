@@ -219,6 +219,7 @@ public class MatchAnnounceInfoActivity extends AppCompatActivity {
         final Intent contacto = new Intent(this, ChatConcrete.class);
         contacto.putExtra("chat", chat);
         contacto.putExtra("chatTitle", titleChat);
+        contacto.putExtra("userName", user1Name);
         startActivity(contacto);
         finish();
     }
@@ -250,11 +251,6 @@ public class MatchAnnounceInfoActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
             return DB_chat.checkIfChatAlreadyExists(user1Id, user2Id) || DB_chat.checkIfChatAlreadyExists(user2Id, user1Id); // Hacemos un OR por si ya existe un chat de User1 y User2 pero al reves
-        }
-
-        @Override
-        protected void onPostExecute(Boolean exists) {
-
         }
     }
 

@@ -84,8 +84,8 @@ CREATE TABLE chat (
 CREATE TABLE msg (
   id int(4) NOT NULL AUTO_INCREMENT,
   texto text NOT NULL,
-  horaMsg date NOT NULL,
-  leido int(4) DEFAULT NULL,
+  horaMsg varchar(10) NOT NULL,
+  leido tinyint(1) DEFAULT NULL,
   idChat int(4) NOT NULL,
   idUsuario int(4) NOT NULL,
   PRIMARY KEY (id),

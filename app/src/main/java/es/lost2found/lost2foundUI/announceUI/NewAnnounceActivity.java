@@ -167,9 +167,7 @@ public class NewAnnounceActivity extends AppCompatActivity {
         String diaMesAnio = announceDay.getText().toString();
         announceDayText = YYYYMMDD(diaMesAnio);
 
-
-
-        // Hora actual (de creacion del anuncio) FALTA capturar hora actual con date()) actualhour
+        // Hora actual (de creacion del anuncio)
         String actualHour = new SimpleDateFormat("HH:mm").format(Calendar.getInstance().getTime());
 
         // Hora de la pérdida o hallazgo

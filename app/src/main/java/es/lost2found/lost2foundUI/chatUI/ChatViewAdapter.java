@@ -19,10 +19,12 @@ public class ChatViewAdapter extends RecyclerView.Adapter<ChatViewHolder> {
     private List<Chat> listChat;
     private Context context;
     private String chatTitle;
+    private String userName;
 
-    public ChatViewAdapter(List<Chat> listChat, Context context) {
+    public ChatViewAdapter(List<Chat> listChat, Context context, String userName) {
         this.listChat = listChat;
         this.context = context;
+        this.userName = userName;
     }
 
     @Override
@@ -30,32 +32,6 @@ public class ChatViewAdapter extends RecyclerView.Adapter<ChatViewHolder> {
         // Inflate the layout and initialize the View Holder
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_chat, parent, false);
         ChatViewHolder holder = new ChatViewHolder(v);
-
-
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            //View itemView = v.findViewById(R.id.activity_concrete_chat);
-            Context context = v.getContext();
-            Intent intent = new Intent(context, ChatConcrete.class);
-            intent.putExtra("chatTitle", chatTitle);
-            context.startActivity(intent);
-
-            /*
-            int position = holder .getAdapterPosition();
-            // This is org.greenrobot.eventbus
-            Application.getInstance().getEventBus().post(new OnHistoryClickEvent(position));*/
-        }
-        });
-        /*holder .itemView.setOnLongClickListener(new View.OnLongClickListener() {
-        @Override
-        public boolean onLongClick(View v) {
-            int position = holder .getAdapterPosition();
-            // This is org.greenrobot.eventbus
-            Application.getInstance().getEventBus().post(new OnHistoryLongClickEvent(position));
-            return true;
-        }
-        });*/
 
         return holder;
     }
@@ -66,6 +42,25 @@ public class ChatViewAdapter extends RecyclerView.Adapter<ChatViewHolder> {
         holder.chaticon.setImageResource(R.drawable.ic_comment);
         chatTitle = listChat.get(position).getChattitle();
         //animate(holder);
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //View itemView = v.findViewById(R.id.activity_concrete_chat);
+                Context context = v.getContext();
+                Intent intent = new Intent(context, ChatConcrete.class);
+                Chat concreteChat = listChat.get(position);
+                intent.putExtra("userName", userName);
+                intent.putExtra("chat", concreteChat);
+                intent.putExtra("chatTitle", chatTitle);
+                context.startActivity(intent);
+
+            /*
+            int position = holder .getAdapterPosition();
+            // This is org.greenrobot.eventbus
+            Application.getInstance().getEventBus().post(new OnHistoryClickEvent(position));*/
+            }
+        });
     }
 
     @Override

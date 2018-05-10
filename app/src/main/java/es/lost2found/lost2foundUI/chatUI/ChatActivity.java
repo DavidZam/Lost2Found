@@ -42,6 +42,7 @@ public class ChatActivity extends AppCompatActivity {
     private Integer listElements = 0;
     private ChatViewAdapter chatAdapter;
     private RecyclerView recyclerView;
+    private String userName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,7 +68,7 @@ public class ChatActivity extends AppCompatActivity {
                 emailUser.setText(userEmail);
             }
             if (spref.contains("nombre")) {
-                String userName = spref.getString("nombre", "");
+                userName = spref.getString("nombre", "");
                 nameUser.setText(userName);
             }
         }
@@ -115,14 +116,11 @@ public class ChatActivity extends AppCompatActivity {
 
         List<Chat> chatList = new ArrayList<>();
 
-        if(spref != null) {
-            if (spref.contains("nombre")) {
-                String userName = spref.getString("nombre", "");
-                new getNumberChatsDB().execute(userName); // Devuelve el numero de chats del usuario en cuestion
-            }
+        if(userName != null) {
+            new getNumberChatsDB().execute(userName); // Devuelve el numero de chats del usuario en cuestion
         }
 
-        chatAdapter = new ChatViewAdapter(chatList, getApplication());
+        chatAdapter = new ChatViewAdapter(chatList, getApplication(), userName);
         recyclerView = findViewById(R.id.chat_recyclerview);
         recyclerView.setAdapter(chatAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -197,38 +195,4 @@ public class ChatActivity extends AppCompatActivity {
         startActivity(intent);
         finish();
     }
-
-    /**
-     *
-     * @param view
-     */
-    public void chat(View view) {
-        /*EditText editText = (EditText) findViewById(R.id.email);
-        String name = editText.getText().toString();
-
-        editText = (EditText) findViewById(R.id.name);
-        String email= editText.getText().toString();
-
-        editText = (EditText) findViewById(R.id.password);
-        String pass = editText.getText().toString();
-
-        editText = (EditText) findViewById(R.id.repassword);
-        String confirmPass = editText.getText().toString();
-
-        String role = "Student";
-
-        if(name.equalsIgnoreCase("") || email.equalsIgnoreCase("") || pass.equalsIgnoreCase("") || confirmPass.equalsIgnoreCase("")) {
-            this.msgerror = "Please, complete all the fields.";
-            TextView textView = (TextView) findViewById(R.id.user_already_exists);
-            textView.setText(this.msgerror);
-        }
-        else if(!pass.equals(confirmPass)) {
-            this.msgerror = "Passwords doesn't match.";
-            TextView textView = (TextView) findViewById(R.id.user_already_exists);
-            textView.setText(this.msgerror);
-        }
-        //else
-        //new RegisterDB().execute(email, pass, name, role);*/
-    }
-
 }

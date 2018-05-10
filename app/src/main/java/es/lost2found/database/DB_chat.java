@@ -258,7 +258,7 @@ public class DB_chat {
         return  ret;
     }
 
-    public static Chat[] getChats(Integer userId, Integer numberChats) { // Falta crear en el servidor y comprobar que funciona
+    public static Chat[] getChats(Integer userId, Integer numberChats) {
         Chat[] chatsArray = new Chat[numberChats];
         try {
             JSONObject jsonObject = new JSONObject();
@@ -326,5 +326,70 @@ public class DB_chat {
             e.printStackTrace();
         }
         return chatsArray;
+    }
+
+    public static Integer getChatId(Chat chat) {
+        Integer idChat = 0;
+        try {
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("nombreChat", chat.getChattitle());
+            jsonObject.put("idUser1", chat.getIdUsuario1());
+            jsonObject.put("idUser2", chat.getIdUsuario2());
+
+            List list = new LinkedList();
+            list.addAll(Arrays.asList(jsonObject));
+            String jsonString = list.toString();
+
+            jsonString = URLEncoder.encode(jsonString, "UTF-8");
+
+            String urlStr = SERVER_PATH + "getChatIdJSON.php";
+            URL url = new URL(urlStr);
+
+            HttpURLConnection con = (HttpURLConnection) url.openConnection();
+            try {
+                con.setRequestMethod("POST");
+                con.setRequestProperty("User-Agent", "your user agent");
+                con.setRequestProperty("Accept-Language", "sp-SP,sp;q=0.5");
+
+                String urlParameters = "json=" + jsonString;
+
+                con.setDoOutput(true);
+                OutputStream outstream = con.getOutputStream();
+                DataOutputStream wr = new DataOutputStream(outstream);
+                wr.writeBytes(urlParameters);
+                wr.flush();
+                wr.close();
+
+                InputStream instream;
+
+                int status = con.getResponseCode();
+
+                if (status != HttpURLConnection.HTTP_OK)
+                    instream = con.getErrorStream();
+                else
+                    instream = con.getInputStream();
+
+                BufferedReader in = new BufferedReader(new InputStreamReader(instream));
+                String inputLine;
+                StringBuffer response = new StringBuffer();
+
+                while ((inputLine = in.readLine()) != null)
+                    response.append(inputLine);
+
+                JSONObject object = new JSONObject(response.toString());
+                if(object.getBoolean("correct")) {
+                    try {
+                        idChat = object.getInt("id");
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            } finally {
+                con.disconnect();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return idChat;
     }
 }
