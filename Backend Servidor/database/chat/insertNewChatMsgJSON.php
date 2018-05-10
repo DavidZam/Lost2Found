@@ -9,13 +9,14 @@
 	    $json = str_replace("\\", "",$json);
 	    $jsonencode = json_decode($json);
 
-	    $chatTitle = $jsonencode[0]->chatTitle;
-            $idUser1 = $jsonencode[0]->idUser1;
-	    $idUser2 = $jsonencode[0]->idUser2;
-	    //$lastMsg = $jsonencode[0]->lastMsg;
+	    $msgText = $jsonencode[0]->msgText;
+        $msgHour = $jsonencode[0]->msgHour;
+	    $msgRead = $jsonencode[0]->msgRead;
+	    $idChat = $jsonencode[0]->idChat;
+	    $idUser = $jsonencode[0]->idUser;
 
 	    require_once("chatClass.php");
-	    $chatObject = new Chat();
-	    $chatObject->insert($chatTitle, $idUser1, $idUser2); // 2, $lastMsg
+	    $msgObject = new Chat();
+	    $msgObject->insertMsg($msgText, $msgHour, $msgRead, $idChat, $idUser);
 	}
 ?>

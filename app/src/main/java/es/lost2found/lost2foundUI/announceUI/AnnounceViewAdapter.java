@@ -40,26 +40,6 @@ public class AnnounceViewAdapter extends RecyclerView.Adapter<AnnounceViewHolder
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_announce, parent, false);
         AnnounceViewHolder holder = new AnnounceViewHolder(v);
 
-        /*
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            int position = holder .getAdapterPosition();
-            // This is org.greenrobot.eventbus
-            Application.getInstance().getEventBus().post(new OnHistoryClickEvent(position));
-        }
-        });
-        holder .itemView.setOnLongClickListener(new View.OnLongClickListener() {
-        @Override
-        public boolean onLongClick(View v) {
-            int position = holder .getAdapterPosition();
-            // This is org.greenrobot.eventbus
-            Application.getInstance().getEventBus().post(new OnHistoryLongClickEvent(position));
-            return true;
-        }
-        });
-         */
-
         return holder;
     }
 
@@ -107,8 +87,6 @@ public class AnnounceViewAdapter extends RecyclerView.Adapter<AnnounceViewHolder
                 context.startActivity(intent);
             }
         });
-
-        //animate(holder);
     }
 
     @Override
@@ -137,9 +115,4 @@ public class AnnounceViewAdapter extends RecyclerView.Adapter<AnnounceViewHolder
     public List<Announce> getListAnnounce() {
         return this.listAnnounce;
     }
-
-    /*public void animate(RecyclerView.ViewHolder viewHolder) {
-        final Animation animAnticipateOvershoot = AnimationUtils.loadAnimation(context, R.anim.bounce_interpolator);
-        viewHolder.itemView.setAnimation(animAnticipateOvershoot);
-    }*/
 }

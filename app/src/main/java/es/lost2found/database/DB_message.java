@@ -213,4 +213,61 @@ public class DB_message {
         return msgsArray;
     }
 
+    public static Integer getUserIdOwnerOfMsg(Message msg) {
+        Integer idUser = null;
+        try {
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("textMsg", msg.getTextMsg());
+            jsonObject.put("hourMsg", msg.getHourMsg());
+
+            List list = new LinkedList();
+            list.addAll(Arrays.asList(jsonObject));
+            String jsonString = list.toString();
+
+            String urlStr = SERVER_PATH + "getUserIdOwnerOfMsgJSON.php";
+            URL url = new URL(urlStr);
+
+            HttpURLConnection con = (HttpURLConnection) url.openConnection();
+            con.setRequestMethod("POST");
+            con.setRequestProperty("User-Agent", "your user agent");
+            con.setRequestProperty("Accept-Language", "sp,SP;q=0.5");
+
+            String urlParameters = "json=" + jsonString;
+
+            con.setDoOutput(true);
+            DataOutputStream wr = new DataOutputStream(con.getOutputStream());
+            wr.writeBytes(urlParameters);
+            wr.flush();
+            wr.close();
+
+            InputStream instream;
+
+            int status = con.getResponseCode();
+
+            if (status != HttpURLConnection.HTTP_OK)
+                instream = con.getErrorStream();
+            else
+                instream = con.getInputStream();
+
+            BufferedReader in = new BufferedReader(new InputStreamReader(instream));
+            String inputLine;
+            StringBuffer response = new StringBuffer();
+
+            while((inputLine = in.readLine()) != null)
+                response.append(inputLine);
+
+            in.close();
+
+            JSONObject object = new JSONObject(response.toString());
+            Boolean correct = object.getBoolean("correct");
+            if (correct) {
+                idUser = object.getInt("id");
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return  idUser;
+    }
+
 }

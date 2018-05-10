@@ -52,7 +52,7 @@ public class ChatViewAdapter extends RecyclerView.Adapter<ChatViewHolder> {
                 Chat concreteChat = listChat.get(position);
                 intent.putExtra("userName", userName);
                 intent.putExtra("chat", concreteChat);
-                intent.putExtra("chatTitle", chatTitle);
+                intent.putExtra("chatTitle", listChat.get(position).getChattitle());
                 context.startActivity(intent);
 
             /*
