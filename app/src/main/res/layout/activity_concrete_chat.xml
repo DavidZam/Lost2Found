@@ -24,76 +24,78 @@
 
     </android.support.v7.widget.Toolbar>
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/reyclerview_message_list"
-        android:scrollbars="vertical"
-        android:layout_below="@id/toolbar_center"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        />
-        <!--app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"-->
+        <ScrollView
+            android:id="@+id/scroll"
+            android:layout_width="match_parent"
+            android:layout_height="500dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_below="@+id/toolbar_center"
+            android:layout_marginTop="57dp"
+            android:scrollbars="vertical">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/reyclerview_message_list"
+                android:layout_width="match_parent"
+                android:layout_height="500dp"
+                android:layout_marginBottom="100sp"
+                android:scrollbars="vertical" />
+
+        </ScrollView>
 
     </RelativeLayout>
 
-    <android.support.constraint.ConstraintLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
+    <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:id="@+id/concrete_chat_layout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:fitsSystemWindows="true"
         android:theme="@style/Lost2FoundTheme"
         tools:context=".lost2foundUI.chatUI.chatConcreteUI.ChatConcrete">
 
-        <!-- A horizontal line between the chatbox and RecyclerView
         <View
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@color/lineChatColor"
-            android:layout_below="@id/reyclerview_message_list"
-            android:layout_marginBottom="0dp"
-            app:layout_constraintBottom_toTopOf="@+id/layout_chatbox"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"/>-->
+            android:layout_width="match_parent"
+            android:layout_height="8dp"
+            android:background="@color/LightGrey" />
 
         <LinearLayout
             android:id="@+id/layout_chatbox"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:minHeight="48dp"
             android:background="#ffffff"
+            android:minHeight="48dp"
+            android:orientation="horizontal"
+            android:paddingTop="2sp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent">
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent">
 
             <EditText
                 android:id="@+id/edittext_chatbox"
-                android:hint="Enter message"
-                android:background="@android:color/transparent"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:layout_marginBottom="5dp"
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp"
-                android:layout_width="0dp"
                 android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:maxLines="6"/>
+                android:background="@android:color/transparent"
+                android:hint="@string/chat_text"
+                android:maxLines="6" />
 
-            <Button
+            <android.support.design.widget.FloatingActionButton
                 android:id="@+id/button_chatbox_send"
-                android:text="SEND"
-                android:textSize="14sp"
-                android:background="?attr/selectableItemBackground"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:layout_marginEnd="16dp"
                 android:clickable="true"
                 android:focusable="true"
-                android:layout_width="64dp"
-                android:layout_height="48dp"
-                android:gravity="center"
-                android:layout_gravity="bottom" />
+                android:src="@drawable/ic_send"
+                app:backgroundTint="@color/colorPrimary" />
 
         </LinearLayout>
 

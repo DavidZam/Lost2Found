@@ -1,5 +1,6 @@
 package es.lost2found.lost2foundUI.chatUI.chatConcreteUI;
 
+import android.content.Context;
 import android.os.AsyncTask;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -12,6 +13,7 @@ import java.util.List;
 import es.lost2found.R;
 import es.lost2found.database.DB_message;
 import es.lost2found.database.DB_user;
+import es.lost2found.entities.Chat;
 import es.lost2found.entities.Message;
 
 public class ChatConcreteViewAdapter extends RecyclerView.Adapter {
@@ -20,8 +22,10 @@ public class ChatConcreteViewAdapter extends RecyclerView.Adapter {
     private List<Message> listMsg = new ArrayList<>();
     private String actualUser;
     private String userOwner;
+    private Context context;
 
-    public ChatConcreteViewAdapter(List<Message> listMsg, String actualUser) {
+    public ChatConcreteViewAdapter(Context context, List<Message> listMsg, String actualUser) {
+        this.context = context;
         this.listMsg = listMsg;
         this.actualUser = actualUser;
     }
@@ -33,12 +37,16 @@ public class ChatConcreteViewAdapter extends RecyclerView.Adapter {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        if(userOwner.equals(actualUser)) {
-            // If the current user is the sender of the message
-            return VIEW_TYPE_MESSAGE_SENT;
+        if(userOwner != null) {
+            if(!userOwner.equals(actualUser)) {
+                // If the current user is the sender of the message
+                return VIEW_TYPE_MESSAGE_SENT;
+            } else {
+                // If some other user sent the message
+                return VIEW_TYPE_MESSAGE_RECEIVED;
+            }
         } else {
-            // If some other user sent the message
-            return VIEW_TYPE_MESSAGE_RECEIVED;
+            return VIEW_TYPE_MESSAGE_SENT; // 0
         }
     }
 
@@ -59,7 +67,11 @@ public class ChatConcreteViewAdapter extends RecyclerView.Adapter {
         @Override
         protected String doInBackground(Message... params) {
             Integer idUser = DB_message.getUserIdOwnerOfMsg(params[0]);
-            return DB_user.getNameById(idUser);
+            if(idUser != null) {
+                return DB_user.getNameById(idUser);
+            } else {
+                return null;
+            }
         }
     }
 

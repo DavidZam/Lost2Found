@@ -220,6 +220,9 @@ public class DB_message {
             jsonObject.put("textMsg", msg.getTextMsg());
             jsonObject.put("hourMsg", msg.getHourMsg());
 
+            //jsonObject.put("textMsg", "puedes mirar si tenia una pequeña marca en la esquina superior izquierda?");
+            //jsonObject.put("hourMsg", "11:07");
+
             List list = new LinkedList();
             list.addAll(Arrays.asList(jsonObject));
             String jsonString = list.toString();
@@ -251,17 +254,19 @@ public class DB_message {
 
             BufferedReader in = new BufferedReader(new InputStreamReader(instream));
             String inputLine;
-            StringBuffer response = new StringBuffer();
+            StringBuilder response = new StringBuilder();
 
             while((inputLine = in.readLine()) != null)
                 response.append(inputLine);
 
             in.close();
 
-            JSONObject object = new JSONObject(response.toString());
-            Boolean correct = object.getBoolean("correct");
-            if (correct) {
-                idUser = object.getInt("id");
+            if(response.toString() != "") {
+                JSONObject object = new JSONObject(response.toString());
+                Boolean correct = object.getBoolean("correct");
+                if (correct) {
+                    idUser = object.getInt("id");
+                }
             }
 
         } catch (Exception e) {

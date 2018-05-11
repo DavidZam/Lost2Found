@@ -3,6 +3,7 @@ package es.lost2found.lost2foundUI.chatUI.chatConcreteUI;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -36,11 +37,9 @@ public class ChatConcrete extends AppCompatActivity {
     private Integer listElements = 0;
     private List<Message> listMsg;
     private Integer chatNumberMsgs;
-    private Button sendButton;
     private String chatTitle;
     private Integer chatId;
     private Integer userId;
-    private Message msg;
     private String userName;
     private EditText chatbox;
 
@@ -66,28 +65,32 @@ public class ChatConcrete extends AppCompatActivity {
 
         getSupportActionBar().setTitle(chatTitle);
 
-        sendButton = findViewById(R.id.button_chatbox_send);
         chatbox = findViewById(R.id.edittext_chatbox);
 
         listMsg = new ArrayList<>();
 
         if(concreteChat != null) {
             new getNumberChatMsgsDB().execute(concreteChat); // Devuelve el numero de msgs del chat en cuestion
-            // Tambien hay que hacer una funcion que me devuelva un array de msgs
         }
 
-        chatConcreteViewAdapter = new ChatConcreteViewAdapter(this, concreteChat, listMsg, sendButton, userName); // otherUserName
-        recyclerView = findViewById(R.id.reyclerview_message_list);
-        recyclerView.setAdapter(chatConcreteViewAdapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-
-        sendButton.setOnClickListener(new View.OnClickListener() {
+        FloatingActionButton createMsg = findViewById(R.id.button_chatbox_send);
+        createMsg.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) { // Creamos un nuevo mensaje // Falta guardar los msgs en la bd
+            public void onClick(View v) {
                 try {
                     String msgText = chatbox.getText().toString();
                     if(!msgText.isEmpty()) { // Si no esta vacio: // Comprobar
-                        msg = new createNewChatMsgOnDB().execute(msgText).get(); // Obtenemos una instancia del nuevo chat
+                        boolean validMsg = false;
+                        for(int i = 0; i < msgText.length(); i++) {
+                            char character = msgText.charAt(i);
+                            if(character != ' ') {
+                                validMsg = true;
+                            }
+                        }
+                        if(validMsg)
+                            new createNewChatMsgOnDB().execute(msgText); // Obtenemos una instancia del nuevo chat
+                            refresh(); // Refrescamos la activity para mostrar el nuevo msg
+                            //new getNumberChatMsgsDB().execute(concreteChat); // Volvemos a llamar para ver los mensajes nuevos
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -95,6 +98,20 @@ public class ChatConcrete extends AppCompatActivity {
                 chatbox.setText("");
             }
         });
+
+        chatConcreteViewAdapter = new ChatConcreteViewAdapter(this, listMsg, userName); // otherUserName
+        recyclerView = findViewById(R.id.reyclerview_message_list);
+        recyclerView.setAdapter(chatConcreteViewAdapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+    }
+
+    public void refresh() {
+        Intent intent = getIntent();
+        overridePendingTransition(0, 0);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+        finish();
+        overridePendingTransition(0, 0);
+        startActivity(intent);
     }
 
     private class createNewChatMsgOnDB extends AsyncTask<String, Void, Message> {
@@ -109,10 +126,10 @@ public class ChatConcrete extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(Message msg) {
-            chatConcreteViewAdapter.insert(listElements, msg);
+            /*chatConcreteViewAdapter.insert(listElements, msg);
             listElements++;
             recyclerView.setAdapter(chatConcreteViewAdapter);
-            //recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+            recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));*/
         }
     }
 
@@ -166,38 +183,4 @@ public class ChatConcrete extends AppCompatActivity {
         finish();
         return true;
     }
-
-    /**
-     *
-     * @param view
-     */
-    public void chat_concrete(View view) {
-        /*EditText editText = (EditText) findViewById(R.id.email);
-        String name = editText.getText().toString();
-
-        editText = (EditText) findViewById(R.id.name);
-        String email= editText.getText().toString();
-
-        editText = (EditText) findViewById(R.id.password);
-        String pass = editText.getText().toString();
-
-        editText = (EditText) findViewById(R.id.repassword);
-        String confirmPass = editText.getText().toString();
-
-        String role = "Student";
-
-        if(name.equalsIgnoreCase("") || email.equalsIgnoreCase("") || pass.equalsIgnoreCase("") || confirmPass.equalsIgnoreCase("")) {
-            this.msgerror = "Please, complete all the fields.";
-            TextView textView = (TextView) findViewById(R.id.user_already_exists);
-            textView.setText(this.msgerror);
-        }
-        else if(!pass.equals(confirmPass)) {
-            this.msgerror = "Passwords doesn't match.";
-            TextView textView = (TextView) findViewById(R.id.user_already_exists);
-            textView.setText(this.msgerror);
-        }
-        //else
-        //new RegisterDB().execute(email, pass, name, role);*/
-    }
-
 }
