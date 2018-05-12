@@ -168,7 +168,12 @@ public class SeekerActivity extends AppCompatActivity implements FloatingActionB
         String userName = spref2.getString("nombre", "");
         List<Announce> announceList = new ArrayList<>();
         String parentName = this.getClass().getSimpleName();
-        typePlace = getIntent().getExtras().getString("typePlace");
+
+        Bundle extras = getIntent().getExtras();
+        if(extras != null) {
+            typePlace = extras.getString("typePlace");
+        }
+
         adapter = new AnnounceViewAdapter(announceList, getApplication(), userName, parentName, typePlace);
         recyclerView = findViewById(R.id.search_recyclerview);
         recyclerView.setAdapter(adapter);

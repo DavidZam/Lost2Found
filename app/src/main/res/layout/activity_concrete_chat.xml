@@ -27,19 +27,17 @@
         <ScrollView
             android:id="@+id/scroll"
             android:layout_width="match_parent"
-            android:layout_height="500dp"
+            android:layout_height="550dp"
             android:layout_alignParentEnd="true"
             android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
             android:layout_below="@+id/toolbar_center"
-            android:layout_marginTop="57dp"
+            android:paddingBottom="65dp"
             android:scrollbars="vertical">
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/reyclerview_message_list"
                 android:layout_width="match_parent"
-                android:layout_height="500dp"
-                android:layout_marginBottom="100sp"
+                android:layout_height="495dp"
                 android:scrollbars="vertical" />
 
         </ScrollView>
@@ -56,27 +54,34 @@
         android:theme="@style/Lost2FoundTheme"
         tools:context=".lost2foundUI.chatUI.chatConcreteUI.ChatConcrete">
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="8dp"
-            android:background="@color/LightGrey" />
-
         <LinearLayout
             android:id="@+id/layout_chatbox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#ffffff"
+            android:background="@drawable/linearlayout_border"
             android:minHeight="48dp"
             android:orientation="horizontal"
-            android:paddingTop="2sp"
+            android:paddingTop="5sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent">
 
+            <!--<View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@android:color/darker_gray"/>-->
+
+            <!--<View
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:background="@color/LightGrey"
+                tools:layout_editor_absoluteX="0dp"
+                tools:layout_editor_absoluteY="517dp" />-->
+
             <EditText
                 android:id="@+id/edittext_chatbox"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_gravity="center"
                 android:layout_marginBottom="5dp"
                 android:layout_marginLeft="16dp"
@@ -89,7 +94,7 @@
             <android.support.design.widget.FloatingActionButton
                 android:id="@+id/button_chatbox_send"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_marginBottom="8dp"
                 android:layout_marginEnd="16dp"
                 android:clickable="true"

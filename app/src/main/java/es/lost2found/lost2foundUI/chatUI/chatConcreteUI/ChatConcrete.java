@@ -10,8 +10,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 
@@ -37,11 +40,13 @@ public class ChatConcrete extends AppCompatActivity {
     private Integer listElements = 0;
     private List<Message> listMsg;
     private Integer chatNumberMsgs;
+    private Integer chatNumberTotalMsgs;
     private String chatTitle;
     private Integer chatId;
     private Integer userId;
     private String userName;
     private EditText chatbox;
+    private boolean active = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +58,8 @@ public class ChatConcrete extends AppCompatActivity {
         ActionBar ab = getSupportActionBar();
         ab.setDisplayHomeAsUpEnabled(true);
         ab.setHomeAsUpIndicator(R.drawable.ic_arrow_back);
+
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
 
         mDrawerLayout = findViewById(R.id.chat_concrete_layout);
 
@@ -66,6 +73,21 @@ public class ChatConcrete extends AppCompatActivity {
         getSupportActionBar().setTitle(chatTitle);
 
         chatbox = findViewById(R.id.edittext_chatbox);
+        chatbox.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                active = false; // Si el usuario esta escribiendo evitamos que se recarge la actividad
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                //active = false; // Si el usuario esta escribiendo evitamos que se recarge la actividad
+                //active = true; // Si el usuario ha acabado de escribir establecemos a true que esta activo para recargar la actividad
+            }
+        });
 
         listMsg = new ArrayList<>();
 
@@ -88,9 +110,9 @@ public class ChatConcrete extends AppCompatActivity {
                             }
                         }
                         if(validMsg)
-                            new createNewChatMsgOnDB().execute(msgText); // Obtenemos una instancia del nuevo chat
+                            active = true;
+                            new createNewChatMsgOnDB().execute(msgText); // Obtenemos una instancia del nuevo msg
                             refresh(); // Refrescamos la activity para mostrar el nuevo msg
-                            //new getNumberChatMsgsDB().execute(concreteChat); // Volvemos a llamar para ver los mensajes nuevos
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -103,6 +125,59 @@ public class ChatConcrete extends AppCompatActivity {
         recyclerView = findViewById(R.id.reyclerview_message_list);
         recyclerView.setAdapter(chatConcreteViewAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        // Prueba para intentar actualizar la pantalla de chat cada x segundos
+        //reloadActivity();
+        reloadChat();
+        // Prueba para intentar actualizar la pantalla de chat cada x segundos
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        active = true;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        active = true;
+        reloadChat();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        active = false;
+    }
+
+    public void reloadChat() {
+        Thread t = new Thread() {
+            @Override
+            public void run() {
+                try {
+                    while (!isInterrupted()) {
+                        Thread.sleep(15000); // Actualizamos el chat cada 15 seg por si hay mensajes nuevos...
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                if(active)
+                                    refresh();
+                            }
+                        });
+                    }
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+        t.start();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        active = false;
     }
 
     public void refresh() {
@@ -122,14 +197,6 @@ public class ChatConcrete extends AppCompatActivity {
             chatId = DB_chat.getChatId(concreteChat); // Funcion que dado un chat devuelve su id
             userId = Integer.valueOf(DB_user.getIdByName(userName)); // Funcion que dado el nombre del usuario devuelve su id
             return DB_message.createNewMsg(strings[0], actualHour, false, chatId, userId);
-        }
-
-        @Override
-        protected void onPostExecute(Message msg) {
-            /*chatConcreteViewAdapter.insert(listElements, msg);
-            listElements++;
-            recyclerView.setAdapter(chatConcreteViewAdapter);
-            recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));*/
         }
     }
 
@@ -158,6 +225,7 @@ public class ChatConcrete extends AppCompatActivity {
 
         @Override
         protected Message[] doInBackground(Integer... params) {
+            chatNumberTotalMsgs = chatNumberMsgs;
             return DB_message.getMsgs(params[0], params[1]);
         }
 

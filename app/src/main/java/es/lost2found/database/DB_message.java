@@ -220,9 +220,6 @@ public class DB_message {
             jsonObject.put("textMsg", msg.getTextMsg());
             jsonObject.put("hourMsg", msg.getHourMsg());
 
-            //jsonObject.put("textMsg", "puedes mirar si tenia una pequeña marca en la esquina superior izquierda?");
-            //jsonObject.put("hourMsg", "11:07");
-
             List list = new LinkedList();
             list.addAll(Arrays.asList(jsonObject));
             String jsonString = list.toString();

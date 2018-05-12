@@ -62,7 +62,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="16dp"
-        app:backgroundTint="@color/colorPrimary"
+        app:backgroundTint="@color/color500"
         android:src="@drawable/ic_add"
         android:clickable="true"
         android:focusable="true"/>
