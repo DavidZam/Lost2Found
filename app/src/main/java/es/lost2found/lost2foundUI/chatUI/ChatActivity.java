@@ -5,16 +5,18 @@ import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -25,10 +27,10 @@ import es.lost2found.database.DB_chat;
 import es.lost2found.database.DB_user;
 import es.lost2found.entities.Chat;
 import es.lost2found.lost2foundUI.announceUI.AnnounceActivity;
-import es.lost2found.lost2foundUI.loginregisterUI.LoginActivity;
+import es.lost2found.lost2foundUI.loginUI.LoginActivity;
 import es.lost2found.lost2foundUI.openDataUI.OpenDataActivity;
 import es.lost2found.lost2foundUI.otherUI.AboutUsActivity;
-import es.lost2found.lost2foundUI.otherUI.ConfigurationActivity;
+import es.lost2found.lost2foundUI.otherUI.SettingsActivity;
 import es.lost2found.lost2foundUI.otherUI.ContactActivity;
 import es.lost2found.lost2foundUI.otherUI.HelpActivity;
 import es.lost2found.lost2foundUI.otherUI.RateActivity;
@@ -56,6 +58,11 @@ public class ChatActivity extends AppCompatActivity {
         ab.setHomeAsUpIndicator(R.drawable.ic_menu);
         mDrawerLayout = findViewById(R.id.chat_layout);
 
+        Window window = this.getWindow();
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        window.setStatusBarColor(ContextCompat.getColor(this, R.color.color700));
+
         NavigationView navView = findViewById(R.id.nav_view);
 
         View headerLayout = navView.getHeaderView(0);
@@ -79,7 +86,7 @@ public class ChatActivity extends AppCompatActivity {
         final Intent aboutus = new Intent(this, AboutUsActivity.class);
         final Intent help = new Intent(this, HelpActivity.class);
         final Intent rate = new Intent(this, RateActivity.class);
-        final Intent config = new Intent(this, ConfigurationActivity.class);
+        final Intent config = new Intent(this, SettingsActivity.class);
         final Intent openData = new Intent(this, OpenDataActivity.class);
         navView.setNavigationItemSelectedListener(
                 new NavigationView.OnNavigationItemSelectedListener() {

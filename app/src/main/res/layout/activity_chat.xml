@@ -53,13 +53,13 @@
     </RelativeLayout>
 
     <android.support.design.widget.NavigationView
-        android:layout_marginTop="16dp"
         android:id="@+id/nav_view"
-        android:layout_width="wrap_content"
+        android:layout_width="240dp"
         android:layout_height="wrap_content"
         android:layout_gravity="start"
         android:fitsSystemWindows="true"
         app:menu="@menu/navigate_menu"
+        android:background="@color/White"
         app:headerLayout="@layout/nav_header"
         />
 

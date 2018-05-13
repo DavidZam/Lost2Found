@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -14,9 +15,11 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -30,6 +33,7 @@ import es.lost2found.database.DB_user;
 import es.lost2found.entities.Chat;
 import es.lost2found.entities.Message;
 import es.lost2found.lost2foundUI.chatUI.ChatActivity;
+import es.lost2found.lost2foundUI.openDataUI.OpenDataActivity;
 import es.lost2found.lost2foundUI.typeObjectUI.OtherObjectActivity;
 
 public class ChatConcrete extends AppCompatActivity {
@@ -58,6 +62,11 @@ public class ChatConcrete extends AppCompatActivity {
         ActionBar ab = getSupportActionBar();
         ab.setDisplayHomeAsUpEnabled(true);
         ab.setHomeAsUpIndicator(R.drawable.ic_arrow_back);
+
+        Window window = this.getWindow();
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        window.setStatusBarColor(ContextCompat.getColor(this, R.color.color700));
 
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
 
@@ -181,6 +190,10 @@ public class ChatConcrete extends AppCompatActivity {
     }
 
     public void refresh() {
+        Toast t = Toast.makeText(ChatConcrete.this, "Cargando...", Toast.LENGTH_SHORT);
+        t.setDuration(Toast.LENGTH_SHORT);
+        t.show();
+
         Intent intent = getIntent();
         overridePendingTransition(0, 0);
         intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);

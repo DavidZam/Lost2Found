@@ -6,6 +6,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
@@ -16,6 +17,8 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
@@ -30,10 +33,10 @@ import es.lost2found.entities.Announce;
 import es.lost2found.lost2foundUI.announceUI.AnnounceActivity;
 import es.lost2found.lost2foundUI.announceUI.AnnounceViewAdapter;
 import es.lost2found.lost2foundUI.chatUI.ChatActivity;
-import es.lost2found.lost2foundUI.loginregisterUI.LoginActivity;
+import es.lost2found.lost2foundUI.loginUI.LoginActivity;
 import es.lost2found.lost2foundUI.openDataUI.OpenDataActivity;
 import es.lost2found.lost2foundUI.otherUI.AboutUsActivity;
-import es.lost2found.lost2foundUI.otherUI.ConfigurationActivity;
+import es.lost2found.lost2foundUI.otherUI.SettingsActivity;
 import es.lost2found.lost2foundUI.otherUI.ContactActivity;
 import es.lost2found.lost2foundUI.otherUI.HelpActivity;
 import es.lost2found.lost2foundUI.otherUI.RateActivity;
@@ -72,6 +75,11 @@ public class SeekerActivity extends AppCompatActivity implements FloatingActionB
         ab.setHomeAsUpIndicator(R.drawable.ic_menu);
         mDrawerLayout = findViewById(R.id.drawer_layout);
 
+        Window window = this.getWindow();
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        window.setStatusBarColor(ContextCompat.getColor(this, R.color.color700));
+
         NavigationView navView = findViewById(R.id.nav_view);
 
         SharedPreferences sp = getApplicationContext().getSharedPreferences("announcePlace", 0);
@@ -97,7 +105,7 @@ public class SeekerActivity extends AppCompatActivity implements FloatingActionB
         final Intent aboutus = new Intent(this, AboutUsActivity.class);
         final Intent help = new Intent(this, HelpActivity.class);
         final Intent rate = new Intent(this, RateActivity.class);
-        final Intent config = new Intent(this, ConfigurationActivity.class);
+        final Intent config = new Intent(this, SettingsActivity.class);
         final Intent openData = new Intent(this, OpenDataActivity.class);
 
         navView.setNavigationItemSelectedListener(

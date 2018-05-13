@@ -9,10 +9,9 @@
     </style>
 
     <style name="Lost2FoundTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <!--<item name="colorBlueLight">@color/colorPrimaryLight</item>-->
-        <item name="android:colorBackground">@color/colorSecondaryText</item>
+        <item name="colorPrimary">@color/color500</item>
+        <item name="colorPrimaryDark">@color/color700</item>
+        <item name="android:colorBackground">@color/colorBG</item>
         <item name="android:actionMenuTextColor">@color/colorPrimaryDark</item>
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
@@ -43,7 +42,6 @@
     <style name="ToolbarStyle" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="android:textColorPrimary">@android:color/white</item>
         <item name="android:textColorSecondary">@android:color/white</item>
-        <!--<item name="android:background">@color/colorPrimary</item>-->
         <item name="android:background">@color/color500</item>
     </style>
 

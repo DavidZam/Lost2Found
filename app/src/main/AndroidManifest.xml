@@ -23,7 +23,7 @@
             android:value="AIzaSyDQ9cH4wobBRIuuJ_y4vUEFWGV6S-dhUFQ" />
 
         <activity
-            android:name=".lost2foundUI.loginregisterUI.LoginActivity"
+            android:name=".lost2foundUI.loginUI.LoginActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -32,7 +32,7 @@
         </activity>
 
         <activity
-            android:name=".lost2foundUI.loginregisterUI.RegisterActivity"
+            android:name=".lost2foundUI.registerUI.RegisterActivity"
             android:screenOrientation="portrait" />
 
         <activity
@@ -114,7 +114,7 @@
             android:label="@string/rate_text" />
 
         <activity
-            android:name=".lost2foundUI.otherUI.ConfigurationActivity"
+            android:name=".lost2foundUI.otherUI.SettingsActivity"
             android:screenOrientation="portrait"
             android:label="Configuración" />
 

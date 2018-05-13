@@ -13,6 +13,8 @@ import android.support.v7.widget.Toolbar;
 import android.text.Html;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -26,6 +28,7 @@ import es.lost2found.lost2foundUI.announceUI.matchingAnnounceUI.MatchAnnounce;
 public class SeekerAnnounceInfoActivity extends AppCompatActivity {
     private Announce a;
     private String atributoDeterminante;
+    private boolean openDataMatching = false;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,6 +39,11 @@ public class SeekerAnnounceInfoActivity extends AppCompatActivity {
         ActionBar ab = getSupportActionBar();
         ab.setDisplayHomeAsUpEnabled(true);
         ab.setHomeAsUpIndicator(R.drawable.ic_arrow_back);
+
+        Window window = this.getWindow();
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        window.setStatusBarColor(ContextCompat.getColor(this, R.color.color700));
 
         TextView cat = (TextView) findViewById(R.id.categoria);
         TextView type = (TextView) findViewById(R.id.tipo);
@@ -91,24 +99,30 @@ public class SeekerAnnounceInfoActivity extends AppCompatActivity {
         }
 
         Bundle bundle = getIntent().getExtras();
-        String parentAct = bundle.getString("parentAct");
-        if(parentAct != null) {
-            if (parentAct.equals("seeker")) {
-                Button matchButton = findViewById(R.id.match);
-                matchButton.setVisibility(View.GONE);
+        if(bundle != null) {
+            String parentAct = bundle.getString("parentAct");
+            if(parentAct != null) {
+                if (parentAct.equals("seeker")) {
+                    Button matchButton = findViewById(R.id.match);
+                    matchButton.setVisibility(View.GONE);
+                }
             }
         }
 
-        //String actualUser = getIntent().getStringExtra("actualUser");
+        switch (a.announceCategorie) {
+            case "Telefono": image.setImageResource(R.drawable.ic_phone_android);
+                  break;
+            case "Cartera":  image.setImageResource(R.drawable.ic_wallet);
+                break;
+            case "Otro": image.setImageResource(R.drawable.ic_other);
+                break;
+            default: image.setImageResource(R.drawable.ic_card);
+                break;
+        }
 
-        if(a.announceCategorie.equals("Telefono")){
-            image.setImageResource(R.drawable.ic_phone_android);
-        }else if(a.announceCategorie.equals("Cartera")){
-            image.setImageResource(R.drawable.ic_wallet);
-        }else if(a.announceCategorie.equals("Otro")){
-            image.setImageResource(R.drawable.ic_other);
-        }else{
-            image.setImageResource(R.drawable.ic_card);
+        if(a.announceType.equals("Hallazgo")) {
+            Button openDataButton = findViewById(R.id.open_data_match);
+            openDataButton.setVisibility(View.GONE);
         }
     }
 
@@ -123,7 +137,6 @@ public class SeekerAnnounceInfoActivity extends AppCompatActivity {
         protected void onPostExecute(String dataObject) {
             if(dataObject != null) {
                 TextView param = (TextView) findViewById(R.id.param);
-               // String params[] = dataObject.split(",");
                 if(a.announceCategorie.equals("Telefono")){
                     String params[] = dataObject.split(",");
                     if(params[2].equalsIgnoreCase(" ")) {
@@ -167,38 +180,58 @@ public class SeekerAnnounceInfoActivity extends AppCompatActivity {
     }
 
     public void matching(View v) {
-        String typePlace = getIntent().getExtras().getString("typePlace");
-        final Intent match = new Intent(this, MatchAnnounce.class);
-        match.putExtra("oldAnnounceSet", true);
-        match.putExtra("match", a);
-        match.putExtra("atributoDeterminante", atributoDeterminante);
-        match.putExtra("typePlace", typePlace);
-        startActivity(match);
+        Bundle extras = getIntent().getExtras();
+        if(extras != null) {
+            openDataMatching = false;
+            final Intent match = new Intent(this, MatchAnnounce.class);
+            String typePlace = getIntent().getExtras().getString("typePlace");
+            match.putExtra("openDataMatching", openDataMatching);
+            match.putExtra("typePlace", typePlace);
+            match.putExtra("oldAnnounceSet", true);
+            match.putExtra("match", a);
+            match.putExtra("atributoDeterminante", atributoDeterminante);
+            startActivity(match);
+        }
+        finish();
+    }
+
+    public void open_data_matching(View v) {
+        Bundle extras = getIntent().getExtras();
+        if(extras != null) {
+            openDataMatching = true;
+            final Intent match = new Intent(this, MatchAnnounce.class);
+            match.putExtra("openDataMatching", openDataMatching);
+            match.putExtra("oldAnnounceSet", true);
+            match.putExtra("atributoDeterminante", atributoDeterminante);
+            startActivity(match);
+        }
         finish();
     }
 
     public void delete(View v) {
         // Elimina el anuncio actual
         Bundle bundle = getIntent().getExtras();
-        String parentAct = bundle.getString("parentAct");
-        if(parentAct != null) {
-            if(parentAct.equals("announce")) {
+        if(bundle != null) {
+            String parentAct = bundle.getString("parentAct");
+            if(parentAct != null) {
+                if(parentAct.equals("announce")) {
+                    Intent announce = new Intent(this, AnnounceActivity.class);
+                    Announce an = (Announce) getIntent().getSerializableExtra("myAnnounce");
+                    announce.putExtra("announce", an);
+                    announce.putExtra("delete", a);
+                    startActivity(announce);
+                } else if(parentAct.equals("seeker")) {
+                    Intent seeker = new Intent(this, SeekerActivity.class);
+                    String place = getIntent().getExtras().getString("place");
+                    getIntent().putExtra("place", place);
+                    seeker.putExtra("delete", a);
+                    startActivity(seeker);
+                }
+            } else {
                 Intent announce = new Intent(this, AnnounceActivity.class);
-                Announce an = (Announce) getIntent().getSerializableExtra("myAnnounce");
-                announce.putExtra("announce", an);
                 announce.putExtra("delete", a);
                 startActivity(announce);
-            } else if(parentAct.equals("seeker")) {
-                Intent seeker = new Intent(this, SeekerActivity.class);
-                String place = getIntent().getExtras().getString("place");
-                getIntent().putExtra("place", place);
-                seeker.putExtra("delete", a);
-                startActivity(seeker);
             }
-        } else {
-            Intent announce = new Intent(this, AnnounceActivity.class);
-            announce.putExtra("delete", a);
-            startActivity(announce);
         }
         finish();
     }
@@ -206,22 +239,24 @@ public class SeekerAnnounceInfoActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         Bundle bundle = getIntent().getExtras();
-        String parentAct = bundle.getString("parentAct");
-        if(parentAct != null) {
-            if(parentAct.equals("announce")) {
+        if(bundle != null) {
+            String parentAct = bundle.getString("parentAct");
+            if(parentAct != null) {
+                if(parentAct.equals("announce")) {
+                    Intent announce = new Intent(this, AnnounceActivity.class);
+                    Announce an = (Announce) getIntent().getSerializableExtra("myAnnounce");
+                    announce.putExtra("announce", an);
+                    startActivity(announce);
+                } else if(parentAct.equals("seeker")) {
+                    Intent seeker = new Intent(this, SeekerActivity.class);
+                    String place = getIntent().getExtras().getString("place");
+                    getIntent().putExtra("place", place);
+                    startActivity(seeker);
+                }
+            } else {
                 Intent announce = new Intent(this, AnnounceActivity.class);
-                Announce an = (Announce) getIntent().getSerializableExtra("myAnnounce");
-                announce.putExtra("announce", an);
                 startActivity(announce);
-            } else if(parentAct.equals("seeker")) {
-                Intent seeker = new Intent(this, SeekerActivity.class);
-                String place = getIntent().getExtras().getString("place");
-                getIntent().putExtra("place", place);
-                startActivity(seeker);
             }
-        } else {
-            Intent announce = new Intent(this, AnnounceActivity.class);
-            startActivity(announce);
         }
         finish();
         return true;

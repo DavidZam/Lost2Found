@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
@@ -14,6 +15,8 @@ import android.support.v7.widget.Toolbar;
 import android.util.TypedValue;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -24,11 +27,11 @@ import es.lost2found.database.DB_user;
 import es.lost2found.entities.User;
 import es.lost2found.lost2foundUI.announceUI.AnnounceActivity;
 import es.lost2found.lost2foundUI.chatUI.ChatActivity;
-import es.lost2found.lost2foundUI.loginregisterUI.LoginActivity;
+import es.lost2found.lost2foundUI.loginUI.LoginActivity;
 import es.lost2found.lost2foundUI.openDataUI.OpenDataActivity;
 import es.lost2found.lost2foundUI.seekerUI.SeekerActivity;
 
-public class ConfigurationActivity extends AppCompatActivity {
+public class SettingsActivity extends AppCompatActivity {
 
     private DrawerLayout mDrawerLayout;
     private View headerLayout;
@@ -38,7 +41,7 @@ public class ConfigurationActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_configuration);
+        setContentView(R.layout.activity_settings);
 
         ////
         findViewById(R.id.cambiarNombre).setOnClickListener(view -> createAndDisplayDialogNombre());
@@ -51,6 +54,11 @@ public class ConfigurationActivity extends AppCompatActivity {
         ab.setDisplayHomeAsUpEnabled(true);
         ab.setHomeAsUpIndicator(R.drawable.ic_menu);
         mDrawerLayout = findViewById(R.id.drawer_layout);
+
+        Window window = this.getWindow();
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        window.setStatusBarColor(ContextCompat.getColor(this, R.color.color700));
 
         NavigationView navView = findViewById(R.id.nav_view);
 
@@ -284,7 +292,7 @@ public class ConfigurationActivity extends AppCompatActivity {
     }
 
     private void processUpdate(User user) {
-        Intent intent = new Intent(this, ConfigurationActivity.class);
+        Intent intent = new Intent(this, SettingsActivity.class);
 
         SharedPreferences sp = getApplicationContext().getSharedPreferences("Login", 0);
 

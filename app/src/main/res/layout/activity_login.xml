@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:padding="16dp"
     android:theme="@style/Lost2FoundTheme"
-    tools:context=".lost2foundUI.loginregisterUI.LoginActivity">
+    tools:context=".lost2foundUI.loginUI.LoginActivity">
     <!---->
 
     <LinearLayout

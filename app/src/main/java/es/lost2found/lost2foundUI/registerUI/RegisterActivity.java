@@ -1,4 +1,4 @@
-package es.lost2found.lost2foundUI.loginregisterUI;
+package es.lost2found.lost2foundUI.registerUI;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -13,12 +13,11 @@ import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import org.json.JSONObject;
-
 import es.lost2found.R;
 import es.lost2found.database.DB_user;
 import es.lost2found.entities.User;
 import es.lost2found.lost2foundUI.announceUI.AnnounceActivity;
+import es.lost2found.lost2foundUI.loginUI.LoginActivity;
 
 public class RegisterActivity extends AppCompatActivity {
 

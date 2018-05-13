@@ -1,11 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--<WebView
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/webview"
-    android:layout_height="fill_parent"
-    android:layout_width="fill_parent"/>-->
-
-
 <android.support.v4.widget.DrawerLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -14,40 +7,43 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:theme="@style/Lost2FoundTheme"
-    tools:context=".lost2foundUI.openDataUI.OpenDataActivity">
+    tools:context=".lost2foundUI.announceUI.AnnounceActivity">
 
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".lost2foundUI.openDataUI.OpenDataActivity"
-    tools:showIn="@layout/activity_open_data"
-    android:background="@color/colorSecondaryText">
-
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/toolbar"
+    <RelativeLayout
+        android:id="@+id/content_frame"
         android:layout_width="match_parent"
-        android:layout_height="60sp"
-        android:theme="@style/ToolbarStyle"
-        android:layout_centerHorizontal="true" />
+        android:layout_height="match_parent"
+        android:layout_marginTop="-6dp"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        tools:context=".lost2foundUI.openDataUI.OpenDataActivity"
+        tools:showIn="@layout/activity_open_data"
+        android:background="@color/colorSecondaryText">
 
-    <WebView
-        android:id="@+id/webview"
-        android:layout_below="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
-</RelativeLayout>
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="60sp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:theme="@style/ToolbarStyle" />
+
+        <WebView
+            android:id="@+id/webview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/toolbar" />
+
+    </RelativeLayout>
 
     <android.support.design.widget.NavigationView
         android:id="@+id/nav_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="240dp"
+        android:layout_height="660dp"
         android:layout_gravity="start"
-        android:fitsSystemWindows="true"
+        android:background="@color/White"
         app:menu="@menu/navigate_menu"
         app:headerLayout="@layout/nav_header"
         />
-</android.support.v4.widget.DrawerLayout>
 
+</android.support.v4.widget.DrawerLayout>

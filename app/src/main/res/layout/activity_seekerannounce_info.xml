@@ -40,17 +40,6 @@
             android:onClick="delete"
             android:textSize="16sp" />
 
-        <!--<ScrollView
-            android:id="@+id/scroll"
-            android:layout_width="match_parent"
-            android:layout_height="370dp"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:layout_below="@+id/toolbar_center"
-            android:layout_marginTop="57dp"
-            android:scrollbars="vertical">-->
-
             <LinearLayout
                 android:id="@+id/login_layout"
                 android:layout_width="match_parent"
@@ -62,62 +51,39 @@
                 <TextView
                     android:id="@+id/categoria"
                     android:layout_width="match_parent"
-                    android:layout_height="46dp"
-                    android:layout_alignParentTop="true"
-                    android:layout_centerHorizontal="true"
-                    android:text="TextView" />
+                    android:layout_height="46dp" />
 
                 <TextView
                     android:id="@+id/tipo"
                     android:layout_width="match_parent"
-                    android:layout_height="46dp"
-                    android:layout_below="@+id/categoria"
-                    android:layout_centerHorizontal="true"
-                    android:text="TextView" />
+                    android:layout_height="46dp" />
 
                 <TextView
                     android:id="@+id/dia"
                     android:layout_width="match_parent"
-                    android:layout_height="46dp"
-                    android:layout_below="@+id/tipo"
-                    android:layout_centerHorizontal="true"
-                    android:text="TextView" />
+                    android:layout_height="46dp"/>
 
                 <TextView
                     android:id="@+id/hora"
                     android:layout_width="match_parent"
-                    android:layout_height="46dp"
-                    android:layout_below="@+id/dia"
-                    android:layout_centerHorizontal="true"
-                    android:text="TextView" />
+                    android:layout_height="46dp" />
 
                 <TextView
                     android:id="@+id/lugar"
                     android:layout_width="match_parent"
-                    android:layout_height="64dp"
-                    android:layout_below="@+id/hora"
-                    android:layout_centerHorizontal="true"
-                    android:text="TextView" />
+                    android:layout_height="64dp"/>
 
                 <TextView
                     android:id="@+id/usuario"
                     android:layout_width="match_parent"
-                    android:layout_height="46dp"
-                    android:layout_below="@+id/lugar"
-                    android:layout_centerHorizontal="true"
-                    android:text="TextView" />
+                    android:layout_height="46dp" />
 
                 <TextView
                     android:id="@+id/param"
                     android:layout_width="354dp"
-                    android:layout_height="65dp"
-                    android:layout_below="@+id/usuario"
-                    android:layout_centerHorizontal="true"
-                    android:text="TextView" />
+                    android:layout_height="65dp" />
 
             </LinearLayout>
-        <!--</ScrollView>-->
-
 
         <RelativeLayout
             android:layout_width="351dp"
@@ -132,20 +98,33 @@
                 style="@style/buttonStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/imageinfoannounce"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="26dp"
+                android:layout_marginTop="65sp"
+                android:layout_alignEnd="@+id/imageinfoannounce"
                 android:onClick="matching"
                 android:padding="10dp"
-                android:text="Buscar coincidencias"
+                android:text="@string/match1"
                 android:textSize="16sp" />
+
+            <Button
+                android:id="@+id/open_data_match"
+                style="@style/buttonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_below="@+id/imageinfoannounce"
+                android:layout_marginEnd="12dp"
+                android:layout_marginTop="27dp"
+                android:onClick="open_data_matching"
+                android:padding="10dp"
+                android:text="@string/match2"
+                android:textSize="16sp" />
+
             <TextView
                 android:id="@+id/colorTexto"
                 android:layout_width="74dp"
                 android:layout_height="27dp"
                 android:layout_marginTop="2sp"
                 android:layout_alignParentStart="true"
-                android:text="c"
                 android:textAllCaps="false" />
 
             <es.lost2found.lost2foundUI.pickerUI.ColorView

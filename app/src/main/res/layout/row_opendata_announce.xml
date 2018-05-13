@@ -13,8 +13,8 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:colorBackground="@color/colorBG"
-        android:layout_height="132dp"
         android:padding="16dp">
 
         <TextView
@@ -31,7 +31,6 @@
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_centerVertical="true"
-            android:layout_marginEnd="10sp"
             android:src="@drawable/ic_phone_android" />
 
         <TextView
@@ -39,8 +38,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignStart="@+id/categorieAnnounce"
-            android:layout_below="@+id/imageView"
-            android:text="Perdida"
+            android:layout_below="@+id/categorieAnnounce"
+            android:text="Hallazgo"
             android:textSize="20sp" />
 
         <TextView
@@ -72,23 +71,6 @@
             android:text="Tarjeta transporte"
             android:textSize="22sp"
             android:textStyle="bold" />
-
-        <es.lost2found.lost2foundUI.pickerUI.ColorView
-            android:id="@+id/color_view"
-            android:layout_width="32dp"
-            android:layout_height="29dp"
-            android:layout_alignEnd="@+id/matchPercentage"
-            android:layout_alignTop="@+id/announceOwner"
-            android:background="@color/Red" />
-
-        <TextView
-            android:id="@+id/announceOwner"
-            android:layout_width="232dp"
-            android:layout_height="wrap_content"
-            android:layout_alignStart="@+id/announceType"
-            android:layout_centerVertical="true"
-            android:text="Random"
-            android:textSize="19sp" />
 
     </RelativeLayout>
 

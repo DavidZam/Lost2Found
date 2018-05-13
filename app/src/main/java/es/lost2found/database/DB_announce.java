@@ -143,11 +143,6 @@ public class DB_announce {
                 Integer intIdLugar = Integer.valueOf(idLugar);
                 String place = DB_place.getPlaceNameById(intIdLugar);
 
-                /*String idObjeto = object.getString("id");
-                Integer intIdObjeto = Integer.valueOf(idObjeto);
-                String param = DB_typeObject.getObjectInfoById(intIdObjeto);*/
-
-                //////HAY QUE CREAR UNA LISTA DE IDs PARA, CUANDO EL USUARIO SELECCIONA UNO, SACAR ESE
                 DB_typeObject.listaIdsAnuncios.add(intIdAnuncio);
 
 
@@ -169,7 +164,6 @@ public class DB_announce {
     // Id, TipoAnuncio, HoraActual, DiaAnuncio, HoraPerdidaoHallazgo, Modelo, Marca, Color, idUsuario e idLugar, Categoria (NombreTabla)
     public static Announce insertAnnounce(String announceType, String currentTime, String announceDayText, String announceHourText, String color, String idUser, String idPlace, String announceCategorie, String place, String userName) {
         Announce ret = null;
-        String param = "";
         try {
             JSONObject jsonObject = new JSONObject();
             jsonObject.put("announceType", announceType);
@@ -356,9 +350,6 @@ public class DB_announce {
                 String place = DB_place.getPlaceNameById(intIdLugar);
                 String idAnuncio = object.getString("id");
                 Integer intIdAnuncio = Integer.valueOf(idAnuncio);
-                /*String idObjeto = object.getString("id");
-                Integer intIdObjeto = Integer.valueOf(idObjeto);
-                String param = DB_typeObject.getObjectInfoById(intIdObjeto);*/
                 Announce announce = new Announce(announces[i], userOwner, place, intIdAnuncio); // , param
                 announcesArray[i] = announce;
             }
@@ -371,9 +362,6 @@ public class DB_announce {
         return announcesArray;
     }
 
-
-
-    ///////////////////////////////MATCH///////////////////////////////////////
     public static Integer getNumberMatchAnnounces(String email, String categoria, String tipo, String dia, String idAnuncio, String determinante) {
 
         Integer userId = DB_user.getId(email);
@@ -387,7 +375,6 @@ public class DB_announce {
             jsonObject.put("tipoAnuncio", tipo);
             jsonObject.put("diaAnuncio", dia);
             jsonObject.put("idObjeto", idObjeto);
-            //jsonObject.put("idObjeto", idObjeto);
             jsonObject.put("param", determinante);
 
             List list = new LinkedList();
@@ -439,7 +426,6 @@ public class DB_announce {
 
     public static Announce[] getAnnouncesMatch(String email, String categoria, String tipo, String numberAnnounces, String place, String dia, String determinante) {
         Integer numAnnounces = Integer.valueOf(numberAnnounces);
-        //Integer idObjeto = Integer.valueOf(idAnun);
         Integer userId = DB_user.getId(email);
         Announce[] announcesArray = new Announce[numAnnounces];
         try {
@@ -449,8 +435,6 @@ public class DB_announce {
             jsonObject.put("tipoAnuncio", tipo);
             jsonObject.put("diaAnuncio", dia);
             jsonObject.put("param", determinante);
-            //jsonObject.put("idObjeto", idObjeto);
-           // jsonObject.put("param", determinante);
 
             List list = new LinkedList();
             list.addAll(Arrays.asList(jsonObject));
@@ -638,6 +622,89 @@ public class DB_announce {
             e.printStackTrace();
         }
         return idPlace;
+    }
+
+    public static Announce[] getMatchOpenDataAnnounces(String categoria, String dia) {
+        // este metodo devuelve los anuncios del open data despues de filtrarlos por
+        // CALCULAR EL NUMERO DE ANUNCIOS LLAMANDO AL OPEN DATA
+        //Integer numAnnounces = Integer.valueOf(numberAnnounces);
+        //Integer userId = DB_user.getId(email);
+        Announce[] announcesArray = new Announce[20];/*
+        try {
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("id", userId);
+            jsonObject.put("nombreTabla", categoria);
+            jsonObject.put("tipoAnuncio", tipo);
+            jsonObject.put("diaAnuncio", dia);
+            jsonObject.put("param", determinante);
+
+            List list = new LinkedList();
+            list.addAll(Arrays.asList(jsonObject));
+            String jsonString = list.toString();
+
+            String urlStr = SERVER_PATH + "getAnnouncesMatchJSON.php";
+            URL url = new URL(urlStr);
+
+            HttpURLConnection con = (HttpURLConnection) url.openConnection();
+            con.setRequestMethod("POST");
+            con.setRequestProperty("User-Agent", "your user agent");
+            con.setRequestProperty("Accept-Language", "sp,SP;q=0.5");
+
+            String urlParameters = "json=" + jsonString;
+
+            con.setDoOutput(true);
+            DataOutputStream wr = new DataOutputStream(con.getOutputStream());
+            wr.writeBytes(urlParameters);
+            wr.flush();
+            wr.close();
+
+            InputStream instream;
+
+            int status = con.getResponseCode();
+
+            if (status != HttpURLConnection.HTTP_OK)
+                instream = con.getErrorStream();
+            else
+                instream = con.getInputStream();
+
+            BufferedReader in = new BufferedReader(new InputStreamReader(instream));
+            String inputLine;
+            StringBuffer response = new StringBuffer();
+
+            while((inputLine = in.readLine()) != null)
+                response.append(inputLine);
+
+            String res = response.toString();
+            String[] announces = res.split("\\.");
+            String text = announces[0].replace("[", "");
+            announces[0] = text;
+            String text2 = announces[announces.length-1].replace("]", "");
+            announces[announces.length-1] = text2;
+
+            for(int i = 0; i < numAnnounces; i++) {
+                char firstChar = announces[i].charAt(1);
+                if(firstChar == ',') {
+                    announces[i] = announces[i].substring(2, announces[i].length());
+                }
+                JSONObject object = new JSONObject(announces[i]);
+                String idUser =  object.getString("idUsuario");
+                Integer intIdUser = Integer.valueOf(idUser);
+                String userOwner = DB_user.getNameById(intIdUser);
+                String idAnuncio = object.getString("id");
+                Integer intIdAnuncio = Integer.valueOf(idAnuncio);
+                String idLugar = object.getString("idLugar");
+                Integer intIdLugar = Integer.valueOf(idLugar);
+                place = DB_place.getPlaceNameById(intIdLugar);
+                Announce announce = new Announce(announces[i], userOwner, place, intIdAnuncio); // , param
+                announcesArray[i] = announce;
+            }
+
+            in.close();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }*/
+        return announcesArray;
     }
 
 }

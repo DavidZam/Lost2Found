@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -15,6 +16,8 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -47,6 +50,7 @@ public class MatchAnnounce extends AppCompatActivity {
     private int placeIdMatchAnnounce;
     private Double[] oldAnnounceLatLng;
     private Double[] matchAnnounceLatLng;
+    private boolean openDataMatching;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +63,10 @@ public class MatchAnnounce extends AppCompatActivity {
         ab.setDisplayHomeAsUpEnabled(true);
         ab.setHomeAsUpIndicator(R.drawable.ic_arrow_back);
 
+        Window window = this.getWindow();
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        window.setStatusBarColor(ContextCompat.getColor(this, R.color.color700));
 
         SharedPreferences spref2 = getApplicationContext().getSharedPreferences("Login", 0);
         String userEmail = spref2.getString("email", "");
@@ -83,9 +91,50 @@ public class MatchAnnounce extends AppCompatActivity {
 
         a = (Announce) getIntent().getSerializableExtra("match");
 
-        new getNumberObjectAnnouncesDB().execute(userEmail, a.announceCategorie, a.announceType, a.announceDateText, String.valueOf(a.getIdAnuncio()), atributoDeterminante);
+        openDataMatching = getIntent().getBooleanExtra("openDataMatching", false);
+
+        if(openDataMatching) { // Matching con open data
+            new getOpenDataAnnounces().execute(a.announceCategorie, a.announceDateText);
+        } else { // Matching con anuncios de la aplicacion
+            new getNumberObjectAnnouncesDB().execute(userEmail, a.announceCategorie, a.announceType, a.announceDateText, String.valueOf(a.getIdAnuncio()), atributoDeterminante);
+        }
     }
 
+    private class getOpenDataAnnounces extends AsyncTask<String, Void, Announce[]> {
+
+        private ProgressDialog dialog = new ProgressDialog(MatchAnnounce.this);
+
+        @Override
+        protected void onPreExecute() {
+            this.dialog.setMessage("Cargando...");
+            this.dialog.show();
+        }
+
+        @Override
+        protected Announce[] doInBackground(String... strings) {
+            return DB_announce.getMatchOpenDataAnnounces(strings[0], strings[1]);
+        }
+
+        @Override
+        protected void onPostExecute(Announce[] announces) {
+            this.dialog.dismiss();
+            processOpenDataAnnounceScreen(announces);
+        }
+    }
+
+    public void processOpenDataAnnounceScreen(Announce[] announces) {
+        Integer numAnnouncesOpenData = announces.length; // Mirar si es .length o .length - 1
+        if (numAnnouncesOpenData == 0) {
+            TextView noannounces = findViewById(R.id.without_match);
+            noannounces.setText(noannounces.getResources().getString(R.string.info_txt2));
+        } else {
+            TextView noannounces = findViewById(R.id.without_match);
+            noannounces.setText("");
+            // Calcular distancias, actualizar adapter...etc
+
+
+        }
+    }
 
     private class getNumberObjectAnnouncesDB extends AsyncTask<String, Void, Integer> {
 
@@ -119,9 +168,7 @@ public class MatchAnnounce extends AppCompatActivity {
             numberAnnounces = numAnnounces;
             SharedPreferences spref = getApplicationContext().getSharedPreferences("Login", 0);
             String userEmail = spref.getString("email", "");
-
             String place = ""; // Se calcula en la llamada getAnnouncesMatch() de la AsyncTask getObjectAnnouncesDB
-
             new getObjectAnnouncesDB().execute(userEmail, a.announceCategorie, a.announceType, String.valueOf(numberAnnounces), place, a.announceDateText, atributoDeterminante);
         }
     }
@@ -150,7 +197,7 @@ public class MatchAnnounce extends AppCompatActivity {
 
     public void updateAdapter(Announce[] announces, Integer numAnnounces) {
         int color1, color2 = Color.TRANSPARENT;
-        String coordinates1 = "", coordinates2 = "";
+        String coordinates1, coordinates2 = "";
         Announce oldAnnounce = (Announce) getIntent().getSerializableExtra("match");
         if(oldAnnounce != null) {
             color2 = oldAnnounce.getColor();
@@ -164,9 +211,11 @@ public class MatchAnnounce extends AppCompatActivity {
         colorPercentagesList = new ArrayList<>();
         matchPercentagesList = new ArrayList<>();
         try {
-            Integer idOldAnnounce = oldAnnounce.getIdAnuncio(); // Obtenemos el idAnuncio
-            placeIdOldAnnounce = new getPlaceIdByAnnounceIdDB().execute(idOldAnnounce).get(); // Funcion que devuelve el idLugar dado el idAnuncio
-            typePlaceOldAnnounce = new getTypePlaceByIdDB().execute(placeIdOldAnnounce).get(); // Funcion que devuelve el tipo de lugar (map, concrete o transport) dado el idLugar
+            if(oldAnnounce != null) {
+                Integer idOldAnnounce = oldAnnounce.getIdAnuncio(); // Obtenemos el idAnuncio
+                placeIdOldAnnounce = new getPlaceIdByAnnounceIdDB().execute(idOldAnnounce).get(); // Funcion que devuelve el idLugar dado el idAnuncio
+                typePlaceOldAnnounce = new getTypePlaceByIdDB().execute(placeIdOldAnnounce).get(); // Funcion que devuelve el tipo de lugar (map, concrete o transport) dado el idLugar
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -183,32 +232,31 @@ public class MatchAnnounce extends AppCompatActivity {
                 e.printStackTrace();
             }
             if(typePlaceOldAnnounce != null && typePlaceMatchAnnounce != null) {
-                /* Posibilidades tipo de lugar: Transporte, Concrete o Map
-                    OldAnnounce:     MatchAnnounce:     Cálculo:
-                    Transporte      Transporte          (Cálculo LatLng, Cálculo Distancia)
-                    Concrete        Concrete            (Cálculo LatLng, Cálculo Distancia)
-                    Map             Map                 (Cálculo Distancia)
-                    Transporte      Concrete            (Cálculo LatLng, Cálculo Distancia)
-                    Transporte      Map                 (Cálculo LatLng, Cálculo Distancia)
-                    Concrete        Map                 (Cálculo LatLng, Cálculo Distancia)
+                /* Posibilidades segun el tipo de lugar:
+                    Announce:       Cálculo
+                    Map             (Cálculo Distancia)
+                    != Map          (Cálculo LatLng, Cálculo Distancia)
                 */
                 if (typePlaceOldAnnounce.equals("map") && typePlaceMatchAnnounce.equals("map")) { // Ambos map:
                     // Calculo distancia
                     coordinates1 = announces[i].getPlace();
                     distanceDouble = getDistance(coordinates1, coordinates2);
                     distanceMetres = String.valueOf(distanceDouble);
-                    distanceMetres = distanceMetres.substring(0, 6);
+                    // distanceMetres = distanceMetres.substring(0, 6); // COMPROBAR
                     distancePercentage = getDistancePercentage(distanceMetres);
                     distancePercentagesList.add(i, distancePercentage);
                     distancesList.add(i, distanceMetres);
                 } else { // Cualquier otro caso menos ambos map:
                     if(typePlaceOldAnnounce.equals("map")) { // Si oldAnnounce es map
+                        if(oldAnnounce != null)
                         coordinates2 = oldAnnounce.getPlace();
                     } else { // Si oldAnnounce no es map
                         // Calculo LatLng para oldAnnounce
                         try {
-                            Double[] tmpArray = new getLatitudeAndLongitudeByAdress().execute(oldAnnounce.getPlace(), typePlaceOldAnnounce).get(); // Conseguimos lat y long a partir de address
-                            oldAnnounceLatLng = Arrays.copyOf(tmpArray, tmpArray.length);
+                            if(oldAnnounce != null) {
+                                Double[] tmpArray = new getLatitudeAndLongitudeByAdress().execute(oldAnnounce.getPlace(), typePlaceOldAnnounce).get(); // Conseguimos lat y long a partir de address
+                                oldAnnounceLatLng = Arrays.copyOf(tmpArray, tmpArray.length);
+                            }
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
@@ -229,7 +277,7 @@ public class MatchAnnounce extends AppCompatActivity {
                     // Calculo distancia
                     distanceDouble = getDistance(coordinates1, coordinates2);
                     distanceMetres = String.valueOf(distanceDouble);
-                    distanceMetres = distanceMetres.substring(0, 6);
+                    // distanceMetres = distanceMetres.substring(0, 6); // COMPROBAR
                     distancePercentage = getDistancePercentage(distanceMetres);
                     distancePercentagesList.add(i, distancePercentage);
                     distancesList.add(i, distanceMetres);
@@ -345,11 +393,11 @@ public class MatchAnnounce extends AppCompatActivity {
 
         double red1 = (matchAnnounceColorInt >> 16) & 0xFF;
         double green1 = (matchAnnounceColorInt >> 8) & 0xFF;
-        double blue1 = (matchAnnounceColorInt >> 0) & 0xFF;
+        double blue1 = (matchAnnounceColorInt >> matchAnnounceColorInt) & 0xFF; //
 
         double red2 = (oldAnnounceColorInt >> 16) & 0xFF;
         double green2 = (oldAnnounceColorInt >> 8) & 0xFF;
-        double blue2 = (oldAnnounceColorInt >> 0) & 0xFF;
+        double blue2 = (oldAnnounceColorInt >> oldAnnounceColorInt) & 0xFF; //
 
         double redPowSubtraction = Math.pow(red1 - red2, 2);
         double greenPowSubtraction = Math.pow(green1 - green2, 2);
@@ -397,18 +445,20 @@ public class MatchAnnounce extends AppCompatActivity {
         String percentageText = "";
         Double percentage;
         Double Ddistance = Double.parseDouble(distance);
-        if(Ddistance <= 20) {
-            percentage = 100.00;
-            percentageText = String.valueOf(percentage);
-            percentageText = percentageText.substring(0, 4);
-        } else if (Ddistance > 20 && Ddistance < 1000){
-            percentage = 1000 - Ddistance;
-            percentage /= 10;
-            percentageText = String.valueOf(percentage);
-            percentageText = percentageText.substring(0, 4);
-        } else {
+        if(Ddistance >= 1000.00) { // >= 1km
             percentage = 0.00;
             percentageText = String.valueOf(percentage);
+        } else { // < 1 km
+            if (Ddistance <= 20) {
+                percentage = 100.00;
+                percentageText = String.valueOf(percentage);
+                percentageText = percentageText.substring(0, 4);
+            } else if (Ddistance > 20 && Ddistance < 999) {
+                percentage = 1000 - Ddistance;
+                percentage /= 10;
+                percentageText = String.valueOf(percentage);
+                percentageText = percentageText.substring(0, 4);
+            }
         }
         return percentageText; // Nos da el porcentaje de aproximación
     }
@@ -437,8 +487,6 @@ public class MatchAnnounce extends AppCompatActivity {
             }
         }
 
-        String matchPercentage = String.valueOf(matchPercentageDouble);
-
-        return matchPercentage; // Nos da el porcentaje de match entre los dos anuncios
+        return String.valueOf(matchPercentageDouble); // Nos da el porcentaje de match entre los dos anuncios
     }
 }

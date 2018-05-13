@@ -52,17 +52,6 @@
             android:layout_marginTop="164dp"
             android:text="TextView" />
 
-        <!--<ScrollView
-            android:id="@+id/scroll"
-            android:layout_width="match_parent"
-            android:layout_height="370dp"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:layout_below="@+id/toolbar_center"
-            android:layout_marginTop="57dp"
-            android:scrollbars="vertical">-->
-
             <LinearLayout
                 android:id="@+id/login_layout"
                 android:layout_width="match_parent"
@@ -121,8 +110,6 @@
                     android:text="TextView" />
 
             </LinearLayout>
-        <!--</ScrollView>-->
-
 
         <RelativeLayout
             android:layout_width="351dp"

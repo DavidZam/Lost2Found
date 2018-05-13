@@ -6,15 +6,16 @@ import android.os.Bundle;
 import es.lost2found.R;
 import es.lost2found.lost2foundUI.announceUI.AnnounceActivity;
 import es.lost2found.lost2foundUI.chatUI.ChatActivity;
-import es.lost2found.lost2foundUI.loginregisterUI.LoginActivity;
+import es.lost2found.lost2foundUI.loginUI.LoginActivity;
 import es.lost2found.lost2foundUI.otherUI.AboutUsActivity;
-import es.lost2found.lost2foundUI.otherUI.ConfigurationActivity;
+import es.lost2found.lost2foundUI.otherUI.SettingsActivity;
 import es.lost2found.lost2foundUI.otherUI.ContactActivity;
 import es.lost2found.lost2foundUI.otherUI.HelpActivity;
 import es.lost2found.lost2foundUI.otherUI.RateActivity;
 import es.lost2found.lost2foundUI.seekerUI.SeekerActivity;
 
 import android.support.design.widget.NavigationView;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
@@ -22,6 +23,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -31,14 +34,19 @@ import android.widget.Toast;
 public class OpenDataActivity extends AppCompatActivity {
 
     private DrawerLayout mDrawerLayout;
+    private final String OPEN_DATA_URL = "https://ressources.data.sncf.com/explore/embed/dataset/objets-trouves-gares/?sort=date&static=false&datasetcard=false";
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_open_data);
+
+        Window window = this.getWindow();
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        window.setStatusBarColor(ContextCompat.getColor(this, R.color.color700));
+
         Toolbar tb = findViewById(R.id.toolbar);
         setSupportActionBar(tb);
-
-
         ActionBar ab = getSupportActionBar();
         ab.setDisplayHomeAsUpEnabled(true);
         ab.setHomeAsUpIndicator(R.drawable.ic_menu);
@@ -68,7 +76,7 @@ public class OpenDataActivity extends AppCompatActivity {
         final Intent aboutus = new Intent(this, AboutUsActivity.class);
         final Intent help = new Intent(this, HelpActivity.class);
         final Intent rate = new Intent(this, RateActivity.class);
-        final Intent config = new Intent(this, ConfigurationActivity.class);
+        final Intent config = new Intent(this, SettingsActivity.class);
         final Intent home = new Intent(this, AnnounceActivity.class);
 
         navView.setNavigationItemSelectedListener(
@@ -105,9 +113,8 @@ public class OpenDataActivity extends AppCompatActivity {
         );
         navView.setCheckedItem(R.id.nav_open_data);
 
-
         WebView webView = (WebView) findViewById(R.id.webview);
-        webView.loadUrl("https://ressources.data.sncf.com/explore/embed/dataset/objets-trouves-gares/?sort=date&static=false&datasetcard=false");
+        webView.loadUrl(OPEN_DATA_URL);
 
         Toast t = Toast.makeText(OpenDataActivity.this, "Cargando...", Toast.LENGTH_SHORT);
         t.setDuration(Toast.LENGTH_LONG);
@@ -116,7 +123,6 @@ public class OpenDataActivity extends AppCompatActivity {
         webView.setWebViewClient(new WebViewClient());
         WebSettings webSettings = webView.getSettings();
         webSettings.setJavaScriptEnabled(true);
-
     }
 
     @Override

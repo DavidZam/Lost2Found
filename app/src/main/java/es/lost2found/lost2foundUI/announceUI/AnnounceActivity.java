@@ -11,7 +11,6 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -28,10 +27,10 @@ import es.lost2found.R;
 import es.lost2found.database.DB_announce;
 import es.lost2found.entities.Announce;
 import es.lost2found.lost2foundUI.chatUI.ChatActivity;
-import es.lost2found.lost2foundUI.loginregisterUI.LoginActivity;
+import es.lost2found.lost2foundUI.loginUI.LoginActivity;
 import es.lost2found.lost2foundUI.openDataUI.OpenDataActivity;
 import es.lost2found.lost2foundUI.otherUI.AboutUsActivity;
-import es.lost2found.lost2foundUI.otherUI.ConfigurationActivity;
+import es.lost2found.lost2foundUI.otherUI.SettingsActivity;
 import es.lost2found.lost2foundUI.otherUI.ContactActivity;
 import es.lost2found.lost2foundUI.otherUI.HelpActivity;
 import es.lost2found.lost2foundUI.otherUI.RateActivity;
@@ -41,6 +40,7 @@ import es.lost2found.lost2foundUI.seekerUI.SeekerActivity;
 public class AnnounceActivity extends AppCompatActivity implements FloatingActionButton.OnClickListener {
 
     private DrawerLayout mDrawerLayout;
+    private List mDrawerList;
     private Integer listElements = 0;
     private AnnounceViewAdapter adapter;
     private RecyclerView recyclerView;
@@ -59,12 +59,12 @@ public class AnnounceActivity extends AppCompatActivity implements FloatingActio
         window.setStatusBarColor(ContextCompat.getColor(this, R.color.color700));
 
         Toolbar tb = findViewById(R.id.toolbar);
-        //tb.setBackgroundColor(getResources().getColor(R.color.color500));
         setSupportActionBar(tb);
         ActionBar ab = getSupportActionBar();
         ab.setDisplayHomeAsUpEnabled(true);
         ab.setHomeAsUpIndicator(R.drawable.ic_menu);
         mDrawerLayout = findViewById(R.id.drawer_layout);
+
 
         NavigationView navView = findViewById(R.id.nav_view);
 
@@ -91,7 +91,7 @@ public class AnnounceActivity extends AppCompatActivity implements FloatingActio
         final Intent aboutus = new Intent(this, AboutUsActivity.class);
         final Intent help = new Intent(this, HelpActivity.class);
         final Intent rate = new Intent(this, RateActivity.class);
-        final Intent config = new Intent(this, ConfigurationActivity.class);
+        final Intent config = new Intent(this, SettingsActivity.class);
         final Intent openData = new Intent(this, OpenDataActivity.class);
 
         navView.setNavigationItemSelectedListener(

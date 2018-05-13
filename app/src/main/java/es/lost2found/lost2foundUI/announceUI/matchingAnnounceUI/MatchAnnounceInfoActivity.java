@@ -7,12 +7,15 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.ColorInt;
 import android.support.annotation.NonNull;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -43,6 +46,11 @@ public class MatchAnnounceInfoActivity extends AppCompatActivity {
         ActionBar ab = getSupportActionBar();
         ab.setDisplayHomeAsUpEnabled(true);
         ab.setHomeAsUpIndicator(R.drawable.ic_arrow_back);
+
+        Window window = this.getWindow();
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        window.setStatusBarColor(ContextCompat.getColor(this, R.color.color700));
 
         TextView cat = (TextView) findViewById(R.id.categoria);
         TextView type = (TextView) findViewById(R.id.tipo);
@@ -112,7 +120,15 @@ public class MatchAnnounceInfoActivity extends AppCompatActivity {
         String typePlaceOldAnnounce = getIntent().getStringExtra("typePlaceOldAnnounce");
         String typePlaceMatchAnnounce = getIntent().getStringExtra("typePlaceMatchAnnounce");
         if(typePlaceOldAnnounce != null && typePlaceMatchAnnounce != null) {
-            //if (typePlaceOldAnnounce.equals("map") && typePlaceMatchAnnounce.equals("map")) { // Si los dos tipos son mapa:
+            Double distanceDouble = Double.valueOf(distanceText);
+            if(distanceDouble > 1000.00) { // >= 1km
+                distanceDouble /= 1000; // Lo expresamos en km
+                String distanceTextKm = String.valueOf(distanceDouble);
+                String[] distanceTextPrint = distanceTextKm.split("\\.");
+                String distance = "<h4><font color=#699CFC> Cercanía: </font>" + distanceTextPrint[0] + " kilometros" + "</h4><br>";
+                distanceMeters.setText(Html.fromHtml(distance));
+                distanceMeters.setTextColor(getResources().getColor(R.color.FireBrick));
+            } else { // < 1 km
                 String[] distanceTextPrint = distanceText.split("\\.");
                 String distance = "<h4><font color=#699CFC> Cercanía: </font>" + distanceTextPrint[0] + " metros" + "</h4><br>";
                 distanceMeters.setText(Html.fromHtml(distance));
@@ -124,7 +140,7 @@ public class MatchAnnounceInfoActivity extends AppCompatActivity {
                 } else if (distanceMeterValue > 700) {
                     distanceMeters.setTextColor(getResources().getColor(R.color.FireBrick));
                 }
-            //}
+            }
         }
 
         color.setBackgroundColor(a.color);
