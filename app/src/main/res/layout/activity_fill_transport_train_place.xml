@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        tools:context=".lost2foundUI.placeUI.transportUI.FillTransportTrainPlaceActivity"
+        tools:context=".lost2foundUI.placeUI.transportPlaceUI.FillTransportTrainPlaceActivity"
         tools:showIn="@layout/activity_fill_transport_train_place"
         android:background="@color/colorSecondaryText">
 

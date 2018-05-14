@@ -2,11 +2,9 @@ package es.lost2found.lost2foundUI.seekerUI;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -23,7 +21,7 @@ import es.lost2found.R;
 import es.lost2found.database.DB_typeObject;
 import es.lost2found.entities.Announce;
 import es.lost2found.lost2foundUI.announceUI.AnnounceActivity;
-import es.lost2found.lost2foundUI.announceUI.matchingAnnounceUI.MatchAnnounce;
+import es.lost2found.lost2foundUI.announceUI.matchAnnounceUI.MatchAnnounce;
 
 public class SeekerAnnounceInfoActivity extends AppCompatActivity {
     private Announce a;
@@ -202,7 +200,7 @@ public class SeekerAnnounceInfoActivity extends AppCompatActivity {
             final Intent match = new Intent(this, MatchAnnounce.class);
             match.putExtra("openDataMatching", openDataMatching);
             match.putExtra("oldAnnounceSet", true);
-            match.putExtra("atributoDeterminante", atributoDeterminante);
+            match.putExtra("match", a);
             startActivity(match);
         }
         finish();

@@ -1,12 +1,8 @@
-package es.lost2found.lost2foundUI.announceUI.matchingAnnounceUI;
+package es.lost2found.lost2foundUI.announceUI.matchAnnounceUI;
 
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.ColorSpace;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.annotation.ColorInt;
-import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;

@@ -2,10 +2,13 @@ package es.lost2found.database;
 
 import android.content.Intent;
 
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
@@ -624,87 +627,80 @@ public class DB_announce {
         return idPlace;
     }
 
-    public static Announce[] getMatchOpenDataAnnounces(String categoria, String dia) {
-        // este metodo devuelve los anuncios del open data despues de filtrarlos por
+    // Hacer otro que sea con anuncios de perdida (usar el otro open data disponible)
+    public static Announce[] getMatchOpenDataFoundAnnounces(String categoria, String dia) {
+        // este metodo devuelve los anuncios del open data despues de filtrarlos por categoria y dia
         // CALCULAR EL NUMERO DE ANUNCIOS LLAMANDO AL OPEN DATA
-        //Integer numAnnounces = Integer.valueOf(numberAnnounces);
-        //Integer userId = DB_user.getId(email);
-        Announce[] announcesArray = new Announce[20];/*
+        //https://data.sncf.com/api/v2/catalog/datasets/objets-trouves-restitution/records?rows=10&pretty=false&timezone=Europe%2FMadrid&sort=-date
+        //
+        String OPEN_DATA_URL = "https://data.sncf.com/api/v2/catalog/datasets/objets-trouves-restitution/records?rows=10&sort=-date&select=exclude(gc_obo_date_heure_restitution_c)%2Cexclude(gc_obo_gare_origine_r_code_uic_c)%2Cexclude(gc_obo_nom_recordtype_sc_c)%2Cexclude(gc_obo_type_c)&pretty=false&timezone=Europe%2FMadrid";
+        // Ver como filtrar la busqueda en el open data por dia
+
+        Announce[] announces = new Announce[11];
+        HttpURLConnection connection = null;
+        InputStream instream = null;
         try {
-            JSONObject jsonObject = new JSONObject();
-            jsonObject.put("id", userId);
-            jsonObject.put("nombreTabla", categoria);
-            jsonObject.put("tipoAnuncio", tipo);
-            jsonObject.put("diaAnuncio", dia);
-            jsonObject.put("param", determinante);
+            URL url = new URL(OPEN_DATA_URL);
+            connection = (HttpURLConnection) url.openConnection();
+            connection.setRequestMethod("GET");
+            connection.setRequestProperty("Content-type", "application/x-www-form-urlencoded");
+            connection.setDoInput(true);
+            connection.setDoOutput(false);
+            connection.connect();
 
-            List list = new LinkedList();
-            list.addAll(Arrays.asList(jsonObject));
-            String jsonString = list.toString();
-
-            String urlStr = SERVER_PATH + "getAnnouncesMatchJSON.php";
-            URL url = new URL(urlStr);
-
-            HttpURLConnection con = (HttpURLConnection) url.openConnection();
-            con.setRequestMethod("POST");
-            con.setRequestProperty("User-Agent", "your user agent");
-            con.setRequestProperty("Accept-Language", "sp,SP;q=0.5");
-
-            String urlParameters = "json=" + jsonString;
-
-            con.setDoOutput(true);
-            DataOutputStream wr = new DataOutputStream(con.getOutputStream());
-            wr.writeBytes(urlParameters);
-            wr.flush();
-            wr.close();
-
-            InputStream instream;
-
-            int status = con.getResponseCode();
+            int status = connection.getResponseCode();
 
             if (status != HttpURLConnection.HTTP_OK)
-                instream = con.getErrorStream();
+                instream = connection.getErrorStream();
             else
-                instream = con.getInputStream();
+                instream = connection.getInputStream();
 
-            BufferedReader in = new BufferedReader(new InputStreamReader(instream));
-            String inputLine;
-            StringBuffer response = new StringBuffer();
-
-            while((inputLine = in.readLine()) != null)
-                response.append(inputLine);
-
-            String res = response.toString();
-            String[] announces = res.split("\\.");
-            String text = announces[0].replace("[", "");
-            announces[0] = text;
-            String text2 = announces[announces.length-1].replace("]", "");
-            announces[announces.length-1] = text2;
-
-            for(int i = 0; i < numAnnounces; i++) {
-                char firstChar = announces[i].charAt(1);
-                if(firstChar == ',') {
-                    announces[i] = announces[i].substring(2, announces[i].length());
-                }
-                JSONObject object = new JSONObject(announces[i]);
-                String idUser =  object.getString("idUsuario");
-                Integer intIdUser = Integer.valueOf(idUser);
-                String userOwner = DB_user.getNameById(intIdUser);
-                String idAnuncio = object.getString("id");
-                Integer intIdAnuncio = Integer.valueOf(idAnuncio);
-                String idLugar = object.getString("idLugar");
-                Integer intIdLugar = Integer.valueOf(idLugar);
-                place = DB_place.getPlaceNameById(intIdLugar);
-                Announce announce = new Announce(announces[i], userOwner, place, intIdAnuncio); // , param
-                announcesArray[i] = announce;
+            instream = connection.getInputStream();
+            BufferedReader bReader = new BufferedReader(new InputStreamReader(instream));
+            String temp, response = "";
+            while((temp = bReader.readLine()) != null) {
+                response += temp;
             }
-
-            in.close();
-
+            JSONObject object = new JSONObject(response);
+            if(response.contains("records")) {
+                try {
+                JSONArray records = object.getJSONArray("records");
+                    for(int i = 0; i < records.length(); i++) {
+                        JSONObject firstRecord = records.getJSONObject(i);
+                        JSONObject record = firstRecord.getJSONObject("record");
+                        JSONObject fields = record.getJSONObject("fields");
+                        String type = "Hallazgo";
+                        String dateAndHour = fields.getString("date");
+                        String[] info = dateAndHour.split("T");
+                        String date = info[0];
+                        if(date.contains("-")) {
+                            date = date.replace("-", "/");
+                        }
+                        String[] hourArray = info[1].split("\\+");
+                        String hour = hourArray[0].substring(0, hourArray[0].length() - 3);
+                        String place = fields.getString("gc_obo_gare_origine_r_name");
+                        String category = fields.getString("gc_obo_nature_c");
+                        // Consulta a la tabla conversor con category para obtener la categoria perteneciente a nuestra app y poder compararlos
+                        // Crear entidad OpenDataAnnounce y crear uno nuevo con todos los datos conseguidos
+                        String fsdfirsd = "";
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
         } catch (Exception e) {
             e.printStackTrace();
-        }*/
-        return announcesArray;
+        } finally {
+            if(instream != null) {
+                try {
+                    instream.close();
+                } catch(IOException ignored) {
+                }
+            }
+            if(connection != null) {
+                connection.disconnect();
+            }
+        }
+        return announces;
     }
-
 }

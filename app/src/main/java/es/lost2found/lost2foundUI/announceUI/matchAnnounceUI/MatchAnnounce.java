@@ -1,4 +1,4 @@
-package es.lost2found.lost2foundUI.announceUI.matchingAnnounceUI;
+package es.lost2found.lost2foundUI.announceUI.matchAnnounceUI;
 
 
 import android.app.ProgressDialog;
@@ -10,12 +10,10 @@ import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
-import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.TextView;
@@ -50,7 +48,6 @@ public class MatchAnnounce extends AppCompatActivity {
     private int placeIdMatchAnnounce;
     private Double[] oldAnnounceLatLng;
     private Double[] matchAnnounceLatLng;
-    private boolean openDataMatching;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,13 +87,14 @@ public class MatchAnnounce extends AppCompatActivity {
         }
 
         a = (Announce) getIntent().getSerializableExtra("match");
+        boolean openDataMatching = getIntent().getBooleanExtra("openDataMatching", false);
 
-        openDataMatching = getIntent().getBooleanExtra("openDataMatching", false);
-
-        if(openDataMatching) { // Matching con open data
-            new getOpenDataAnnounces().execute(a.announceCategorie, a.announceDateText);
-        } else { // Matching con anuncios de la aplicacion
-            new getNumberObjectAnnouncesDB().execute(userEmail, a.announceCategorie, a.announceType, a.announceDateText, String.valueOf(a.getIdAnuncio()), atributoDeterminante);
+        if(a != null) {
+            if(openDataMatching) { // Matching con open data
+                new getOpenDataAnnounces().execute(oldAnnounce.announceCategorie, oldAnnounce.announceDateText);
+            } else { // Matching con anuncios de la aplicacion
+                new getNumberObjectAnnouncesDB().execute(userEmail, a.announceCategorie, a.announceType, a.announceDateText, String.valueOf(a.getIdAnuncio()), atributoDeterminante);
+            }
         }
     }
 
@@ -112,7 +110,7 @@ public class MatchAnnounce extends AppCompatActivity {
 
         @Override
         protected Announce[] doInBackground(String... strings) {
-            return DB_announce.getMatchOpenDataAnnounces(strings[0], strings[1]);
+            return DB_announce.getMatchOpenDataFoundAnnounces(strings[0], strings[1]);
         }
 
         @Override

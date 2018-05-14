@@ -62,15 +62,15 @@
             android:label="@string/title_announce_section"/>
 
         <activity
-            android:name=".lost2foundUI.announceUI.matchingAnnounceUI.MatchAnnounce"
+            android:name=".lost2foundUI.announceUI.matchAnnounceUI.MatchAnnounce"
             android:parentActivityName=".lost2foundUI.seekerUI.SeekerAnnounceInfoActivity"
             android:screenOrientation="portrait"
             android:label="@string/title_matchannounce_section" >
         </activity>
 
         <activity
-            android:name=".lost2foundUI.announceUI.matchingAnnounceUI.MatchAnnounceInfoActivity"
-            android:parentActivityName=".lost2foundUI.announceUI.matchingAnnounceUI.MatchAnnounce"
+            android:name=".lost2foundUI.announceUI.matchAnnounceUI.MatchAnnounceInfoActivity"
+            android:parentActivityName=".lost2foundUI.announceUI.matchAnnounceUI.MatchAnnounce"
             android:screenOrientation="portrait"
             android:label="@string/title_matchannounce_info" >
         </activity>
@@ -82,7 +82,7 @@
             android:label="@string/title_typeplace_section" />
 
         <activity
-            android:name=".lost2foundUI.placeUI.transportUI.TransportPlaceActivity"
+            android:name=".lost2foundUI.placeUI.transportPlaceUI.TransportPlaceActivity"
             android:parentActivityName=".lost2foundUI.placeUI.PlaceActivity"
             android:screenOrientation="portrait"
             android:label="@string/title_transrport_typeplace_section" />
@@ -125,14 +125,14 @@
             android:label="@string/title_matchannounce_info" />
 
         <activity
-            android:name=".lost2foundUI.placeUI.transportUI.FillTransportPlaceActivity"
-            android:parentActivityName=".lost2foundUI.placeUI.transportUI.TransportPlaceActivity"
+            android:name=".lost2foundUI.placeUI.transportPlaceUI.FillTransportPlaceActivity"
+            android:parentActivityName=".lost2foundUI.placeUI.transportPlaceUI.TransportPlaceActivity"
             android:screenOrientation="portrait"
             android:label="@string/transport_title_text" />
 
         <activity
-            android:name=".lost2foundUI.placeUI.transportUI.FillTransportTrainPlaceActivity"
-            android:parentActivityName=".lost2foundUI.placeUI.transportUI.TransportPlaceActivity"
+            android:name=".lost2foundUI.placeUI.transportPlaceUI.FillTransportTrainPlaceActivity"
+            android:parentActivityName=".lost2foundUI.placeUI.transportPlaceUI.TransportPlaceActivity"
             android:screenOrientation="portrait"
             android:label="@string/transport_title_text" />
 

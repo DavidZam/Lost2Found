@@ -38,6 +38,7 @@
 
         <TextView
             android:id="@+id/without_announces"
+            android:padding="16dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/toolbar"

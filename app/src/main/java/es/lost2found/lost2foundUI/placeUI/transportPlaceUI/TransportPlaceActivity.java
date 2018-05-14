@@ -1,6 +1,5 @@
-package es.lost2found.lost2foundUI.placeUI.transportUI;
+package es.lost2found.lost2foundUI.placeUI.transportPlaceUI;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -12,11 +11,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.Button;
 
 import es.lost2found.R;
-import es.lost2found.entities.TransportPlace;
-import es.lost2found.lost2foundUI.announceUI.NewAnnounceActivity;
 import es.lost2found.lost2foundUI.placeUI.PlaceActivity;
 
 public class TransportPlaceActivity extends AppCompatActivity { // implements View.OnClickListener

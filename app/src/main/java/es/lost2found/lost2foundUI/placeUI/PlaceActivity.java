@@ -1,11 +1,7 @@
 package es.lost2found.lost2foundUI.placeUI;
 
-import android.Manifest;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -18,7 +14,7 @@ import android.view.WindowManager;
 import es.lost2found.R;
 import es.lost2found.lost2foundUI.announceUI.AnnounceActivity;
 import es.lost2found.lost2foundUI.placeUI.concretePlaceUI.FillConcretePlaceActivity;
-import es.lost2found.lost2foundUI.placeUI.transportUI.TransportPlaceActivity;
+import es.lost2found.lost2foundUI.placeUI.transportPlaceUI.TransportPlaceActivity;
 
 public class PlaceActivity extends AppCompatActivity {
 

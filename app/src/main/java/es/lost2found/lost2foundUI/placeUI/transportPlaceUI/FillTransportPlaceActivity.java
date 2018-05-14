@@ -1,7 +1,6 @@
-package es.lost2found.lost2foundUI.placeUI.transportUI;
+package es.lost2found.lost2foundUI.placeUI.transportPlaceUI;
 
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
@@ -15,12 +14,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.EditText;
-import android.widget.ListView;
-import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner;
@@ -28,14 +23,9 @@ import com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner;
 import java.util.ArrayList;
 
 import es.lost2found.R;
-import es.lost2found.database.DB_announce;
-import es.lost2found.database.DB_place;
 import es.lost2found.database.DB_transportPlace;
-import es.lost2found.entities.Announce;
-import es.lost2found.entities.Place;
 import es.lost2found.entities.TransportPlace;
 import es.lost2found.lost2foundUI.announceUI.NewAnnounceActivity;
-import es.lost2found.lost2foundUI.placeUI.PlaceActivity;
 
 public class FillTransportPlaceActivity extends AppCompatActivity {
 

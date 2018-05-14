@@ -1,21 +1,16 @@
 package es.lost2found.lost2foundUI.announceUI;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 
-import java.util.Collections;
 import java.util.List;
 
 import es.lost2found.R;
 import es.lost2found.entities.Announce;
-import es.lost2found.lost2foundUI.announceUI.matchingAnnounceUI.MatchAnnounce;
 import es.lost2found.lost2foundUI.seekerUI.SeekerActivity;
 import es.lost2found.lost2foundUI.seekerUI.SeekerAnnounceInfoActivity;
 

@@ -1,4 +1,4 @@
-package es.lost2found.lost2foundUI.placeUI.transportUI;
+package es.lost2found.lost2foundUI.placeUI.transportPlaceUI;
 
 import android.app.ProgressDialog;
 import android.content.Intent;

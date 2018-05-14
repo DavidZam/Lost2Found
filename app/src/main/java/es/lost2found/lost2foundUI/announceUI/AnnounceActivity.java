@@ -197,17 +197,22 @@ public class AnnounceActivity extends AppCompatActivity implements FloatingActio
     }
 
     public void processAnnounceScreen(Integer numAnnounces) {
-        if (numAnnounces == 0) {
-            TextView noannounces = findViewById(R.id.without_announces);
-            noannounces.setText(noannounces.getResources().getString(R.string.info_txt));
+        if(numAnnounces != null) {
+            if (numAnnounces == 0) {
+                TextView noannounces = findViewById(R.id.without_announces);
+                noannounces.setText(noannounces.getResources().getString(R.string.info_txt));
+            } else {
+                TextView noannounces = findViewById(R.id.without_announces);
+                noannounces.setText("");
+                userNumberAnnounces = numAnnounces;
+                SharedPreferences spref = getApplicationContext().getSharedPreferences("Login", 0);
+                String userEmail = spref.getString("email", "");
+
+                new getObjectAnnouncesDB().execute(userEmail, String.valueOf(userNumberAnnounces)); // Devuelve una lista con los anuncios del usuario en cuestion
+            }
         } else {
             TextView noannounces = findViewById(R.id.without_announces);
-            noannounces.setText("");
-            userNumberAnnounces = numAnnounces;
-            SharedPreferences spref = getApplicationContext().getSharedPreferences("Login", 0);
-            String userEmail = spref.getString("email", "");
-
-            new getObjectAnnouncesDB().execute(userEmail, String.valueOf(userNumberAnnounces)); // Devuelve una lista con los anuncios del usuario en cuestion
+            noannounces.setText(noannounces.getResources().getString(R.string.info_txt4));
         }
     }
 
