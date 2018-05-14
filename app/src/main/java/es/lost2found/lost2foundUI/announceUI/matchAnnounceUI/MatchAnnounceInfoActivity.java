@@ -113,31 +113,29 @@ public class MatchAnnounceInfoActivity extends AppCompatActivity {
             distancePercentage.setTextColor(getResources().getColor(R.color.FireBrick));
         }
 
-        String typePlaceOldAnnounce = getIntent().getStringExtra("typePlaceOldAnnounce");
-        String typePlaceMatchAnnounce = getIntent().getStringExtra("typePlaceMatchAnnounce");
-        if(typePlaceOldAnnounce != null && typePlaceMatchAnnounce != null) {
-            Double distanceDouble = Double.valueOf(distanceText);
-            if(distanceDouble > 1000.00) { // >= 1km
-                distanceDouble /= 1000; // Lo expresamos en km
-                String distanceTextKm = String.valueOf(distanceDouble);
-                String[] distanceTextPrint = distanceTextKm.split("\\.");
-                String distance = "<h4><font color=#699CFC> Cercanía: </font>" + distanceTextPrint[0] + " kilometros" + "</h4><br>";
-                distanceMeters.setText(Html.fromHtml(distance));
+
+        Double distanceDouble = Double.valueOf(distanceText);
+        if(distanceDouble > 1000.00) { // >= 1km
+            distanceDouble /= 1000; // Lo expresamos en km
+            String distanceTextKm = String.valueOf(distanceDouble);
+            String[] distanceTextPrint = distanceTextKm.split("\\.");
+            String distance = "<h4><font color=#699CFC> Cercanía: </font>" + distanceTextPrint[0] + " kilometros" + "</h4><br>";
+            distanceMeters.setText(Html.fromHtml(distance));
+            distanceMeters.setTextColor(getResources().getColor(R.color.FireBrick));
+        } else { // < 1 km
+            String[] distanceTextPrint = distanceText.split("\\.");
+            String distance = "<h4><font color=#699CFC> Cercanía: </font>" + distanceTextPrint[0] + " metros" + "</h4><br>";
+            distanceMeters.setText(Html.fromHtml(distance));
+            double distanceMeterValue = Double.valueOf(distanceText);
+            if (distanceMeterValue <= 400) {
+                distanceMeters.setTextColor(getResources().getColor(R.color.ForestGreen));
+            } else if (distanceMeterValue > 400 && distanceMeterValue <= 700) {
+                distanceMeters.setTextColor(getResources().getColor(R.color.Coral));
+            } else if (distanceMeterValue > 700) {
                 distanceMeters.setTextColor(getResources().getColor(R.color.FireBrick));
-            } else { // < 1 km
-                String[] distanceTextPrint = distanceText.split("\\.");
-                String distance = "<h4><font color=#699CFC> Cercanía: </font>" + distanceTextPrint[0] + " metros" + "</h4><br>";
-                distanceMeters.setText(Html.fromHtml(distance));
-                double distanceMeterValue = Double.valueOf(distanceText);
-                if (distanceMeterValue <= 400) {
-                    distanceMeters.setTextColor(getResources().getColor(R.color.ForestGreen));
-                } else if (distanceMeterValue > 400 && distanceMeterValue <= 700) {
-                    distanceMeters.setTextColor(getResources().getColor(R.color.Coral));
-                } else if (distanceMeterValue > 700) {
-                    distanceMeters.setTextColor(getResources().getColor(R.color.FireBrick));
-                }
             }
         }
+
 
         color.setBackgroundColor(a.color);
 
@@ -270,6 +268,7 @@ public class MatchAnnounceInfoActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         Intent matchannounce = new Intent(this, MatchAnnounce.class);
         //matchannounce.putExtra("match", a);
+        matchannounce.putExtra("openDataMatching", false);
         matchannounce.putExtra("back", true);
         Announce oldAnnounce = (Announce) getIntent().getSerializableExtra("oldAnnounce");
         //matchannounce.putExtra("oldAnnounce", oldAnnounce);

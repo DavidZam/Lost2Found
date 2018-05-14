@@ -139,7 +139,40 @@
             disconnectDB($connection);
             return $query;
         }
-		
+
+        function getCategory($category) {
+            $connection = connectDB();
+
+            $sql = mysqli_prepare($connection, "SELECT nombreTabla FROM conversor WHERE tipoObjetoFrances = ?");
+            mysqli_stmt_bind_param($sql, "s", $category);
+
+            $query = $sql->execute();
+
+            if(!$query)
+                die();
+
+            $result = $sql->store_result();
+
+            $realresult = $sql->bind_result($category);
+
+            $rawdata = array();
+
+            $sql->fetch();
+
+            if($sql->num_rows == 0) { // Otro
+                $category = "Otro";
+                $rawdata['category'] = utf8_encode($category);
+            } else {
+                $rawdata['category'] = utf8_encode($category);
+            }
+
+            $correct = $query;
+
+            $rawdata['correct'] = $correct;
+
+            disconnectDB($connection);
+            return $rawdata;
+        }
 		
 	}
 ?>

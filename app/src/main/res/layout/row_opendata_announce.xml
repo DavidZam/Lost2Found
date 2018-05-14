@@ -21,8 +21,9 @@
             android:id="@+id/matchPercentage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_above="@+id/imageView"
             android:layout_alignEnd="@+id/announceHourText"
+            android:layout_alignBaseline="@+id/categorieAnnounce"
+            android:layout_alignParentTop="true"
             android:textAllCaps="false" />
 
         <ImageView

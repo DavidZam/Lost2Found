@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_match_announce_info"
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:id="@+id/content_frame"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorSecondaryText"
+        tools:context=".lost2foundUI.announceUI.matchAnnounceUI.OpenDataMatchAnnounceInfoActivity"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="16dp"
+        tools:showIn="@layout/activity_opendata_matchannounce_info">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar_center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:theme="@style/ToolbarStyle">
+
+        </android.support.v7.widget.Toolbar>
+
+        <TextView
+            android:id="@+id/distancePercentage"
+            android:layout_width="46dp"
+            android:layout_height="36dp"
+            android:layout_marginTop="420dp"
+            android:layout_marginStart="220dp"
+            android:textAllCaps="false" />
+
+        <LinearLayout
+            android:id="@+id/login_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/toolbar_center"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <TextView
+                android:id="@+id/categoria"
+                android:layout_width="match_parent"
+                android:layout_height="46dp"
+                android:layout_marginTop="20sp"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:text="TextView" />
+
+            <TextView
+                android:id="@+id/tipo"
+                android:layout_width="match_parent"
+                android:layout_height="46dp"
+                android:layout_marginTop="20sp"
+                android:layout_below="@+id/categoria"
+                android:layout_centerHorizontal="true"
+                android:text="TextView" />
+
+            <TextView
+                android:id="@+id/dia"
+                android:layout_width="match_parent"
+                android:layout_height="46dp"
+                android:layout_marginTop="20sp"
+                android:layout_below="@+id/tipo"
+                android:layout_centerHorizontal="true"
+                android:text="TextView" />
+
+            <TextView
+                android:id="@+id/hora"
+                android:layout_width="134dp"
+                android:layout_height="46dp"
+                android:layout_marginTop="20sp"
+                android:text="TextView" />
+
+            <TextView
+                android:id="@+id/lugar"
+                android:layout_width="match_parent"
+                android:layout_height="64dp"
+                android:layout_marginTop="20sp"
+                android:layout_below="@+id/hora"
+                android:layout_centerHorizontal="true"
+                android:text="TextView" />
+
+            <TextView
+                android:id="@+id/distance"
+                android:layout_width="match_parent"
+                android:layout_height="54dp"
+                android:textAllCaps="false"
+                android:layout_below="@+id/hora"
+                android:layout_centerHorizontal="true"
+                android:text="TextView"/>
+
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="351dp"
+            android:layout_height="155dp"
+            android:padding="12dp"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true">
+
+            <ImageView
+                android:id="@+id/imageinfoannounce"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_marginTop="40sp"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:src="@drawable/ic_phone_android" />
+
+        </RelativeLayout>
+    </RelativeLayout>
+
+</android.support.constraint.ConstraintLayout>

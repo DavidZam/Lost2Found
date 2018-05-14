@@ -172,7 +172,12 @@
             android:screenOrientation="portrait"
             android:label="Otro" />
 
-
+        <activity
+            android:name=".lost2foundUI.announceUI.matchAnnounceUI.OpenDataMatchAnnounceInfoActivity"
+            android:parentActivityName=".lost2foundUI.announceUI.matchAnnounceUI.MatchAnnounce"
+            android:screenOrientation="portrait"
+            android:label="@string/title_matchannounce_info" >
+        </activity>
 
     </application>
 

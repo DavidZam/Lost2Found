@@ -13,6 +13,7 @@ import java.util.List;
 import es.lost2found.R;
 import es.lost2found.entities.Announce;
 import es.lost2found.lost2foundUI.announceUI.AnnounceViewHolder;
+import es.lost2found.lost2foundUI.chatUI.chatConcreteUI.ChatConcreteViewAdapter;
 
 public class MatchAnnounceViewAdapter extends RecyclerView.Adapter<AnnounceViewHolder> {
 
@@ -44,34 +45,8 @@ public class MatchAnnounceViewAdapter extends RecyclerView.Adapter<AnnounceViewH
 
     @Override
     public AnnounceViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        // Inflate the layout and initialize the View Holder
-
-
-        //Comentamos esta linea porque no está bien la vista row_matching_announce y usamos row_announce de momento
-        //View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_matching_announce, parent, false);
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_announce, parent, false);
         AnnounceViewHolder holder = new AnnounceViewHolder(v);
-
-
-        /*
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            int position = holder .getAdapterPosition();
-            // This is org.greenrobot.eventbus
-            Application.getInstance().getEventBus().post(new OnHistoryClickEvent(position));
-        }
-        });
-        holder .itemView.setOnLongClickListener(new View.OnLongClickListener() {
-        @Override
-        public boolean onLongClick(View v) {
-            int position = holder .getAdapterPosition();
-            // This is org.greenrobot.eventbus
-            Application.getInstance().getEventBus().post(new OnHistoryLongClickEvent(position));
-            return true;
-        }
-        });
-         */
 
         return holder;
     }

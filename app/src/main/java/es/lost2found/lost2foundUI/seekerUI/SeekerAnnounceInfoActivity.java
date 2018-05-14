@@ -117,11 +117,6 @@ public class SeekerAnnounceInfoActivity extends AppCompatActivity {
             default: image.setImageResource(R.drawable.ic_card);
                 break;
         }
-
-        if(a.announceType.equals("Hallazgo")) {
-            Button openDataButton = findViewById(R.id.open_data_match);
-            openDataButton.setVisibility(View.GONE);
-        }
     }
 
     private class getObjectDataFromDB extends AsyncTask<String, Void, String> {
@@ -197,10 +192,14 @@ public class SeekerAnnounceInfoActivity extends AppCompatActivity {
         Bundle extras = getIntent().getExtras();
         if(extras != null) {
             openDataMatching = true;
+            String typePlace = getIntent().getExtras().getString("typePlace");
             final Intent match = new Intent(this, MatchAnnounce.class);
+            match.putExtra("announceType", a.announceType);
             match.putExtra("openDataMatching", openDataMatching);
             match.putExtra("oldAnnounceSet", true);
             match.putExtra("match", a);
+            match.putExtra("typePlace", typePlace);
+            match.putExtra("place", a.place);
             startActivity(match);
         }
         finish();

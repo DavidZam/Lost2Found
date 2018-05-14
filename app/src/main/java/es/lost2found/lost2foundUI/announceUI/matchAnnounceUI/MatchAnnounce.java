@@ -27,21 +27,29 @@ import es.lost2found.R;
 import es.lost2found.database.DB_announce;
 import es.lost2found.database.DB_place;
 import es.lost2found.entities.Announce;
+import es.lost2found.entities.OpenDataAnnounce;
+import es.lost2found.lost2foundUI.openDataUI.OpenDataActivity;
 import es.lost2found.lost2foundUI.seekerUI.SeekerAnnounceInfoActivity;
 
 public class MatchAnnounce extends AppCompatActivity {
 
     private Integer numberAnnounces;
     private Integer listElements = 0;
+    private Integer openDataListElements = 0;
     private MatchAnnounceViewAdapter adapter;
     private RecyclerView recyclerView;
+    private OpenDataMatchAnnounceViewAdapter openDataAdapter;
+    //private RecyclerView openDataRecyclerView;
     private Announce a;
     private Announce oldAnnounce;
     private String atributoDeterminante;
     private List<String> colorPercentagesList;
     private List<String> distancePercentagesList;
+    private List<String> openDataDistancePercentagesList;
     private List<String> matchPercentagesList;
+    private List<String> openDataMatchPercentagesList;
     private List<String> distancesList;
+    private List<String> openDataDistancesList;
     private String typePlaceOldAnnounce;
     private String typePlaceMatchAnnounce;
     private int placeIdOldAnnounce;
@@ -68,37 +76,47 @@ public class MatchAnnounce extends AppCompatActivity {
         SharedPreferences spref2 = getApplicationContext().getSharedPreferences("Login", 0);
         String userEmail = spref2.getString("email", "");
         List<Announce> announceList = new ArrayList<>();
+        List<OpenDataAnnounce> openDataAnnounceList = new ArrayList<>();
 
         if(getIntent().getBooleanExtra("oldAnnounceSet", false)) {
             oldAnnounce = (Announce) getIntent().getSerializableExtra("match");
             atributoDeterminante = getIntent().getStringExtra("atributoDeterminante");
         }
 
-        adapter = new MatchAnnounceViewAdapter(announceList, getApplication(), userEmail, oldAnnounce, atributoDeterminante, colorPercentagesList, distancePercentagesList, distancesList, typePlaceOldAnnounce, typePlaceMatchAnnounce, matchPercentagesList);
-        recyclerView = findViewById(R.id.match_announce_reyclerview);
-        recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-
-        if(!adapter.getListAnnounce().isEmpty()) {
-            adapter.getListAnnounce().clear();
-            listElements = 0;
-            recyclerView.setAdapter(adapter);
-            recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        }
-
         a = (Announce) getIntent().getSerializableExtra("match");
         boolean openDataMatching = getIntent().getBooleanExtra("openDataMatching", false);
 
-        if(a != null) {
-            if(openDataMatching) { // Matching con open data
-                new getOpenDataAnnounces().execute(oldAnnounce.announceCategorie, oldAnnounce.announceDateText);
-            } else { // Matching con anuncios de la aplicacion
+        if(openDataMatching) {
+            openDataAdapter = new OpenDataMatchAnnounceViewAdapter(openDataAnnounceList, getApplication(), oldAnnounce, openDataDistancePercentagesList, openDataDistancesList, typePlaceOldAnnounce, "transport", openDataMatchPercentagesList);
+            recyclerView = findViewById(R.id.match_announce_reyclerview);
+            recyclerView.setAdapter(openDataAdapter);
+            recyclerView.setLayoutManager(new LinearLayoutManager(this));
+            if(!openDataAdapter.getListAnnounce().isEmpty()) {
+                openDataAdapter.getListAnnounce().clear();
+                listElements = 0;
+                recyclerView.setAdapter(openDataAdapter);
+                recyclerView.setLayoutManager(new LinearLayoutManager(this));
+            }
+            String announceType = getIntent().getStringExtra("announceType");
+            new getOpenDataAnnounces().execute(oldAnnounce.announceCategorie, oldAnnounce.announceDateText, announceType);
+        } else {
+            adapter = new MatchAnnounceViewAdapter(announceList, getApplication(), userEmail, oldAnnounce, atributoDeterminante, colorPercentagesList, distancePercentagesList, distancesList, typePlaceOldAnnounce, typePlaceMatchAnnounce, matchPercentagesList);
+            recyclerView = findViewById(R.id.match_announce_reyclerview);
+            recyclerView.setAdapter(adapter);
+            recyclerView.setLayoutManager(new LinearLayoutManager(this));
+            if(!adapter.getListAnnounce().isEmpty()) {
+                adapter.getListAnnounce().clear();
+                listElements = 0;
+                recyclerView.setAdapter(adapter);
+                recyclerView.setLayoutManager(new LinearLayoutManager(this));
+            }
+            if(a != null) {
                 new getNumberObjectAnnouncesDB().execute(userEmail, a.announceCategorie, a.announceType, a.announceDateText, String.valueOf(a.getIdAnuncio()), atributoDeterminante);
             }
         }
     }
 
-    private class getOpenDataAnnounces extends AsyncTask<String, Void, Announce[]> {
+    private class getOpenDataAnnounces extends AsyncTask<String, Void, List<OpenDataAnnounce>> {
 
         private ProgressDialog dialog = new ProgressDialog(MatchAnnounce.this);
 
@@ -109,28 +127,124 @@ public class MatchAnnounce extends AppCompatActivity {
         }
 
         @Override
-        protected Announce[] doInBackground(String... strings) {
-            return DB_announce.getMatchOpenDataFoundAnnounces(strings[0], strings[1]);
+        protected List<OpenDataAnnounce> doInBackground(String... strings) {
+            if(strings[2].equals("Perdida")) {
+                return DB_announce.getMatchOpenDataFoundAnnounces(strings[0], strings[1]);
+            } else {
+                return DB_announce.getMatchOpenDataLostAnnounces(strings[0], strings[1]);
+            }
         }
 
         @Override
-        protected void onPostExecute(Announce[] announces) {
+        protected void onPostExecute(List<OpenDataAnnounce> announces) {
             this.dialog.dismiss();
             processOpenDataAnnounceScreen(announces);
         }
     }
 
-    public void processOpenDataAnnounceScreen(Announce[] announces) {
-        Integer numAnnouncesOpenData = announces.length; // Mirar si es .length o .length - 1
+    public void processOpenDataAnnounceScreen(List<OpenDataAnnounce> announces) {
+        Integer numAnnouncesOpenData = announces.size();
         if (numAnnouncesOpenData == 0) {
             TextView noannounces = findViewById(R.id.without_match);
             noannounces.setText(noannounces.getResources().getString(R.string.info_txt2));
         } else {
             TextView noannounces = findViewById(R.id.without_match);
             noannounces.setText("");
-            // Calcular distancias, actualizar adapter...etc
+            String placeOldAnnounce = getIntent().getStringExtra("place"); // Info anuncio original
+            String coordinates1, coordinates2 = "";
+            Announce oldAnnounce = (Announce) getIntent().getSerializableExtra("match");
+            if(oldAnnounce != null) {
+                coordinates2 = oldAnnounce.getPlace();
+            }
+            double distanceDouble;
+            openDataDistancePercentagesList = new ArrayList<>();
+            openDataDistancesList = new ArrayList<>();
+            String distanceMetres, distancePercentage = "";
+            openDataMatchPercentagesList = new ArrayList<>();
+            try {
+                if(oldAnnounce != null) {
+                    Integer idOldAnnounce = oldAnnounce.getIdAnuncio(); // Obtenemos el idAnuncio
+                    placeIdOldAnnounce = new getPlaceIdByAnnounceIdDB().execute(idOldAnnounce).get(); // Funcion que devuelve el idLugar dado el idAnuncio
+                    typePlaceOldAnnounce = new getTypePlaceByIdDB().execute(placeIdOldAnnounce).get(); // Funcion que devuelve el tipo de lugar (map, concrete o transport) dado el idLugar
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            typePlaceMatchAnnounce = "transport";
+            for(int i = 0; i < numAnnouncesOpenData; i++) { // Para cada uno de los anuncios que hacen match:
+                if(typePlaceOldAnnounce != null) { // typePlaceMatchAnnounce SIEMPRE es transport
+                    /* Posibilidades segun el tipo de lugar:
+                    Announce:       Cálculo
+                    Map             (Cálculo Distancia)
+                    != Map          (Cálculo LatLng, Cálculo Distancia)*/
+                    // Calculo LatLng para matchAnnounce
+                    if(!announces.get(i).getPlace().equals(" ")) { // Distancia disponible
+                        try {
+                            Double[] tmpArray = new getLatitudeAndLongitudeByAdress().execute(announces.get(i).getPlace(), typePlaceMatchAnnounce).get(); // Conseguimos lat y long a partir de address
+                            matchAnnounceLatLng = Arrays.copyOf(tmpArray, tmpArray.length);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                        coordinates1 = matchAnnounceLatLng[0] + "," + matchAnnounceLatLng[1];
+                        if(typePlaceOldAnnounce.equals("map")) { // Si oldAnnounce es map
+                            if(oldAnnounce != null)
+                                coordinates2 = oldAnnounce.getPlace();
+                        } else { // Si oldAnnounce no es map
+                            // Calculo LatLng para oldAnnounce
+                            try {
+                                if(oldAnnounce != null) {
+                                    Double[] tmpArray = new getLatitudeAndLongitudeByAdress().execute(oldAnnounce.getPlace(), typePlaceOldAnnounce).get(); // Conseguimos lat y long a partir de address
+                                    oldAnnounceLatLng = Arrays.copyOf(tmpArray, tmpArray.length);
+                                }
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                            coordinates2 = oldAnnounceLatLng[0] + "," + oldAnnounceLatLng[1];
+                        }
+                        // Calculo distancia
+                        distanceDouble = getDistance(coordinates1, coordinates2);
+                        distanceMetres = String.valueOf(distanceDouble);
+                        distancePercentage = getDistancePercentage(distanceMetres);
+                        openDataDistancePercentagesList.add(i, distancePercentage);
+                        openDataDistancesList.add(i, distanceMetres);
+                        // Calculo del match final a partir de las caracteristicas especificas de los dos objetos y el porcentaje de la distancia:
+                        Double distancePercentageInt = Double.valueOf(distancePercentage);
+                        String matchPercentaje = getOpenDataMatchPercentage(distancePercentageInt, oldAnnounce, announces.get(i));
+                        String matchPercentajeArray[] = matchPercentaje.split("\\.");
+                        if(matchPercentajeArray[1].length() == 1) {
+                            matchPercentajeArray[1] = matchPercentajeArray[1] + "0";
+                        }
+                        matchPercentaje = matchPercentajeArray[0] + "." + matchPercentajeArray[1].substring(0, 2);
+                        openDataMatchPercentagesList.add(i, matchPercentaje);
+                        openDataAdapter.insert(openDataListElements, announces.get(i));
+                        openDataListElements++;
+                        recyclerView.setAdapter(openDataAdapter);
+                        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+                    } else { // Distancia no disponible
+                        openDataDistancePercentagesList.add(i, " ");
+                        openDataDistancesList.add(i, " ");
+                        String matchPercentaje = getOpenDataMatchPercentage(0.0, oldAnnounce, announces.get(i));
+                        String matchPercentajeArray[] = matchPercentaje.split("\\.");
+                        if(matchPercentajeArray[1].length() == 1) {
+                            matchPercentajeArray[1] = matchPercentajeArray[1] + "0";
+                        }
+                        matchPercentaje = matchPercentajeArray[0] + "." + matchPercentajeArray[1].substring(0, 2);
+                        openDataMatchPercentagesList.add(i, matchPercentaje);
+                        openDataAdapter.insert(openDataListElements, announces.get(i));
+                        openDataListElements++;
+                        recyclerView.setAdapter(openDataAdapter);
+                        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+                    }
+                }
+            }
+            Collections.sort(openDataMatchPercentagesList);
+            Collections.reverse(openDataMatchPercentagesList);
 
-
+            openDataAdapter.setListPercentageDistance(openDataDistancePercentagesList);
+            openDataAdapter.setListDistance(openDataDistancesList);
+            openDataAdapter.setTypePlaceOldAnnounce(typePlaceOldAnnounce);
+            openDataAdapter.setTypePlaceMatchAnnounce("transport"); // typePlaceMatchAnnounce siempre es transport
+            openDataAdapter.setListPercentageMatch(openDataMatchPercentagesList);
         }
     }
 
@@ -166,8 +280,7 @@ public class MatchAnnounce extends AppCompatActivity {
             numberAnnounces = numAnnounces;
             SharedPreferences spref = getApplicationContext().getSharedPreferences("Login", 0);
             String userEmail = spref.getString("email", "");
-            String place = ""; // Se calcula en la llamada getAnnouncesMatch() de la AsyncTask getObjectAnnouncesDB
-            new getObjectAnnouncesDB().execute(userEmail, a.announceCategorie, a.announceType, String.valueOf(numberAnnounces), place, a.announceDateText, atributoDeterminante);
+            new getObjectAnnouncesDB().execute(userEmail, a.announceCategorie, a.announceType, String.valueOf(numberAnnounces), a.announceDateText, atributoDeterminante);
         }
     }
 
@@ -183,7 +296,7 @@ public class MatchAnnounce extends AppCompatActivity {
 
         @Override
         protected Announce[] doInBackground(String... strings) {
-            return DB_announce.getAnnouncesMatch(strings[0], strings[1], strings[2], strings[3], strings[4], strings[5], strings[6]);
+            return DB_announce.getAnnouncesMatch(strings[0], strings[1], strings[2], strings[3], strings[4], strings[5]);
         }
 
         @Override
@@ -482,6 +595,42 @@ public class MatchAnnounce extends AppCompatActivity {
         } else { // oldAnnounceDayInt >= matchAnnounceDayInt
             if(matchAnnounceDayInt - oldAnnounceDayInt <= 3) {
                 matchPercentageDouble += 5.0; // Le sumamos 10 al porcentaje si los anuncios tienen 3 dias o menos de diferencia
+            }
+        }
+
+        return String.valueOf(matchPercentageDouble); // Nos da el porcentaje de match entre los dos anuncios
+    }
+
+    public String getOpenDataMatchPercentage(Double distancePercentage, Announce oldAnnounce, OpenDataAnnounce matchAnnounce) {
+        Double matchPercentageDouble = 0.0;
+
+        // Formula del match...
+        Double distanceMultiplier = 0.7;
+
+        matchPercentageDouble = distancePercentage * distanceMultiplier;
+
+        if(distancePercentage != 0) {
+            String oldAnnounceDay = oldAnnounce.getAnnounceDateText().substring(oldAnnounce.getAnnounceDateText().length()-2);
+            Integer oldAnnounceDayInt = Integer.valueOf(oldAnnounceDay);
+            String matchAnnounceDay = matchAnnounce.getAnnounceDateText().substring(matchAnnounce.getAnnounceDateText().length()-2);
+            Integer matchAnnounceDayInt = Integer.valueOf(matchAnnounceDay);
+            // Por cada día más de diferencia se le resta al porcentaje...
+            if(oldAnnounce.getAnnounceType().equals("Perdida")) { // oldAnnounceDayInt <= matchAnnounceDayInt
+                if(oldAnnounceDayInt - matchAnnounceDayInt <= 1) {
+                    matchPercentageDouble += 30.0; // Le sumamos 10 al porcentaje si los anuncios tienen 3 dias o menos de diferencia
+                } else if(oldAnnounceDayInt - matchAnnounceDayInt == 2) {
+                    matchPercentageDouble += 20.0;
+                } else if(oldAnnounceDayInt - matchAnnounceDayInt >= 3 && oldAnnounceDayInt - matchAnnounceDayInt < 5) {
+                    matchPercentageDouble += 10.0;
+                }
+            } else { // oldAnnounceDayInt >= matchAnnounceDayInt
+                if(matchAnnounceDayInt - oldAnnounceDayInt <= 1) {
+                    matchPercentageDouble += 30.0; // Le sumamos 10 al porcentaje si los anuncios tienen 3 dias o menos de diferencia
+                } else if(matchAnnounceDayInt - oldAnnounceDayInt == 2) {
+                    matchPercentageDouble += 20.0;
+                } else if(matchAnnounceDayInt - oldAnnounceDayInt >= 3 && matchAnnounceDayInt - oldAnnounceDayInt < 5) {
+                    matchPercentageDouble += 10.0;
+                }
             }
         }
 

@@ -16,11 +16,13 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
 import es.lost2found.entities.Announce;
+import es.lost2found.entities.OpenDataAnnounce;
 
 public class DB_announce {
 
@@ -427,7 +429,8 @@ public class DB_announce {
         return  ret;
     }
 
-    public static Announce[] getAnnouncesMatch(String email, String categoria, String tipo, String numberAnnounces, String place, String dia, String determinante) {
+    public static Announce[] getAnnouncesMatch(String email, String categoria, String tipo, String numberAnnounces, String dia, String determinante) {
+        String place = "";
         Integer numAnnounces = Integer.valueOf(numberAnnounces);
         Integer userId = DB_user.getId(email);
         Announce[] announcesArray = new Announce[numAnnounces];
@@ -627,16 +630,13 @@ public class DB_announce {
         return idPlace;
     }
 
-    // Hacer otro que sea con anuncios de perdida (usar el otro open data disponible)
-    public static Announce[] getMatchOpenDataFoundAnnounces(String categoria, String dia) {
-        // este metodo devuelve los anuncios del open data despues de filtrarlos por categoria y dia
-        // CALCULAR EL NUMERO DE ANUNCIOS LLAMANDO AL OPEN DATA
-        //https://data.sncf.com/api/v2/catalog/datasets/objets-trouves-restitution/records?rows=10&pretty=false&timezone=Europe%2FMadrid&sort=-date
-        //
-        String OPEN_DATA_URL = "https://data.sncf.com/api/v2/catalog/datasets/objets-trouves-restitution/records?rows=10&sort=-date&select=exclude(gc_obo_date_heure_restitution_c)%2Cexclude(gc_obo_gare_origine_r_code_uic_c)%2Cexclude(gc_obo_nom_recordtype_sc_c)%2Cexclude(gc_obo_type_c)&pretty=false&timezone=Europe%2FMadrid";
-        // Ver como filtrar la busqueda en el open data por dia
-
-        Announce[] announces = new Announce[11];
+    public static List<OpenDataAnnounce>  getMatchOpenDataFoundAnnounces(String categoria, String dia) {
+        // Devuelve los anuncios del open data despues de filtrarlos por categoria y dia
+        if(dia.contains("/")) { // dia tiene que estar en el formato YYYY-MM-dd
+            dia = dia.replace("/", "-");
+        }
+        String OPEN_DATA_URL = "https://data.sncf.com/api/records/1.0/search//?dataset=objets-trouves-restitution&rows=25&sort=-date&facet=date&refine.date=" + dia + "&timezone=Europe/Madrid";
+        List<OpenDataAnnounce> announces = new ArrayList<>();
         HttpURLConnection connection = null;
         InputStream instream = null;
         try {
@@ -664,12 +664,11 @@ public class DB_announce {
             JSONObject object = new JSONObject(response);
             if(response.contains("records")) {
                 try {
+                int j = 0;
                 JSONArray records = object.getJSONArray("records");
                     for(int i = 0; i < records.length(); i++) {
                         JSONObject firstRecord = records.getJSONObject(i);
-                        JSONObject record = firstRecord.getJSONObject("record");
-                        JSONObject fields = record.getJSONObject("fields");
-                        String type = "Hallazgo";
+                        JSONObject fields = firstRecord.getJSONObject("fields");
                         String dateAndHour = fields.getString("date");
                         String[] info = dateAndHour.split("T");
                         String date = info[0];
@@ -678,11 +677,97 @@ public class DB_announce {
                         }
                         String[] hourArray = info[1].split("\\+");
                         String hour = hourArray[0].substring(0, hourArray[0].length() - 3);
+                        String announceType = "Hallazgo";
                         String place = fields.getString("gc_obo_gare_origine_r_name");
                         String category = fields.getString("gc_obo_nature_c");
                         // Consulta a la tabla conversor con category para obtener la categoria perteneciente a nuestra app y poder compararlos
-                        // Crear entidad OpenDataAnnounce y crear uno nuevo con todos los datos conseguidos
-                        String fsdfirsd = "";
+                        String localCategory = DB_typeObject.getLocalCategory(category);
+                        if(localCategory.equals(categoria)) { // Si coincide la categoria lo introducimos en el array de anuncios a mostrar
+                            announces.add(j, new OpenDataAnnounce(announceType, date, hour, localCategory, place));
+                            j++;
+                        }
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if(instream != null) {
+                try {
+                    instream.close();
+                } catch(IOException ignored) {
+                }
+            }
+            if(connection != null) {
+                connection.disconnect();
+            }
+        }
+        return announces;
+    }
+
+    public static List<OpenDataAnnounce>  getMatchOpenDataLostAnnounces(String categoria, String dia) {
+        // Devuelve los anuncios del open data despues de filtrarlos por categoria y dia
+        if(dia.contains("/")) { // dia tiene que estar en el formato YYYY-MM-dd
+            dia = dia.replace("/", "-");
+        }
+        String OPEN_DATA_URL = "https://data.sncf.com/api/records/1.0/search//?dataset=objets-trouves-gares&rows=25&sort=-date&facet=date&refine.date=" + dia + "&timezone=Europe/Madrid";
+        List<OpenDataAnnounce> announces = new ArrayList<>();
+        HttpURLConnection connection = null;
+        InputStream instream = null;
+        try {
+            URL url = new URL(OPEN_DATA_URL);
+            connection = (HttpURLConnection) url.openConnection();
+            connection.setRequestMethod("GET");
+            connection.setRequestProperty("Content-type", "application/x-www-form-urlencoded");
+            connection.setDoInput(true);
+            connection.setDoOutput(false);
+            connection.connect();
+
+            int status = connection.getResponseCode();
+
+            if (status != HttpURLConnection.HTTP_OK)
+                instream = connection.getErrorStream();
+            else
+                instream = connection.getInputStream();
+
+            instream = connection.getInputStream();
+            BufferedReader bReader = new BufferedReader(new InputStreamReader(instream));
+            String temp, response = "";
+            while((temp = bReader.readLine()) != null) {
+                response += temp;
+            }
+            JSONObject object = new JSONObject(response);
+            if(response.contains("records")) {
+                try {
+                    int j = 0;
+                    JSONArray records = object.getJSONArray("records");
+                    for(int i = 0; i < records.length(); i++) {
+                        JSONObject firstRecord = records.getJSONObject(i);
+                        JSONObject fields = firstRecord.getJSONObject("fields");
+                        String dateAndHour = fields.getString("date");
+                        String[] info = dateAndHour.split("T");
+                        String date = info[0];
+                        if(date.contains("-")) {
+                            date = date.replace("-", "/");
+                        }
+                        String[] hourArray = info[1].split("\\+");
+                        String hour = hourArray[0].substring(0, hourArray[0].length() - 3);
+                        String announceType = "Perdida";
+                        String place;
+                        if(fields.toString().contains("gc_obo_gare_origine_r_name")) {
+                            place = fields.getString("gc_obo_gare_origine_r_name");
+                        } else {
+                            place = " ";
+                        }
+                        String category = fields.getString("gc_obo_nature_c");
+                        // Consulta a la tabla conversor con category para obtener la categoria perteneciente a nuestra app y poder compararlos
+                        String localCategory = DB_typeObject.getLocalCategory(category);
+                        if(localCategory.equals(categoria)) { // Si coincide la categoria lo introducimos en el array de anuncios a mostrar
+                            announces.add(j, new OpenDataAnnounce(announceType, date, hour, localCategory, place));
+                            j++;
+                        }
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
