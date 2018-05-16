@@ -79,6 +79,9 @@ public class OpenDataMatchAnnounceInfoActivity extends AppCompatActivity {
             String distance = "<h4><font color=#699CFC> Cercanía: </font>" + "<font color=#FF0000> Distancia no disponible </font>";
             distanceMeters.setText(Html.fromHtml(distance));
         } else { // Distancia disponible
+            if(distancePercentageText.endsWith(".")) {
+                distancePercentageText += "0";
+            }
             String distancePerc = "<h4>" + distancePercentageText + "%" + "</h4><br>";
             distancePercentage.setText(Html.fromHtml(distancePerc));
             double distancePercentageValue = Double.valueOf(distancePercentageText);
