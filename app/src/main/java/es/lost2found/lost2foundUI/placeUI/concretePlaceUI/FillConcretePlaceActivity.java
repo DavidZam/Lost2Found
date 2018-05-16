@@ -32,8 +32,10 @@ public class FillConcretePlaceActivity extends AppCompatActivity {
         Toolbar tb = findViewById(R.id.toolbar_center);
         setSupportActionBar(tb);
         ActionBar ab = getSupportActionBar();
-        ab.setDisplayHomeAsUpEnabled(true);
-        ab.setHomeAsUpIndicator(R.drawable.ic_arrow_back);
+        if(ab != null) {
+            ab.setDisplayHomeAsUpEnabled(true);
+            ab.setHomeAsUpIndicator(R.drawable.ic_arrow_back);
+        }
 
         Window window = this.getWindow();
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
@@ -97,7 +99,7 @@ public class FillConcretePlaceActivity extends AppCompatActivity {
         SharedPreferences.Editor ed = sp.edit();  // Saved the place data filled by the user.
         Integer placeId = concretePlace.getId(); // transportPlace.getId();
 
-        ed.putInt("idLugar", placeId); // Comprobar
+        ed.putInt("idLugar", placeId);
         ed.apply();
 
         intent.putExtra("concretePlace", concretePlace);

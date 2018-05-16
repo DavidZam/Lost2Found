@@ -21,7 +21,7 @@ import es.lost2found.lost2foundUI.loginUI.LoginActivity;
 
 public class RegisterActivity extends AppCompatActivity {
 
-    private String msgerror;
+    private String msgError;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,13 +55,13 @@ public class RegisterActivity extends AppCompatActivity {
 
 
         if(email.equalsIgnoreCase("") || name.equalsIgnoreCase("") || pass.equalsIgnoreCase("") || confirmPass.equalsIgnoreCase("")) {
-            this.msgerror = "Completa todos los campos";
+            this.msgError = "Completa todos los campos";
             TextView textView = findViewById(R.id.user_already_exists);
-            textView.setText(this.msgerror);
+            textView.setText(this.msgError);
         } else if(!pass.equals(confirmPass)) {
-            this.msgerror = "Las contraseñas no coinciden";
+            this.msgError = "Las contraseñas no coinciden";
             TextView textView = findViewById(R.id.user_already_exists);
-            textView.setText(this.msgerror);
+            textView.setText(this.msgError);
         } else
             new RegisterDB().execute(name, email, pass);
     }
@@ -92,15 +92,11 @@ public class RegisterActivity extends AppCompatActivity {
         }
     }
 
-    /**
-     * Verify the sign up process after atempt to insert into the database.
-     * @param user
-     */
     private void processRegister(User user) {
         if(user == null) { // User already exists
-            this.msgerror = "Ese usuario ya existe";
+            this.msgError = "Ese usuario ya existe";
             TextView textView = findViewById(R.id.user_already_exists);
-            textView.setText(this.msgerror);
+            textView.setText(this.msgError);
         } else { // User doesn't exists
             Intent intent = new Intent(this, AnnounceActivity.class);
             SharedPreferences sp = getSharedPreferences("Login", 0);
@@ -109,7 +105,7 @@ public class RegisterActivity extends AppCompatActivity {
             ed.putString("nombre", user.getName());
             Integer userId = user.getId();
             ed.putInt("userId", userId);
-            ed.apply(); //ed.commit()
+            ed.apply();
 
             intent.putExtra("user", user);
             startActivity(intent);

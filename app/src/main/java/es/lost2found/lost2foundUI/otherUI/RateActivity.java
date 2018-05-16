@@ -36,8 +36,10 @@ public class RateActivity extends AppCompatActivity {
         Toolbar tb = findViewById(R.id.toolbar);
         setSupportActionBar(tb);
         ActionBar ab = getSupportActionBar();
-        ab.setDisplayHomeAsUpEnabled(true);
-        ab.setHomeAsUpIndicator(R.drawable.ic_menu);
+        if(ab != null) {
+            ab.setDisplayHomeAsUpEnabled(true);
+            ab.setHomeAsUpIndicator(R.drawable.ic_menu);
+        }
         mDrawerLayout = findViewById(R.id.drawer_layout);
 
         Window window = this.getWindow();
@@ -51,7 +53,7 @@ public class RateActivity extends AppCompatActivity {
                 "Además, colaboras en la difusión de la aplicación y llegar a más gente.<br><br>" +
                 "Es una forma de agradecer lo que te ofrece Lost2Found.<br><br>" +
                 "<h2> <font color=#1976D2> ¿Cómo nos puedes puntuar? </font></h2> Pincha en el siguiente enlace, busca nuestra aplicación y puntúa: <address>http://play.google.com/store/apps</address>";
-        TextView texto = (TextView)findViewById(R.id.textinfo);
+        TextView texto = findViewById(R.id.textinfo);
         texto.setText(Html.fromHtml(s));
 
         View headerLayout = navView.getHeaderView(0);
@@ -79,36 +81,30 @@ public class RateActivity extends AppCompatActivity {
         final Intent openData = new Intent(this, OpenDataActivity.class);
 
         navView.setNavigationItemSelectedListener(
-                new NavigationView.OnNavigationItemSelectedListener() {
+                menuItem -> {
+                    menuItem.setChecked(true);
+                    mDrawerLayout.closeDrawers();
 
-                    @Override
-                    public boolean onNavigationItemSelected(MenuItem menuItem) {
-                        menuItem.setChecked(true);
-                        mDrawerLayout.closeDrawers();
-
-                        // Add code here to update the UI based on the item selected
-
-                        if(menuItem.getItemId()== R.id.nav_home) {
-                            startActivity(home);
-                        }else if(menuItem.getItemId()== R.id.nav_search) {
-                            startActivity(buscar);
-                        }else if(menuItem.getItemId()== R.id.nav_info) {
-                            startActivity(aboutus);
-                        } else if(menuItem.getItemId()== R.id.nav_chat) {
-                            startActivity(chat);
-                        } else if(menuItem.getItemId() == R.id.nav_settings){
-                            startActivity(config);
-                        } else if(menuItem.getItemId()== R.id.nav_contact) {
-                            startActivity(contact);
-                        }else if(menuItem.getItemId()== R.id.nav_open_data) {
-                            startActivity(openData);
-                        } else if(menuItem.getItemId()== R.id.nav_help) {
-                            startActivity(help);
-                        } else if(menuItem.getItemId()== R.id.nav_logout) {
-                            logoutUser();
-                        }
-                        return true;
+                    if(menuItem.getItemId()== R.id.nav_home) {
+                        startActivity(home);
+                    }else if(menuItem.getItemId()== R.id.nav_search) {
+                        startActivity(buscar);
+                    }else if(menuItem.getItemId()== R.id.nav_info) {
+                        startActivity(aboutus);
+                    } else if(menuItem.getItemId()== R.id.nav_chat) {
+                        startActivity(chat);
+                    } else if(menuItem.getItemId() == R.id.nav_settings){
+                        startActivity(config);
+                    } else if(menuItem.getItemId()== R.id.nav_contact) {
+                        startActivity(contact);
+                    }else if(menuItem.getItemId()== R.id.nav_open_data) {
+                        startActivity(openData);
+                    } else if(menuItem.getItemId()== R.id.nav_help) {
+                        startActivity(help);
+                    } else if(menuItem.getItemId()== R.id.nav_logout) {
+                        logoutUser();
                     }
+                    return true;
                 }
         );
         navView.setCheckedItem(R.id.nav_feedback);

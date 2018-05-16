@@ -1,22 +1,16 @@
 package es.lost2found.lost2foundUI.pickerUI;
 
-import android.content.Context;
+import android.app.Application;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.support.annotation.ArrayRes;
 import android.support.annotation.ColorInt;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.Button;
-import android.widget.EditText;
-
-import eltos.simpledialogfragment.color.SimpleColorDialog;
 import eltos.simpledialogfragment.color.SimpleColorWheelDialog;
 import eltos.simpledialogfragment.list.AdvancedAdapter;
 import eltos.simpledialogfragment.list.CustomListDialog;
@@ -34,14 +28,6 @@ public class ColorPickerUI extends CustomListDialog<ColorPickerUI> implements Si
         return new ColorPickerUI();
     }
 
-    public static final @ArrayRes
-    int
-            MATERIAL_COLOR_PALLET = R.array.material_pallet,
-            MATERIAL_COLOR_PALLET_LIGHT = R.array.material_pallet_light,
-            MATERIAL_COLOR_PALLET_DARK = R.array.material_pallet_dark,
-            BEIGE_COLOR_PALLET = R.array.beige_pallet,
-            COLORFUL_COLOR_PALLET = R.array.colorful_pallet;
-
     public static final int
             NONE = ColorView.NONE,
             AUTO = ColorView.AUTO;
@@ -53,23 +39,10 @@ public class ColorPickerUI extends CustomListDialog<ColorPickerUI> implements Si
      *
      * @param colors array of rgb-colors
      */
-    public ColorPickerUI colors(@ColorInt int[] colors){
-        getArguments().putIntArray(COLORS, colors);
-        return this;
-    }
-
-    /**
-     * Sets the color pallet to choose from
-     * May be one of {@link ColorPickerUI#MATERIAL_COLOR_PALLET},
-     * {@link ColorPickerUI#MATERIAL_COLOR_PALLET_DARK},
-     * {@link ColorPickerUI#MATERIAL_COLOR_PALLET_LIGHT},
-     * {@link ColorPickerUI#BEIGE_COLOR_PALLET} or a custom pallet
-     *
-     * @param context a context to resolve the resource
-     * @param colorArrayRes color array resource id
-     */
-    public ColorPickerUI colors(Context context, @ArrayRes int colorArrayRes){
-        return colors(context.getResources().getIntArray(colorArrayRes));
+    public void colors(@ColorInt int[] colors){
+        if(getArguments() != null) {
+            getArguments().putIntArray(COLORS, colors);
+        }
     }
 
     /**
@@ -78,17 +51,18 @@ public class ColorPickerUI extends CustomListDialog<ColorPickerUI> implements Si
      * @param color the selected color
      */
     public ColorPickerUI colorPreset(@ColorInt int color){
-        getArguments().putInt(COLOR, color);
+        if(getArguments() != null) {
+            getArguments().putInt(COLOR, color);
+        }
         return this;
     }
 
     /**
      * Set this to true to show a field with a color picker option
      *
-     * @param allow allow custom picked color if true
      */
-    public ColorPickerUI allowCustom(boolean allow){
-        return setArg(CUSTOM, allow);
+    public ColorPickerUI allowCustom(){
+        return setArg(CUSTOM, true);
     }
 
     /**
@@ -139,30 +113,31 @@ public class ColorPickerUI extends CustomListDialog<ColorPickerUI> implements Si
 
     @Override
     protected AdvancedAdapter onCreateAdapter() {
+        if(getArguments() != null) {
+            int[] colors = getArguments().getIntArray(COLORS);
+            if (colors == null) colors = new int[0];
+            boolean custom = getArguments().getBoolean(CUSTOM);
 
-        int[] colors = getArguments().getIntArray(COLORS);
-        if (colors == null) colors = new int[0];
-        boolean custom = getArguments().getBoolean(CUSTOM);
-
-        // preset
-        if (mSelectedColor == NONE && getArguments().containsKey(COLOR)){
-            @ColorInt int preset = getArguments().getInt(COLOR, NONE);
-            int index = indexOf(colors, preset);
-            if (index < 0){ // custom preset
-                mSelectedColor = mCustomColor = preset;
-                if (custom){
-                    choicePreset(colors.length);
+            if (mSelectedColor == NONE && getArguments().containsKey(COLOR)){
+                @ColorInt int preset = getArguments().getInt(COLOR, NONE);
+                int index = indexOf(colors, preset);
+                if (index < 0){ // custom preset
+                    mSelectedColor = mCustomColor = preset;
+                    if (custom){
+                        choicePreset(colors.length);
+                    }
+                } else {
+                    choicePreset(index);
+                    mSelectedColor = preset;
                 }
-            } else {
-                choicePreset(index);
-                mSelectedColor = preset;
             }
+
+            getListView().setSelector(new ColorDrawable(Color.TRANSPARENT));
+
+            return new ColorAdapter(colors, custom);
+        } else {
+            return null;
         }
-
-        // Selector provided by ColorView
-        getListView().setSelector(new ColorDrawable(Color.TRANSPARENT));
-
-        return new ColorAdapter(colors, custom);
     }
 
     private int indexOf(int[] array, int item){
@@ -183,10 +158,7 @@ public class ColorPickerUI extends CustomListDialog<ColorPickerUI> implements Si
 
     @Override
     protected boolean acceptsPositiveButtonPress() {
-        if (getArguments().getInt(CHOICE_MODE) == SINGLE_CHOICE_DIRECT){
-            return mSelectedColor != NONE;
-        }
-        return true;
+        return getArguments() != null && (getArguments().getInt(CHOICE_MODE) != SINGLE_CHOICE_DIRECT || mSelectedColor != NONE);
     }
 
     @Override
@@ -203,10 +175,8 @@ public class ColorPickerUI extends CustomListDialog<ColorPickerUI> implements Si
             }
             dialog.show(this, PICKER_DIALOG_TAG);
             mSelectedColor = NONE;
-            //onColorSet();
         } else {
             mSelectedColor = (int) id;
-            //onColorSet();
         }
         onColorSet();
     }
@@ -217,11 +187,12 @@ public class ColorPickerUI extends CustomListDialog<ColorPickerUI> implements Si
             mSelectedColor = mCustomColor = extras.getInt(SimpleColorWheelDialog.COLOR);
             notifyDataSetChanged();
             onColorSet();
-            if (getArguments().getInt(CHOICE_MODE) == SINGLE_CHOICE_DIRECT){
-                pressPositiveButton();
-                //onColorSet();
+            if(getArguments() != null) {
+                if (getArguments().getInt(CHOICE_MODE) == SINGLE_CHOICE_DIRECT){
+                    pressPositiveButton();
+                }
+                return true;
             }
-            return true;
         }
         return false;
     }
@@ -254,7 +225,7 @@ public class ColorPickerUI extends CustomListDialog<ColorPickerUI> implements Si
 
     protected class ColorAdapter extends AdvancedAdapter<Integer>{
 
-        public ColorAdapter(int[] colors, boolean addCustomField){
+        ColorAdapter(int[] colors, boolean addCustomField){
             if (colors == null) colors = new int[0];
 
             Integer[] cs = new Integer[colors.length + (addCustomField ? 1 : 0)];
@@ -264,12 +235,7 @@ public class ColorPickerUI extends CustomListDialog<ColorPickerUI> implements Si
             if (addCustomField){
                 cs[cs.length-1] = PICKER;
             }
-            setData(cs, new ItemIdentifier<Integer>(){
-                @Nullable
-                public Long getIdForItem(Integer color) {
-                    return Long.valueOf(color);
-                }
-            });
+            setData(cs, Long::valueOf);
         }
 
         @Override
@@ -292,12 +258,14 @@ public class ColorPickerUI extends CustomListDialog<ColorPickerUI> implements Si
                 item.setStyle(ColorView.Style.CHECK);
             }
 
-            @ColorInt int outline = getArguments().getInt(OUTLINE, ColorView.NONE);
-            if (outline != NONE){
-                float width = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,
-                        2 /*dp*/, getResources().getDisplayMetrics());
-                item.setOutlineWidth((int) width);
-                item.setOutlineColor(outline);
+            if(getArguments() != null) {
+                @ColorInt int outline = getArguments().getInt(OUTLINE, ColorView.NONE);
+                if (outline != NONE) {
+                    float width = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,
+                            2 /*dp*/, getResources().getDisplayMetrics());
+                    item.setOutlineWidth((int) width);
+                    item.setOutlineColor(outline);
+                }
             }
 
             return super.getView(position, item, parent);
@@ -305,11 +273,18 @@ public class ColorPickerUI extends CustomListDialog<ColorPickerUI> implements Si
     }
 
     public void onColorSet() {
-        SharedPreferences sp = getActivity().getApplication().getApplicationContext().getSharedPreferences("colorBtn", 0);
-        SharedPreferences.Editor ed = sp.edit();            // Saved the user color choice.
-        ed.putInt("colorChoice", mSelectedColor);
-        ed.apply();
-        View view = getActivity().findViewById(R.id.color_view);
-        view.setBackgroundColor(mSelectedColor);
+        try {
+            Application app = getActivity().getApplication();
+            if (app != null) {
+                SharedPreferences sp = getActivity().getApplication().getApplicationContext().getSharedPreferences("colorBtn", 0);
+                SharedPreferences.Editor ed = sp.edit();            // Saved the user color choice.
+                ed.putInt("colorChoice", mSelectedColor);
+                ed.apply();
+                View view = getActivity().findViewById(R.id.color_view);
+                view.setBackgroundColor(mSelectedColor);
+            }
+        } catch(NullPointerException e) {
+            e.printStackTrace();
+        }
     }
 }

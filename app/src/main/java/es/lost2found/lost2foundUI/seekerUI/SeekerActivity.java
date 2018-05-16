@@ -41,10 +41,8 @@ import es.lost2found.lost2foundUI.otherUI.ContactActivity;
 import es.lost2found.lost2foundUI.otherUI.HelpActivity;
 import es.lost2found.lost2foundUI.otherUI.RateActivity;
 
-
 public class SeekerActivity extends AppCompatActivity implements FloatingActionButton.OnClickListener{
     private DrawerLayout mDrawerLayout;
-    //private SeekerAnnounceViewAdapter adapter;
     private AnnounceViewAdapter adapter;
     private Integer listElements = 0;
     private RecyclerView recyclerView;
@@ -58,21 +56,22 @@ public class SeekerActivity extends AppCompatActivity implements FloatingActionB
         setContentView(R.layout.activity_seeker);
 
         String[] categorias = {"Cartera", "Telefono", "Tarjeta bancaria", "Tarjeta transporte", "Otro"};
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, categorias);
-        categoriaSeleccionada = (MaterialBetterSpinner) findViewById(R.id.listaCategorias);
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_dropdown_item_1line, categorias);
+        categoriaSeleccionada = findViewById(R.id.listaCategorias);
         categoriaSeleccionada.setAdapter(arrayAdapter);
 
         String[] tipo = {"Perdida", "Hallazgo"};
-        ArrayAdapter<String> arrayAdapter2 = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, tipo);
-        tipoAnuncionSeleccionado = (MaterialBetterSpinner) findViewById(R.id.tipoAnuncio);
+        ArrayAdapter<String> arrayAdapter2 = new ArrayAdapter<>(this, android.R.layout.simple_dropdown_item_1line, tipo);
+        tipoAnuncionSeleccionado =  findViewById(R.id.tipoAnuncio);
         tipoAnuncionSeleccionado.setAdapter(arrayAdapter2);
 
-        //Menú
         Toolbar tb = findViewById(R.id.toolbar);
         setSupportActionBar(tb);
         ActionBar ab = getSupportActionBar();
-        ab.setDisplayHomeAsUpEnabled(true);
-        ab.setHomeAsUpIndicator(R.drawable.ic_menu);
+        if(ab != null) {
+            ab.setDisplayHomeAsUpEnabled(true);
+            ab.setHomeAsUpIndicator(R.drawable.ic_menu);
+        }
         mDrawerLayout = findViewById(R.id.drawer_layout);
 
         Window window = this.getWindow();
@@ -81,8 +80,6 @@ public class SeekerActivity extends AppCompatActivity implements FloatingActionB
         window.setStatusBarColor(ContextCompat.getColor(this, R.color.color700));
 
         NavigationView navView = findViewById(R.id.nav_view);
-
-        SharedPreferences sp = getApplicationContext().getSharedPreferences("announcePlace", 0);
 
         View headerLayout = navView.getHeaderView(0);
         TextView emailUser = headerLayout.findViewById(R.id.user_mail);
@@ -109,65 +106,39 @@ public class SeekerActivity extends AppCompatActivity implements FloatingActionB
         final Intent openData = new Intent(this, OpenDataActivity.class);
 
         navView.setNavigationItemSelectedListener(
-                new NavigationView.OnNavigationItemSelectedListener() {
+                menuItem -> {
+                    menuItem.setChecked(true);
+                    mDrawerLayout.closeDrawers();
 
-                    @Override
-                    public boolean onNavigationItemSelected(MenuItem menuItem) {
-                        menuItem.setChecked(true);
-                        mDrawerLayout.closeDrawers();
-
-                        // Add code here to update the UI based on the item selected
-
-                        if(menuItem.getItemId()== R.id.nav_home) {
-                            startActivity(home);
-                        }else if(menuItem.getItemId()== R.id.nav_chat) {
-                            startActivity(chat);
-                        }else if(menuItem.getItemId()== R.id.nav_contact) {
-                            startActivity(contact);
-                        } else if(menuItem.getItemId() == R.id.nav_settings){
-                            startActivity(config);
-                        } else if(menuItem.getItemId()== R.id.nav_info) {
-                            startActivity(aboutus);
-                        } else if(menuItem.getItemId()== R.id.nav_help) {
-                            startActivity(help);
-                        }else if(menuItem.getItemId()== R.id.nav_feedback) {
-                            startActivity(rate);
-                        } else if(menuItem.getItemId()== R.id.nav_open_data) {
-                            startActivity(openData);
-                        } else if(menuItem.getItemId()== R.id.nav_logout) {
-                            logoutUser();
-                        }
-                        return true;
+                    if(menuItem.getItemId()== R.id.nav_home) {
+                        startActivity(home);
+                    }else if(menuItem.getItemId()== R.id.nav_chat) {
+                        startActivity(chat);
+                    }else if(menuItem.getItemId()== R.id.nav_contact) {
+                        startActivity(contact);
+                    } else if(menuItem.getItemId() == R.id.nav_settings){
+                        startActivity(config);
+                    } else if(menuItem.getItemId()== R.id.nav_info) {
+                        startActivity(aboutus);
+                    } else if(menuItem.getItemId()== R.id.nav_help) {
+                        startActivity(help);
+                    }else if(menuItem.getItemId()== R.id.nav_feedback) {
+                        startActivity(rate);
+                    } else if(menuItem.getItemId()== R.id.nav_open_data) {
+                        startActivity(openData);
+                    } else if(menuItem.getItemId()== R.id.nav_logout) {
+                        logoutUser();
                     }
+                    return true;
                 }
         );
         navView.setCheckedItem(R.id.nav_search);
-
-        // In this example we fill announceList with a function fill_with_data(), in the future we'll do it with the database info
-        /*List<Announce> announceList = new ArrayList<>();
-        Announce announce = new Announce();
-        announce.fill_with_data(announceList);
-
-        RecyclerView recyclerView = findViewById(R.id.search_recyclerview);
-        SeekerAnnounceViewAdapter adapter = new SeekerAnnounceViewAdapter(announceList, getApplication());
-        recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-
-        // Adding a ItemAnimator to the RecyclerView (Optional)
-        RecyclerView.ItemAnimator itemAnimator = new DefaultItemAnimator();
-        itemAnimator.setAddDuration(1000);
-        itemAnimator.setRemoveDuration(1000);
-        /*recyclerView.setItemAnimator(itemAnimator);*/
 
         FloatingActionButton search = findViewById(R.id.search);
         search.setOnClickListener(this);
 
         Announce delAnnounce = (Announce) getIntent().getSerializableExtra("delete");
         if(delAnnounce != null) {
-            //adapter.remove(delAnnounce);
-            //listElements--;
-            //recyclerView.setAdapter(adapter);
-            //recyclerView.setLayoutManager(new LinearLayoutManager(this));
             String idAnuncio = String.valueOf(delAnnounce.getIdAnuncio());
             new deleteAnnounceFromDB().execute(idAnuncio, delAnnounce.getAnnounceCategorie());
         }
@@ -182,17 +153,10 @@ public class SeekerActivity extends AppCompatActivity implements FloatingActionB
             typePlace = extras.getString("typePlace");
         }
 
-        adapter = new AnnounceViewAdapter(announceList, getApplication(), userName, parentName, typePlace);
+        adapter = new AnnounceViewAdapter(announceList, userName, parentName, typePlace);
         recyclerView = findViewById(R.id.search_recyclerview);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-
-        // Adding a ItemAnimator to the RecyclerView (Optional)
-        RecyclerView.ItemAnimator itemAnimator = new DefaultItemAnimator();
-        itemAnimator.setAddDuration(1000);
-        itemAnimator.setRemoveDuration(1000);
-        recyclerView.setItemAnimator(itemAnimator);
-
     }
 
     private class deleteAnnounceFromDB extends AsyncTask<String, Void, Boolean> {
@@ -200,12 +164,6 @@ public class SeekerActivity extends AppCompatActivity implements FloatingActionB
         @Override
         protected Boolean doInBackground(String... strings) {
             return DB_announce.deleteAnnounce(strings[0], strings[1]);
-        }
-
-        @Override
-        protected void onPostExecute(Boolean removed) {
-
-            //processAnnounceScreen(numAnnounce);
         }
     }
 
@@ -222,11 +180,7 @@ public class SeekerActivity extends AppCompatActivity implements FloatingActionB
         if(categoriaSeleccionada.getText().toString().equalsIgnoreCase("") || tipoAnuncionSeleccionado.getText().toString().equalsIgnoreCase("")){
             TextView textView = findViewById(R.id.without_search);
             textView.setText(textView.getResources().getString(R.string.error_txt5));
-
-        }else{
-
-            //String cat = cambiarNombreCategoria();
-            //String tipoA = cambiarNombreTipo();
+        } else {
             String cat = categoriaSeleccionada.getText().toString();
             String tipoA = tipoAnuncionSeleccionado.getText().toString();
             new getNumberObjectAnnouncesDB().execute(cat, tipoA);
@@ -237,31 +191,6 @@ public class SeekerActivity extends AppCompatActivity implements FloatingActionB
     public void onPointerCaptureChanged(boolean hasCapture) {
 
     }
-
-    /*private String cambiarNombreCategoria(){
-        String cat;
-        if(categoriaSeleccionada.getText().toString().equals("Tarjeta bancaria")){
-            cat = "Tarjeta bancaria";
-        }else if(categoriaSeleccionada.getText().toString().equals("Tarjeta transporte")){
-            cat = "Tarjeta transporte";
-        }else if(categoriaSeleccionada.getText().toString().equals("Cartera")){
-            cat = "Cartera";
-        }else if(categoriaSeleccionada.getText().toString().equals("Telefono")){
-            cat = "Telefono";
-        }else{
-            cat = "Otro";
-        }
-
-        return cat;
-    }
-
-    private String cambiarNombreTipo(){
-        String tipoA = "Hallazgo";
-        if(tipoAnuncionSeleccionado.getText().toString().equals("Perdida")){
-            tipoA = "Perdida";
-        }
-        return tipoA;
-    }*/
 
     private class getNumberObjectAnnouncesDB extends AsyncTask<String, Void, Integer> {
 
@@ -278,24 +207,15 @@ public class SeekerActivity extends AppCompatActivity implements FloatingActionB
 
     public void processAnnounceScreen(Integer numAnnounces) {
         if (numAnnounces == 0) {
-            TextView noannounces = findViewById(R.id.without_search);
-            noannounces.setText("No hay objetos que cumplan con tus requisitos");
+            TextView noAnnounces = findViewById(R.id.without_search);
+            noAnnounces.setText(getResources().getString(R.string.seeker_error));
         } else {
-            TextView noannounces = findViewById(R.id.without_search);
-            noannounces.setText("");
+            TextView noAnnounces = findViewById(R.id.without_search);
+            noAnnounces.setText("");
             numberAnnounces = numAnnounces;
 
             String cat = categoriaSeleccionada.getText().toString();
             String tipoA = tipoAnuncionSeleccionado.getText().toString();
-
-            //String cat = cambiarNombreCategoria();
-            //String tipoA = cambiarNombreTipo();
-
-            //SharedPreferences spref = getApplicationContext().getSharedPreferences("Login", 0);
-            //String userName = spref.getString("nombre", "");
-
-            //SharedPreferences sp = getApplicationContext().getSharedPreferences("announcePlace", 0);
-            //String place = sp.getString("place", "");
 
             new getObjectAnnouncesDB().execute(cat, tipoA, String.valueOf(numberAnnounces));
         }
@@ -344,13 +264,5 @@ public class SeekerActivity extends AppCompatActivity implements FloatingActionB
         Intent intent = new Intent(this, LoginActivity.class);
         startActivity(intent);
         finish();
-    }
-
-    /**
-     *
-     * @param view
-     */
-    public void seeker(View view) {
-
     }
 }

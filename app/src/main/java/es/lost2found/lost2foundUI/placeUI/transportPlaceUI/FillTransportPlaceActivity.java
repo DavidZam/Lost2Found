@@ -45,8 +45,10 @@ public class FillTransportPlaceActivity extends AppCompatActivity {
         Toolbar tb = findViewById(R.id.toolbar_center);
         setSupportActionBar(tb);
         ActionBar ab = getSupportActionBar();
-        ab.setDisplayHomeAsUpEnabled(true);
-        ab.setHomeAsUpIndicator(R.drawable.ic_arrow_back);
+        if(ab != null) {
+            ab.setDisplayHomeAsUpEnabled(true);
+            ab.setHomeAsUpIndicator(R.drawable.ic_arrow_back);
+        }
 
         Window window = this.getWindow();
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
@@ -73,24 +75,15 @@ public class FillTransportPlaceActivity extends AppCompatActivity {
                 new linesDB().execute(busText);
         }
 
-        spinner.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if(parent.getItemAtPosition(position).toString() != null) {
-                    lineChoice = parent.getItemAtPosition(position).toString();
-                    if (Build.VERSION.SDK_INT>=Build.VERSION_CODES.HONEYCOMB)
-                        new stationsDB().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, lineChoice);
-                    else
-                        new stationsDB().execute(lineChoice);
-                }
+        spinner.setOnItemClickListener((parent, view, position, id) -> {
+            if(parent.getItemAtPosition(position).toString() != null) {
+                lineChoice = parent.getItemAtPosition(position).toString();
+                new stationsDB().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, lineChoice);
             }
         });
-        spinner2.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if(parent.getItemAtPosition(position).toString() != null) {
-                    stationChoice = parent.getItemAtPosition(position).toString();
-                }
+        spinner2.setOnItemClickListener((parent, view, position, id) -> {
+            if(parent.getItemAtPosition(position).toString() != null) {
+                stationChoice = parent.getItemAtPosition(position).toString();
             }
         });
     }
@@ -121,12 +114,12 @@ public class FillTransportPlaceActivity extends AppCompatActivity {
     }
 
     public void updateAdapter(String[] result) {
-        arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, result);
+        arrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_dropdown_item_1line, result);
         spinner.setAdapter(arrayAdapter);
     }
 
     public void updateAdapter2(String[] result) {
-        arrayAdapter2 = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, result);
+        arrayAdapter2 = new ArrayAdapter<>(this, android.R.layout.simple_dropdown_item_1line, result);
         spinner2.setAdapter(arrayAdapter2);
     }
 

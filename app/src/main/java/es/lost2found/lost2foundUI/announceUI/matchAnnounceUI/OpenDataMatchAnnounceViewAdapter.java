@@ -2,6 +2,7 @@ package es.lost2found.lost2foundUI.announceUI.matchAnnounceUI;
 
 import android.content.Context;
 import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,7 +19,6 @@ import es.lost2found.lost2foundUI.announceUI.OpenDataAnnounceViewHolder;
 public class OpenDataMatchAnnounceViewAdapter extends RecyclerView.Adapter<OpenDataAnnounceViewHolder> {
 
     private List<OpenDataAnnounce> listAnnounce = Collections.emptyList();
-    private Context context;
     private Announce oldAnnounce;
     private List<String> distancePercentagesList;
     private List<String> matchPercentagesList;
@@ -26,9 +26,8 @@ public class OpenDataMatchAnnounceViewAdapter extends RecyclerView.Adapter<OpenD
     private String typePlaceOldAnnounce;
     private String typePlaceMatchAnnounce;
 
-    public OpenDataMatchAnnounceViewAdapter(List<OpenDataAnnounce> listAnnounce, Context context, Announce oldAnnounce, List<String>  distancePercentagesList, List<String>  distancesList, String typePlaceOldAnnounce, String typePlaceMatchAnnounce, List<String>  matchPercentagesList) {
+    OpenDataMatchAnnounceViewAdapter(List<OpenDataAnnounce> listAnnounce, Announce oldAnnounce, List<String>  distancePercentagesList, List<String>  distancesList, String typePlaceOldAnnounce, String typePlaceMatchAnnounce, List<String>  matchPercentagesList) {
         this.listAnnounce = listAnnounce;
-        this.context = context;
         this.oldAnnounce = oldAnnounce;
         this.distancePercentagesList = distancePercentagesList;
         this.distancesList = distancesList;
@@ -37,21 +36,20 @@ public class OpenDataMatchAnnounceViewAdapter extends RecyclerView.Adapter<OpenD
         this.matchPercentagesList = matchPercentagesList;
     }
 
+    @NonNull
     @Override
-    public OpenDataAnnounceViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public OpenDataAnnounceViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_opendata_announce, parent, false);
-        OpenDataAnnounceViewHolder holder = new OpenDataAnnounceViewHolder(v);
-
-        return holder;
+        return new OpenDataAnnounceViewHolder(v);
     }
 
     @Override
-    public void onBindViewHolder(OpenDataAnnounceViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull OpenDataAnnounceViewHolder holder, int position) {
         holder.getOpenDataAnnounceType().setText(listAnnounce.get(position).getAnnounceType());
         holder.getOpenDataAnnounceDateText().setText(listAnnounce.get(position).DDMMYYYY());
         holder.getOpenDataAnnounceHourText().setText(listAnnounce.get(position).getAnnounceHourText());
         holder.getOpenDataAnnounceCategorie().setText(listAnnounce.get(position).getAnnounceCategorie());
-        holder.getOpenDataMatchPercentage().setText(matchPercentagesList.get(position) + "%");
+        holder.getOpenDataMatchPercentage().setText(String.format("%s%%", matchPercentagesList.get(position)));
         double matchPercentageValue = Double.valueOf(matchPercentagesList.get(position));
         if(matchPercentageValue >= 70) {
             holder.getOpenDataMatchPercentage().setTextColor(holder.getOpenDataMatchPercentage().getResources().getColor(R.color.ForestGreen));
@@ -71,25 +69,22 @@ public class OpenDataMatchAnnounceViewAdapter extends RecyclerView.Adapter<OpenD
             holder.getOpenDataCategorieIcon().setImageResource(R.drawable.ic_other);
         }
 
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Context context = v.getContext();
-                Intent intent = new Intent(context, OpenDataMatchAnnounceInfoActivity.class);
+        holder.itemView.setOnClickListener(v -> {
+            Context context = v.getContext();
+            Intent intent = new Intent(context, OpenDataMatchAnnounceInfoActivity.class);
 
-                OpenDataAnnounce announce = listAnnounce.get(position);
-                intent.putExtra("myAnnounce", announce);
-                intent.putExtra("oldAnnounce", oldAnnounce);
-                if(typePlaceOldAnnounce != null && typePlaceMatchAnnounce != null) {
-                    String distance = distancesList.get(position);
-                    String percentageDistance = distancePercentagesList.get(position);
-                    intent.putExtra("typePlaceOldAnnounce", typePlaceOldAnnounce);
-                    intent.putExtra("typePlaceMatchAnnounce", typePlaceMatchAnnounce);
-                    intent.putExtra("distance", distance);
-                    intent.putExtra("percentageDistance", percentageDistance);
-                }
-                context.startActivity(intent);
+            OpenDataAnnounce announce = listAnnounce.get(position);
+            intent.putExtra("myAnnounce", announce);
+            intent.putExtra("oldAnnounce", oldAnnounce);
+            if(typePlaceOldAnnounce != null && typePlaceMatchAnnounce != null) {
+                String distance = distancesList.get(position);
+                String percentageDistance = distancePercentagesList.get(position);
+                intent.putExtra("typePlaceOldAnnounce", typePlaceOldAnnounce);
+                intent.putExtra("typePlaceMatchAnnounce", typePlaceMatchAnnounce);
+                intent.putExtra("distance", distance);
+                intent.putExtra("percentageDistance", percentageDistance);
             }
+            context.startActivity(intent);
         });
     }
 
@@ -99,44 +94,36 @@ public class OpenDataMatchAnnounceViewAdapter extends RecyclerView.Adapter<OpenD
     }
 
     @Override
-    public void onAttachedToRecyclerView(RecyclerView recyclerView) {
+    public void onAttachedToRecyclerView(@NonNull RecyclerView recyclerView) {
         super.onAttachedToRecyclerView(recyclerView);
     }
 
-    // Insert a new item (announce) to the RecyclerView on a predefined position
     public void insert(int position, OpenDataAnnounce annonuce) {
         listAnnounce.add(position, annonuce);
         notifyItemInserted(position);
     }
 
-    // Remove a RecyclerView item containing a specified announce Object
-    public void remove(OpenDataAnnounce announce) {
-        int position = listAnnounce.indexOf(announce);
-        listAnnounce.remove(position);
-        notifyItemRemoved(position);
-    }
-
-    public List<OpenDataAnnounce> getListAnnounce() {
+    List<OpenDataAnnounce> getListAnnounce() {
         return this.listAnnounce;
     }
 
-    public void setListPercentageDistance(List<String> listPercentageDistance) {
+    void setListPercentageDistance(List<String> listPercentageDistance) {
         this.distancePercentagesList = listPercentageDistance;
     }
 
-    public void setListDistance(List<String> listDistance) {
+    void setListDistance(List<String> listDistance) {
         this.distancesList = listDistance;
     }
 
-    public void setTypePlaceOldAnnounce(String typePlaceOldAnnounce) {
+    void setTypePlaceOldAnnounce(String typePlaceOldAnnounce) {
         this.typePlaceOldAnnounce = typePlaceOldAnnounce;
     }
 
-    public void setTypePlaceMatchAnnounce(String typePlaceMatchAnnounce) {
-        this.typePlaceMatchAnnounce = typePlaceMatchAnnounce;
+    void setTypePlaceMatchAnnounce() {
+        this.typePlaceMatchAnnounce = "transport";
     }
 
-    public void setListPercentageMatch(List<String> listPercentageMatch) {
+    void setListPercentageMatch(List<String> listPercentageMatch) {
         this.matchPercentagesList = listPercentageMatch;
     }
 }

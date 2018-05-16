@@ -15,7 +15,7 @@ import android.view.WindowManager;
 import es.lost2found.R;
 import es.lost2found.lost2foundUI.placeUI.PlaceActivity;
 
-public class TransportPlaceActivity extends AppCompatActivity { // implements View.OnClickListener
+public class TransportPlaceActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,8 +25,10 @@ public class TransportPlaceActivity extends AppCompatActivity { // implements Vi
         Toolbar tb = findViewById(R.id.toolbar_center);
         setSupportActionBar(tb);
         ActionBar ab = getSupportActionBar();
-        ab.setDisplayHomeAsUpEnabled(true);
-        ab.setHomeAsUpIndicator(R.drawable.ic_arrow_back);
+        if(ab != null) {
+            ab.setDisplayHomeAsUpEnabled(true);
+            ab.setHomeAsUpIndicator(R.drawable.ic_arrow_back);
+        }
 
         Window window = this.getWindow();
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
@@ -43,7 +45,6 @@ public class TransportPlaceActivity extends AppCompatActivity { // implements Vi
         ed.apply();
         Intent intent = new Intent(this, FillTransportPlaceActivity.class);
         startActivity(intent);
-        //finish();
     }
 
     public void saveBusClicked(View view) {
@@ -55,7 +56,6 @@ public class TransportPlaceActivity extends AppCompatActivity { // implements Vi
         ed.apply();
         Intent intent = new Intent(this, FillTransportPlaceActivity.class);
         startActivity(intent);
-        //finish();
     }
 
     public void saveTrainClicked(View view) {
@@ -67,15 +67,7 @@ public class TransportPlaceActivity extends AppCompatActivity { // implements Vi
         ed.apply();
         Intent intent = new Intent(this, FillTransportTrainPlaceActivity.class);
         startActivity(intent);
-        //finish();
     }
-
-    /*@Override
-    public void onClick(View v) {
-        final Intent intent = new Intent(this, FillTransportPlaceActivity.class);
-        startActivity(intent);
-        //finish();
-    }*/
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

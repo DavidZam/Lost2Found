@@ -54,8 +54,10 @@ public class ChatActivity extends AppCompatActivity {
         Toolbar tb = findViewById(R.id.toolbar);
         setSupportActionBar(tb);
         ActionBar ab = getSupportActionBar();
-        ab.setDisplayHomeAsUpEnabled(true);
-        ab.setHomeAsUpIndicator(R.drawable.ic_menu);
+        if(ab != null) {
+            ab.setDisplayHomeAsUpEnabled(true);
+            ab.setHomeAsUpIndicator(R.drawable.ic_menu);
+        }
         mDrawerLayout = findViewById(R.id.chat_layout);
 
         Window window = this.getWindow();
@@ -89,34 +91,30 @@ public class ChatActivity extends AppCompatActivity {
         final Intent config = new Intent(this, SettingsActivity.class);
         final Intent openData = new Intent(this, OpenDataActivity.class);
         navView.setNavigationItemSelectedListener(
-                new NavigationView.OnNavigationItemSelectedListener() {
+                menuItem -> {
+                    menuItem.setChecked(true);
+                    mDrawerLayout.closeDrawers();
 
-                    @Override
-                    public boolean onNavigationItemSelected(MenuItem menuItem) {
-                        menuItem.setChecked(true);
-                        mDrawerLayout.closeDrawers();
-
-                        if(menuItem.getItemId()== R.id.nav_home) {
-                            startActivity(home);
-                        }else if(menuItem.getItemId()== R.id.nav_search) {
-                            startActivity(buscar);
-                        }else if(menuItem.getItemId()== R.id.nav_contact) {
-                            startActivity(contact);
-                        } else if(menuItem.getItemId()== R.id.nav_open_data) {
-                            startActivity(openData);
-                        } else if(menuItem.getItemId()== R.id.nav_info) {
-                            startActivity(aboutus);
-                        } else if(menuItem.getItemId() == R.id.nav_settings){
-                            startActivity(config);
-                        } else if(menuItem.getItemId()== R.id.nav_help) {
-                            startActivity(help);
-                        }else if(menuItem.getItemId()== R.id.nav_feedback) {
-                            startActivity(rate);
-                        } else if(menuItem.getItemId()== R.id.nav_logout) {
-                            logoutUser();
-                        }
-                        return true;
+                    if(menuItem.getItemId()== R.id.nav_home) {
+                        startActivity(home);
+                    }else if(menuItem.getItemId()== R.id.nav_search) {
+                        startActivity(buscar);
+                    }else if(menuItem.getItemId()== R.id.nav_contact) {
+                        startActivity(contact);
+                    } else if(menuItem.getItemId()== R.id.nav_open_data) {
+                        startActivity(openData);
+                    } else if(menuItem.getItemId()== R.id.nav_info) {
+                        startActivity(aboutus);
+                    } else if(menuItem.getItemId() == R.id.nav_settings){
+                        startActivity(config);
+                    } else if(menuItem.getItemId()== R.id.nav_help) {
+                        startActivity(help);
+                    }else if(menuItem.getItemId()== R.id.nav_feedback) {
+                        startActivity(rate);
+                    } else if(menuItem.getItemId()== R.id.nav_logout) {
+                        logoutUser();
                     }
+                    return true;
                 }
         );
         navView.setCheckedItem(R.id.nav_chat);
@@ -127,7 +125,7 @@ public class ChatActivity extends AppCompatActivity {
             new getNumberChatsDB().execute(userName); // Devuelve el numero de chats del usuario en cuestion
         }
 
-        chatAdapter = new ChatViewAdapter(chatList, getApplication(), userName);
+        chatAdapter = new ChatViewAdapter(chatList, userName);
         recyclerView = findViewById(R.id.chat_recyclerview);
         recyclerView.setAdapter(chatAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));

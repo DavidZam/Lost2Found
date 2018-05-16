@@ -40,7 +40,6 @@ import es.lost2found.lost2foundUI.seekerUI.SeekerActivity;
 public class AnnounceActivity extends AppCompatActivity implements FloatingActionButton.OnClickListener {
 
     private DrawerLayout mDrawerLayout;
-    private List mDrawerList;
     private Integer listElements = 0;
     private AnnounceViewAdapter adapter;
     private RecyclerView recyclerView;
@@ -61,8 +60,10 @@ public class AnnounceActivity extends AppCompatActivity implements FloatingActio
         Toolbar tb = findViewById(R.id.toolbar);
         setSupportActionBar(tb);
         ActionBar ab = getSupportActionBar();
-        ab.setDisplayHomeAsUpEnabled(true);
-        ab.setHomeAsUpIndicator(R.drawable.ic_menu);
+        if(ab != null) {
+            ab.setDisplayHomeAsUpEnabled(true);
+            ab.setHomeAsUpIndicator(R.drawable.ic_menu);
+        }
         mDrawerLayout = findViewById(R.id.drawer_layout);
 
 
@@ -95,52 +96,43 @@ public class AnnounceActivity extends AppCompatActivity implements FloatingActio
         final Intent openData = new Intent(this, OpenDataActivity.class);
 
         navView.setNavigationItemSelectedListener(
-                new NavigationView.OnNavigationItemSelectedListener() {
+                menuItem -> {
+                    menuItem.setChecked(true);
+                    mDrawerLayout.closeDrawers();
 
-                    @Override
-                    public boolean onNavigationItemSelected(MenuItem menuItem) {
-                        menuItem.setChecked(true);
-                        mDrawerLayout.closeDrawers();
-
-                        // Add code here to update the UI based on the item selected
-                        if(menuItem.getItemId()== R.id.nav_search) {
-                            SharedPreferences sp = getApplicationContext().getSharedPreferences("announcePlace", 0);
-                            String place = sp.getString("place", "");
-                            buscar.putExtra("place", place);
-                            startActivity(buscar);
-                        }else if(menuItem.getItemId()== R.id.nav_chat) {
-                            Bundle extras = getIntent().getExtras();
-                            if(extras != null) {
-                                chat.putExtra("nombre", userName);
-                            }
-                            startActivity(chat);
-                        }else if(menuItem.getItemId()== R.id.nav_open_data) {
-                            startActivity(openData);
-                        }else if(menuItem.getItemId()== R.id.nav_contact) {
-                            startActivity(contact);
-                        } else if(menuItem.getItemId() == R.id.nav_settings){
-                            startActivity(config);
-                        } else if(menuItem.getItemId()== R.id.nav_info) {
-                            startActivity(aboutus);
-                        } else if(menuItem.getItemId()== R.id.nav_help) {
-                            startActivity(help);
-                        }else if(menuItem.getItemId()== R.id.nav_feedback) {
-                            startActivity(rate);
-                        } else if(menuItem.getItemId()== R.id.nav_logout) {
-                            logoutUser();
+                    if(menuItem.getItemId()== R.id.nav_search) {
+                        SharedPreferences sp = getApplicationContext().getSharedPreferences("announcePlace", 0);
+                        String place = sp.getString("place", "");
+                        buscar.putExtra("place", place);
+                        startActivity(buscar);
+                    }else if(menuItem.getItemId()== R.id.nav_chat) {
+                        Bundle extras = getIntent().getExtras();
+                        if(extras != null) {
+                            chat.putExtra("nombre", userName);
                         }
-                        return true;
+                        startActivity(chat);
+                    }else if(menuItem.getItemId()== R.id.nav_open_data) {
+                        startActivity(openData);
+                    }else if(menuItem.getItemId()== R.id.nav_contact) {
+                        startActivity(contact);
+                    } else if(menuItem.getItemId() == R.id.nav_settings){
+                        startActivity(config);
+                    } else if(menuItem.getItemId()== R.id.nav_info) {
+                        startActivity(aboutus);
+                    } else if(menuItem.getItemId()== R.id.nav_help) {
+                        startActivity(help);
+                    }else if(menuItem.getItemId()== R.id.nav_feedback) {
+                        startActivity(rate);
+                    } else if(menuItem.getItemId()== R.id.nav_logout) {
+                        logoutUser();
                     }
+                    return true;
                 }
         );
         navView.setCheckedItem(R.id.nav_home);
 
         Announce delAnnounce = (Announce) getIntent().getSerializableExtra("delete");
         if(delAnnounce != null) {
-            //adapter.remove(delAnnounce);
-            //listElements--;
-            //recyclerView.setAdapter(adapter);
-            //recyclerView.setLayoutManager(new LinearLayoutManager(this));
             String idAnuncio = String.valueOf(delAnnounce.getIdAnuncio());
             new deleteAnnounceFromDB().execute(idAnuncio, delAnnounce.getAnnounceCategorie());
         }
@@ -160,7 +152,7 @@ public class AnnounceActivity extends AppCompatActivity implements FloatingActio
             typePlace = extras.getString("typePlace");
         }
 
-        adapter = new AnnounceViewAdapter(announceList, getApplication(), userName, parentName, typePlace);
+        adapter = new AnnounceViewAdapter(announceList, userName, parentName, typePlace);
         recyclerView = findViewById(R.id.announce_recyclerview);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -174,12 +166,6 @@ public class AnnounceActivity extends AppCompatActivity implements FloatingActio
         @Override
         protected Boolean doInBackground(String... strings) {
             return DB_announce.deleteAnnounce(strings[0], strings[1]);
-        }
-
-        @Override
-        protected void onPostExecute(Boolean removed) {
-
-            //processAnnounceScreen(numAnnounce);
         }
     }
 
@@ -199,8 +185,8 @@ public class AnnounceActivity extends AppCompatActivity implements FloatingActio
     public void processAnnounceScreen(Integer numAnnounces) {
         if(numAnnounces != null) {
             if (numAnnounces == 0) {
-                TextView noannounces = findViewById(R.id.without_announces);
-                noannounces.setText(noannounces.getResources().getString(R.string.info_txt));
+                TextView noAnnounces = findViewById(R.id.without_announces);
+                noAnnounces.setText(noAnnounces.getResources().getString(R.string.info_txt));
             } else {
                 TextView noannounces = findViewById(R.id.without_announces);
                 noannounces.setText("");

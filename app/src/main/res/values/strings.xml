@@ -20,6 +20,7 @@
     <string name="confirm_button_text">Confirmar</string>
     <string name="next_button_text">Siguiente</string>
     <string name="contact_button_text">Contactar</string>
+    <string name="contact_text">Contactar con</string>
     <string name="select_button_text">Seleccionar</string>
     <string name="spinner_placeholder">Categoria</string>
     <string name="spinner2_placeholder">Tipo Anuncio</string>
@@ -37,9 +38,14 @@
     <string name="image_upload_text">Subir imagen</string>
     <string name="info_announce_text">+ Info</string>
     <string name="config_text">Configuración</string>
-    <string name="contact_text">Contáctanos!</string>
+    <string name="contact_text2">Contáctanos!</string>
     <string name="about_us_text">Sobre nosotros</string>
     <string name="help_text">Ayuda</string>
+    <string name="new_name">Introduce tu nuevo nombre:</string>
+    <string name="new_email">Introduce tu nuevo email:</string>
+    <string name="new_pass">Introduce tu nueva contraseña:</string>
+    <string name="seeker_error">No hay objetos que cumplan con tus requisitos</string>
+    <string name="me_text">Yo</string>
     <string name="rate_text">Valóranos!</string>
     <string name="error_txt1">Email o contraseña incorrectos</string>
     <string name="error_txt2">Introduce la linea y la estacion</string>

@@ -1,6 +1,5 @@
 package es.lost2found.lost2foundUI.announceUI;
 
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
@@ -10,23 +9,23 @@ import es.lost2found.R;
 
 public class OpenDataAnnounceViewHolder extends RecyclerView.ViewHolder {
 
-    CardView cv;
-    TextView announceType;
-    TextView announceDateText;
-    TextView announceHourText;
-    ImageView categorieIcon;
-    TextView announceCategorie;
-    TextView matchPercentage;
+    //private CardView cv;
+    private TextView announceType;
+    private TextView announceDateText;
+    private TextView announceHourText;
+    private ImageView categorieIcon;
+    private TextView announceCategorie;
+    private TextView matchPercentage;
 
     public OpenDataAnnounceViewHolder(View itemView) {
         super(itemView);
-        cv = (CardView) itemView.findViewById(R.id.cardView);
-        categorieIcon = (ImageView) itemView.findViewById(R.id.imageView);
-        announceType = (TextView) itemView.findViewById(R.id.announceType);
-        announceDateText = (TextView) itemView.findViewById(R.id.announceDateText);
-        announceHourText = (TextView) itemView.findViewById(R.id.announceHourText);
-        announceCategorie = (TextView) itemView.findViewById(R.id.categorieAnnounce);
-        matchPercentage = (TextView) itemView.findViewById(R.id.matchPercentage);
+        //cv = itemView.findViewById(R.id.cardView);
+        categorieIcon = itemView.findViewById(R.id.imageView);
+        announceType = itemView.findViewById(R.id.announceType);
+        announceDateText = itemView.findViewById(R.id.announceDateText);
+        announceHourText = itemView.findViewById(R.id.announceHourText);
+        announceCategorie = itemView.findViewById(R.id.categorieAnnounce);
+        matchPercentage = itemView.findViewById(R.id.matchPercentage);
     }
 
     public TextView getOpenDataAnnounceType() {

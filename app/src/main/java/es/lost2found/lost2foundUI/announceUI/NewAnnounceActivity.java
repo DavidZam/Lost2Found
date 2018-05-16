@@ -12,7 +12,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -55,25 +54,24 @@ public class NewAnnounceActivity extends AppCompatActivity {
         MaterialBetterSpinner materialDesignSpinner = findViewById(R.id.announce_type);
         materialDesignSpinner.setAdapter(arrayAdapter);
 
-        arrayAdapter2 = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, list);
+        arrayAdapter2 = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, list);
         spinner2 = findViewById(R.id.listCategories);
         spinner2.setAdapter(arrayAdapter);
         new categoriesDB().execute();
 
-        spinner2.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if(parent.getItemAtPosition(position).toString() != null) {
-                    categorie = parent.getItemAtPosition(position).toString();
-                }
+        spinner2.setOnItemClickListener((parent, view, position, id) -> {
+            if(parent.getItemAtPosition(position).toString() != null) {
+                categorie = parent.getItemAtPosition(position).toString();
             }
         });
 
         Toolbar tb = findViewById(R.id.toolbar_center);
         setSupportActionBar(tb);
         ActionBar ab = getSupportActionBar();
-        ab.setDisplayHomeAsUpEnabled(true);
-        ab.setHomeAsUpIndicator(R.drawable.ic_arrow_back);
+        if(ab != null) {
+            ab.setDisplayHomeAsUpEnabled(true);
+            ab.setHomeAsUpIndicator(R.drawable.ic_arrow_back);
+        }
     }
 
     private class categoriesDB extends AsyncTask<String, Void, String[]> {
@@ -90,7 +88,7 @@ public class NewAnnounceActivity extends AppCompatActivity {
     }
 
     public void updateAdapter(String[] result) {
-        arrayAdapter2 = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, result);
+        arrayAdapter2 = new ArrayAdapter<>(this, android.R.layout.simple_dropdown_item_1line, result);
         spinner2.setAdapter(arrayAdapter2);
     }
 
@@ -113,11 +111,10 @@ public class NewAnnounceActivity extends AppCompatActivity {
     }
 
     public void showColorPickerDialog(View v) {
-        ColorPickerUI colorpicker = new ColorPickerUI();
-        colorpicker.build()
+        ColorPickerUI.build()
                 .title(R.string.color_dialog_title)
                 .colorPreset(Color.BLACK)
-                .allowCustom(true)
+                .allowCustom()
                 .show(this, "dialog");
     }
 
@@ -257,51 +254,62 @@ public class NewAnnounceActivity extends AppCompatActivity {
     }
 
     private void processNewAnnounce(Announce announce) {
-        if(categorie.equals("Cartera")) {
-            SharedPreferences sp = getApplicationContext().getSharedPreferences("announcePlace", 0);
-            String place = sp.getString("place", "");
-            Intent intent = new Intent(this, WalletActivity.class);
-            intent.putExtra("announce", announce);
-            intent.putExtra("categorie", categorie);
-            intent.putExtra("typePlace", typePlace);
-            intent.putExtra("place", place);
-            startActivity(intent);
-        } else if(categorie.equals("Telefono")) {
-            SharedPreferences sp = getApplicationContext().getSharedPreferences("announcePlace", 0);
-            String place = sp.getString("place", "");
-            Intent intent = new Intent(this, PhoneActivity.class);
-            intent.putExtra("announce", announce);
-            intent.putExtra("categorie", categorie);
-            intent.putExtra("typePlace", typePlace);
-            intent.putExtra("place", place);
-            startActivity(intent);
-        } else if(categorie.equals("Tarjeta bancaria")) {
-            SharedPreferences sp = getApplicationContext().getSharedPreferences("announcePlace", 0);
-            String place = sp.getString("place", "");
-            Intent intent = new Intent(this, BankCardActivity.class);
-            intent.putExtra("announce", announce);
-            intent.putExtra("categorie", categorie);
-            intent.putExtra("typePlace", typePlace);
-            intent.putExtra("place", place);
-            startActivity(intent);
-        } else if(categorie.equals("Tarjeta transporte")) {
-            SharedPreferences sp = getApplicationContext().getSharedPreferences("announcePlace", 0);
-            String place = sp.getString("place", "");
-            Intent intent = new Intent(this, TransportCardActivity.class);
-            intent.putExtra("announce", announce);
-            intent.putExtra("categorie", categorie);
-            intent.putExtra("typePlace", typePlace);
-            intent.putExtra("place", place);
-            startActivity(intent);
-        } else if(categorie.equals("Otro")) {
-            SharedPreferences sp = getApplicationContext().getSharedPreferences("announcePlace", 0);
-            String place = sp.getString("place", "");
-            Intent intent = new Intent(this, OtherObjectActivity.class);
-            intent.putExtra("announce", announce);
-            intent.putExtra("categorie", categorie);
-            intent.putExtra("typePlace", typePlace);
-            intent.putExtra("place", place);
-            startActivity(intent);
+        switch (categorie) {
+            case "Cartera": {
+                SharedPreferences sp = getApplicationContext().getSharedPreferences("announcePlace", 0);
+                String place = sp.getString("place", "");
+                Intent intent = new Intent(this, WalletActivity.class);
+                intent.putExtra("announce", announce);
+                intent.putExtra("categorie", categorie);
+                intent.putExtra("typePlace", typePlace);
+                intent.putExtra("place", place);
+                startActivity(intent);
+                break;
+            }
+            case "Telefono": {
+                SharedPreferences sp = getApplicationContext().getSharedPreferences("announcePlace", 0);
+                String place = sp.getString("place", "");
+                Intent intent = new Intent(this, PhoneActivity.class);
+                intent.putExtra("announce", announce);
+                intent.putExtra("categorie", categorie);
+                intent.putExtra("typePlace", typePlace);
+                intent.putExtra("place", place);
+                startActivity(intent);
+                break;
+            }
+            case "Tarjeta bancaria": {
+                SharedPreferences sp = getApplicationContext().getSharedPreferences("announcePlace", 0);
+                String place = sp.getString("place", "");
+                Intent intent = new Intent(this, BankCardActivity.class);
+                intent.putExtra("announce", announce);
+                intent.putExtra("categorie", categorie);
+                intent.putExtra("typePlace", typePlace);
+                intent.putExtra("place", place);
+                startActivity(intent);
+                break;
+            }
+            case "Tarjeta transporte": {
+                SharedPreferences sp = getApplicationContext().getSharedPreferences("announcePlace", 0);
+                String place = sp.getString("place", "");
+                Intent intent = new Intent(this, TransportCardActivity.class);
+                intent.putExtra("announce", announce);
+                intent.putExtra("categorie", categorie);
+                intent.putExtra("typePlace", typePlace);
+                intent.putExtra("place", place);
+                startActivity(intent);
+                break;
+            }
+            case "Otro": {
+                SharedPreferences sp = getApplicationContext().getSharedPreferences("announcePlace", 0);
+                String place = sp.getString("place", "");
+                Intent intent = new Intent(this, OtherObjectActivity.class);
+                intent.putExtra("announce", announce);
+                intent.putExtra("categorie", categorie);
+                intent.putExtra("typePlace", typePlace);
+                intent.putExtra("place", place);
+                startActivity(intent);
+                break;
+            }
         }
         finish();
     }

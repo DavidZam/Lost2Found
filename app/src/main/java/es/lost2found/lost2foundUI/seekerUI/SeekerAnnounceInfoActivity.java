@@ -35,23 +35,24 @@ public class SeekerAnnounceInfoActivity extends AppCompatActivity {
         Toolbar tb = findViewById(R.id.toolbar_center);
         setSupportActionBar(tb);
         ActionBar ab = getSupportActionBar();
-        ab.setDisplayHomeAsUpEnabled(true);
-        ab.setHomeAsUpIndicator(R.drawable.ic_arrow_back);
+        if(ab != null) {
+            ab.setDisplayHomeAsUpEnabled(true);
+            ab.setHomeAsUpIndicator(R.drawable.ic_arrow_back);
+        }
 
         Window window = this.getWindow();
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         window.setStatusBarColor(ContextCompat.getColor(this, R.color.color700));
 
-        TextView cat = (TextView) findViewById(R.id.categoria);
-        TextView type = (TextView) findViewById(R.id.tipo);
-        TextView dia = (TextView) findViewById(R.id.dia);
-        TextView lugar = (TextView) findViewById(R.id.lugar);
-        TextView usuario = (TextView) findViewById(R.id.usuario);
-        TextView hora = (TextView) findViewById(R.id.hora);
-        TextView param = (TextView) findViewById(R.id.param);
-        TextView textoColor = (TextView) findViewById(R.id.colorTexto);
-        View color = (View) findViewById(R.id.color_view);
+        TextView cat = findViewById(R.id.categoria);
+        TextView type = findViewById(R.id.tipo);
+        TextView dia = findViewById(R.id.dia);
+        TextView lugar = findViewById(R.id.lugar);
+        TextView usuario = findViewById(R.id.usuario);
+        TextView hora = findViewById(R.id.hora);
+        TextView textoColor = findViewById(R.id.colorTexto);
+        View color = findViewById(R.id.color_view);
 
         if(getIntent().getBooleanExtra("back", false)) {
             a = (Announce) getIntent().getSerializableExtra("oldAnnounce");
@@ -130,43 +131,54 @@ public class SeekerAnnounceInfoActivity extends AppCompatActivity {
         protected void onPostExecute(String dataObject) {
             if(dataObject != null) {
                 TextView param = (TextView) findViewById(R.id.param);
-                if(a.announceCategorie.equals("Telefono")){
-                    String params[] = dataObject.split(",");
-                    if(params[2].equalsIgnoreCase(" ")) {
-                        String o = "<h4> <font color=#699CFC> Datos: </font><br>"+ "Marca: " + params[0] + ", Modelo: " + params[1] +" </h4><br>";
-                        param.setText(Html.fromHtml(o));
-                        atributoDeterminante = params[0];
-                    } else {
-                        String o = "<h4> <font color=#699CFC> Datos: </font><br>"+ "Marca: " + params[0] + ", Modelo: " + params[1] + "<br>" +  "tara: " + params[2] +" </h4><br>";
-                        param.setText(Html.fromHtml(o));
-                        atributoDeterminante = params[0];
+                switch (a.announceCategorie) {
+                    case "Telefono": {
+                        String params[] = dataObject.split(",");
+                        if (params[2].equalsIgnoreCase(" ")) {
+                            String o = "<h4> <font color=#699CFC> Datos: </font><br>" + "Marca: " + params[0] + ", Modelo: " + params[1] + " </h4><br>";
+                            param.setText(Html.fromHtml(o));
+                            atributoDeterminante = params[0];
+                        } else {
+                            String o = "<h4> <font color=#699CFC> Datos: </font><br>" + "Marca: " + params[0] + ", Modelo: " + params[1] + "<br>" + "tara: " + params[2] + " </h4><br>";
+                            param.setText(Html.fromHtml(o));
+                            atributoDeterminante = params[0];
+                        }
+                        break;
                     }
-                }else if(a.announceCategorie.equals("Cartera")){
-                    String params[] = dataObject.split(",");
-                    if(params[1].equalsIgnoreCase(" ")) {
-                        String o = "<h4> <font color=#699CFC> Datos: </font><br>"+ "Marca: " + params[0] +" </h4><br>";
-                        param.setText(Html.fromHtml(o));
-                        atributoDeterminante = params[0];
-                    } else {
-                        String o = "<h4> <font color=#699CFC> Datos: </font><br>"+ "Marca: " + params[0] + ", Documentacion: " + params[1] +" </h4><br>";
-                        param.setText(Html.fromHtml(o));
-                        atributoDeterminante = params[0];
+                    case "Cartera": {
+                        String params[] = dataObject.split(",");
+                        if (params[1].equalsIgnoreCase(" ")) {
+                            String o = "<h4> <font color=#699CFC> Datos: </font><br>" + "Marca: " + params[0] + " </h4><br>";
+                            param.setText(Html.fromHtml(o));
+                            atributoDeterminante = params[0];
+                        } else {
+                            String o = "<h4> <font color=#699CFC> Datos: </font><br>" + "Marca: " + params[0] + ", Documentacion: " + params[1] + " </h4><br>";
+                            param.setText(Html.fromHtml(o));
+                            atributoDeterminante = params[0];
+                        }
+                        break;
                     }
-                }else if(a.announceCategorie.equals("Otro")){
-                    String params[] = dataObject.split(",");
-                    String o = "<h4> <font color=#699CFC> Datos: </font><br>"+ "Nombre: " + params[0] + ", Descripcion: " + params[1] +" </h4><br>";
-                    param.setText(Html.fromHtml(o));
-                    atributoDeterminante = params[0];
-                }else if(a.announceCategorie.equals("Tarjeta bancaria")){
-                    String params[] = dataObject.split(", ");
-                    String o = "<h4> <font color=#699CFC> Datos: </font><br>"+ "Banco: " + params[0] + ", Propietario: " + params[1] +" </h4><br>";
-                    param.setText(Html.fromHtml(o));
-                    atributoDeterminante = params[1];
-                }else if(a.announceCategorie.equals("Tarjeta transporte")){
-                    String params[] = dataObject.split(",");
-                    String o = "<h4> <font color=#699CFC> Datos: </font><br>"+ "Propietario: " + params[0] +" </h4><br>";
-                    param.setText(Html.fromHtml(o));
-                    atributoDeterminante = params[0];
+                    case "Otro": {
+                        String params[] = dataObject.split(",");
+                        String o = "<h4> <font color=#699CFC> Datos: </font><br>" + "Nombre: " + params[0] + ", Descripcion: " + params[1] + " </h4><br>";
+                        param.setText(Html.fromHtml(o));
+                        atributoDeterminante = params[0];
+                        break;
+                    }
+                    case "Tarjeta bancaria": {
+                        String params[] = dataObject.split(", ");
+                        String o = "<h4> <font color=#699CFC> Datos: </font><br>" + "Banco: " + params[0] + ", Propietario: " + params[1] + " </h4><br>";
+                        param.setText(Html.fromHtml(o));
+                        atributoDeterminante = params[1];
+                        break;
+                    }
+                    case "Tarjeta transporte": {
+                        String params[] = dataObject.split(",");
+                        String o = "<h4> <font color=#699CFC> Datos: </font><br>" + "Propietario: " + params[0] + " </h4><br>";
+                        param.setText(Html.fromHtml(o));
+                        atributoDeterminante = params[0];
+                        break;
+                    }
                 }
             }
         }

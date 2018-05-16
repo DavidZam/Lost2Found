@@ -34,25 +34,25 @@ import es.lost2found.lost2foundUI.seekerUI.SeekerActivity;
 public class SettingsActivity extends AppCompatActivity {
 
     private DrawerLayout mDrawerLayout;
-    private View headerLayout;
     private String nombreActual, emailActual;
-    private String cambiado = "false";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
 
-        ////
+
         findViewById(R.id.cambiarNombre).setOnClickListener(view -> createAndDisplayDialogNombre());
         findViewById(R.id.cambiarEmail).setOnClickListener(view -> createAndDisplayDialogEmail());
         findViewById(R.id.cambiarPass).setOnClickListener(view -> createAndDisplayDialogPass());
-        ////
+
         Toolbar tb = findViewById(R.id.toolbar);
         setSupportActionBar(tb);
         ActionBar ab = getSupportActionBar();
-        ab.setDisplayHomeAsUpEnabled(true);
-        ab.setHomeAsUpIndicator(R.drawable.ic_menu);
+        if(ab != null) {
+            ab.setDisplayHomeAsUpEnabled(true);
+            ab.setHomeAsUpIndicator(R.drawable.ic_menu);
+        }
         mDrawerLayout = findViewById(R.id.drawer_layout);
 
         Window window = this.getWindow();
@@ -62,7 +62,7 @@ public class SettingsActivity extends AppCompatActivity {
 
         NavigationView navView = findViewById(R.id.nav_view);
 
-        headerLayout = navView.getHeaderView(0);
+        View headerLayout = navView.getHeaderView(0);
         TextView emailUser = headerLayout.findViewById(R.id.user_mail);
         TextView nameUser = headerLayout.findViewById(R.id.user_name);
         SharedPreferences spref = getApplicationContext().getSharedPreferences("Login", 0);
@@ -89,36 +89,30 @@ public class SettingsActivity extends AppCompatActivity {
         final Intent openData = new Intent(this, OpenDataActivity.class);
 
         navView.setNavigationItemSelectedListener(
-                new NavigationView.OnNavigationItemSelectedListener() {
+                menuItem -> {
+                    menuItem.setChecked(true);
+                    mDrawerLayout.closeDrawers();
 
-                    @Override
-                    public boolean onNavigationItemSelected(MenuItem menuItem) {
-                        menuItem.setChecked(true);
-                        mDrawerLayout.closeDrawers();
-
-                        // Add code here to update the UI based on the item selected
-
-                        if(menuItem.getItemId()== R.id.nav_home) {
-                            startActivity(home);
-                        }else if(menuItem.getItemId()== R.id.nav_search) {
-                            startActivity(buscar);
-                        }else if(menuItem.getItemId()== R.id.nav_contact) {
-                            startActivity(contact);
-                        } else if(menuItem.getItemId()== R.id.nav_chat) {
-                            startActivity(chat);
-                        } else if(menuItem.getItemId()== R.id.nav_open_data) {
-                            startActivity(openData);
-                        } else if(menuItem.getItemId()== R.id.nav_help) {
-                            startActivity(help);
-                        }else if(menuItem.getItemId()== R.id.nav_feedback) {
-                            startActivity(rate);
-                        } else if(menuItem.getItemId() == R.id.nav_info) {
-                            startActivity(aboutus);
-                        } else if(menuItem.getItemId()== R.id.nav_logout) {
-                            logoutUser();
-                        }
-                        return true;
+                    if(menuItem.getItemId()== R.id.nav_home) {
+                        startActivity(home);
+                    }else if(menuItem.getItemId()== R.id.nav_search) {
+                        startActivity(buscar);
+                    }else if(menuItem.getItemId()== R.id.nav_contact) {
+                        startActivity(contact);
+                    } else if(menuItem.getItemId()== R.id.nav_chat) {
+                        startActivity(chat);
+                    } else if(menuItem.getItemId()== R.id.nav_open_data) {
+                        startActivity(openData);
+                    } else if(menuItem.getItemId()== R.id.nav_help) {
+                        startActivity(help);
+                    }else if(menuItem.getItemId()== R.id.nav_feedback) {
+                        startActivity(rate);
+                    } else if(menuItem.getItemId() == R.id.nav_info) {
+                        startActivity(aboutus);
+                    } else if(menuItem.getItemId()== R.id.nav_logout) {
+                        logoutUser();
                     }
+                    return true;
                 }
         );
         navView.setCheckedItem(R.id.nav_settings);
@@ -132,8 +126,8 @@ public class SettingsActivity extends AppCompatActivity {
         TextView tvMessage2        = new TextView(this);
         final EditText etInput    = new EditText(this);
 
-        tvMessage2.setText("Nombre actual: "+ nombreActual);
-        tvMessage.setText("Introduce tu nuevo nombre:");
+        tvMessage2.setText(String.format("Nombre actual: %s", nombreActual));
+        tvMessage.setText(getResources().getText(R.string.new_name));
         tvMessage2.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16f);
         tvMessage.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16f);
         etInput.setSingleLine();
@@ -170,8 +164,8 @@ public class SettingsActivity extends AppCompatActivity {
         TextView tvMessage2        = new TextView(this);
         final EditText etInput    = new EditText(this);
 
-        tvMessage2.setText("Email actual: "+ emailActual);
-        tvMessage.setText("Introduce tu nuevo email:");
+        tvMessage2.setText(String.format("Email actual: %s", emailActual));
+        tvMessage.setText(getResources().getText(R.string.new_email));
         tvMessage2.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16f);
         tvMessage.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16f);
         etInput.setSingleLine();
@@ -192,13 +186,6 @@ public class SettingsActivity extends AppCompatActivity {
             String email = etInput.getText().toString();
 
             new updateEmail().execute(nombreActual, email, emailActual);
-
-            /*if(cambiado == "true") {
-                Toast.makeText(this, "Nuevo email: " + email, Toast.LENGTH_SHORT).show();
-                emailActual = email;
-            }else{
-                Toast.makeText(this, "¡Error! Inténtalo de nuevo.", Toast.LENGTH_SHORT).show();
-            }*/
         });
 
         builder.create().show();
@@ -211,7 +198,7 @@ public class SettingsActivity extends AppCompatActivity {
         EditText etInput    = new EditText(this);
         EditText etInput2    = new EditText(this);
 
-        tvMessage.setText("Introduce tu nueva contraseña:");
+        tvMessage.setText(getResources().getText(R.string.new_pass));
         tvMessage.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16f);
         etInput.setSingleLine();
         layout.setOrientation(LinearLayout.VERTICAL);
@@ -219,10 +206,7 @@ public class SettingsActivity extends AppCompatActivity {
         layout.addView(etInput);
         layout.addView(etInput2);
         layout.setPadding(50, 40, 50, 10);
-
         builder.setView(layout);
-
-
 
         builder.setNegativeButton("Cancelar", (dialog, which) -> {
             Toast.makeText(this, "No has hecho cambios", Toast.LENGTH_SHORT).show();
@@ -230,7 +214,6 @@ public class SettingsActivity extends AppCompatActivity {
         });
 
         builder.setPositiveButton("Cambiar", (dialog, which) -> {
-            //Toast.makeText(this, "Contraseña cambiada", Toast.LENGTH_SHORT).show();
             String pass = etInput.getText().toString();
             String repass = etInput2.getText().toString();
 
@@ -263,7 +246,6 @@ public class SettingsActivity extends AppCompatActivity {
             boolean userExists = DB_user.checkIfEmailAlreadyExists(strings[1]);
 
             if(!userExists){
-                //cambiado = "true";
                 return DB_user.updateEmailUser(strings[0], strings[1], strings[2]);
 
             }
@@ -272,7 +254,6 @@ public class SettingsActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(User result) {
-
             processUpdate(result);
         }
     }
@@ -286,7 +267,6 @@ public class SettingsActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(User result) {
-
             processUpdate(result);
         }
     }
@@ -317,7 +297,6 @@ public class SettingsActivity extends AppCompatActivity {
             case android.R.id.home:
                 mDrawerLayout.openDrawer(GravityCompat.START);
                 return true;
-
         }
         return super.onOptionsItemSelected(item);
     }

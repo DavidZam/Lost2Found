@@ -29,8 +29,10 @@ public class OtherObjectActivity extends AppCompatActivity {
         Toolbar tb = findViewById(R.id.toolbar_center);
         setSupportActionBar(tb);
         ActionBar ab = getSupportActionBar();
-        ab.setDisplayHomeAsUpEnabled(true);
-        ab.setHomeAsUpIndicator(R.drawable.ic_arrow_back);
+        if(ab != null) {
+            ab.setDisplayHomeAsUpEnabled(true);
+            ab.setHomeAsUpIndicator(R.drawable.ic_arrow_back);
+        }
 
         Window window = this.getWindow();
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
@@ -57,7 +59,11 @@ public class OtherObjectActivity extends AppCompatActivity {
 
     private void processNewObject(Integer objectId) {
         String objectIdText = String.valueOf(objectId);
-        String categorie = getIntent().getExtras().getString("categorie");
+        Bundle bundle = getIntent().getExtras();
+        String categorie = "";
+        if(bundle != null) {
+            categorie = getIntent().getExtras().getString("categorie");
+        }
 
         // Nombre
         EditText announceName = findViewById(R.id.name);
@@ -91,7 +97,11 @@ public class OtherObjectActivity extends AppCompatActivity {
     private void showAnnounceScreen(String announce) {
         SharedPreferences sp = getApplicationContext().getSharedPreferences("announcePlace", 0);
         String place = sp.getString("place", "");
-        String typePlace = getIntent().getExtras().getString("typePlace");
+        String typePlace = "";
+        Bundle bundle = getIntent().getExtras();
+        if(bundle != null) {
+            typePlace = getIntent().getExtras().getString("typePlace");
+        }
         SharedPreferences sp2 = getSharedPreferences("announcePlace", 0);
         SharedPreferences.Editor ed = sp2.edit();            // Saved the user login credencials.
         ed.putString("place", place);

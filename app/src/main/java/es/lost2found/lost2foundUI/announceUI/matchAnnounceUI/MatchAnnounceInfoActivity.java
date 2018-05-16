@@ -26,12 +26,8 @@ import es.lost2found.lost2foundUI.chatUI.chatConcreteUI.ChatConcrete;
 
 public class MatchAnnounceInfoActivity extends AppCompatActivity {
     private Announce a;
-    private String colorPercentageText;
-    private String distancePercentageText;
-    private String distanceText;
     private Integer user1Id;
     private Integer user2Id;
-    //private String typePlace;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,32 +36,33 @@ public class MatchAnnounceInfoActivity extends AppCompatActivity {
         Toolbar tb = findViewById(R.id.toolbar_center);
         setSupportActionBar(tb);
         ActionBar ab = getSupportActionBar();
-        ab.setDisplayHomeAsUpEnabled(true);
-        ab.setHomeAsUpIndicator(R.drawable.ic_arrow_back);
+        if(ab != null) {
+            ab.setDisplayHomeAsUpEnabled(true);
+            ab.setHomeAsUpIndicator(R.drawable.ic_arrow_back);
+        }
 
         Window window = this.getWindow();
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         window.setStatusBarColor(ContextCompat.getColor(this, R.color.color700));
 
-        TextView cat = (TextView) findViewById(R.id.categoria);
-        TextView type = (TextView) findViewById(R.id.tipo);
-        TextView dia = (TextView) findViewById(R.id.dia);
-        TextView lugar = (TextView) findViewById(R.id.lugar);
-        TextView usuario = (TextView) findViewById(R.id.usuario);
-        TextView hora = (TextView) findViewById(R.id.hora);
-        TextView param = (TextView) findViewById(R.id.param);
-        TextView textoColor = (TextView) findViewById(R.id.colorTexto);
-        View color = (View) findViewById(R.id.color_view);
-        TextView colorPercentage = (TextView) findViewById(R.id.colorPercentage);
-        TextView distanceMeters = (TextView) findViewById(R.id.distance);
-        TextView distancePercentage = (TextView) findViewById(R.id.distancePercentage);
+        TextView cat =  findViewById(R.id.categoria);
+        TextView type =  findViewById(R.id.tipo);
+        TextView dia =  findViewById(R.id.dia);
+        TextView lugar =  findViewById(R.id.lugar);
+        TextView usuario =  findViewById(R.id.usuario);
+        TextView hora =  findViewById(R.id.hora);
+        TextView textoColor =  findViewById(R.id.colorTexto);
+        View color =  findViewById(R.id.color_view);
+        TextView colorPercentage =  findViewById(R.id.colorPercentage);
+        TextView distanceMeters =  findViewById(R.id.distance);
+        TextView distancePercentage =  findViewById(R.id.distancePercentage);
 
         a = (Announce) getIntent().getSerializableExtra("myAnnounce");
 
-        colorPercentageText = getIntent().getStringExtra("percentageColor");
-        distancePercentageText = getIntent().getStringExtra("percentageDistance");
-        distanceText = getIntent().getStringExtra("distance");
+        String colorPercentageText = getIntent().getStringExtra("percentageColor");
+        String distancePercentageText = getIntent().getStringExtra("percentageDistance");
+        String distanceText = getIntent().getStringExtra("distance");
 
         String idText = String.valueOf(a.getAnnounceId());
         new getObjectDataFromDB().execute(idText, a.announceCategorie);
@@ -142,7 +139,7 @@ public class MatchAnnounceInfoActivity extends AppCompatActivity {
         ImageView image = findViewById(R.id.imageinfoannounce);
 
         Button contact = findViewById(R.id.contactar);
-        contact.setText("Contactar con " + a.userOwner);
+        contact.setText(getResources().getText(R.string.contact_text2) + a.userOwner);
 
         if(a.announceCategorie.equals("Telefono")){
             image.setImageResource(R.drawable.ic_smartphone);
@@ -165,7 +162,7 @@ public class MatchAnnounceInfoActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(String dataObject) {
             if(dataObject != null) {
-                TextView param = (TextView) findViewById(R.id.param);
+                TextView param = findViewById(R.id.param);
                 String params[] = dataObject.split(",");
                 if(a.announceCategorie.equals("Telefono")){
                     if(params[2].equalsIgnoreCase(" ")) {
@@ -212,8 +209,6 @@ public class MatchAnnounceInfoActivity extends AppCompatActivity {
         if(chatExists) { // Si ya existe:
             try {
                 chat = new getChatFromDB().execute().get(); // Obtenemos una instancia del chat
-                // Obtenemos los mensajes existentes de ese chat en orden:
-
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -267,11 +262,9 @@ public class MatchAnnounceInfoActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         Intent matchannounce = new Intent(this, MatchAnnounce.class);
-        //matchannounce.putExtra("match", a);
         matchannounce.putExtra("openDataMatching", false);
         matchannounce.putExtra("back", true);
         Announce oldAnnounce = (Announce) getIntent().getSerializableExtra("oldAnnounce");
-        //matchannounce.putExtra("oldAnnounce", oldAnnounce);
         matchannounce.putExtra("match", oldAnnounce);
         matchannounce.putExtra("oldAnnounceSet", true);
         String atrDeterminante = getIntent().getStringExtra("atributoDeterminante");

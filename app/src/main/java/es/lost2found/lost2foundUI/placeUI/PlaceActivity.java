@@ -18,9 +18,6 @@ import es.lost2found.lost2foundUI.placeUI.transportPlaceUI.TransportPlaceActivit
 
 public class PlaceActivity extends AppCompatActivity {
 
-    //private boolean permissionGranted = false;
-    //private static final int PERMISSION_ACCESS_FINE_LOCATION = 1;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,8 +26,10 @@ public class PlaceActivity extends AppCompatActivity {
         Toolbar tb = findViewById(R.id.toolbar_center);
         setSupportActionBar(tb);
         ActionBar ab = getSupportActionBar();
-        ab.setDisplayHomeAsUpEnabled(true);
-        ab.setHomeAsUpIndicator(R.drawable.ic_arrow_back);
+        if(ab != null) {
+            ab.setDisplayHomeAsUpEnabled(true);
+            ab.setHomeAsUpIndicator(R.drawable.ic_arrow_back);
+        }
 
         Window window = this.getWindow();
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
@@ -55,8 +54,8 @@ public class PlaceActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        Intent newannounce = new Intent(this, AnnounceActivity.class);
-        startActivity(newannounce);
+        Intent newAnnounce = new Intent(this, AnnounceActivity.class);
+        startActivity(newAnnounce);
         finish();
         return true;
     }

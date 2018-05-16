@@ -1,6 +1,5 @@
 package es.lost2found.lost2foundUI.announceUI.matchAnnounceUI;
 
-
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -28,7 +27,6 @@ import es.lost2found.database.DB_announce;
 import es.lost2found.database.DB_place;
 import es.lost2found.entities.Announce;
 import es.lost2found.entities.OpenDataAnnounce;
-import es.lost2found.lost2foundUI.openDataUI.OpenDataActivity;
 import es.lost2found.lost2foundUI.seekerUI.SeekerAnnounceInfoActivity;
 
 public class MatchAnnounce extends AppCompatActivity {
@@ -39,7 +37,6 @@ public class MatchAnnounce extends AppCompatActivity {
     private MatchAnnounceViewAdapter adapter;
     private RecyclerView recyclerView;
     private OpenDataMatchAnnounceViewAdapter openDataAdapter;
-    //private RecyclerView openDataRecyclerView;
     private Announce a;
     private Announce oldAnnounce;
     private String atributoDeterminante;
@@ -53,7 +50,6 @@ public class MatchAnnounce extends AppCompatActivity {
     private String typePlaceOldAnnounce;
     private String typePlaceMatchAnnounce;
     private int placeIdOldAnnounce;
-    private int placeIdMatchAnnounce;
     private Double[] oldAnnounceLatLng;
     private Double[] matchAnnounceLatLng;
 
@@ -65,8 +61,10 @@ public class MatchAnnounce extends AppCompatActivity {
         Toolbar tb = findViewById(R.id.toolbar_center);
         setSupportActionBar(tb);
         ActionBar ab = getSupportActionBar();
-        ab.setDisplayHomeAsUpEnabled(true);
-        ab.setHomeAsUpIndicator(R.drawable.ic_arrow_back);
+        if(ab != null) {
+            ab.setDisplayHomeAsUpEnabled(true);
+            ab.setHomeAsUpIndicator(R.drawable.ic_arrow_back);
+        }
 
         Window window = this.getWindow();
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
@@ -87,7 +85,7 @@ public class MatchAnnounce extends AppCompatActivity {
         boolean openDataMatching = getIntent().getBooleanExtra("openDataMatching", false);
 
         if(openDataMatching) {
-            openDataAdapter = new OpenDataMatchAnnounceViewAdapter(openDataAnnounceList, getApplication(), oldAnnounce, openDataDistancePercentagesList, openDataDistancesList, typePlaceOldAnnounce, "transport", openDataMatchPercentagesList);
+            openDataAdapter = new OpenDataMatchAnnounceViewAdapter(openDataAnnounceList, oldAnnounce, openDataDistancePercentagesList, openDataDistancesList, typePlaceOldAnnounce, "transport", openDataMatchPercentagesList);
             recyclerView = findViewById(R.id.match_announce_reyclerview);
             recyclerView.setAdapter(openDataAdapter);
             recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -100,7 +98,7 @@ public class MatchAnnounce extends AppCompatActivity {
             String announceType = getIntent().getStringExtra("announceType");
             new getOpenDataAnnounces().execute(oldAnnounce.announceCategorie, oldAnnounce.announceDateText, announceType);
         } else {
-            adapter = new MatchAnnounceViewAdapter(announceList, getApplication(), userEmail, oldAnnounce, atributoDeterminante, colorPercentagesList, distancePercentagesList, distancesList, typePlaceOldAnnounce, typePlaceMatchAnnounce, matchPercentagesList);
+            adapter = new MatchAnnounceViewAdapter(announceList, userEmail, oldAnnounce, atributoDeterminante, colorPercentagesList, distancePercentagesList, distancesList, typePlaceOldAnnounce, typePlaceMatchAnnounce, matchPercentagesList);
             recyclerView = findViewById(R.id.match_announce_reyclerview);
             recyclerView.setAdapter(adapter);
             recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -150,7 +148,6 @@ public class MatchAnnounce extends AppCompatActivity {
         } else {
             TextView noannounces = findViewById(R.id.without_match);
             noannounces.setText("");
-            String placeOldAnnounce = getIntent().getStringExtra("place"); // Info anuncio original
             String coordinates1, coordinates2 = "";
             Announce oldAnnounce = (Announce) getIntent().getSerializableExtra("match");
             if(oldAnnounce != null) {
@@ -223,13 +220,13 @@ public class MatchAnnounce extends AppCompatActivity {
                     } else { // Distancia no disponible
                         openDataDistancePercentagesList.add(i, " ");
                         openDataDistancesList.add(i, " ");
-                        String matchPercentaje = getOpenDataMatchPercentage(0.0, oldAnnounce, announces.get(i));
-                        String matchPercentajeArray[] = matchPercentaje.split("\\.");
-                        if(matchPercentajeArray[1].length() == 1) {
-                            matchPercentajeArray[1] = matchPercentajeArray[1] + "0";
+                        String matchPercentage = getOpenDataMatchPercentage(0.0, oldAnnounce, announces.get(i));
+                        String matchPercentageArray[] = matchPercentage.split("\\.");
+                        if(matchPercentageArray[1].length() == 1) {
+                            matchPercentageArray[1] = matchPercentageArray[1] + "0";
                         }
-                        matchPercentaje = matchPercentajeArray[0] + "." + matchPercentajeArray[1].substring(0, 2);
-                        openDataMatchPercentagesList.add(i, matchPercentaje);
+                        matchPercentage = matchPercentageArray[0] + "." + matchPercentageArray[1].substring(0, 2);
+                        openDataMatchPercentagesList.add(i, matchPercentage);
                         openDataAdapter.insert(openDataListElements, announces.get(i));
                         openDataListElements++;
                         recyclerView.setAdapter(openDataAdapter);
@@ -243,7 +240,7 @@ public class MatchAnnounce extends AppCompatActivity {
             openDataAdapter.setListPercentageDistance(openDataDistancePercentagesList);
             openDataAdapter.setListDistance(openDataDistancesList);
             openDataAdapter.setTypePlaceOldAnnounce(typePlaceOldAnnounce);
-            openDataAdapter.setTypePlaceMatchAnnounce("transport"); // typePlaceMatchAnnounce siempre es transport
+            openDataAdapter.setTypePlaceMatchAnnounce(); // typePlaceMatchAnnounce siempre es transport
             openDataAdapter.setListPercentageMatch(openDataMatchPercentagesList);
         }
     }
@@ -272,11 +269,11 @@ public class MatchAnnounce extends AppCompatActivity {
 
     public void processAnnounceScreen(Integer numAnnounces) {
         if (numAnnounces == 0) {
-            TextView noannounces = findViewById(R.id.without_match);
-            noannounces.setText(noannounces.getResources().getString(R.string.info_txt2));
+            TextView noAnnounces = findViewById(R.id.without_match);
+            noAnnounces.setText(noAnnounces.getResources().getString(R.string.info_txt2));
         } else {
-            TextView noannounces = findViewById(R.id.without_match);
-            noannounces.setText("");
+            TextView noAnnounces = findViewById(R.id.without_match);
+            noAnnounces.setText("");
             numberAnnounces = numAnnounces;
             SharedPreferences spref = getApplicationContext().getSharedPreferences("Login", 0);
             String userEmail = spref.getString("email", "");
@@ -315,7 +312,7 @@ public class MatchAnnounce extends AppCompatActivity {
             coordinates2 = oldAnnounce.getPlace();
         }
         double colorPercentage, distanceDouble;
-        String colorPercentajeDouble, colorPercentageText;
+        String colorPercentageDouble, colorPercentageText;
         distancePercentagesList = new ArrayList<>();
         distancesList = new ArrayList<>();
         String distanceMetres, distancePercentage = "";
@@ -333,10 +330,11 @@ public class MatchAnnounce extends AppCompatActivity {
         for(int i = 0; i < numAnnounces; i++) { // Para cada uno de los anuncios que hacen match:
             color1 = announces[i].getColor();
             colorPercentage = getColorPercentage(color1, color2); // Funcion que obtiene el porcentaje de proximidad de dos colores según la distancia euclidea entre ambos
-            colorPercentajeDouble = String.valueOf(colorPercentage);
-            colorPercentageText = colorPercentajeDouble.substring(0, 5);
+            colorPercentageDouble = String.valueOf(colorPercentage);
+            colorPercentageText = colorPercentageDouble.substring(0, 5);
             colorPercentagesList.add(i, colorPercentageText);
             try {
+                int placeIdMatchAnnounce;
                 placeIdMatchAnnounce = new getPlaceIdByAnnounceIdDB().execute(announces[i].getIdAnuncio()).get(); // Funcion que devuelve el idLugar dado el idAnuncio
                 typePlaceMatchAnnounce = new getTypePlaceByIdDB().execute(placeIdMatchAnnounce).get(); // Funcion que devuelve el tipo de lugar (map, concrete o transport) dado el idLugar
             } catch (Exception e) {
@@ -353,7 +351,6 @@ public class MatchAnnounce extends AppCompatActivity {
                     coordinates1 = announces[i].getPlace();
                     distanceDouble = getDistance(coordinates1, coordinates2);
                     distanceMetres = String.valueOf(distanceDouble);
-                    // distanceMetres = distanceMetres.substring(0, 6); // COMPROBAR
                     distancePercentage = getDistancePercentage(distanceMetres);
                     distancePercentagesList.add(i, distancePercentage);
                     distancesList.add(i, distanceMetres);
@@ -388,7 +385,6 @@ public class MatchAnnounce extends AppCompatActivity {
                     // Calculo distancia
                     distanceDouble = getDistance(coordinates1, coordinates2);
                     distanceMetres = String.valueOf(distanceDouble);
-                    // distanceMetres = distanceMetres.substring(0, 6); // COMPROBAR
                     distancePercentage = getDistancePercentage(distanceMetres);
                     distancePercentagesList.add(i, distancePercentage);
                     distancesList.add(i, distanceMetres);
@@ -499,8 +495,8 @@ public class MatchAnnounce extends AppCompatActivity {
 
     public double getColorPercentage(Integer matchAnnounceColorInt, Integer oldAnnounceColorInt) {
         double maxDistance = 765;
-        double percentageTmp = 0;
-        double percentage = 0;
+        double percentageTmp;
+        double percentage;
 
         double red1 = (matchAnnounceColorInt >> 16) & 0xFF;
         double green1 = (matchAnnounceColorInt >> 8) & 0xFF;
@@ -545,7 +541,7 @@ public class MatchAnnounce extends AppCompatActivity {
         double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
         double d = earthRadius * c;
 
-        return d; // Nos da la distancia faltaria calcular el porcentaje de aproximación
+        return d; // Nos da la distancia
     }
 
     public double radius(double num) {
@@ -575,7 +571,7 @@ public class MatchAnnounce extends AppCompatActivity {
     }
 
     public String getMatchPercentage(Double distancePercentage, Double colorPercentage, Announce oldAnnounce, Announce matchAnnounce) {
-        Double matchPercentageDouble = 0.0;
+        Double matchPercentageDouble;
 
         // Formula del match...
         Double colorMultiplier = 0.35;
@@ -602,7 +598,7 @@ public class MatchAnnounce extends AppCompatActivity {
     }
 
     public String getOpenDataMatchPercentage(Double distancePercentage, Announce oldAnnounce, OpenDataAnnounce matchAnnounce) {
-        Double matchPercentageDouble = 0.0;
+        Double matchPercentageDouble;
 
         // Formula del match...
         Double distanceMultiplier = 0.7;

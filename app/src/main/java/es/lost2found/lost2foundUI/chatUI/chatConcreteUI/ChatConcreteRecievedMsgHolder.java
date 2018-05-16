@@ -1,7 +1,5 @@
 package es.lost2found.lost2foundUI.chatUI.chatConcreteUI;
 
-
-import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
@@ -9,19 +7,19 @@ import android.widget.TextView;
 import es.lost2found.R;
 import es.lost2found.entities.Message;
 
-public class ChatConcreteRecievedMsgHolder extends RecyclerView.ViewHolder {
+class ChatConcreteRecievedMsgHolder extends RecyclerView.ViewHolder {
 
-    ConstraintLayout cl;
-    TextView userSender;
-    TextView textMsg;
-    TextView hourMsg;
+    //private ConstraintLayout cl;
+    private TextView userSender;
+    private TextView textMsg;
+    private TextView hourMsg;
 
-    public ChatConcreteRecievedMsgHolder(View itemView) {
+    ChatConcreteRecievedMsgHolder(View itemView) {
         super(itemView);
-        cl = (ConstraintLayout) itemView.findViewById(R.id.concrete_chat_layout);
-        userSender = (TextView) itemView.findViewById(R.id.userSender);
-        textMsg = (TextView) itemView.findViewById(R.id.textMsg);
-        hourMsg = (TextView) itemView.findViewById(R.id.hourMsg);
+        //cl = (ConstraintLayout) itemView.findViewById(R.id.concrete_chat_layout);
+        userSender = itemView.findViewById(R.id.userSender);
+        textMsg = itemView.findViewById(R.id.textMsg);
+        hourMsg = itemView.findViewById(R.id.hourMsg);
     }
 
     void bind(Message msg, String userOwner) {

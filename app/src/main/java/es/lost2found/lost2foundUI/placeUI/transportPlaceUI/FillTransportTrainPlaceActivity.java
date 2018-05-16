@@ -41,26 +41,25 @@ public class FillTransportTrainPlaceActivity extends AppCompatActivity {
         Toolbar tb = findViewById(R.id.toolbar_center);
         setSupportActionBar(tb);
         ActionBar ab = getSupportActionBar();
-        ab.setDisplayHomeAsUpEnabled(true);
-        ab.setHomeAsUpIndicator(R.drawable.ic_arrow_back);
+        if(ab != null) {
+            ab.setDisplayHomeAsUpEnabled(true);
+            ab.setHomeAsUpIndicator(R.drawable.ic_arrow_back);
+        }
 
         Window window = this.getWindow();
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         window.setStatusBarColor(ContextCompat.getColor(this, R.color.color700));
 
-        arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, list);
+        arrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, list);
         spinner = findViewById(R.id.listStations);
         spinner.setAdapter(arrayAdapter);
 
         new stationsDB().execute();
 
-        spinner.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if(parent.getItemAtPosition(position).toString() != null) {
-                    stationChoice = parent.getItemAtPosition(position).toString();
-                }
+        spinner.setOnItemClickListener((parent, view, position, id) -> {
+            if(parent.getItemAtPosition(position).toString() != null) {
+                stationChoice = parent.getItemAtPosition(position).toString();
             }
         });
     }
@@ -79,7 +78,7 @@ public class FillTransportTrainPlaceActivity extends AppCompatActivity {
     }
 
     public void updateAdapter(String[] result) {
-        arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, result);
+        arrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_dropdown_item_1line, result);
         spinner.setAdapter(arrayAdapter);
     }
 

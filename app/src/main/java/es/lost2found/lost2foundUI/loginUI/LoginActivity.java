@@ -107,11 +107,4 @@ public class LoginActivity extends AppCompatActivity {
         startActivity(intent);
         finish();
     }
-
-    /*public void announce(View view) {
-        Intent intent = new Intent(this, AnnounceActivity.class);
-        startActivity(intent);
-        finish();
-    }*/
-
 }

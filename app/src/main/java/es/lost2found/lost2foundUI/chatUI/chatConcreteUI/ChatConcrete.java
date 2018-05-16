@@ -39,17 +39,13 @@ import es.lost2found.lost2foundUI.typeObjectUI.OtherObjectActivity;
 public class ChatConcrete extends AppCompatActivity {
     private RecyclerView recyclerView;
     private ChatConcreteViewAdapter chatConcreteViewAdapter;
-    private DrawerLayout mDrawerLayout;
     private Chat concreteChat;
     private Integer listElements = 0;
-    private List<Message> listMsg;
     private Integer chatNumberMsgs;
-    private Integer chatNumberTotalMsgs;
     private String chatTitle;
     private Integer chatId;
-    private Integer userId;
     private String userName;
-    private EditText chatbox;
+    private EditText chatBox;
     private boolean active = false;
 
     @Override
@@ -60,8 +56,10 @@ public class ChatConcrete extends AppCompatActivity {
         Toolbar tb = findViewById(R.id.toolbar_center);
         setSupportActionBar(tb);
         ActionBar ab = getSupportActionBar();
-        ab.setDisplayHomeAsUpEnabled(true);
-        ab.setHomeAsUpIndicator(R.drawable.ic_arrow_back);
+        if(ab != null) {
+            ab.setDisplayHomeAsUpEnabled(true);
+            ab.setHomeAsUpIndicator(R.drawable.ic_arrow_back);
+        }
 
         Window window = this.getWindow();
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
@@ -69,8 +67,6 @@ public class ChatConcrete extends AppCompatActivity {
         window.setStatusBarColor(ContextCompat.getColor(this, R.color.color700));
 
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
-
-        mDrawerLayout = findViewById(R.id.chat_concrete_layout);
 
         Intent intent = getIntent();
         if(intent != null) {
@@ -81,8 +77,8 @@ public class ChatConcrete extends AppCompatActivity {
 
         getSupportActionBar().setTitle(chatTitle);
 
-        chatbox = findViewById(R.id.edittext_chatbox);
-        chatbox.addTextChangedListener(new TextWatcher() {
+        chatBox = findViewById(R.id.edittext_chatbox);
+        chatBox.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
 
@@ -94,51 +90,45 @@ public class ChatConcrete extends AppCompatActivity {
             @Override
             public void afterTextChanged(Editable s) {
                 //active = false; // Si el usuario esta escribiendo evitamos que se recarge la actividad
-                //active = true; // Si el usuario ha acabado de escribir establecemos a true que esta activo para recargar la actividad
             }
         });
 
-        listMsg = new ArrayList<>();
+        List<Message> listMsg = new ArrayList<>();
 
         if(concreteChat != null) {
             new getNumberChatMsgsDB().execute(concreteChat); // Devuelve el numero de msgs del chat en cuestion
         }
 
         FloatingActionButton createMsg = findViewById(R.id.button_chatbox_send);
-        createMsg.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                try {
-                    String msgText = chatbox.getText().toString();
-                    if(!msgText.isEmpty()) { // Si no esta vacio: // Comprobar
-                        boolean validMsg = false;
-                        for(int i = 0; i < msgText.length(); i++) {
-                            char character = msgText.charAt(i);
-                            if(character != ' ') {
-                                validMsg = true;
-                            }
+        createMsg.setOnClickListener(v -> {
+            try {
+                String msgText = chatBox.getText().toString();
+                if(!msgText.isEmpty()) { // Si no esta vacio: // Comprobar
+                    boolean validMsg = false;
+                    for(int i = 0; i < msgText.length(); i++) {
+                        char character = msgText.charAt(i);
+                        if(character != ' ') {
+                            validMsg = true;
                         }
-                        if(validMsg)
-                            active = true;
-                            new createNewChatMsgOnDB().execute(msgText); // Obtenemos una instancia del nuevo msg
-                            refresh(); // Refrescamos la activity para mostrar el nuevo msg
                     }
-                } catch (Exception e) {
-                    e.printStackTrace();
+                    if(validMsg)
+                        active = true;
+                        new createNewChatMsgOnDB().execute(msgText); // Obtenemos una instancia del nuevo msg
+                        refresh(); // Refrescamos la activity para mostrar el nuevo msg
                 }
-                chatbox.setText("");
+            } catch (Exception e) {
+                e.printStackTrace();
             }
+            chatBox.setText("");
         });
 
-        chatConcreteViewAdapter = new ChatConcreteViewAdapter(this, listMsg, userName); // otherUserName
+        chatConcreteViewAdapter = new ChatConcreteViewAdapter(listMsg, userName); // otherUserName
         recyclerView = findViewById(R.id.reyclerview_message_list);
         recyclerView.setAdapter(chatConcreteViewAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        // Prueba para intentar actualizar la pantalla de chat cada x segundos
-        //reloadActivity();
+        // Recargamos el chat por si hay mensajes nuevos
         reloadChat();
-        // Prueba para intentar actualizar la pantalla de chat cada x segundos
     }
 
     @Override
@@ -167,12 +157,9 @@ public class ChatConcrete extends AppCompatActivity {
                 try {
                     while (!isInterrupted()) {
                         Thread.sleep(15000); // Actualizamos el chat cada 15 seg por si hay mensajes nuevos...
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                if(active)
-                                    refresh();
-                            }
+                        runOnUiThread(() -> {
+                            if(active)
+                                refresh();
                         });
                     }
                 } catch (InterruptedException e) {
@@ -208,7 +195,7 @@ public class ChatConcrete extends AppCompatActivity {
         protected Message doInBackground(String... strings) {
             String actualHour = new SimpleDateFormat("HH:mm").format(Calendar.getInstance().getTime()); // Hora del msg
             chatId = DB_chat.getChatId(concreteChat); // Funcion que dado un chat devuelve su id
-            userId = Integer.valueOf(DB_user.getIdByName(userName)); // Funcion que dado el nombre del usuario devuelve su id
+            Integer userId = Integer.valueOf(DB_user.getIdByName(userName)); // Funcion que dado el nombre del usuario devuelve su id
             return DB_message.createNewMsg(strings[0], actualHour, false, chatId, userId);
         }
     }
@@ -238,7 +225,6 @@ public class ChatConcrete extends AppCompatActivity {
 
         @Override
         protected Message[] doInBackground(Integer... params) {
-            chatNumberTotalMsgs = chatNumberMsgs;
             return DB_message.getMsgs(params[0], params[1]);
         }
 

@@ -1,7 +1,9 @@
 package es.lost2found.lost2foundUI.announceUI;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,30 +18,26 @@ import es.lost2found.lost2foundUI.seekerUI.SeekerAnnounceInfoActivity;
 
 public class AnnounceViewAdapter extends RecyclerView.Adapter<AnnounceViewHolder>{
     private List<Announce> listAnnounce;
-    private Context context;
     private String actualUser;
     private String parentAct;
     private String typePlace;
 
-    public AnnounceViewAdapter(List<Announce> listAnnounce, Context context, String actualUser, String parentAct, String typePlace) {
+    public AnnounceViewAdapter(List<Announce> listAnnounce, String actualUser, String parentAct, String typePlace) {
         this.listAnnounce = listAnnounce;
-        this.context = context;
         this.actualUser = actualUser;
         this.parentAct = parentAct;
         this.typePlace = typePlace;
     }
 
+    @NonNull
     @Override
-    public AnnounceViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        // Inflate the layout and initialize the View Holder
+    public AnnounceViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_announce, parent, false);
-        AnnounceViewHolder holder = new AnnounceViewHolder(v);
-
-        return holder;
+        return new AnnounceViewHolder(v);
     }
 
     @Override
-    public void onBindViewHolder(AnnounceViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull AnnounceViewHolder holder, @SuppressLint("RecyclerView") int position) {
         holder.announceType.setText(listAnnounce.get(position).getAnnounceType());
         holder.announceDateText.setText(listAnnounce.get(position).DDMMYYYY());
         holder.announceHourText.setText(listAnnounce.get(position).getAnnounceHourText());
@@ -63,24 +61,21 @@ public class AnnounceViewAdapter extends RecyclerView.Adapter<AnnounceViewHolder
             holder.categorieIcon.setImageResource(R.drawable.ic_other);
         }
 
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Context context = v.getContext();
-                Intent intent = new Intent(context, SeekerAnnounceInfoActivity.class);
+        holder.itemView.setOnClickListener(v -> {
+            Context context = v.getContext();
+            Intent intent = new Intent(context, SeekerAnnounceInfoActivity.class);
 
-                Announce announce = listAnnounce.get(position);
-                intent.putExtra("myAnnounce", announce);
+            Announce announce = listAnnounce.get(position);
+            intent.putExtra("myAnnounce", announce);
 
-                if(parentAct.equals(AnnounceActivity.class.getSimpleName())) {
-                    intent.putExtra("parentAct", "announce");
-                    intent.putExtra("actualUser", actualUser);
-                    intent.putExtra("typePlace", typePlace);
-                } else if(parentAct.equals(SeekerActivity.class.getSimpleName())) {
-                    intent.putExtra("parentAct", "seeker");
-                }
-                context.startActivity(intent);
+            if(parentAct.equals(AnnounceActivity.class.getSimpleName())) {
+                intent.putExtra("parentAct", "announce");
+                intent.putExtra("actualUser", actualUser);
+                intent.putExtra("typePlace", typePlace);
+            } else if(parentAct.equals(SeekerActivity.class.getSimpleName())) {
+                intent.putExtra("parentAct", "seeker");
             }
+            context.startActivity(intent);
         });
     }
 
@@ -90,21 +85,13 @@ public class AnnounceViewAdapter extends RecyclerView.Adapter<AnnounceViewHolder
     }
 
     @Override
-    public void onAttachedToRecyclerView(RecyclerView recyclerView) {
+    public void onAttachedToRecyclerView(@NonNull RecyclerView recyclerView) {
         super.onAttachedToRecyclerView(recyclerView);
     }
 
-    // Insert a new item (announce) to the RecyclerView on a predefined position
     public void insert(int position, Announce announce) {
         listAnnounce.add(position, announce);
         notifyItemInserted(position);
-    }
-
-    // Remove a RecyclerView item containing a specified announce Object
-    public void remove(Announce announce) {
-        int position = listAnnounce.indexOf(announce);
-        listAnnounce.remove(position);
-        notifyItemRemoved(position);
     }
 
     public List<Announce> getListAnnounce() {

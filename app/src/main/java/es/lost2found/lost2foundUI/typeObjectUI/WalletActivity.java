@@ -32,8 +32,10 @@ public class WalletActivity extends AppCompatActivity {
         Toolbar tb = findViewById(R.id.toolbar_center);
         setSupportActionBar(tb);
         ActionBar ab = getSupportActionBar();
-        ab.setDisplayHomeAsUpEnabled(true);
-        ab.setHomeAsUpIndicator(R.drawable.ic_arrow_back);
+        if(ab != null) {
+            ab.setDisplayHomeAsUpEnabled(true);
+            ab.setHomeAsUpIndicator(R.drawable.ic_arrow_back);
+        }
 
         Window window = this.getWindow();
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
@@ -60,7 +62,11 @@ public class WalletActivity extends AppCompatActivity {
 
     private void processNewObject(Integer objectId) {
         String objectIdText = String.valueOf(objectId);
-        String categorie = getIntent().getExtras().getString("categorie");
+        Bundle bundle = getIntent().getExtras();
+        String categorie = "";
+        if(bundle != null) {
+            categorie = getIntent().getExtras().getString("categorie");
+        }
 
         // Marca
         EditText announceBrand = findViewById(R.id.marca);
@@ -93,7 +99,11 @@ public class WalletActivity extends AppCompatActivity {
     }
 
     private void showAnnounceScreen() {
-        String place = getIntent().getExtras().getString("place");
+        String place = "";
+        Bundle bundle = getIntent().getExtras();
+        if(bundle != null) {
+            place = getIntent().getExtras().getString("place");
+        }
         String typePlace = getIntent().getExtras().getString("typePlace");
         SharedPreferences sp = getSharedPreferences("announcePlace", 0);
         SharedPreferences.Editor ed = sp.edit();            // Saved the user login credencials.

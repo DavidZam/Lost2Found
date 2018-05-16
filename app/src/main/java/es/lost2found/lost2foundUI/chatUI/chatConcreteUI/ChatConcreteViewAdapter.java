@@ -1,7 +1,7 @@
 package es.lost2found.lost2foundUI.chatUI.chatConcreteUI;
 
-import android.content.Context;
 import android.os.AsyncTask;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,7 +13,6 @@ import java.util.List;
 import es.lost2found.R;
 import es.lost2found.database.DB_message;
 import es.lost2found.database.DB_user;
-import es.lost2found.entities.Chat;
 import es.lost2found.entities.Message;
 
 public class ChatConcreteViewAdapter extends RecyclerView.Adapter {
@@ -22,45 +21,50 @@ public class ChatConcreteViewAdapter extends RecyclerView.Adapter {
     private List<Message> listMsg = new ArrayList<>();
     private String actualUser;
     private String userOwner;
-    private Context context;
 
-    public ChatConcreteViewAdapter(Context context, List<Message> listMsg, String actualUser) {
-        this.context = context;
+    ChatConcreteViewAdapter(List<Message> listMsg, String actualUser) {
         this.listMsg = listMsg;
         this.actualUser = actualUser;
     }
 
     @Override
     public int getItemViewType(int position) {
+        int viewType = 0;
         try {
             userOwner = new getUserIdOwnerOfMsg().execute(listMsg.get(position)).get();
+            if(userOwner != null) {
+                if(!userOwner.equals(actualUser)) {
+                    // If the current user is the sender of the message
+                    viewType = VIEW_TYPE_MESSAGE_SENT;
+                } else {
+                    // If some other user sent the message
+                    viewType = VIEW_TYPE_MESSAGE_RECEIVED;
+                }
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
-        if(userOwner != null) {
-            if(!userOwner.equals(actualUser)) {
-                // If the current user is the sender of the message
-                return VIEW_TYPE_MESSAGE_SENT;
-            } else {
-                // If some other user sent the message
-                return VIEW_TYPE_MESSAGE_RECEIVED;
-            }
-        } else {
-            return VIEW_TYPE_MESSAGE_SENT; // 0
-        }
+        return viewType;
     }
 
+    @NonNull
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        RecyclerView.ViewHolder holder = null;
         View view;
-        if (viewType == VIEW_TYPE_MESSAGE_SENT) {
-            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_msg_blue, parent, false);
-            return new ChatConcreteSentMsgHolder(view);
-        } else if (viewType == VIEW_TYPE_MESSAGE_RECEIVED) {
+        if(viewType != 0) {
+            if (viewType == VIEW_TYPE_MESSAGE_SENT) {
+                view = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_msg_blue, parent, false);
+                holder = new ChatConcreteSentMsgHolder(view);
+            } else if (viewType == VIEW_TYPE_MESSAGE_RECEIVED) {
+                view = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_msg_green, parent, false);
+                holder = new ChatConcreteRecievedMsgHolder(view);
+            }
+        } else {
             view = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_msg_green, parent, false);
-            return new ChatConcreteRecievedMsgHolder(view);
+            holder = new ChatConcreteRecievedMsgHolder(view);
         }
-        return null;
+        return holder;
     }
 
     private class getUserIdOwnerOfMsg extends AsyncTask<Message, Void, String> {
@@ -77,13 +81,15 @@ public class ChatConcreteViewAdapter extends RecyclerView.Adapter {
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        Message msg = (Message) listMsg.get(position);
-        switch (holder.getItemViewType()) {
-            case VIEW_TYPE_MESSAGE_SENT:
-                ((ChatConcreteSentMsgHolder) holder).bind(msg, userOwner);
-                break;
-            case VIEW_TYPE_MESSAGE_RECEIVED:
-                ((ChatConcreteRecievedMsgHolder) holder).bind(msg, userOwner);
+        Message msg = listMsg.get(position);
+        if(holder != null) {
+            switch (holder.getItemViewType()) {
+                case VIEW_TYPE_MESSAGE_SENT:
+                    ((ChatConcreteSentMsgHolder) holder).bind(msg, userOwner);
+                    break;
+                case VIEW_TYPE_MESSAGE_RECEIVED:
+                    ((ChatConcreteRecievedMsgHolder) holder).bind(msg, userOwner);
+            }
         }
     }
 
@@ -93,21 +99,12 @@ public class ChatConcreteViewAdapter extends RecyclerView.Adapter {
     }
 
     @Override
-    public void onAttachedToRecyclerView(RecyclerView recyclerView) {
+    public void onAttachedToRecyclerView(@NonNull RecyclerView recyclerView) {
         super.onAttachedToRecyclerView(recyclerView);
     }
 
-    // Insert a new item (announce) to the RecyclerView on a predefined position
     public void insert(int position, Message chat) {
         listMsg.add(position, chat);
         notifyItemInserted(position);
     }
-
-    // Remove a RecyclerView item containing a specified announce Object
-    public void remove(Message chat) {
-        int position = listMsg.indexOf(chat);
-        listMsg.remove(position);
-        notifyItemRemoved(position);
-    }
-
 }

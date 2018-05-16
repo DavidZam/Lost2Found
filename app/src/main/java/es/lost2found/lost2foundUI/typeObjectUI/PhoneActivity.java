@@ -29,8 +29,10 @@ public class PhoneActivity extends AppCompatActivity {
         Toolbar tb = findViewById(R.id.toolbar_center);
         setSupportActionBar(tb);
         ActionBar ab = getSupportActionBar();
-        ab.setDisplayHomeAsUpEnabled(true);
-        ab.setHomeAsUpIndicator(R.drawable.ic_arrow_back);
+        if(ab != null) {
+            ab.setDisplayHomeAsUpEnabled(true);
+            ab.setHomeAsUpIndicator(R.drawable.ic_arrow_back);
+        }
 
         Window window = this.getWindow();
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
@@ -57,7 +59,11 @@ public class PhoneActivity extends AppCompatActivity {
 
     private void processNewObject(Integer objectId) {
         String objectIdText = String.valueOf(objectId);
-        String categorie = getIntent().getExtras().getString("categorie");
+        Bundle bundle = getIntent().getExtras();
+        String categorie = "";
+        if(bundle != null) {
+            categorie = getIntent().getExtras().getString("categorie");
+        }
 
         // Marca
         EditText announceBrand = findViewById(R.id.marca);
@@ -67,10 +73,6 @@ public class PhoneActivity extends AppCompatActivity {
         EditText announceModel = findViewById(R.id.model);
         String announceModelText = announceModel.getText().toString();
 
-        /* IMEI
-        EditText announceIMEI = findViewById(R.id.IMEI);
-        String announceIMEIText = announceIMEI.getText().toString();*/
-
         // tara
         EditText announceTara = findViewById(R.id.tara);
         String announceTaraText = announceTara.getText().toString();
@@ -79,7 +81,7 @@ public class PhoneActivity extends AppCompatActivity {
             TextView textView = findViewById(R.id.wrong_information);
             textView.setText(textView.getResources().getString(R.string.error_txt3));
         } else {
-            new saveObjectDB().execute(objectIdText, categorie, announceBrandText, announceModelText, announceTaraText); //  announceIMEIText
+            new saveObjectDB().execute(objectIdText, categorie, announceBrandText, announceModelText, announceTaraText);
         }
     }
 
@@ -99,7 +101,11 @@ public class PhoneActivity extends AppCompatActivity {
     private void showAnnounceScreen(String announce) {
         SharedPreferences sp = getApplicationContext().getSharedPreferences("announcePlace", 0);
         String place = sp.getString("place", "");
-        String typePlace = getIntent().getExtras().getString("typePlace");
+        String typePlace = "";
+        Bundle bundle = getIntent().getExtras();
+        if(bundle != null) {
+            typePlace = getIntent().getExtras().getString("typePlace");
+        }
         SharedPreferences sp2 = getSharedPreferences("announcePlace", 0);
         SharedPreferences.Editor ed = sp2.edit();            // Saved the user login credencials.
         ed.putString("place", place);

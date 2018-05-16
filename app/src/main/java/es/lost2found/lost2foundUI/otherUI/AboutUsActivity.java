@@ -36,8 +36,10 @@ public class AboutUsActivity extends AppCompatActivity {
         Toolbar tb = findViewById(R.id.toolbar);
         setSupportActionBar(tb);
         ActionBar ab = getSupportActionBar();
-        ab.setDisplayHomeAsUpEnabled(true);
-        ab.setHomeAsUpIndicator(R.drawable.ic_menu);
+        if(ab != null) {
+            ab.setDisplayHomeAsUpEnabled(true);
+            ab.setHomeAsUpIndicator(R.drawable.ic_menu);
+        }
         mDrawerLayout = findViewById(R.id.drawer_layout);
 
         Window window = this.getWindow();
@@ -50,7 +52,7 @@ public class AboutUsActivity extends AppCompatActivity {
         String s = "<h2> <font color=#1976D2>¿Cuál es nuestra misión? </font></h2> Lost2Found ha sido creado para que las personas puedan recuperar los objetos que hayan perdido, de forma sencilla y rápida.<br><br><br>" +
                     "<h2> <font color=#1976D2>¿Qué visión tiene Lost2Found? </font></h2> Intentamos hacer un mundo mejor poniendo en contacto a personas para recuperar sus objetos perdidos y, así, ver sonreir a todos los que consiguen dicho objetivo.<br><br><br>" +
                     "<h2> <font color=#1976D2>¿Cuáles son nuestros valores? </font></h2> Nuestro proyecto se basa en creer en las personas y en sus colaboraciones altruistas. De esta manera Lost2Found se retroalimenta.<br><b>";
-        TextView texto = (TextView)findViewById(R.id.textinfoannounce);
+        TextView texto = findViewById(R.id.textinfoannounce);
         texto.setText(Html.fromHtml(s));
 
         View headerLayout = navView.getHeaderView(0);
@@ -78,36 +80,30 @@ public class AboutUsActivity extends AppCompatActivity {
         final Intent openData = new Intent(this, OpenDataActivity.class);
 
         navView.setNavigationItemSelectedListener(
-                new NavigationView.OnNavigationItemSelectedListener() {
+                menuItem -> {
+                    menuItem.setChecked(true);
+                    mDrawerLayout.closeDrawers();
 
-                    @Override
-                    public boolean onNavigationItemSelected(MenuItem menuItem) {
-                        menuItem.setChecked(true);
-                        mDrawerLayout.closeDrawers();
-
-                        // Add code here to update the UI based on the item selected
-
-                        if(menuItem.getItemId()== R.id.nav_home) {
-                            startActivity(home);
-                        }else if(menuItem.getItemId()== R.id.nav_search) {
-                            startActivity(buscar);
-                        }else if(menuItem.getItemId()== R.id.nav_contact) {
-                            startActivity(contact);
-                        } else if(menuItem.getItemId()== R.id.nav_chat) {
-                            startActivity(chat);
-                        }else if(menuItem.getItemId() == R.id.nav_settings){
-                            startActivity(config);
-                        } else if(menuItem.getItemId()== R.id.nav_help) {
-                            startActivity(help);
-                        }else if(menuItem.getItemId()== R.id.nav_feedback) {
-                            startActivity(rate);
-                        } else if(menuItem.getItemId()== R.id.nav_open_data) {
-                            startActivity(openData);
-                        } else if(menuItem.getItemId()== R.id.nav_logout) {
-                            logoutUser();
-                        }
-                        return true;
+                    if(menuItem.getItemId()== R.id.nav_home) {
+                        startActivity(home);
+                    }else if(menuItem.getItemId()== R.id.nav_search) {
+                        startActivity(buscar);
+                    }else if(menuItem.getItemId()== R.id.nav_contact) {
+                        startActivity(contact);
+                    } else if(menuItem.getItemId()== R.id.nav_chat) {
+                        startActivity(chat);
+                    }else if(menuItem.getItemId() == R.id.nav_settings){
+                        startActivity(config);
+                    } else if(menuItem.getItemId()== R.id.nav_help) {
+                        startActivity(help);
+                    }else if(menuItem.getItemId()== R.id.nav_feedback) {
+                        startActivity(rate);
+                    } else if(menuItem.getItemId()== R.id.nav_open_data) {
+                        startActivity(openData);
+                    } else if(menuItem.getItemId()== R.id.nav_logout) {
+                        logoutUser();
                     }
+                    return true;
                 }
         );
         navView.setCheckedItem(R.id.nav_info);

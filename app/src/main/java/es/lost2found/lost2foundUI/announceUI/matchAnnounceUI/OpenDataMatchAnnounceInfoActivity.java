@@ -21,12 +21,6 @@ import es.lost2found.entities.OpenDataAnnounce;
 
 public class OpenDataMatchAnnounceInfoActivity extends AppCompatActivity {
 
-    private OpenDataAnnounce a;
-    private String distancePercentageText;
-    private String distanceText;
-    private Integer user1Id;
-    private Integer user2Id;
-
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_opendata_matchannounce_info);
@@ -34,26 +28,28 @@ public class OpenDataMatchAnnounceInfoActivity extends AppCompatActivity {
         Toolbar tb = findViewById(R.id.toolbar_center);
         setSupportActionBar(tb);
         ActionBar ab = getSupportActionBar();
-        ab.setDisplayHomeAsUpEnabled(true);
-        ab.setHomeAsUpIndicator(R.drawable.ic_arrow_back);
+        if(ab != null) {
+            ab.setDisplayHomeAsUpEnabled(true);
+            ab.setHomeAsUpIndicator(R.drawable.ic_arrow_back);
+        }
 
         Window window = this.getWindow();
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         window.setStatusBarColor(ContextCompat.getColor(this, R.color.color700));
 
-        TextView cat = (TextView) findViewById(R.id.categoria);
-        TextView type = (TextView) findViewById(R.id.tipo);
-        TextView dia = (TextView) findViewById(R.id.dia);
-        TextView lugar = (TextView) findViewById(R.id.lugar);
-        TextView hora = (TextView) findViewById(R.id.hora);
-        TextView distanceMeters = (TextView) findViewById(R.id.distance);
-        TextView distancePercentage = (TextView) findViewById(R.id.distancePercentage);
+        TextView cat =  findViewById(R.id.categoria);
+        TextView type =  findViewById(R.id.tipo);
+        TextView dia =  findViewById(R.id.dia);
+        TextView lugar =  findViewById(R.id.lugar);
+        TextView hora =  findViewById(R.id.hora);
+        TextView distanceMeters =  findViewById(R.id.distance);
+        TextView distancePercentage =  findViewById(R.id.distancePercentage);
 
-        a = (OpenDataAnnounce) getIntent().getSerializableExtra("myAnnounce");
+        OpenDataAnnounce a = (OpenDataAnnounce) getIntent().getSerializableExtra("myAnnounce");
 
-        distancePercentageText = getIntent().getStringExtra("percentageDistance");
-        distanceText = getIntent().getStringExtra("distance");
+        String distancePercentageText = getIntent().getStringExtra("percentageDistance");
+        String distanceText = getIntent().getStringExtra("distance");
 
         String c = "<h4> <font color=#699CFC> Categoría: </font>"+ a.announceCategorie +" </h4><br>";
         cat.setText(Html.fromHtml(c));
@@ -118,14 +114,19 @@ public class OpenDataMatchAnnounceInfoActivity extends AppCompatActivity {
 
         ImageView image = findViewById(R.id.imageinfoannounce);
 
-        if(a.announceCategorie.equals("Telefono")){
-            image.setImageResource(R.drawable.ic_smartphone);
-        }else if(a.announceCategorie.equals("Cartera")){
-            image.setImageResource(R.drawable.ic_wallet);
-        }else if(a.announceCategorie.equals("Otro")){
-            image.setImageResource(R.drawable.ic_other);
-        }else{
-            image.setImageResource(R.drawable.ic_card);
+        switch (a.announceCategorie) {
+            case "Telefono":
+                image.setImageResource(R.drawable.ic_smartphone);
+                break;
+            case "Cartera":
+                image.setImageResource(R.drawable.ic_wallet);
+                break;
+            case "Otro":
+                image.setImageResource(R.drawable.ic_other);
+                break;
+            default:
+                image.setImageResource(R.drawable.ic_card);
+                break;
         }
     }
 
