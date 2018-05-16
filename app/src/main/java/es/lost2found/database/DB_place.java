@@ -9,18 +9,14 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 import es.lost2found.entities.Place;
-import es.lost2found.entities.User;
 
 public class DB_place {
-    // Server: jcorreas-hp.fdi.ucm.es
     private static String SERVER_PATH = "http://jcorreas-hp.fdi.ucm.es/lost2found/database/place/";
 
     public static Place insertPlace() {
@@ -63,7 +59,7 @@ public class DB_place {
 
                 BufferedReader in = new BufferedReader(new InputStreamReader(instream));
                 String inputLine;
-                StringBuffer response = new StringBuffer();
+                StringBuilder response = new StringBuilder();
 
                 while ((inputLine = in.readLine()) != null)
                     response.append(inputLine);
@@ -73,8 +69,6 @@ public class DB_place {
             } finally {
                 con.disconnect();
             }
-        } catch(MalformedURLException e) {
-            e.printStackTrace();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -121,7 +115,7 @@ public class DB_place {
 
                 BufferedReader in = new BufferedReader(new InputStreamReader(instream));
                 String inputLine;
-                StringBuffer response = new StringBuffer();
+                StringBuilder response = new StringBuilder();
 
                 while ((inputLine = in.readLine()) != null)
                     response.append(inputLine);
@@ -184,7 +178,7 @@ public class DB_place {
 
                 BufferedReader in = new BufferedReader(new InputStreamReader(instream));
                 String inputLine;
-                StringBuffer response = new StringBuffer();
+                StringBuilder response = new StringBuilder();
 
                 while ((inputLine = in.readLine()) != null)
                     response.append(inputLine);
@@ -258,7 +252,7 @@ public class DB_place {
 
                 BufferedReader in = new BufferedReader(new InputStreamReader(instream));
                 String inputLine;
-                StringBuffer response = new StringBuffer();
+                StringBuilder response = new StringBuilder();
 
                 while ((inputLine = in.readLine()) != null)
                     response.append(inputLine);
@@ -277,7 +271,7 @@ public class DB_place {
     }
 
     public static Double[] callGeocodingGoogleMapsApi(String address, String typePlace) {
-        String[] addressArray = new String[2];
+        String[] addressArray;
         String[] addressArray2 = new String[2];
         if(typePlace.equals("concrete")) {
             if(address.contains(":")) {
@@ -345,7 +339,7 @@ public class DB_place {
 
                 BufferedReader in = new BufferedReader(new InputStreamReader(instream));
                 String inputLine;
-                StringBuffer response = new StringBuffer();
+                StringBuilder response = new StringBuilder();
 
                 while ((inputLine = in.readLine()) != null)
                     response.append(inputLine);

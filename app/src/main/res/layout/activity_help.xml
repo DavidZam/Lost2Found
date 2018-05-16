@@ -50,15 +50,6 @@
                 android:layout_marginEnd="20dp"
                 android:layout_below="@id/toolbar" />
 
-            <!--<ImageView
-                android:id="@+id/imageinfoannounce"
-                android:layout_width="280dp"
-                android:layout_height="72dp"
-                android:layout_alignParentBottom="true"
-                android:layout_centerHorizontal="true"
-                android:layout_marginBottom="32dp"
-                android:src="@drawable/lost2found" />-->
-
         </RelativeLayout>
 
     <android.support.design.widget.NavigationView

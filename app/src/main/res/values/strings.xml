@@ -15,6 +15,7 @@
     <string name="map_button_text">Mapa</string>
     <string name="concrete_place_button_text">Dirección concreta</string>
     <string name="create_button_text">Crear</string>
+    <string name="image_description">Imagen objeto</string>
     <string name="next2_button_text">Continuar</string>
     <string name="confirm_button_text">Confirmar</string>
     <string name="next_button_text">Siguiente</string>
@@ -25,8 +26,9 @@
     <string name="spinner3_placeholder">Color</string>
     <string name="spinner4_placeholder">Línea</string>
     <string name="spinner5_placeholder">Estación</string>
+    <string name="spinner6_placeholder">Tipo</string>
+    <string name="delete">Eliminar</string>
     <string name="color_dialog_title">Elige un color</string>
-
     <string name="create_announce_text">Crear nuevo anuncio</string>
     <string name="location_text">Ubicación</string>
     <string name="new_announce_text">Nuevo anuncio</string>
@@ -34,24 +36,20 @@
     <string name="hour_announce_text">Hora</string>
     <string name="image_upload_text">Subir imagen</string>
     <string name="info_announce_text">+ Info</string>
-
     <string name="config_text">Configuración</string>
     <string name="contact_text">Contáctanos!</string>
     <string name="about_us_text">Sobre nosotros</string>
     <string name="help_text">Ayuda</string>
     <string name="rate_text">Valóranos!</string>
-
     <string name="error_txt1">Email o contraseña incorrectos</string>
     <string name="error_txt2">Introduce la linea y la estacion</string>
     <string name="error_txt3">Completa los campos necesarios</string>
     <string name="error_txt4">Combinación no valida</string>
     <string name="error_txt5">Selecciona la categoría y el tipo de anuncio</string>
-
     <string name="info_txt">¿Todavía no has creado ningún anuncio?\n\n¡Pulsa en el botón (+) y hazlo ya!</string>
     <string name="info_txt2">"De momento no hay objetos similares en nuestra aplicación. Prueba más tarde."</string>
     <string name="info_txt3">¿Todavía no tienes ningún chat?\n\n¡Pulsa en contactar cuando tengas un match y crea uno!</string>
     <string name="info_txt4">No podemos cargar tus anuncios, revisa tu conexion a internet</string>
-
     <string name="title_announce_section">Mis anuncios</string>
     <string name="title_chat_section">Mis chats</string>
     <string name="title_chatconcrete_section">Chat con </string>
@@ -59,14 +57,12 @@
     <string name="title_matchannounce_info">Información anuncio</string>
     <string name="title_typeplace_section">Escoge un lugar</string>
     <string name="title_transrport_typeplace_section">Tipos de lugar de transporte</string>
-
     <string name="email_textloginregister">Email</string>
     <string name="brand_text">Marca</string>
     <string name="documents_text">Documentacion</string>
     <string name="street_text">Calle</string>
     <string name="number_text">Numero</string>
     <string name="postalcode_text">Codigo Postal</string>
-
     <string name="model_text">Modelo</string>
     <string name="tara_text">Tara</string>
     <string name="IMEI_text">IMEI</string>
@@ -87,9 +83,7 @@
     <string name="name_textregister">Nombre</string>
     <string name="passagain_textregister">Vuelve a escribir la contraseña</string>
     <string name="alreadyhaveaccount">Ya tengo cuenta</string>
-
-    <string name="writemsg_chat">Escribe tu mensaje...</string>
-
+    <string name="writemsg_chat">Escribe tu mensaje</string>
     <string name="nav_title_section1">Anuncios</string>
     <string name="nav_title_section2">Búsqueda</string>
     <string name="nav_title_section3">Chats</string>
@@ -100,17 +94,17 @@
     <string name="nav_title_section8">Sobre nosotros</string>
     <string name="nav_title_section9">Ayuda</string>
     <string name="nav_title_section10">Valoración</string>
-
     <string name="nav_header_text1">User name</string>
     <string name="nav_header_text2">User email</string>
-
     <string name="action_example">Example action</string>
-
     <string name="action_settings">Settings</string>
-
     <string name="match1">Buscar coincidencias</string>
     <string name="match2">Open Data</string>
-
     <string name="chat_text">Escribir mensaje</string>
     <string name="chat_button">Enviar</string>
+
+    <string name="settings_button1">Cambiar email</string>
+    <string name="settings_button2">Cambiar nombre</string>
+    <string name="settings_button3">Cambiar contraseña</string>
+    <string name="settings_text">Puedes cambiar en cualquier momento tu nombre, tu email y tu contraseña</string>
 </resources>

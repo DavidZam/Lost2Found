@@ -62,6 +62,7 @@
                 android:id="@+id/date_show"
                 android:layout_width="85dp"
                 android:layout_height="wrap_content"
+                android:inputType="date"
                 android:layout_alignBottom="@+id/date_button"
                 android:layout_marginStart="-96dp"
                 android:layout_toEndOf="@+id/date_button"
@@ -86,6 +87,7 @@
                 android:id="@+id/hour_show"
                 android:layout_width="65dp"
                 android:layout_height="wrap_content"
+                android:inputType="time"
                 android:layout_alignBottom="@+id/date_button"
                 android:layout_alignEnd="@+id/listCategories"
                 android:textAlignment="center" />
@@ -109,7 +111,7 @@
                 android:layout_alignBottom="@+id/color_view"
                 android:layout_toStartOf="@+id/hour_show"
                 android:onClick="showColorPickerDialog"
-                android:text="Color" />
+                android:text="@string/color_button_text" />
 
             <es.lost2found.lost2foundUI.pickerUI.ColorView
                 android:id="@+id/color_view"

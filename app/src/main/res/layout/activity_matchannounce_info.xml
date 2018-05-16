@@ -49,8 +49,7 @@
             android:layout_height="46dp"
             android:layout_marginStart="180sp"
             android:layout_alignParentTop="true"
-            android:layout_marginTop="164dp"
-            android:text="TextView" />
+            android:layout_marginTop="164dp" />
 
             <LinearLayout
                 android:id="@+id/login_layout"
@@ -63,51 +62,33 @@
                 <TextView
                     android:id="@+id/categoria"
                     android:layout_width="match_parent"
-                    android:layout_height="46dp"
-                    android:layout_alignParentTop="true"
-                    android:layout_centerHorizontal="true"
-                    android:text="TextView" />
+                    android:layout_height="46dp" />
 
                 <TextView
                     android:id="@+id/tipo"
                     android:layout_width="match_parent"
-                    android:layout_height="46dp"
-                    android:layout_below="@+id/categoria"
-                    android:layout_centerHorizontal="true"
-                    android:text="TextView" />
+                    android:layout_height="46dp" />
 
                 <TextView
                     android:id="@+id/dia"
                     android:layout_width="match_parent"
-                    android:layout_height="46dp"
-                    android:layout_below="@+id/tipo"
-                    android:layout_centerHorizontal="true"
-                    android:text="TextView" />
+                    android:layout_height="46dp" />
 
                 <TextView
                     android:id="@+id/lugar"
                     android:layout_width="match_parent"
-                    android:layout_height="64dp"
-                    android:layout_below="@+id/hora"
-                    android:layout_centerHorizontal="true"
-                    android:text="TextView" />
+                    android:layout_height="64dp" />
 
                 <TextView
                     android:id="@+id/usuario"
                     android:layout_width="match_parent"
                     android:layout_height="46dp"
-                    android:layout_marginTop="35sp"
-                    android:layout_below="@+id/lugar"
-                    android:layout_centerHorizontal="true"
-                    android:text="TextView" />
+                    android:layout_marginTop="35sp" />
 
                 <TextView
                     android:id="@+id/param"
                     android:layout_width="354dp"
-                    android:layout_height="90dp"
-                    android:layout_below="@+id/usuario"
-                    android:layout_centerHorizontal="true"
-                    android:text="TextView" />
+                    android:layout_height="90dp" />
 
             </LinearLayout>
 
@@ -128,7 +109,6 @@
                 android:layout_marginBottom="16dp"
                 android:onClick="contactar"
                 android:padding="10sp"
-                android:text="Contactar"
                 android:textSize="16sp" />
 
             <TextView
@@ -137,7 +117,6 @@
                 android:layout_height="27dp"
                 android:layout_marginTop="2sp"
                 android:layout_alignParentStart="true"
-                android:text="c"
                 android:textAllCaps="false" />
 
             <es.lost2found.lost2foundUI.pickerUI.ColorView
@@ -159,7 +138,7 @@
                 android:layout_marginStart="40sp"
                 android:layout_alignStart="@+id/color_view"
                 android:layout_marginTop="7sp"
-                android:textSize="11sp"
+                android:textSize="12sp"
                 android:textAllCaps="false" />
 
             <ImageView
@@ -169,7 +148,7 @@
                 android:layout_marginTop="-2sp"
                 android:layout_alignParentTop="true"
                 android:layout_centerHorizontal="true"
-                android:src="@drawable/ic_phone_android" />
+                android:src="@drawable/ic_smartphone" />
         </RelativeLayout>
     </RelativeLayout>
 

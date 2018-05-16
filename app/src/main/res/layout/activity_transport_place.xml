@@ -17,7 +17,6 @@
             android:id="@+id/toolbar_center"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Tipos de lugar"
             android:theme="@style/ToolbarStyle">
 
         </android.support.v7.widget.Toolbar>
@@ -39,7 +38,6 @@
                 android:layout_marginTop="80dp"
                 android:onClick="saveMetroClicked"
                 android:text="@string/underground_transport_button_text" />
-            <!--android:onClick="place"-->
 
             <Button
                 android:id="@+id/bus_transport_place_button"

@@ -9,7 +9,7 @@
     android:fitsSystemWindows="true"
     android:paddingTop="16dp"
     android:theme="@style/Lost2FoundTheme"
-    tools:context=".lost2foundUI.announceUI.AnnounceActivity">
+    tools:context=".lost2foundUI.otherUI.AboutUsActivity">
 
     <RelativeLayout
         android:id="@+id/content_frame"

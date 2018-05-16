@@ -8,7 +8,6 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.util.Arrays;
@@ -23,7 +22,6 @@ public class DB_message {
 
     public static Message createNewMsg(String msgText, String msgHour, Boolean msgRead, Integer idChat, Integer idUser) {
         Message msg = null;
-        String userName = DB_user.getNameById(idUser);
         try {
             JSONObject jsonObject = new JSONObject();
             jsonObject.put("msgText", msgText);
@@ -67,18 +65,16 @@ public class DB_message {
 
                 BufferedReader in = new BufferedReader(new InputStreamReader(instream));
                 String inputLine;
-                StringBuffer response = new StringBuffer();
+                StringBuilder response = new StringBuilder();
 
                 while ((inputLine = in.readLine()) != null)
                     response.append(inputLine);
 
                 if (response.toString().equals("correct"))
-                    msg = new Message(msgText, msgHour, msgRead, userName);
+                    msg = new Message(msgText, msgHour, msgRead);
             } finally {
                 con.disconnect();
             }
-        } catch(MalformedURLException e) {
-            e.printStackTrace();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -175,7 +171,7 @@ public class DB_message {
 
             BufferedReader in = new BufferedReader(new InputStreamReader(instream));
             String inputLine;
-            StringBuffer response = new StringBuffer();
+            StringBuilder response = new StringBuilder();
 
             while((inputLine = in.readLine()) != null)
                 response.append(inputLine);
@@ -199,8 +195,7 @@ public class DB_message {
                 if(leido.equals(1)) {
                     msgRead = true;
                 }
-                String userName = DB_user.getNameById(idUser);
-                Message msg = new Message(msgTxt, msgHour, msgRead, userName);
+                Message msg = new Message(msgTxt, msgHour, msgRead);
 
                 msgsArray[i] = msg;
             }

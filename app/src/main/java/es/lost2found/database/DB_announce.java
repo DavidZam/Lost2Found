@@ -1,7 +1,5 @@
 package es.lost2found.database;
 
-import android.content.Intent;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -13,7 +11,6 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.util.ArrayList;
@@ -26,7 +23,6 @@ import es.lost2found.entities.OpenDataAnnounce;
 
 public class DB_announce {
 
-    // Server: jcorreas-hp.fdi.ucm.es
     private static String SERVER_PATH = "http://jcorreas-hp.fdi.ucm.es/lost2found/database/announce/";
 
     public static Integer getNumberAnnounces(String email) {
@@ -67,7 +63,7 @@ public class DB_announce {
 
             BufferedReader in = new BufferedReader(new InputStreamReader(instream));
             String inputLine;
-            StringBuffer response = new StringBuffer();
+            StringBuilder response = new StringBuilder();
 
             while((inputLine = in.readLine()) != null)
                 response.append(inputLine);
@@ -122,7 +118,7 @@ public class DB_announce {
 
             BufferedReader in = new BufferedReader(new InputStreamReader(instream));
             String inputLine;
-            StringBuffer response = new StringBuffer();
+            StringBuilder response = new StringBuilder();
 
             while((inputLine = in.readLine()) != null)
                 response.append(inputLine);
@@ -153,7 +149,7 @@ public class DB_announce {
 
                 Integer intIdUser = Integer.valueOf(idUser);
                 String userOwner = DB_user.getNameById(intIdUser);
-                Announce announce = new Announce(announces[i], userOwner, place, intIdAnuncio); // , param)
+                Announce announce = new Announce(announces[i], userOwner, place, intIdAnuncio);
 
                 announcesArray[i] = announce;
             }
@@ -166,7 +162,6 @@ public class DB_announce {
         return announcesArray;
     }
 
-    // Id, TipoAnuncio, HoraActual, DiaAnuncio, HoraPerdidaoHallazgo, Modelo, Marca, Color, idUsuario e idLugar, Categoria (NombreTabla)
     public static Announce insertAnnounce(String announceType, String currentTime, String announceDayText, String announceHourText, String color, String idUser, String idPlace, String announceCategorie, String place, String userName) {
         Announce ret = null;
         try {
@@ -215,19 +210,17 @@ public class DB_announce {
 
                 BufferedReader in = new BufferedReader(new InputStreamReader(instream));
                 String inputLine;
-                StringBuffer response = new StringBuffer();
+                StringBuilder response = new StringBuilder();
 
                 while ((inputLine = in.readLine()) != null)
                     response.append(inputLine);
                 Integer colorInt = Integer.valueOf(color);
                 if (response.toString().equals("correct"))
-                    ret = new Announce(announceType, currentTime, announceDayText, announceHourText, colorInt, announceCategorie, place, userName); // , param
+                    ret = new Announce(announceType, currentTime, announceDayText, announceHourText, colorInt, announceCategorie, place, userName);
             } finally {
                 con.disconnect();
             }
-        } catch(MalformedURLException e) {
-            e.printStackTrace();
-        } catch (Exception e) {
+        }  catch (Exception e) {
             e.printStackTrace();
         }
         return ret;
@@ -273,7 +266,7 @@ public class DB_announce {
 
             BufferedReader in = new BufferedReader(new InputStreamReader(instream));
             String inputLine;
-            StringBuffer response = new StringBuffer();
+            StringBuilder response = new StringBuilder();
 
             while((inputLine = in.readLine()) != null)
                 response.append(inputLine);
@@ -289,7 +282,6 @@ public class DB_announce {
         return  ret;
     }
 
-    // id, tipoAnuncio, horaActual, diaAnuncio, horaPerdidaoHallazgo, color, idUsuario, idLugar, nombreTabla (categoria)
     public static Announce[] getAnnouncesSeeker(String categoria, String tipo, String numberAnnounces) {
         Integer numAnnounces = Integer.valueOf(numberAnnounces);
         Announce[] announcesArray = new Announce[numAnnounces];
@@ -368,7 +360,6 @@ public class DB_announce {
     }
 
     public static Integer getNumberMatchAnnounces(String email, String categoria, String tipo, String dia, String idAnuncio, String determinante) {
-
         Integer userId = DB_user.getId(email);
         Integer idObjeto = Integer.valueOf(idAnuncio);
         Integer ret = 0;
@@ -413,7 +404,7 @@ public class DB_announce {
 
             BufferedReader in = new BufferedReader(new InputStreamReader(instream));
             String inputLine;
-            StringBuffer response = new StringBuffer();
+            StringBuilder response = new StringBuilder();
 
             while((inputLine = in.readLine()) != null)
                 response.append(inputLine);
@@ -430,7 +421,7 @@ public class DB_announce {
     }
 
     public static Announce[] getAnnouncesMatch(String email, String categoria, String tipo, String numberAnnounces, String dia, String determinante) {
-        String place = "";
+        String place;
         Integer numAnnounces = Integer.valueOf(numberAnnounces);
         Integer userId = DB_user.getId(email);
         Announce[] announcesArray = new Announce[numAnnounces];
@@ -473,7 +464,7 @@ public class DB_announce {
 
             BufferedReader in = new BufferedReader(new InputStreamReader(instream));
             String inputLine;
-            StringBuffer response = new StringBuffer();
+            StringBuilder response = new StringBuilder();
 
             while((inputLine = in.readLine()) != null)
                 response.append(inputLine);
@@ -553,7 +544,7 @@ public class DB_announce {
 
                 BufferedReader in = new BufferedReader(new InputStreamReader(instream));
                 String inputLine;
-                StringBuffer response = new StringBuffer();
+                StringBuilder response = new StringBuilder();
 
                 while ((inputLine = in.readLine()) != null)
                     response.append(inputLine);
@@ -562,8 +553,6 @@ public class DB_announce {
             } finally {
                 con.disconnect();
             }
-        } catch(MalformedURLException e) {
-            e.printStackTrace();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -611,7 +600,7 @@ public class DB_announce {
 
                 BufferedReader in = new BufferedReader(new InputStreamReader(instream));
                 String inputLine;
-                StringBuffer response = new StringBuffer();
+                StringBuilder response = new StringBuilder();
 
                 while ((inputLine = in.readLine()) != null)
                     response.append(inputLine);

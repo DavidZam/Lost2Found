@@ -7,7 +7,6 @@
     android:padding="16dp"
     android:theme="@style/Lost2FoundTheme"
     tools:context=".lost2foundUI.loginUI.LoginActivity">
-    <!---->
 
     <LinearLayout
         android:id="@+id/login_layout"

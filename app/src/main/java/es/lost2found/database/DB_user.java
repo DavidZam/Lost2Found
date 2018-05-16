@@ -19,9 +19,6 @@ import es.lost2found.entities.User;
 
 public class DB_user {
 
-
-    //private static String SERVER_PATH = "http://192.168.1.42/lost2found/database/user/";
-    // Server: jcorreas-hp.fdi.ucm.es
     private static String SERVER_PATH = "http://jcorreas-hp.fdi.ucm.es/lost2found/database/user/";
 
     public static User findUserByEmail(String email, String contrasena) {
@@ -63,7 +60,7 @@ public class DB_user {
 
             BufferedReader in = new BufferedReader(new InputStreamReader(instream));
             String inputLine;
-            StringBuffer response = new StringBuffer();
+            StringBuilder response = new StringBuilder();
 
             while((inputLine = in.readLine()) != null)
                 response.append(inputLine);
@@ -73,7 +70,8 @@ public class DB_user {
             JSONObject object = new JSONObject(response.toString());
             if(object.getBoolean("correct"))
                 ret = new User(response.toString());
-                ret.setId(idLUser);
+                if(ret != null)
+                    ret.setId(idLUser);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -123,7 +121,7 @@ public class DB_user {
 
                 BufferedReader in = new BufferedReader(new InputStreamReader(instream));
                 String inputLine;
-                StringBuffer response = new StringBuffer();
+                StringBuilder response = new StringBuilder();
 
                 while ((inputLine = in.readLine()) != null)
                     response.append(inputLine);
@@ -134,8 +132,6 @@ public class DB_user {
             } finally {
                 con.disconnect();
             }
-        } catch(MalformedURLException e) {
-            e.printStackTrace();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -181,7 +177,7 @@ public class DB_user {
 
             BufferedReader in = new BufferedReader(new InputStreamReader(instream));
             String inputLine;
-            StringBuffer response = new StringBuffer();
+            StringBuilder response = new StringBuilder();
 
             while((inputLine = in.readLine()) != null)
                 response.append(inputLine);
@@ -234,7 +230,7 @@ public class DB_user {
 
             BufferedReader in = new BufferedReader(new InputStreamReader(instream));
             String inputLine;
-            StringBuffer response = new StringBuffer();
+            StringBuilder response = new StringBuilder();
 
             while((inputLine = in.readLine()) != null)
                 response.append(inputLine);
@@ -290,7 +286,7 @@ public class DB_user {
 
                 BufferedReader in = new BufferedReader(new InputStreamReader(instream));
                 String inputLine;
-                StringBuffer response = new StringBuffer();
+                StringBuilder response = new StringBuilder();
 
                 while ((inputLine = in.readLine()) != null)
                     response.append(inputLine);
@@ -353,7 +349,7 @@ public class DB_user {
 
                 BufferedReader in = new BufferedReader(new InputStreamReader(instream));
                 String inputLine;
-                StringBuffer response = new StringBuffer();
+                StringBuilder response = new StringBuilder();
 
                 while ((inputLine = in.readLine()) != null)
                     response.append(inputLine);
@@ -416,7 +412,7 @@ public class DB_user {
 
                 BufferedReader in = new BufferedReader(new InputStreamReader(instream));
                 String inputLine;
-                StringBuffer response = new StringBuffer();
+                StringBuilder response = new StringBuilder();
 
                 while ((inputLine = in.readLine()) != null)
                     response.append(inputLine);
@@ -476,7 +472,7 @@ public class DB_user {
 
             BufferedReader in = new BufferedReader(new InputStreamReader(instream));
             String inputLine;
-            StringBuffer response = new StringBuffer();
+            StringBuilder response = new StringBuilder();
 
             while((inputLine = in.readLine()) != null)
                 response.append(inputLine);
@@ -529,7 +525,7 @@ public class DB_user {
 
             BufferedReader in = new BufferedReader(new InputStreamReader(instream));
             String inputLine;
-            StringBuffer response = new StringBuffer();
+            StringBuilder response = new StringBuilder();
 
             while((inputLine = in.readLine()) != null)
                 response.append(inputLine);
@@ -582,7 +578,7 @@ public class DB_user {
 
             BufferedReader in = new BufferedReader(new InputStreamReader(instream));
             String inputLine;
-            StringBuffer response = new StringBuffer();
+            StringBuilder response = new StringBuilder();
 
             while((inputLine = in.readLine()) != null)
                 response.append(inputLine);

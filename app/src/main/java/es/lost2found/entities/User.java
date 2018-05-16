@@ -46,8 +46,6 @@ public class User implements Serializable {
         this.email = email;
     }
 
-    public String getPassHash() { return this.password; }
-
     public Integer getId() {
         return this.id;
     }

@@ -2,13 +2,11 @@
 
 <android.support.v4.widget.DrawerLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/drawer_layout"
     android:fitsSystemWindows="true"
     android:paddingTop="16dp"
     android:theme="@style/Lost2FoundTheme"
-
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -46,7 +44,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="7dp"
             android:layout_below="@+id/listaCategorias"
-            android:hint="Tipo"
+            android:hint="@string/spinner6_placeholder"
             android:textColorHint="@color/colorPrimaryText"
             app:met_floatingLabel="normal" />
 
@@ -57,8 +55,6 @@
             android:scrollbars="vertical"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
-        <!-- android:clickable="true"
-            android:focusable="true" -->
         <TextView
             android:id="@+id/without_search"
             android:layout_width="wrap_content"

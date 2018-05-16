@@ -12,12 +12,3 @@
         android:radius="20dp">
     </corners>
 </shape>
-
-    <!--<TextView
-    android:text="hi man, how are you?"
-    android:background="@drawable/rounded_rectangle_orange"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:padding="8dp"
-    android:textColor="#ffffff"
-    android:layout_marginTop="4dp"/>-->

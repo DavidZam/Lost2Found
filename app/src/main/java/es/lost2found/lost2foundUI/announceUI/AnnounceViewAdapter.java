@@ -54,7 +54,7 @@ public class AnnounceViewAdapter extends RecyclerView.Adapter<AnnounceViewHolder
         }
 
         if(listAnnounce.get(position).announceCategorie.equals("Telefono")) {
-            holder.categorieIcon.setImageResource(R.drawable.ic_phone_android);
+            holder.categorieIcon.setImageResource(R.drawable.ic_smartphone);
         } else if(listAnnounce.get(position).announceCategorie.equals("Cartera")) {
             holder.categorieIcon.setImageResource(R.drawable.ic_wallet);
         } else if(listAnnounce.get(position).announceCategorie.equals("Tarjeta bancaria") || listAnnounce.get(position).announceCategorie.equals("Tarjeta transporte")) {

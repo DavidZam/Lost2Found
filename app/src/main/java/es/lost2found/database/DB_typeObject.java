@@ -19,8 +19,6 @@ import java.util.List;
 public class DB_typeObject {
 
     public static List<Integer>listaIdsAnuncios = new ArrayList<>();
-
-    // Server: jcorreas-hp.fdi.ucm.es
     private static String SERVER_PATH = "http://jcorreas-hp.fdi.ucm.es/lost2found/database/typeObject/";
 
     public static String[] getCategories() {
@@ -63,7 +61,7 @@ public class DB_typeObject {
 
                 BufferedReader in = new BufferedReader(new InputStreamReader(instream));
                 String inputLine;
-                StringBuffer response = new StringBuffer();
+                StringBuilder response = new StringBuilder();
 
                 while ((inputLine = in.readLine()) != null) {
                     response.append(inputLine);
@@ -87,8 +85,6 @@ public class DB_typeObject {
             } finally {
                 con.disconnect();
             }
-        } catch(MalformedURLException e) {
-            e.printStackTrace();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -96,16 +92,10 @@ public class DB_typeObject {
     }
 
     // Obtiene el id de un objecto a partir de sus caracteristicas
-    public static Integer getObjectId() { // String tipoAnuncio, String currentTime, String diaAnuncio, String horaPerdidaHallazgo, String color, String categorie
+    public static Integer getObjectId() {
         Integer objectId = null;
         try {
             JSONObject jsonObject = new JSONObject();
-            /*jsonObject.put("tipoAnuncio", tipoAnuncio);
-            jsonObject.put("currentTime", currentTime);
-            jsonObject.put("diaAnuncio", diaAnuncio);
-            jsonObject.put("horaPerdidaHallazgo", horaPerdidaHallazgo);
-            jsonObject.put("color", color);
-            jsonObject.put("categorie", categorie);*/
 
             List list = new LinkedList();
             list.addAll(Arrays.asList(jsonObject));
@@ -142,7 +132,7 @@ public class DB_typeObject {
 
                 BufferedReader in = new BufferedReader(new InputStreamReader(instream));
                 String inputLine;
-                StringBuffer response = new StringBuffer();
+                StringBuilder response = new StringBuilder();
 
                 while ((inputLine = in.readLine()) != null)
                     response.append(inputLine);
@@ -159,8 +149,6 @@ public class DB_typeObject {
             } finally {
                 con.disconnect();
             }
-        } catch(MalformedURLException e) {
-            e.printStackTrace();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -209,7 +197,7 @@ public class DB_typeObject {
 
                 BufferedReader in = new BufferedReader(new InputStreamReader(instream));
                 String inputLine;
-                StringBuffer response = new StringBuffer();
+                StringBuilder response = new StringBuilder();
 
                 while ((inputLine = in.readLine()) != null)
                     response.append(inputLine);
@@ -235,8 +223,6 @@ public class DB_typeObject {
             } finally {
                 con.disconnect();
             }
-        } catch(MalformedURLException e) {
-            e.printStackTrace();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -288,7 +274,7 @@ public class DB_typeObject {
 
                 BufferedReader in = new BufferedReader(new InputStreamReader(instream));
                 String inputLine;
-                StringBuffer response = new StringBuffer();
+                StringBuilder response = new StringBuilder();
 
                 while ((inputLine = in.readLine()) != null) {
                     response.append(inputLine);
@@ -298,8 +284,6 @@ public class DB_typeObject {
             } finally {
                 con.disconnect();
             }
-        } catch(MalformedURLException e) {
-            e.printStackTrace();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -360,8 +344,6 @@ public class DB_typeObject {
             } finally {
                 con.disconnect();
             }
-        } catch(MalformedURLException e) {
-            e.printStackTrace();
         } catch (Exception e) {
             e.printStackTrace();
         }

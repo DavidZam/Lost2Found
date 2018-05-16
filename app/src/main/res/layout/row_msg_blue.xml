@@ -18,6 +18,7 @@
         android:layout_height="wrap_content"
         android:paddingTop="10dp"
         android:paddingStart="15dp"
+        android:paddingEnd="3dp"
         android:paddingBottom="10dp">
 
         <TextView
@@ -27,7 +28,6 @@
             android:layout_alignParentTop="true"
             android:layout_marginStart="5dp"
             android:layout_toEndOf="@+id/hourMsg"
-            android:text="Nombre usuario"
             app:layout_constraintTop_toTopOf="@id/textMsg"
             android:textSize="12sp"/>
 
@@ -38,12 +38,10 @@
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
             android:layout_marginStart="5dp"
-            android:text="11:43"
             android:textSize="12sp" />
 
         <TextView
             android:id="@+id/textMsg"
-            android:text="Si"
             android:background="@drawable/rounded_rectangle_blue"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

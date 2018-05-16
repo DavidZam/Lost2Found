@@ -37,18 +37,6 @@
                 android:layout_marginEnd="20dp"
                 android:padding="8sp"
                 android:layout_below="@id/toolbar"/>
-                <!--android:text="Lorem ipsum dolor sit met, felis ullamcorper et." />-->
-
-            <!--<TextView
-                android:id="@+id/contactinfo"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="8sp"
-                android:layout_alignParentBottom="true"
-                android:layout_centerHorizontal="true"
-                android:layout_marginBottom="44dp"
-                android:text="To rate lost2found app please go to http://play.google.com/store/apps and search for our application."
-                android:textSize="20sp" />-->
 
         </RelativeLayout>
 

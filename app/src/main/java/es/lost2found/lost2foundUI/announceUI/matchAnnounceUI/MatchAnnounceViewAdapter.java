@@ -78,7 +78,7 @@ public class MatchAnnounceViewAdapter extends RecyclerView.Adapter<AnnounceViewH
         }
 
         if(listAnnounce.get(position).announceCategorie.equals("Telefono")) {
-            holder.getCategorieIcon().setImageResource(R.drawable.ic_phone_android);
+            holder.getCategorieIcon().setImageResource(R.drawable.ic_smartphone);
         } else if(listAnnounce.get(position).announceCategorie.equals("Cartera")) {
             holder.getCategorieIcon().setImageResource(R.drawable.ic_wallet);
         } else if(listAnnounce.get(position).announceCategorie.equals("Tarjeta bancaria") || listAnnounce.get(position).announceCategorie.equals("Tarjeta transporte")) {

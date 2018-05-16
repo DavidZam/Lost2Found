@@ -9,8 +9,6 @@ public class OpenDataAnnounce implements Serializable {
     public String lostFoundHourText;
     public String announceCategorie;
     public String place;
-    private Integer idAnuncio;
-    private String typePlace;
 
     public OpenDataAnnounce(String announceType, String announceDateText, String lostFoundHourText, String announceCategorie, String place) {
         this.announceType = announceType;
@@ -18,10 +16,6 @@ public class OpenDataAnnounce implements Serializable {
         this.lostFoundHourText = lostFoundHourText;
         this.announceCategorie = announceCategorie;
         this.place = place;
-    }
-
-    public Integer getIdAnuncio() {
-        return idAnuncio;
     }
 
     public String getAnnounceType() {
@@ -47,9 +41,6 @@ public class OpenDataAnnounce implements Serializable {
             dia += announceDateText.charAt(ini);
             ++ini;
         }
-
-        /*announceDateText = (dia + "/" + mes + "/" + anio);
-        return announceDateText;*/
         return (dia + "/" + mes + "/" + anio);
     }
 
@@ -83,10 +74,6 @@ public class OpenDataAnnounce implements Serializable {
 
     public String getPlace() {
         return this.place;
-    }
-
-    public Integer getAnnounceId() {
-        return this.idAnuncio;
     }
 
 }

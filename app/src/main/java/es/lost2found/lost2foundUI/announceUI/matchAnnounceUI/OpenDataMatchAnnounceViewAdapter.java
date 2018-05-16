@@ -62,7 +62,7 @@ public class OpenDataMatchAnnounceViewAdapter extends RecyclerView.Adapter<OpenD
         }
 
         if(listAnnounce.get(position).announceCategorie.equals("Telefono")) {
-            holder.getOpenDataCategorieIcon().setImageResource(R.drawable.ic_phone_android);
+            holder.getOpenDataCategorieIcon().setImageResource(R.drawable.ic_smartphone);
         } else if(listAnnounce.get(position).announceCategorie.equals("Cartera")) {
             holder.getOpenDataCategorieIcon().setImageResource(R.drawable.ic_wallet);
         } else if(listAnnounce.get(position).announceCategorie.equals("Tarjeta bancaria") || listAnnounce.get(position).announceCategorie.equals("Tarjeta transporte")) {

@@ -8,7 +8,6 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.util.Arrays;
@@ -20,10 +19,8 @@ import es.lost2found.entities.Place;
 
 public class DB_concretePlace {
 
-    // Server: jcorreas-hp.fdi.ucm.es
-    private static String SERVER_PATH = "http://jcorreas-hp.fdi.ucm.es/lost2found/database/place/concrete/";
-
      public static ConcretePlace insertConcretePlace(String street, String number, String postalcode) {
+        String SERVER_PATH = "http://jcorreas-hp.fdi.ucm.es/lost2found/database/place/concrete/";
         Place lugar = DB_place.insertPlace(); // Primero insertamos un lugar
         Integer idLugar = lugar.getId(); // Obtenemos el id de ese lugar
         ConcretePlace ret = null;
@@ -69,7 +66,7 @@ public class DB_concretePlace {
 
                 BufferedReader in = new BufferedReader(new InputStreamReader(instream));
                 String inputLine;
-                StringBuffer response = new StringBuffer();
+                StringBuilder response = new StringBuilder();
 
                 while ((inputLine = in.readLine()) != null)
                     response.append(inputLine);
@@ -80,8 +77,6 @@ public class DB_concretePlace {
             } finally {
                 con.disconnect();
             }
-        } catch(MalformedURLException e) {
-            e.printStackTrace();
         } catch (Exception e) {
             e.printStackTrace();
         }

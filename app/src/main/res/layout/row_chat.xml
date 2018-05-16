@@ -35,14 +35,6 @@
             android:layout_toEndOf="@+id/chaticon"
             android:textSize="22sp" />
 
-        <!--<TextView
-            android:id="@+id/lastmsg"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/chattitle"
-            android:layout_toEndOf="@+id/chaticon"
-            android:text="Ultimo msg" />-->
-
     </RelativeLayout>
 
 </android.support.v7.widget.CardView>

@@ -119,7 +119,7 @@ public class OpenDataMatchAnnounceInfoActivity extends AppCompatActivity {
         ImageView image = findViewById(R.id.imageinfoannounce);
 
         if(a.announceCategorie.equals("Telefono")){
-            image.setImageResource(R.drawable.ic_phone_android);
+            image.setImageResource(R.drawable.ic_smartphone);
         }else if(a.announceCategorie.equals("Cartera")){
             image.setImageResource(R.drawable.ic_wallet);
         }else if(a.announceCategorie.equals("Otro")){

@@ -55,7 +55,7 @@ public class FillConcretePlaceActivity extends AppCompatActivity {
         String placeStreetText = placeStreet.getText().toString();
 
         // Numero
-        EditText placeNumber = findViewById(R.id.number);
+        EditText placeNumber = findViewById(R.id.streetNum);
         String placeNumberText = placeNumber.getText().toString();
 
         // Cod Postal

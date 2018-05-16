@@ -108,7 +108,7 @@ public class SeekerAnnounceInfoActivity extends AppCompatActivity {
         }
 
         switch (a.announceCategorie) {
-            case "Telefono": image.setImageResource(R.drawable.ic_phone_android);
+            case "Telefono": image.setImageResource(R.drawable.ic_smartphone);
                   break;
             case "Cartera":  image.setImageResource(R.drawable.ic_wallet);
                 break;

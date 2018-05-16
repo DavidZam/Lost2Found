@@ -45,53 +45,37 @@
                 android:id="@+id/categoria"
                 android:layout_width="match_parent"
                 android:layout_height="46dp"
-                android:layout_marginTop="20sp"
-                android:layout_alignParentTop="true"
-                android:layout_centerHorizontal="true"
-                android:text="TextView" />
+                android:layout_marginTop="20sp"/>
 
             <TextView
                 android:id="@+id/tipo"
                 android:layout_width="match_parent"
                 android:layout_height="46dp"
-                android:layout_marginTop="20sp"
-                android:layout_below="@+id/categoria"
-                android:layout_centerHorizontal="true"
-                android:text="TextView" />
+                android:layout_marginTop="20sp" />
 
             <TextView
                 android:id="@+id/dia"
                 android:layout_width="match_parent"
                 android:layout_height="46dp"
-                android:layout_marginTop="20sp"
-                android:layout_below="@+id/tipo"
-                android:layout_centerHorizontal="true"
-                android:text="TextView" />
+                android:layout_marginTop="20sp" />
 
             <TextView
                 android:id="@+id/hora"
                 android:layout_width="134dp"
                 android:layout_height="46dp"
-                android:layout_marginTop="20sp"
-                android:text="TextView" />
+                android:layout_marginTop="20sp" />
 
             <TextView
                 android:id="@+id/lugar"
                 android:layout_width="match_parent"
                 android:layout_height="64dp"
-                android:layout_marginTop="20sp"
-                android:layout_below="@+id/hora"
-                android:layout_centerHorizontal="true"
-                android:text="TextView" />
+                android:layout_marginTop="20sp" />
 
             <TextView
                 android:id="@+id/distance"
                 android:layout_width="match_parent"
                 android:layout_height="54dp"
-                android:textAllCaps="false"
-                android:layout_below="@+id/hora"
-                android:layout_centerHorizontal="true"
-                android:text="TextView"/>
+                android:textAllCaps="false"/>
 
         </LinearLayout>
 
@@ -107,9 +91,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="40dp"
                 android:layout_marginTop="40sp"
+                android:contentDescription="@string/image_description"
                 android:layout_alignParentTop="true"
                 android:layout_centerHorizontal="true"
-                android:src="@drawable/ic_phone_android" />
+                android:src="@drawable/ic_smartphone" />
 
         </RelativeLayout>
     </RelativeLayout>

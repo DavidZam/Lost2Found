@@ -36,7 +36,7 @@
             android:layout_marginTop="65dp"
             android:layout_marginEnd="10dp"
             android:padding="10dp"
-            android:text="Eliminar"
+            android:text="@string/delete"
             android:onClick="delete"
             android:textSize="16sp" />
 
@@ -146,7 +146,7 @@
                 android:layout_marginTop="-2sp"
                 android:layout_alignParentTop="true"
                 android:layout_centerHorizontal="true"
-                android:src="@drawable/ic_phone_android" />
+                android:src="@drawable/ic_smartphone" />
         </RelativeLayout>
     </RelativeLayout>
 

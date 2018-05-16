@@ -58,18 +58,6 @@
                 android:textColor="@color/colorPrimaryText"
                 android:textSize="17sp" />
 
-            <!--<EditText
-                android:id="@+id/IMEI"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10sp"
-                android:layout_marginBottom="5sp"
-                android:layout_below="@id/model"
-                android:hint="@string/IMEI_text"
-                android:inputType="text"
-                android:textColor="@color/colorPrimaryText"
-                android:textSize="17sp" />-->
-
             <EditText
                 android:id="@+id/tara"
                 android:layout_width="match_parent"

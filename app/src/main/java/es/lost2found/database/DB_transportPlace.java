@@ -1,7 +1,6 @@
 package es.lost2found.database;
 
 import org.json.JSONObject;
-import org.json.JSONTokener;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
@@ -10,10 +9,8 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
@@ -23,7 +20,6 @@ import es.lost2found.entities.TransportPlace;
 
 public class DB_transportPlace {
 
-    // Server: jcorreas-hp.fdi.ucm.es
     private static String SERVER_PATH = "http://jcorreas-hp.fdi.ucm.es/lost2found/database/place/transport/";
 
     public static TransportPlace getTransportPlace(String lineText, String stationText) {
@@ -68,7 +64,7 @@ public class DB_transportPlace {
 
                 BufferedReader in = new BufferedReader(new InputStreamReader(instream));
                 String inputLine;
-                StringBuffer response = new StringBuffer();
+                StringBuilder response = new StringBuilder();
 
                 while ((inputLine = in.readLine()) != null)
                     response.append(inputLine);
@@ -81,8 +77,6 @@ public class DB_transportPlace {
             } finally {
                 con.disconnect();
             }
-        } catch(MalformedURLException e) {
-            e.printStackTrace();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -130,7 +124,7 @@ public class DB_transportPlace {
 
                 BufferedReader in = new BufferedReader(new InputStreamReader(instream));
                 String inputLine;
-                StringBuffer response = new StringBuffer();
+                StringBuilder response = new StringBuilder();
 
                 while ((inputLine = in.readLine()) != null) {
                     response.append(inputLine);
@@ -196,7 +190,7 @@ public class DB_transportPlace {
 
                 BufferedReader in = new BufferedReader(new InputStreamReader(instream));
                 String inputLine;
-                StringBuffer response = new StringBuffer();
+                StringBuilder response = new StringBuilder();
 
                 while ((inputLine = in.readLine()) != null) {
                     response.append(inputLine);
@@ -223,13 +217,10 @@ public class DB_transportPlace {
 
     public static String[] getTrainStations() {
         String OPEN_DATA_URL = "https://data.sncf.com/api/records/1.0/search//?dataset=objets-trouves-gares&rows=0&facet=gc_obo_gare_origine_r_name";
-        String[] stations = new String[12];
+        String[] stations;
         String[] realStations = new String[13];
-
-        int timeout = 5000;
-        URL url = null;
+        URL url;
         HttpURLConnection connection = null;
-        JSONObject object = null;
         InputStream instream = null;
         try {
             url = new URL(OPEN_DATA_URL);
@@ -334,7 +325,7 @@ public class DB_transportPlace {
 
                 BufferedReader in = new BufferedReader(new InputStreamReader(instream));
                 String inputLine;
-                StringBuffer response = new StringBuffer();
+                StringBuilder response = new StringBuilder();
 
                 while ((inputLine = in.readLine()) != null) {
                     response.append(inputLine);
@@ -342,7 +333,8 @@ public class DB_transportPlace {
                 Integer id = Integer.valueOf(placeId);
                 if (response.toString().equals("correct"))
                    trainPlace = new TransportPlace(id, "tren", null, estacion);
-                    trainPlace.setId(id);
+                   if(trainPlace != null)
+                        trainPlace.setId(id);
             } finally {
                 con.disconnect();
             }

@@ -35,7 +35,7 @@
             android:layout_alignStart="@+id/cambiarNombre"
             android:layout_below="@+id/cambiarNombre"
             android:layout_marginTop="58dp"
-            android:text="Cambiar email" />
+            android:text="@string/settings_button1" />
 
         <Button
             android:id="@+id/cambiarNombre"
@@ -43,7 +43,7 @@
             android:layout_width="250dp"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="178dp"
-            android:text="Cambiar nombre" />
+            android:text="@string/settings_button2" />
 
         <Button
             android:id="@+id/cambiarPass"
@@ -52,7 +52,7 @@
             android:layout_alignStart="@+id/cambiarEmail"
             android:layout_below="@+id/cambiarEmail"
             android:layout_marginTop="67dp"
-            android:text="Cambiar contraseña" />
+            android:text="@string/settings_button3" />
 
         <TextView
             android:id="@+id/textView7"
@@ -63,7 +63,7 @@
             android:layout_marginTop="93dp"
             android:paddingLeft="16dp"
             android:paddingRight="16dp"
-            android:text="Puedes cambiar en cualquier momento tu nombre, tu email y tu contraseña."
+            android:text="@string/settings_text"
             android:textSize="16sp" />
 
     </RelativeLayout>

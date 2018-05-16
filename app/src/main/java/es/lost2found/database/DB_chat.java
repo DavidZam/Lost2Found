@@ -8,7 +8,6 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.util.Arrays;
@@ -16,20 +15,18 @@ import java.util.LinkedList;
 import java.util.List;
 
 import es.lost2found.entities.Chat;
-import es.lost2found.entities.Message;
 
 public class DB_chat {
 
     private static String SERVER_PATH = "http://jcorreas-hp.fdi.ucm.es/lost2found/database/chat/";
 
-    public static Chat createNewChat(String chatTitle, Integer idUser1, Integer idUser2) { // , String lastMsg
+    public static Chat createNewChat(String chatTitle, Integer idUser1, Integer idUser2) {
         Chat chat = null;
         try {
             JSONObject jsonObject = new JSONObject();
             jsonObject.put("chatTitle", chatTitle);
             jsonObject.put("idUser1", idUser1);
             jsonObject.put("idUser2", idUser2);
-            //jsonObject.put("lastMsg", lastMsg);
 
             List list = new LinkedList();
             list.addAll(Arrays.asList(jsonObject));
@@ -66,7 +63,7 @@ public class DB_chat {
 
                 BufferedReader in = new BufferedReader(new InputStreamReader(instream));
                 String inputLine;
-                StringBuffer response = new StringBuffer();
+                StringBuilder response = new StringBuilder();
 
                 while ((inputLine = in.readLine()) != null)
                     response.append(inputLine);
@@ -76,8 +73,6 @@ public class DB_chat {
             } finally {
                 con.disconnect();
             }
-        } catch(MalformedURLException e) {
-            e.printStackTrace();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -123,7 +118,7 @@ public class DB_chat {
 
             BufferedReader in = new BufferedReader(new InputStreamReader(instream));
             String inputLine;
-            StringBuffer response = new StringBuffer();
+            StringBuilder response = new StringBuilder();
 
             while((inputLine = in.readLine()) != null)
                 response.append(inputLine);
@@ -184,7 +179,7 @@ public class DB_chat {
 
                 BufferedReader in = new BufferedReader(new InputStreamReader(instream));
                 String inputLine;
-                StringBuffer response = new StringBuffer();
+                StringBuilder response = new StringBuilder();
 
                 while ((inputLine = in.readLine()) != null)
                     response.append(inputLine);
@@ -243,7 +238,7 @@ public class DB_chat {
 
             BufferedReader in = new BufferedReader(new InputStreamReader(instream));
             String inputLine;
-            StringBuffer response = new StringBuffer();
+            StringBuilder response = new StringBuilder();
 
             while((inputLine = in.readLine()) != null)
                 response.append(inputLine);
@@ -296,7 +291,7 @@ public class DB_chat {
 
             BufferedReader in = new BufferedReader(new InputStreamReader(instream));
             String inputLine;
-            StringBuffer response = new StringBuffer();
+            StringBuilder response = new StringBuilder();
 
             while((inputLine = in.readLine()) != null)
                 response.append(inputLine);
@@ -372,7 +367,7 @@ public class DB_chat {
 
                 BufferedReader in = new BufferedReader(new InputStreamReader(instream));
                 String inputLine;
-                StringBuffer response = new StringBuffer();
+                StringBuilder response = new StringBuilder();
 
                 while ((inputLine = in.readLine()) != null)
                     response.append(inputLine);
