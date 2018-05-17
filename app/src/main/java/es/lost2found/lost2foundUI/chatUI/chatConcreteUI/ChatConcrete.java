@@ -103,6 +103,9 @@ public class ChatConcrete extends AppCompatActivity {
         createMsg.setOnClickListener(v -> {
             try {
                 String msgText = chatBox.getText().toString();
+
+                msgText = msgText.replace("uoo26","&");
+                //String msgText = "\u00A9" + getApplicationContext().getString(chatBox.getText().toString());
                 if(!msgText.isEmpty()) { // Si no esta vacio: // Comprobar
                     boolean validMsg = false;
                     for(int i = 0; i < msgText.length(); i++) {
@@ -226,6 +229,7 @@ public class ChatConcrete extends AppCompatActivity {
         @Override
         protected Message[] doInBackground(Integer... params) {
             return DB_message.getMsgs(params[0], params[1]);
+
         }
 
         @Override

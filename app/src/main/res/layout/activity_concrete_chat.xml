@@ -60,7 +60,7 @@
             android:background="@drawable/linearlayout_border"
             android:minHeight="48dp"
             android:orientation="horizontal"
-            android:paddingTop="5sp"
+            android:paddingTop="2sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent">

@@ -1,12 +1,18 @@
 package es.lost2found.database;
 
 import org.json.JSONObject;
+import org.json.JSONTokener;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.DataOutputStream;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.io.Writer;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
@@ -17,7 +23,6 @@ import java.util.List;
 import es.lost2found.entities.Message;
 
 public class DB_message {
-
     private static String SERVER_PATH = "http://jcorreas-hp.fdi.ucm.es/lost2found/database/chat/";
 
     public static Message createNewMsg(String msgText, String msgHour, Boolean msgRead, Integer idChat, Integer idUser) {
@@ -134,7 +139,7 @@ public class DB_message {
         return  ret;
     }
 
-    public static Message[] getMsgs(Integer chatId, Integer numberMsgs) { // Falta crear en el servidor y comprobar que funciona
+    public static Message[] getMsgs(Integer chatId, Integer numberMsgs) {
         Message[] msgsArray = new Message[numberMsgs];
         try {
             JSONObject jsonObject = new JSONObject();
@@ -169,7 +174,7 @@ public class DB_message {
             else
                 instream = con.getInputStream();
 
-            BufferedReader in = new BufferedReader(new InputStreamReader(instream));
+            BufferedReader in = new BufferedReader(new InputStreamReader(instream, "UTF-8"));
             String inputLine;
             StringBuilder response = new StringBuilder();
 
@@ -222,6 +227,7 @@ public class DB_message {
             con.setRequestMethod("POST");
             con.setRequestProperty("User-Agent", "your user agent");
             con.setRequestProperty("Accept-Language", "sp,SP;q=0.5");
+            //con.setRequestProperty("Content-Type", "text/html; charset=UTF-8");
 
             String urlParameters = "json=" + jsonString;
 
@@ -240,21 +246,37 @@ public class DB_message {
             else
                 instream = con.getInputStream();
 
-            BufferedReader in = new BufferedReader(new InputStreamReader(instream));
+            BufferedReader in = new BufferedReader(new InputStreamReader(instream, "UTF-8")); // ISO-8859-1
+            in.mark(1);
+            if(in.read() != 0xFEFF)
+                in.reset();
             String inputLine;
             StringBuilder response = new StringBuilder();
 
             while((inputLine = in.readLine()) != null)
                 response.append(inputLine);
 
+
+            /*StringBuilder response = new StringBuilder();
+            try (BufferedReader br = new BufferedReader(new InputStreamReader(instream, "UTF-8"))) {
+                // BOM marker will only appear on the very beginning
+                br.mark(4);
+                if ('\ufeff' != br.read())
+                    br.reset(); // not the BOM marker
+
+                String inputLine;
+                while ((inputLine = br.readLine()) != null) {
+                    response.append(inputLine);
+                }
+            }*/
+
             in.close();
 
-            if(response.toString() != "") {
-                JSONObject object = new JSONObject(response.toString());
-                Boolean correct = object.getBoolean("correct");
-                if (correct) {
-                    idUser = object.getInt("id");
-                }
+            JSONObject object = new JSONObject(response.toString());
+            Boolean correct = object.getBoolean("correct");
+            if (correct) {
+                idUser = object.getInt("id");
+
             }
 
         } catch (Exception e) {
@@ -262,5 +284,4 @@ public class DB_message {
         }
         return  idUser;
     }
-
 }

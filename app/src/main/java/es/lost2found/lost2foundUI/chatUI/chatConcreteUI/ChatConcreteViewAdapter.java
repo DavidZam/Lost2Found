@@ -32,6 +32,7 @@ public class ChatConcreteViewAdapter extends RecyclerView.Adapter {
         int viewType = 0;
         try {
             userOwner = new getUserIdOwnerOfMsg().execute(listMsg.get(position)).get();
+            //userOwner = listMsg.get(position).getUserOwner(); // NO FUNCIONA
             if(userOwner != null) {
                 if(!userOwner.equals(actualUser)) {
                     // If the current user is the sender of the message
@@ -80,16 +81,14 @@ public class ChatConcreteViewAdapter extends RecyclerView.Adapter {
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         Message msg = listMsg.get(position);
-        if(holder != null) {
-            switch (holder.getItemViewType()) {
-                case VIEW_TYPE_MESSAGE_SENT:
-                    ((ChatConcreteSentMsgHolder) holder).bind(msg, userOwner);
-                    break;
-                case VIEW_TYPE_MESSAGE_RECEIVED:
-                    ((ChatConcreteRecievedMsgHolder) holder).bind(msg, userOwner);
-            }
+        switch (holder.getItemViewType()) {
+            case VIEW_TYPE_MESSAGE_SENT:
+                ((ChatConcreteSentMsgHolder) holder).bind(msg, userOwner);
+                break;
+            case VIEW_TYPE_MESSAGE_RECEIVED:
+                ((ChatConcreteRecievedMsgHolder) holder).bind(msg, userOwner);
         }
     }
 
