@@ -1,43 +1,39 @@
 <?php
-        ini_set('display_errors', 1);
-        ini_set('display_startup_errors', 1);
-        error_reporting(E_ALL);
 	include('../dbFunctions.php');
 
 	class typeObject {
+
 		function select() {
 			$connection = connectDB();
 
 			$stmt = $connection->prepare("SELECT nombreTabla FROM tipo");
 
-                        $stmt->execute();
+            $stmt->execute();
 
-                        $result = $stmt->get_result();
+            $result = $stmt->get_result();
 
-                        while($row = $result->fetch_assoc())    {
-                            $rows[] = $row;
-                        }
+            while($row = $result->fetch_assoc())    {
+                $rows[] = $row;
+            }
 
-                        $rawdata = array();
-                        $i = 0;
+            $rawdata = array();
+            $i = 0;
 
-                        foreach($rows as $row)    {
-                                $rawdata[$i] = $rows[$i];
-                                $i++;
-                        }
+            foreach($rows as $row)    {
+                    $rawdata[$i] = $rows[$i];
+                    $i++;
+            }
 
-                        $result->close();
+            $result->close();
 
-                        disconnectDB($connection);
+            disconnectDB($connection);
 
-                        return $rawdata;
+            return $rawdata;
 		}
 
-        function getId() { // $typeAnnounce, $currentTime, $announceDay, $announceHour, $color, $categorie
+        function getId() {
             $connection = connectDB();
 
-            // SELECT id FROM anuncio_objeto WHERE tipoAnuncio = 'Perdida' AND horaAnuncio = '14:01' AND diaAnuncio = '20/03/2018' AND horaPerdidaHallazgo = '15:30' AND color = '-16777216' AND nombreTabla = 'Cartera';
-            //$sql = mysqli_prepare($connection, "SELECT id FROM anuncio_objeto WHERE tipoAnuncio = ? AND horaAnuncio = ? AND diaAnuncio = ? AND horaPerdidaHallazgo = ? AND color = ? AND nombreTabla = ?;");
             $sql = mysqli_prepare($connection, "SELECT MAX(id) FROM anuncio_objeto");
 
             $query = $sql->execute();
@@ -71,39 +67,33 @@
             $query = $sql->execute();
 
             if(!$query)
-                die();
+                    die();
 
-            $result = $sql->store_result();
-	    if(strcmp($announceCategorie, "Tarjeta transporte") == 0) {
-		$realresult = $sql->bind_result($id, $param1);
+                    $result = $sql->store_result();
 
-		$sql->fetch();
-                $rawdata = array();
-                $rawdata['param1'] = $param1;
+    	    if(strcmp($announceCategorie, "Tarjeta transporte") == 0) {
+    	            $realresult = $sql->bind_result($id, $param1);
+
+    		        $sql->fetch();
+                    $rawdata = array();
+                    $rawdata['param1'] = $param1;
 
             } else if(strcmp($announceCategorie, "Telefono") == 0) {
-		$realresult = $sql->bind_result($id, $param1, $param2, $param3);
+        		$realresult = $sql->bind_result($id, $param1, $param2, $param3);
 
-		$sql->fetch();
+        		$sql->fetch();
                 $rawdata = array();
                 $rawdata['param1'] = $param1;
-		$rawdata['param2'] = $param2;
-		$rawdata['param3'] = $param3;
+        		$rawdata['param2'] = $param2;
+        		$rawdata['param3'] = $param3;
             } else {
-		$realresult = $sql->bind_result($id, $param1, $param2);
-		$sql->fetch();
+        		$realresult = $sql->bind_result($id, $param1, $param2);
+        		$sql->fetch();
                 $rawdata = array();
-		$rawdata['param1'] = $param1;
-		$rawdata['param2'] = $param2;
+        		$rawdata['param1'] = $param1;
+        		$rawdata['param2'] = $param2;
             }
-            //$sql->fetch();
-
-            //$rawdata = array();
-
             $correct = $query;
-
-            //$rawdata['param1'] = $param1;
-            //$rawdata['param2'] = $param2;
             $rawdata['correct'] = $correct;
 
             disconnectDB($connection);
@@ -120,11 +110,6 @@
                 $sql = mysqli_prepare($connection, "INSERT INTO $categorie (idObjeto, marca, modelo, tara) VALUES (?, ?, ?, ?)");
                 mysqli_stmt_bind_param($sql, "ssss", $objectId, $param1, $param2, $param3);
             } else {
-		//$param2 = utf8_encode($param2);
-		//var_dump($param2);
-		//var_dump($objectId);
-		//var_dump($param1);
-		//var_dump($param2);
                 $sql = mysqli_prepare($connection, "INSERT INTO `$categorie` VALUES (?, ?, ?)");
                 mysqli_stmt_bind_param($sql, "sss", $objectId, $param1, $param2);
             }

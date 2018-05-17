@@ -177,24 +177,20 @@ public class DB_message {
                 response.append(inputLine);
 
             String res = response.toString();
-            String[] msgs = res.split("\\.");
+            String[] msgs = res.split("\\},");
             msgs[0] = msgs[0].replace("[", "");
             msgs[msgs.length-1] = msgs[msgs.length-1].replace("]", "");
 
             for(int i = 0; i < numberMsgs; i++) {
-                char firstChar = msgs[i].charAt(1);
-                if(firstChar == ',') {
-                    msgs[i] = msgs[i].substring(2, msgs[i].length());
+                char lastChar = msgs[i].charAt(msgs[i].length()-1);
+                if(lastChar != '}') {
+                    msgs[i] += "}";
                 }
+
                 JSONObject object = new JSONObject(msgs[i]);
                 String msgTxt =  object.getString("texto");
                 String msgHour =  object.getString("horaMsg");
-                Integer leido = object.getInt("leido");
-                Integer idUser = object.getInt("idUsuario");
                 boolean msgRead = false;
-                if(leido.equals(1)) {
-                    msgRead = true;
-                }
                 Message msg = new Message(msgTxt, msgHour, msgRead);
 
                 msgsArray[i] = msg;

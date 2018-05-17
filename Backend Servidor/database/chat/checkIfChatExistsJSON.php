@@ -1,7 +1,4 @@
 <?php
-	ini_set('display_errors', 1);
-        ini_set('display_startup_errors', 1);
-        error_reporting(E_ALL);
 	include('../dbFunctions.php');
 
 	if(isset($_POST["json"])) {
@@ -10,7 +7,7 @@
 	    $json = str_replace("\\", "",$json);
 	    $jsonencode = json_decode($json);
 
-            $idUser1 = $jsonencode[0]->idUser1;
+        $idUser1 = $jsonencode[0]->idUser1;
 	    $idUser2 = $jsonencode[0]->idUser2;
 
 	    $connection = connectDB();

@@ -1,38 +1,35 @@
 <?php
-	ini_set('display_errors', 1);
-	ini_set('display_startup_errors', 1);
-	error_reporting(E_ALL);
 	include('../../dbFunctions.php');
 
 	class TransportPlace {
 
-                function selectStation($linea) {
-                        $connection = connectDB();
+        function selectStation($linea) {
+            $connection = connectDB();
 
-						$lineaText = substr($linea, 11, -3);
-                        $stmt = $connection->prepare("SELECT DISTINCT estacion FROM lugar_transporte WHERE linea = ?");
-                        $stmt->bind_param('s', $lineaText);
+			$lineaText = substr($linea, 11, -3);
+            $stmt = $connection->prepare("SELECT DISTINCT estacion FROM lugar_transporte WHERE linea = ?");
+            $stmt->bind_param('s', $lineaText);
 
-                        $stmt->execute();
+            $stmt->execute();
 
-                        $result = $stmt->get_result();
+            $result = $stmt->get_result();
 
-                        while($row = $result->fetch_assoc())    {
-                            $rows[] = $row;
-                        }
-                        $rawdata = array();
-                        $i = 0;
+            while($row = $result->fetch_assoc())    {
+                $rows[] = $row;
+            }
+            $rawdata = array();
+            $i = 0;
 
-                        foreach($rows as $row)    {
-                                $rawdata[$i] = $rows[$i];
-                                $i++;
-                        }
+            foreach($rows as $row)    {
+                    $rawdata[$i] = $rows[$i];
+                    $i++;
+            }
 
-                        $result->close();
+            $result->close();
 
-                        disconnectDB($connection);
-                        return $rawdata;
-                }
+            disconnectDB($connection);
+            return $rawdata;
+        }
 
 		function select($tipoTte) {
 			$connection = connectDB();
@@ -45,20 +42,21 @@
 			$result = $stmt->get_result();
 
 			while($row = $result->fetch_assoc())    {
-		            $rows[] = $row;
-            		}
+	            $rows[] = $row;
+    		}
+    		
 			$rawdata = array();
 			$i = 0;
 
-            		foreach($rows as $row)    {
-        	    		$rawdata[$i] = $rows[$i];
-	            		$i++;
-           		}
+    		foreach($rows as $row)    {
+	    		$rawdata[$i] = $rows[$i];
+        		$i++;
+       		}
 
 			$result->close();
 
-		    	disconnectDB($connection);
-	        	return $rawdata;
+	    	disconnectDB($connection);
+        	return $rawdata;
 		}
 
 		function selectId($linea, $station) {
@@ -85,14 +83,14 @@
 			$rawdata['linea'] = utf8_encode($linea);
 			$rawdata['estacion'] = $estacion;
 
-	        	disconnectDB($connection);
-		    	return $rawdata;
+        	disconnectDB($connection);
+	    	return $rawdata;
 		}
 
 	    function insert($placeId, $tipoTte, $linea, $station) {
 	        $connection = connectDB();
-		$sql = mysqli_prepare($connection, "INSERT INTO lugar_transporte (idLugarTte, tipoTte, linea, estacion) VALUES (?, ?, ?, ?)");
-		mysqli_stmt_bind_param($sql, "isss", $placeId, $tipoTte, $linea, $station);
+			$sql = mysqli_prepare($connection, "INSERT INTO lugar_transporte (idLugarTte, tipoTte, linea, estacion) VALUES (?, ?, ?, ?)");
+			mysqli_stmt_bind_param($sql, "isss", $placeId, $tipoTte, $linea, $station);
 
 	        $query = $sql->execute();
 	        if(!$query)

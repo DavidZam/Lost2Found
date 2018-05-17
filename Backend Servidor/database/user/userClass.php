@@ -1,14 +1,8 @@
 <?php
-	ini_set('display_errors', 1);
-    ini_set('display_startup_errors', 1);
-    error_reporting(E_ALL);
 	include('../dbFunctions.php');
 
 	class User {
-		/**
-		 *	Return a array with the query result. The query only can be execute by searching by email.
-		 *	@param email
-		 */
+		// Devuelve un array con el resultado de la consulta.
 		function select($email, $password) {
 			$connection = connectDB();
 
@@ -18,7 +12,7 @@
 			$query = $sql->execute();
 
 			if(!$query)
-            	        die();
+    	        die();
 			$result = $sql->store_result();
 
 			$realresult = $sql->bind_result($id, $email, $name, $passHash);
@@ -34,65 +28,65 @@
 			$rawdata['nombre'] = utf8_encode($name);
 			$rawdata['correct'] = $correct;
 
-	                disconnectDB($connection);
-		        return $rawdata;
+            disconnectDB($connection);
+	        return $rawdata;
 		}
 
 		function getId($email) {
-                        $connection = connectDB();
+            $connection = connectDB();
 
-                        $sql = mysqli_prepare($connection, "SELECT id FROM usuario WHERE email = ?");
-                        mysqli_stmt_bind_param($sql, "s", $email);
+            $sql = mysqli_prepare($connection, "SELECT id FROM usuario WHERE email = ?");
+            mysqli_stmt_bind_param($sql, "s", $email);
 
-                        $query = $sql->execute();
+            $query = $sql->execute();
 
-                        if(!$query)
-                        die();
+            if(!$query)
+            die();
 
-                        $result = $sql->store_result();
+            $result = $sql->store_result();
 
-                        $realresult = $sql->bind_result($id);
+            $realresult = $sql->bind_result($id);
 
-                        $rawdata = array();
+            $rawdata = array();
 
 			$correct = $query;
 
-                        $sql->fetch();
+            $sql->fetch();
 
-                        $rawdata['id'] = utf8_encode($id);
+            $rawdata['id'] = utf8_encode($id);
 			$rawdata['correct'] = $correct;
 
-                        disconnectDB($connection);
-                        return $rawdata;
-                }
+            disconnectDB($connection);
+            return $rawdata;
+        }
 
         function getIdByName($name) {
-                        $connection = connectDB();
+            $connection = connectDB();
 
-                        $sql = mysqli_prepare($connection, "SELECT id FROM usuario WHERE nombre = ?");
-                        mysqli_stmt_bind_param($sql, "s", $name);
+            $sql = mysqli_prepare($connection, "SELECT id FROM usuario WHERE nombre = ?");
+            mysqli_stmt_bind_param($sql, "s", $name);
 
-                        $query = $sql->execute();
+            $query = $sql->execute();
 
-                        if(!$query)
-                        die();
+            if(!$query)
+            die();
 
-                        $result = $sql->store_result();
+            $result = $sql->store_result();
 
-                        $realresult = $sql->bind_result($id);
+            $realresult = $sql->bind_result($id);
 
-                        $rawdata = array();
+            $rawdata = array();
 
 			$correct = $query;
 
-                        $sql->fetch();
+            $sql->fetch();
 
-                        $rawdata['id'] = utf8_encode($id);
+            $rawdata['id'] = utf8_encode($id);
 			$rawdata['correct'] = $correct;
 
-                        disconnectDB($connection);
-                        return $rawdata;
-                }
+            disconnectDB($connection);
+            return $rawdata;
+        }
 
         function getName($id) {
             $connection = connectDB();
@@ -122,16 +116,11 @@
             return $rawdata;
 	    }	
 
-		/**
-		 *	Insert a user in the database.
-		 *	@param email
-		 *	@param name
-		 *	@param password
-		 */
+		// Inserta un usuario en la base de datos
 		function insert($email, $name, $password) {
 	        $connection = connectDB();
 
-		$passHash = password_hash($password, PASSWORD_BCRYPT);
+			$passHash = password_hash($password, PASSWORD_BCRYPT);
 
 	        $sql = mysqli_prepare($connection, "INSERT INTO usuario (id, email, nombre, contrasena) VALUES (null, ?, ?, ?)");
 
@@ -146,63 +135,56 @@
 
 	        disconnectDB($connection);
 	        return $query;
-	    	}
-
+    	}
 		
-		/**
-			Update a name of user in the database
-		*/
+		// Actualiza el nombre del usuario en la base de datos
 		function updateName($nombre, $email){
-		$connection = connectDB();
-		$sql = mysqli_prepare($connection, "UPDATE usuario SET nombre=? WHERE email=?");
-		mysqli_stmt_bind_param($sql, "ss", $nombre, $email);
-		$query = $sql->execute();
+			$connection = connectDB();
+			$sql = mysqli_prepare($connection, "UPDATE usuario SET nombre=? WHERE email=?");
+			mysqli_stmt_bind_param($sql, "ss", $nombre, $email);
+			$query = $sql->execute();
 
-		if(!$query)
-			echo "incorrect";
-		else
-			echo "correct";
+			if(!$query)
+				echo "incorrect";
+			else
+				echo "correct";
 
-		disconnectDB($connection);
-		return $query;
+			disconnectDB($connection);
+			return $query;
 		}
 
-		/**
-			Update a email of user in the database
-		*/
+		// Actualiza el email del usuario en la base de datos
 		function updateEmail($email, $id){
-		$connection = connectDB();
-		$sql = mysqli_prepare($connection, "UPDATE usuario SET email=? WHERE id=?");
-		mysqli_stmt_bind_param($sql, "si", $email, $id);
-		$query = $sql->execute();
+			$connection = connectDB();
+			$sql = mysqli_prepare($connection, "UPDATE usuario SET email=? WHERE id=?");
+			mysqli_stmt_bind_param($sql, "si", $email, $id);
+			$query = $sql->execute();
 
-		if(!$query)
-			echo "incorrect";
-		else
-			echo "correct";
+			if(!$query)
+				echo "incorrect";
+			else
+				echo "correct";
 
-		disconnectDB($connection);
-		return $query;
+			disconnectDB($connection);
+			return $query;
 		}
 	
 	
-	/**
-			Update a password of user in the database
-		*/
+		// Actualiza la contraseña del usuario en la base de datos
 		function updatePassword($pass, $email){
-		$connection = connectDB();
-		$passHash = password_hash($pass, PASSWORD_BCRYPT);
-		$sql = mysqli_prepare($connection, "UPDATE usuario SET contrasena=? WHERE email=?");
-		mysqli_stmt_bind_param($sql, "ss", $passHash, $email);
-		$query = $sql->execute();
+			$connection = connectDB();
+			$passHash = password_hash($pass, PASSWORD_BCRYPT);
+			$sql = mysqli_prepare($connection, "UPDATE usuario SET contrasena=? WHERE email=?");
+			mysqli_stmt_bind_param($sql, "ss", $passHash, $email);
+			$query = $sql->execute();
 
-		if(!$query)
-			echo "incorrect";
-		else
-			echo "correct";
+			if(!$query)
+				echo "incorrect";
+			else
+				echo "correct";
 
-		disconnectDB($connection);
-		return $query;
+			disconnectDB($connection);
+			return $query;
 		}
 	}
 ?>

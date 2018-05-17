@@ -6,7 +6,7 @@
 	    $jsonencode = json_decode($json);
  
 	    $email = $jsonencode[0]->email;
-            $password = $jsonencode[0]->contrasena;
+        $password = $jsonencode[0]->contrasena;
 
 	    require_once("userClass.php");
 	    $userObject = new User();

@@ -1,7 +1,4 @@
 <?php
-	ini_set('display_errors', 1);
-        ini_set('display_startup_errors', 1);
-        error_reporting(E_ALL);
 
 	if(isset($_POST["json"])) {
 	    $json = $_POST["json"];
@@ -15,7 +12,6 @@
 	    require_once("userClass.php");
 	    $userObject = new User();
 	    $user = $userObject->updateName($nombre, $email);
-		//var_dump($user);
 	    json_encode($user);
 	}
 ?>

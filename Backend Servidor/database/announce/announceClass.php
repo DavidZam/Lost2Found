@@ -1,7 +1,4 @@
 <?php
-	ini_set('display_errors', 1);
-    ini_set('display_startup_errors', 1);
-    error_reporting(E_ALL);
 	include('../dbFunctions.php');
 
 	class Announce {
@@ -20,13 +17,12 @@
 			$realresult = $sql->bind_result($numAnnounces);
 			$sql->fetch();
 			
-	        	disconnectDB($connection);
-	        
-		    	return $numAnnounces;
+        	disconnectDB($connection);
+        
+	    	return $numAnnounces;
 		}
 
 		function getAnnounces($id) {
-
 			$connection = connectDB();
 
 			$stmt = $connection->prepare("SELECT DISTINCT * FROM `anuncio_objeto` WHERE idUsuario = ?");
@@ -37,43 +33,32 @@
 			$result = $stmt->get_result();
 
 			while($row = $result->fetch_assoc())    {
-		            $rows[] = $row;
+	            $rows[] = $row;
 			    $rows[] = ".";
-            		}
+    		}
+
 			$rawdata = array();
 			$i = 0;
 
-            		foreach($rows as $row)    {
-        	    		$rawdata[$i] = $rows[$i];
-	            		$i++;
-           		}
+    		foreach($rows as $row) {
+	    		$rawdata[$i] = $rows[$i];
+        		$i++;
+       		}
 
 			$result->close();
 
-		    	disconnectDB($connection);
-	        	return $rawdata;
+	    	disconnectDB($connection);
+        	return $rawdata;
 		}
 
-		/**
-		 *	Insert an announce in the database.
-		 *	@param announceType
-		 *	@param currentTime
-		 *	@param announceDateText
-		 *	@param announceHourText
-		 *	@param model
-		 *	@param brand
-		 *	@param color
-		 *	@param announceCategorie
-		 */
-		function insert($announceType, $currentTime, $announceDateText, $announceHourText, $color, $idUser, $idPlace, $announceCategorie) { //  $model, $brand,
+		// Inserta un anuncio en la base de datos
+		function insert($announceType, $currentTime, $announceDateText, $announceHourText, $color, $idUser, $idPlace, $announceCategorie) {
 	        $connection = connectDB();
 
-		$sql = mysqli_prepare($connection, "INSERT INTO anuncio_objeto (id, tipoAnuncio, horaAnuncio, diaAnuncio, horaPerdidaHallazgo, color, idUsuario, idLugar, nombreTabla) VALUES (null, ?, ?, ?, ?, ?, ?, ?, ?)");
-		//var_dump($sql);
-	        mysqli_stmt_bind_param($sql, "sssssiis", $announceType, $currentTime, $announceDateText, $announceHourText, $color, $idUser, $idPlace, $announceCategorie); // model, brand
+			$sql = mysqli_prepare($connection, "INSERT INTO anuncio_objeto (id, tipoAnuncio, horaAnuncio, diaAnuncio, horaPerdidaHallazgo, color, idUsuario, idLugar, nombreTabla) VALUES (null, ?, ?, ?, ?, ?, ?, ?, ?)");
+	        mysqli_stmt_bind_param($sql, "sssssiis", $announceType, $currentTime, $announceDateText, $announceHourText, $color, $idUser, $idPlace, $announceCategorie);
 
 	        $query = $sql->execute();
-		//var_dump($query);
 	        if(!$query)
 	            echo "incorrect";
 	        else
@@ -123,9 +108,9 @@
 			$realresult = $sql->bind_result($numAnnounces);
 			$sql->fetch();
 			
-	        	disconnectDB($connection);
-	        
-		    	return $numAnnounces;
+        	disconnectDB($connection);
+        
+	    	return $numAnnounces;
 		}
 		
 		
@@ -141,50 +126,45 @@
 			$result = $stmt->get_result();
 
 			while($row = $result->fetch_assoc())    {
-		            $rows[] = $row;
+	            $rows[] = $row;
 			    $rows[] = ".";
-            		}
+    		}
+
 			$rawdata = array();
 			$i = 0;
 
-            		foreach($rows as $row)    {
-        	    		$rawdata[$i] = $rows[$i];
-	            		$i++;
-           		}
+			foreach($rows as $row)    {
+				$rawdata[$i] = $rows[$i];
+				$i++;
+       		}
 
 			$result->close();
 
-		    	disconnectDB($connection);
-	        	return $rawdata;
+	    	disconnectDB($connection);
+        	return $rawdata;
 		}
 		
 		function getNumberMatchAnnounces($idUser, $categoria, $tipo, $dia, $determinante) {
 			$connection = connectDB();
 					
-			
-			if($tipo == "Perdida"){
+			if($tipo == "Perdida") {
 				if(strcmp($categoria, "Telefono") == 0 || strcmp($categoria, "Cartera") == 0) {
 					$stmt = mysqli_prepare($connection, "SELECT COUNT(DISTINCT id) FROM anuncio_objeto, `$categoria` WHERE idUsuario != ? AND nombreTabla = ? AND tipoAnuncio != ? AND diaAnuncio >= ? AND id = idObjeto AND marca LIKE CONCAT('%', ?, '%')");
-				}else if(strcmp($categoria, "Otro") == 0) {
+				} else if(strcmp($categoria, "Otro") == 0) {
 					$stmt = mysqli_prepare($connection, "SELECT COUNT(DISTINCT id) FROM anuncio_objeto, `$categoria` WHERE idUsuario != ? AND nombreTabla = ? AND tipoAnuncio != ? AND diaAnuncio >= ? AND id = idObjeto AND  nombre LIKE CONCAT('%', ?, '%')");
-				}else if(strcmp($categoria, "Tarjeta bancaria") == 0 || strcmp($categoria, "Tarjeta transporte") == 0){
+				} else if(strcmp($categoria, "Tarjeta bancaria") == 0 || strcmp($categoria, "Tarjeta transporte") == 0) {
 					$stmt = mysqli_prepare($connection, "SELECT COUNT(DISTINCT id) FROM anuncio_objeto, `$categoria` WHERE idUsuario != ? AND nombreTabla = ? AND tipoAnuncio != ? AND diaAnuncio >= ? AND id = idObjeto AND datosPropietario LIKE CONCAT('%', ?, '%')");
 					$stmt->bind_param("sssss", $idUser, $categoria, $tipo, $dia, $determinante);
-			
 				}
-				
-			}else{
-				
+			} else {
 				if(strcmp($categoria, "Telefono") == 0 || strcmp($categoria, "Cartera") == 0) {
 					$stmt = mysqli_prepare($connection, "SELECT COUNT(DISTINCT id) FROM anuncio_objeto, `$categoria` WHERE idUsuario != ? AND nombreTabla = ? AND tipoAnuncio != ? AND diaAnuncio <= ? AND id = idObjeto AND marca LIKE CONCAT('%', ?, '%')");
 				}else if(strcmp($categoria, "Otro") == 0) {
 					$stmt = mysqli_prepare($connection, "SELECT COUNT(DISTINCT id) FROM anuncio_objeto, `$categoria` WHERE idUsuario != ? AND nombreTabla = ? AND tipoAnuncio != ? AND diaAnuncio <= ? AND id = idObjeto AND nombre LIKE CONCAT('%', ?, '%')");
 				}else if(strcmp($categoria, "Tarjeta bancaria") == 0 || strcmp($categoria, "Tarjeta transporte") == 0){
 					$stmt = mysqli_prepare($connection, "SELECT COUNT(DISTINCT id) FROM anuncio_objeto, `$categoria` WHERE idUsuario != ? AND nombreTabla = ? AND tipoAnuncio != ? AND diaAnuncio <= ? AND id = idObjeto AND datosPropietario LIKE CONCAT('%', ?, '%')");
-					
 				}
 			}
-			
 			
 			mysqli_stmt_bind_param($stmt, "sssss", $idUser, $categoria, $tipo, $dia, $determinante);
 			
@@ -196,30 +176,28 @@
 			$realresult = $stmt->bind_result($numAnnounces);
 			$stmt->fetch();
 			
-	        	disconnectDB($connection);
-	        
-		    	return $numAnnounces;
+        	disconnectDB($connection);
+        
+	    	return $numAnnounces;
 		}
 		
-		
 		function getAnnouncesMatchJSON($idUser, $categoria, $tipo, $dia, $determinante) {
-
 			$connection = connectDB();
 
-			if($tipo == 'Perdida'){
+			if($tipo == 'Perdida') {
 				if(strcmp($categoria, "Telefono") == 0 || strcmp($categoria, "Cartera") == 0) {
 					$stmt = $connection->prepare("SELECT DISTINCT * FROM anuncio_objeto, `$categoria` WHERE idUsuario != ? AND nombreTabla = ? AND tipoAnuncio != ? AND diaAnuncio >= ? AND id = idObjeto AND marca LIKE CONCAT('%', ?, '%')");
-				}else if(strcmp($categoria, "Otro") == 0) {
+				} else if(strcmp($categoria, "Otro") == 0) {
 					$stmt = $connection->prepare("SELECT DISTINCT * FROM anuncio_objeto, `$categoria` WHERE idUsuario != ? AND nombreTabla = ? AND tipoAnuncio != ? AND diaAnuncio >= ? AND id = idObjeto AND nombre LIKE CONCAT('%', ?, '%')");
-				}else if(strcmp($categoria, "Tarjeta bancaria") == 0 || strcmp($categoria, "Tarjeta transporte") == 0){
+				} else if(strcmp($categoria, "Tarjeta bancaria") == 0 || strcmp($categoria, "Tarjeta transporte") == 0) {
 					$stmt = $connection->prepare("SELECT DISTINCT * FROM anuncio_objeto, `$categoria` WHERE idUsuario != ? AND nombreTabla = ? AND tipoAnuncio != ? AND diaAnuncio >= ? AND id = idObjeto AND datosPropietario LIKE CONCAT('%', ?, '%')");
 				}
-			}else if($tipo == 'Hallazgo'){
+			} else if($tipo == 'Hallazgo') {
 				if(strcmp($categoria, "Telefono") == 0 || strcmp($categoria, "Cartera") == 0) {
 					$stmt = $connection->prepare("SELECT DISTINCT * FROM anuncio_objeto, `$categoria` WHERE idUsuario != ? AND nombreTabla = ? AND tipoAnuncio != ? AND diaAnuncio <= ? AND id = idObjeto AND marca LIKE CONCAT('%', ?, '%')");
-				}else if(strcmp($categoria, "Otro") == 0) {
+				} else if(strcmp($categoria, "Otro") == 0) {
 					$stmt = $connection->prepare("SELECT DISTINCT * FROM anuncio_objeto, `$categoria` WHERE idUsuario != ? AND nombreTabla = ? AND tipoAnuncio != ? AND diaAnuncio <= ? AND id = idObjeto AND nombre LIKE CONCAT('%', ?, '%')");
-				}else if(strcmp($categoria, "Tarjeta bancaria") == 0 || strcmp($categoria, "Tarjeta transporte") == 0){
+				} else if(strcmp($categoria, "Tarjeta bancaria") == 0 || strcmp($categoria, "Tarjeta transporte") == 0) {
 					$stmt = $connection->prepare("SELECT DISTINCT * FROM anuncio_objeto, `$categoria` WHERE idUsuario != ? AND nombreTabla = ? AND tipoAnuncio != ? AND diaAnuncio <= ? AND id = idObjeto AND datosPropietario LIKE CONCAT('%', ?, '%')");
 				}
 			}
@@ -231,21 +209,22 @@
 			$result = $stmt->get_result();
 
 			while($row = $result->fetch_assoc())    {
-		            $rows[] = $row;
+	            $rows[] = $row;
 			    $rows[] = ".";
-            		}
+    		}
+
 			$rawdata = array();
 			$i = 0;
 
-            		foreach($rows as $row)    {
-        	    		$rawdata[$i] = $rows[$i];
-	            		$i++;
-           		}
+    		foreach($rows as $row)    {
+	    		$rawdata[$i] = $rows[$i];
+        		$i++;
+       		}
 
 			$result->close();
 
-		    	disconnectDB($connection);
-	        	return $rawdata;
+	    	disconnectDB($connection);
+        	return $rawdata;
 		}
 
 		function getPlaceId($id) {
@@ -264,10 +243,9 @@
 			$sql->fetch();
 
 			$rawdata = array();
-                        $correct = $query;
-                        $rawdata['param1'] = utf8_encode($placeId);
-                        $rawdata['correct'] = $correct;
-
+            $correct = $query;
+            $rawdata['param1'] = utf8_encode($placeId);
+            $rawdata['correct'] = $correct;
 
 	        disconnectDB($connection);
 	        

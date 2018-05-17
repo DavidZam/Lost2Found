@@ -1,5 +1,8 @@
 
 <?php
+	ini_set('display_errors', 1);
+    ini_set('display_startup_errors', 1);
+    error_reporting(E_ALL);
 	include('../dbFunctions.php');
     require_once("encryptionClass.php");
 
@@ -85,6 +88,7 @@
 
             $encryptionObject = new Encryption();
             $textEncrypt = $encryptionObject->encrypt($msgText);
+            //$textHash = password_hash($textMsg, PASSWORD_BCRYPT);
 
             $sql = mysqli_prepare($connection, "INSERT INTO msg (id, texto, horaMsg, leido, idChat, idUsuario) VALUES (null, ?, ?, ?, ?, ?)");
             $result = mysqli_stmt_bind_param($sql, "sssii", $textEncrypt, $msgHour, $msgRead, $idChat, $idUser);
@@ -189,25 +193,44 @@
 	    $j = 0;
             while($row = $result->fetch_assoc()) {
                 $rows[] = $row;
+		//var_dump($textEncrypted[$j]);
+		//if(isset($textEncrypted[$j])) {
+		//	$textDecrypted = array();
+		//	$textDecrypted[$j] = $encryptionObject->decrypt($textEncrypted[$j]);
+			//$rows[$j]["texto"] = $textDecrypted;
+		//}
+			 //var_dump($textDecrypted);
+
+			//if(!is_null($rows)
+				//$rows[$j]["texto"] = $textDecrypted;
+
+		//$j++;
+                $rows[] = ".";
             }
 
 	    $textDecrypted = array();
             $textEncrypted = array_column($rows, "texto");
-
+            var_dump($textEncrypted);
             foreach($textEncrypted as $value) {
                   $textDecrypted[$j] = $encryptionObject->decrypt($value);
-		  $reemplazo[$j] = array("texto" => $textDecrypted[$j]);
                   $j++;
             }
+            var_dump($textDecrypted);
+	    var_dump($reemplazo);
 
             $rawdata = array();
             $i = 0;
-
             foreach($rows as $row) {
+
                 $rawdata[$i] = $rows[$i];
-		$rawdata[$i]["texto"] = $reemplazo[$i]["texto"];
+
                 $i++;
             }
+
+	    var_dump($rawdata);
+
+	    $finalarray = array_replace($rawdata, $reemplazo);
+	    var_dump($finalarray);
 
             $result->close();
 
@@ -218,8 +241,11 @@
         function getUserId($textMsg, $hourMsg) {
             $connection = connectDB();
 
+            //$textHash = password_hash($textMsg, PASSWORD_BCRYPT);
+
             $encryptionObject = new Encryption();
 
+            //$textEncrypt = $encryptionObject->encode($textMsg);
 	    $textEncrypt = $encryptionObject->encrypt($textMsg);
 
             $sql = mysqli_prepare($connection, "SELECT idUsuario FROM msg WHERE texto = ? AND horaMsg = ?");
