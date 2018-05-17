@@ -233,7 +233,7 @@ public class MatchAnnounceInfoActivity extends AppCompatActivity {
 
         @Override
         protected Chat doInBackground(String... strings) {
-            return DB_chat.createNewChat(strings[0], user1Id, user2Id); // , ""
+            return DB_chat.createNewChat(strings[0], user1Id, user2Id);
         }
     }
 
