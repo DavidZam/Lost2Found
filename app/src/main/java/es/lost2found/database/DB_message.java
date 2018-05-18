@@ -17,8 +17,10 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.util.Arrays;
+import java.util.InvalidPropertiesFormatException;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.prefs.InvalidPreferencesFormatException;
 
 import es.lost2found.entities.Message;
 
@@ -227,13 +229,14 @@ public class DB_message {
             con.setRequestMethod("POST");
             con.setRequestProperty("User-Agent", "your user agent");
             con.setRequestProperty("Accept-Language", "sp,SP;q=0.5");
-            //con.setRequestProperty("Content-Type", "text/html; charset=UTF-8");
+            //con.setRequestProperty("Content-Type", "application/x-json;charset=UTF-8"); // Si se descomenta no se muestran bien los msgs
 
             String urlParameters = "json=" + jsonString;
 
             con.setDoOutput(true);
-            DataOutputStream wr = new DataOutputStream(con.getOutputStream());
-            wr.writeBytes(urlParameters);
+            DataOutputStream wr = new DataOutputStream (con.getOutputStream());
+            //URLEncoder.encode(urlParameters, "ISO-8859-1"); // Si se descomenta no se muestran bien los msgs
+            wr.writeBytes (urlParameters);
             wr.flush();
             wr.close();
 
@@ -246,38 +249,24 @@ public class DB_message {
             else
                 instream = con.getInputStream();
 
-            BufferedReader in = new BufferedReader(new InputStreamReader(instream, "UTF-8")); // ISO-8859-1
-            in.mark(1);
-            if(in.read() != 0xFEFF)
-                in.reset();
+            BufferedReader in = new BufferedReader(new InputStreamReader(instream, "UTF-8"));
             String inputLine;
             StringBuilder response = new StringBuilder();
 
             while((inputLine = in.readLine()) != null)
                 response.append(inputLine);
 
-
-            /*StringBuilder response = new StringBuilder();
-            try (BufferedReader br = new BufferedReader(new InputStreamReader(instream, "UTF-8"))) {
-                // BOM marker will only appear on the very beginning
-                br.mark(4);
-                if ('\ufeff' != br.read())
-                    br.reset(); // not the BOM marker
-
-                String inputLine;
-                while ((inputLine = br.readLine()) != null) {
-                    response.append(inputLine);
-                }
-            }*/
-
-            in.close();
-
             JSONObject object = new JSONObject(response.toString());
             Boolean correct = object.getBoolean("correct");
             if (correct) {
-                idUser = object.getInt("id");
-
+                //if(!idUser.toString().equals(""))
+                try {
+                    idUser = Integer.valueOf(object.getString("id"));
+                } catch (NumberFormatException e) {
+                    e.printStackTrace();
+                }
             }
+            in.close();
 
         } catch (Exception e) {
             e.printStackTrace();

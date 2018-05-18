@@ -37,6 +37,7 @@
             android:layout_below="@+id/toolbar"
             android:hint="@string/spinner_placeholder"
             android:textColorHint="@color/colorPrimaryText"
+            android:popupBackground="@color/White"
             app:met_floatingLabel="normal" />
         <com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner
             android:id="@+id/tipoAnuncio"
@@ -44,6 +45,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="7dp"
             android:layout_below="@+id/listaCategorias"
+            android:popupBackground="@color/White"
             android:hint="@string/spinner6_placeholder"
             android:textColorHint="@color/colorPrimaryText"
             app:met_floatingLabel="normal" />

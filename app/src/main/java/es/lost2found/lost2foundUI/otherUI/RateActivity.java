@@ -87,20 +87,28 @@ public class RateActivity extends AppCompatActivity {
 
                     if(menuItem.getItemId()== R.id.nav_home) {
                         startActivity(home);
+                        finish();
                     }else if(menuItem.getItemId()== R.id.nav_search) {
                         startActivity(buscar);
+                        finish();
                     }else if(menuItem.getItemId()== R.id.nav_info) {
                         startActivity(aboutus);
+                        finish();
                     } else if(menuItem.getItemId()== R.id.nav_chat) {
                         startActivity(chat);
+                        finish();
                     } else if(menuItem.getItemId() == R.id.nav_settings){
                         startActivity(config);
+                        finish();
                     } else if(menuItem.getItemId()== R.id.nav_contact) {
                         startActivity(contact);
+                        finish();
                     }else if(menuItem.getItemId()== R.id.nav_open_data) {
                         startActivity(openData);
+                        finish();
                     } else if(menuItem.getItemId()== R.id.nav_help) {
                         startActivity(help);
+                        finish();
                     } else if(menuItem.getItemId()== R.id.nav_logout) {
                         logoutUser();
                     }

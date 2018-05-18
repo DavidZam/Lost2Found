@@ -104,6 +104,9 @@ public class SeekerAnnounceInfoActivity extends AppCompatActivity {
                 if (parentAct.equals("seeker")) {
                     Button matchButton = findViewById(R.id.match);
                     matchButton.setVisibility(View.GONE);
+                    Button matchOpenDataButton = findViewById(R.id.open_data_match);
+                    matchOpenDataButton.setVisibility(View.GONE);
+
                 }
             }
         }

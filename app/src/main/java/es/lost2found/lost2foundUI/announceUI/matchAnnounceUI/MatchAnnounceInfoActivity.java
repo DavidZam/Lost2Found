@@ -139,7 +139,7 @@ public class MatchAnnounceInfoActivity extends AppCompatActivity {
         ImageView image = findViewById(R.id.imageinfoannounce);
 
         Button contact = findViewById(R.id.contactar);
-        contact.setText(getResources().getText(R.string.contact_text2) + a.userOwner);
+        contact.setText(getResources().getText(R.string.contact_text) + a.userOwner);
 
         if(a.announceCategorie.equals("Telefono")){
             image.setImageResource(R.drawable.ic_smartphone);

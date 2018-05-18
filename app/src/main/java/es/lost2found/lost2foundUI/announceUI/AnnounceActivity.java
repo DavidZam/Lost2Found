@@ -105,24 +105,32 @@ public class AnnounceActivity extends AppCompatActivity implements FloatingActio
                         String place = sp.getString("place", "");
                         buscar.putExtra("place", place);
                         startActivity(buscar);
+                        finish();
                     }else if(menuItem.getItemId()== R.id.nav_chat) {
                         Bundle extras = getIntent().getExtras();
                         if(extras != null) {
                             chat.putExtra("nombre", userName);
                         }
                         startActivity(chat);
+                        finish();
                     }else if(menuItem.getItemId()== R.id.nav_open_data) {
                         startActivity(openData);
+                        finish();
                     }else if(menuItem.getItemId()== R.id.nav_contact) {
                         startActivity(contact);
+                        finish();
                     } else if(menuItem.getItemId() == R.id.nav_settings){
                         startActivity(config);
+                        finish();
                     } else if(menuItem.getItemId()== R.id.nav_info) {
                         startActivity(aboutus);
+                        finish();
                     } else if(menuItem.getItemId()== R.id.nav_help) {
                         startActivity(help);
+                        finish();
                     }else if(menuItem.getItemId()== R.id.nav_feedback) {
                         startActivity(rate);
+                        finish();
                     } else if(menuItem.getItemId()== R.id.nav_logout) {
                         logoutUser();
                     }

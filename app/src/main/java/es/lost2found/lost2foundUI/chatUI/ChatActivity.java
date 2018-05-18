@@ -97,20 +97,28 @@ public class ChatActivity extends AppCompatActivity {
 
                     if(menuItem.getItemId()== R.id.nav_home) {
                         startActivity(home);
+                        finish();
                     }else if(menuItem.getItemId()== R.id.nav_search) {
                         startActivity(buscar);
+                        finish();
                     }else if(menuItem.getItemId()== R.id.nav_contact) {
                         startActivity(contact);
+                        finish();
                     } else if(menuItem.getItemId()== R.id.nav_open_data) {
                         startActivity(openData);
+                        finish();
                     } else if(menuItem.getItemId()== R.id.nav_info) {
                         startActivity(aboutus);
+                        finish();
                     } else if(menuItem.getItemId() == R.id.nav_settings){
                         startActivity(config);
+                        finish();
                     } else if(menuItem.getItemId()== R.id.nav_help) {
                         startActivity(help);
+                        finish();
                     }else if(menuItem.getItemId()== R.id.nav_feedback) {
                         startActivity(rate);
+                        finish();
                     } else if(menuItem.getItemId()== R.id.nav_logout) {
                         logoutUser();
                     }
@@ -146,14 +154,16 @@ public class ChatActivity extends AppCompatActivity {
     }
 
     public void processChatScreen(Integer numChats) {
-        if (numChats == 0) {
-            TextView noannounces = findViewById(R.id.without_chats);
-            noannounces.setText(noannounces.getResources().getString(R.string.info_txt3));
-        } else {
-            TextView noannounces = findViewById(R.id.without_chats);
-            noannounces.setText("");
-            userNumberChats = numChats;
-            new getChatsDB().execute(userId, userNumberChats); // Devuelve una lista con los chats del usuario en cuestion
+        if(numChats != null) {
+            if (numChats == 0) {
+                TextView noannounces = findViewById(R.id.without_chats);
+                noannounces.setText(noannounces.getResources().getString(R.string.info_txt3));
+            } else {
+                TextView noannounces = findViewById(R.id.without_chats);
+                noannounces.setText("");
+                userNumberChats = numChats;
+                new getChatsDB().execute(userId, userNumberChats); // Devuelve una lista con los chats del usuario en cuestion
+            }
         }
     }
 
