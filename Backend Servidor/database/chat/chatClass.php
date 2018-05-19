@@ -1,4 +1,3 @@
-
 <?php
 	include('../dbFunctions.php');
     require_once("encryptionClass.php");
@@ -80,14 +79,14 @@
             return $rawdata;
         }
 
-        function insertMsg($msgText, $msgHour, $msgRead, $idChat, $idUser) {
+        function insertMsg($msgText, $msgHour, $idChat, $idUser) {
             $connection = connectDB();
 
             $encryptionObject = new Encryption();
             $textEncrypt = $encryptionObject->encrypt($msgText);
 
-            $sql = mysqli_prepare($connection, "INSERT INTO msg (id, texto, horaMsg, leido, idChat, idUsuario) VALUES (null, ?, ?, ?, ?, ?)");
-            $result = mysqli_stmt_bind_param($sql, "sssii", $textEncrypt, $msgHour, $msgRead, $idChat, $idUser);
+            $sql = mysqli_prepare($connection, "INSERT INTO msg (id, texto, horaMsg, idChat, idUsuario) VALUES (null, ?, ?, ?, ?)");
+            $result = mysqli_stmt_bind_param($sql, "ssii", $textEncrypt, $msgHour, $idChat, $idUser);
 
             $query = $sql->execute();
 
@@ -219,7 +218,6 @@
             $connection = connectDB();
 
             $encryptionObject = new Encryption();
-
 	    $textEncrypt = $encryptionObject->encrypt($textMsg);
 
             $sql = mysqli_prepare($connection, "SELECT idUsuario FROM msg WHERE texto = ? AND horaMsg = ?");
@@ -238,6 +236,7 @@
             $sql->fetch();
 
             $correct = $query;
+            
 
             $rawdata['id'] = utf8_encode($idUsuario);
             $rawdata['correct'] = $correct;

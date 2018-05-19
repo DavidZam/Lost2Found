@@ -7,14 +7,12 @@ import es.lost2found.R;
 
 public class Message implements Serializable {
 
-    String textMsg;
-    String hourMsg;
-    boolean read;
+    private String textMsg;
+    private String hourMsg;
 
-    public Message(String textMsg, String hourMsg, boolean read) {
+    public Message(String textMsg, String hourMsg) {
         this.textMsg = textMsg;
         this.hourMsg = hourMsg;
-        this.read = read;
     }
 
     public String getTextMsg() {

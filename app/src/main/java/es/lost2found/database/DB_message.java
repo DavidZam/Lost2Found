@@ -1,39 +1,31 @@
 package es.lost2found.database;
 
 import org.json.JSONObject;
-import org.json.JSONTokener;
 
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.DataOutputStream;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-import java.io.Writer;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.nio.charset.Charset;
 import java.util.Arrays;
-import java.util.InvalidPropertiesFormatException;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.prefs.InvalidPreferencesFormatException;
 
 import es.lost2found.entities.Message;
 
 public class DB_message {
     private static String SERVER_PATH = "http://jcorreas-hp.fdi.ucm.es/lost2found/database/chat/";
 
-    public static Message createNewMsg(String msgText, String msgHour, Boolean msgRead, Integer idChat, Integer idUser) {
+    public static Message createNewMsg(String msgText, String msgHour, Integer idChat, Integer idUser) {
         Message msg = null;
         try {
             JSONObject jsonObject = new JSONObject();
             jsonObject.put("msgText", msgText);
             jsonObject.put("msgHour", msgHour);
-            jsonObject.put("msgRead", msgRead);
             jsonObject.put("idChat", idChat);
             jsonObject.put("idUser", idUser);
 
@@ -78,7 +70,7 @@ public class DB_message {
                     response.append(inputLine);
 
                 if (response.toString().equals("correct"))
-                    msg = new Message(msgText, msgHour, msgRead);
+                    msg = new Message(msgText, msgHour);
             } finally {
                 con.disconnect();
             }
@@ -197,8 +189,7 @@ public class DB_message {
                 JSONObject object = new JSONObject(msgs[i]);
                 String msgTxt =  object.getString("texto");
                 String msgHour =  object.getString("horaMsg");
-                boolean msgRead = false;
-                Message msg = new Message(msgTxt, msgHour, msgRead);
+                Message msg = new Message(msgTxt, msgHour);
 
                 msgsArray[i] = msg;
             }
@@ -229,14 +220,13 @@ public class DB_message {
             con.setRequestMethod("POST");
             con.setRequestProperty("User-Agent", "your user agent");
             con.setRequestProperty("Accept-Language", "sp,SP;q=0.5");
-            //con.setRequestProperty("Content-Type", "application/x-json;charset=UTF-8"); // Si se descomenta no se muestran bien los msgs
 
             String urlParameters = "json=" + jsonString;
 
             con.setDoOutput(true);
             DataOutputStream wr = new DataOutputStream (con.getOutputStream());
-            //URLEncoder.encode(urlParameters, "ISO-8859-1"); // Si se descomenta no se muestran bien los msgs
-            wr.writeBytes (urlParameters);
+            byte[] buf = urlParameters.getBytes("UTF-8");
+            wr.write(buf, 0, buf.length);
             wr.flush();
             wr.close();
 
@@ -249,7 +239,7 @@ public class DB_message {
             else
                 instream = con.getInputStream();
 
-            BufferedReader in = new BufferedReader(new InputStreamReader(instream, "UTF-8"));
+            BufferedReader in = new BufferedReader(new InputStreamReader(instream, Charset.forName("UTF-8")),8192);
             String inputLine;
             StringBuilder response = new StringBuilder();
 
@@ -259,9 +249,9 @@ public class DB_message {
             JSONObject object = new JSONObject(response.toString());
             Boolean correct = object.getBoolean("correct");
             if (correct) {
-                //if(!idUser.toString().equals(""))
                 try {
-                    idUser = Integer.valueOf(object.getString("id"));
+                    String idUserText = object.getString("id");
+                    idUser = Integer.valueOf(idUserText);
                 } catch (NumberFormatException e) {
                     e.printStackTrace();
                 }

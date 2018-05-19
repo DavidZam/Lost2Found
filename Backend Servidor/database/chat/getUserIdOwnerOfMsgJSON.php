@@ -11,6 +11,6 @@
 	    require_once("chatClass.php");
 	    $chatObject = new Chat();
 	    $userId = $chatObject->getUserId($textMsg, $hourMsg);
-	    echo json_encode($userId);
+	    echo json_encode($userId, JSON_UNESCAPED_UNICODE);
 	}
 ?>

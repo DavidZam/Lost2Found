@@ -11,6 +11,6 @@
 
 	    $chatObject = new Chat();
 	    $msgListObject = $chatObject->getMsgs($idChat);
-	    echo json_encode($msgListObject, JSON_UNESCAPED_SLASHES);
+	    echo json_encode($msgListObject, JSON_UNESCAPED_UNICODE);
 	}
 ?>

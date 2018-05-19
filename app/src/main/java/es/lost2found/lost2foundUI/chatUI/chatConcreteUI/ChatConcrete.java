@@ -89,7 +89,6 @@ public class ChatConcrete extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                //active = false; // Si el usuario esta escribiendo evitamos que se recarge la actividad
             }
         });
 
@@ -103,7 +102,7 @@ public class ChatConcrete extends AppCompatActivity {
         createMsg.setOnClickListener(v -> {
             try {
                 String msgText = chatBox.getText().toString();
-                if(!msgText.isEmpty()) { // Si no esta vacio: // Comprobar
+                if(!msgText.isEmpty()) { // Si no esta vacio:
                     boolean validMsg = false;
                     for(int i = 0; i < msgText.length(); i++) {
                         char character = msgText.charAt(i);
@@ -122,7 +121,7 @@ public class ChatConcrete extends AppCompatActivity {
             chatBox.setText("");
         });
 
-        chatConcreteViewAdapter = new ChatConcreteViewAdapter(listMsg, userName); // otherUserName
+        chatConcreteViewAdapter = new ChatConcreteViewAdapter(listMsg, userName);
         recyclerView = findViewById(R.id.reyclerview_message_list);
         recyclerView.setAdapter(chatConcreteViewAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -196,7 +195,7 @@ public class ChatConcrete extends AppCompatActivity {
             String actualHour = new SimpleDateFormat("HH:mm").format(Calendar.getInstance().getTime()); // Hora del msg
             chatId = DB_chat.getChatId(concreteChat); // Funcion que dado un chat devuelve su id
             Integer userId = Integer.valueOf(DB_user.getIdByName(userName)); // Funcion que dado el nombre del usuario devuelve su id
-            return DB_message.createNewMsg(strings[0], actualHour, false, chatId, userId);
+            return DB_message.createNewMsg(strings[0], actualHour, chatId, userId);
         }
     }
 

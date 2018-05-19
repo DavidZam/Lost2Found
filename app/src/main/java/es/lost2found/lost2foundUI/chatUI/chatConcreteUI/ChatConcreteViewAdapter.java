@@ -32,7 +32,6 @@ public class ChatConcreteViewAdapter extends RecyclerView.Adapter {
         int viewType = 0;
         try {
             userOwner = new getUserIdOwnerOfMsg().execute(listMsg.get(position)).get();
-            //userOwner = listMsg.get(position).getUserOwner(); // NO FUNCIONA
             if(userOwner != null) {
                 if(!userOwner.equals(actualUser)) {
                     // If the current user is the sender of the message
