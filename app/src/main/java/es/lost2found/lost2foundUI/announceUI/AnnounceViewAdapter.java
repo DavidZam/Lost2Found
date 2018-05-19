@@ -8,7 +8,9 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
+import java.io.IOException;
 import java.util.List;
 
 import es.lost2found.R;
@@ -21,12 +23,15 @@ public class AnnounceViewAdapter extends RecyclerView.Adapter<AnnounceViewHolder
     private String actualUser;
     private String parentAct;
     private String typePlace;
+    private TextView noAnnounces;
+    private boolean connected;
 
-    public AnnounceViewAdapter(List<Announce> listAnnounce, String actualUser, String parentAct, String typePlace) {
+    public AnnounceViewAdapter(List<Announce> listAnnounce, String actualUser, String parentAct, String typePlace, TextView noAnnounces) {
         this.listAnnounce = listAnnounce;
         this.actualUser = actualUser;
         this.parentAct = parentAct;
         this.typePlace = typePlace;
+        this.noAnnounces = noAnnounces;
     }
 
     @NonNull
@@ -62,20 +67,31 @@ public class AnnounceViewAdapter extends RecyclerView.Adapter<AnnounceViewHolder
         }
 
         holder.itemView.setOnClickListener(v -> {
-            Context context = v.getContext();
-            Intent intent = new Intent(context, SeekerAnnounceInfoActivity.class);
-
-            Announce announce = listAnnounce.get(position);
-            intent.putExtra("myAnnounce", announce);
-
-            if(parentAct.equals(AnnounceActivity.class.getSimpleName())) {
-                intent.putExtra("parentAct", "announce");
-                intent.putExtra("actualUser", actualUser);
-                intent.putExtra("typePlace", typePlace);
-            } else if(parentAct.equals(SeekerActivity.class.getSimpleName())) {
-                intent.putExtra("parentAct", "seeker");
+            try {
+                connected = isConnected();
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-            context.startActivity(intent);
+            if(!connected) {
+                this.getListAnnounce().clear();
+                noAnnounces.setText(noAnnounces.getResources().getString(R.string.info_txt4));
+            } else {
+                noAnnounces.setText("");
+                Context context = v.getContext();
+                Intent intent = new Intent(context, SeekerAnnounceInfoActivity.class);
+
+                Announce announce = listAnnounce.get(position);
+                intent.putExtra("myAnnounce", announce);
+
+                if (parentAct.equals(AnnounceActivity.class.getSimpleName())) {
+                    intent.putExtra("parentAct", "announce");
+                    intent.putExtra("actualUser", actualUser);
+                    intent.putExtra("typePlace", typePlace);
+                } else if (parentAct.equals(SeekerActivity.class.getSimpleName())) {
+                    intent.putExtra("parentAct", "seeker");
+                }
+                context.startActivity(intent);
+            }
         });
     }
 
@@ -96,5 +112,10 @@ public class AnnounceViewAdapter extends RecyclerView.Adapter<AnnounceViewHolder
 
     public List<Announce> getListAnnounce() {
         return this.listAnnounce;
+    }
+
+    public boolean isConnected() throws InterruptedException, IOException {
+        String command = "ping -c 1 google.com";
+        return (Runtime.getRuntime().exec (command).waitFor() == 0);
     }
 }

@@ -31,9 +31,12 @@ import android.webkit.WebViewClient;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.IOException;
+
 public class OpenDataActivity extends AppCompatActivity {
 
     private DrawerLayout mDrawerLayout;
+    private boolean connected;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,6 +55,12 @@ public class OpenDataActivity extends AppCompatActivity {
             ab.setHomeAsUpIndicator(R.drawable.ic_menu);
         }
         mDrawerLayout = findViewById(R.id.drawer_layout);
+
+        try {
+            connected = isConnected();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         NavigationView navView = findViewById(R.id.nav_view);
 
@@ -79,6 +88,7 @@ public class OpenDataActivity extends AppCompatActivity {
         final Intent rate = new Intent(this, RateActivity.class);
         final Intent config = new Intent(this, SettingsActivity.class);
         final Intent home = new Intent(this, AnnounceActivity.class);
+        final Intent openData = new Intent(this, OpenDataActivity.class);
 
         navView.setNavigationItemSelectedListener(
                 menuItem -> {
@@ -111,23 +121,33 @@ public class OpenDataActivity extends AppCompatActivity {
                         finish();
                     } else if(menuItem.getItemId()== R.id.nav_logout) {
                         logoutUser();
+                    } else if(menuItem.getItemId()== R.id.nav_open_data) {
+                        startActivity(openData);
+                        finish();
                     }
                     return true;
                 }
         );
         navView.setCheckedItem(R.id.nav_open_data);
 
-        WebView webView = findViewById(R.id.webview);
-        String OPEN_DATA_URL = "https://ressources.data.sncf.com/explore/embed/dataset/objets-trouves-gares/?sort=date&static=false&datasetcard=false";
-        webView.loadUrl(OPEN_DATA_URL);
+        if(connected) {
+            TextView withoutConnection = findViewById(R.id.without_connection);
+            withoutConnection.setText("");
+            WebView webView = findViewById(R.id.webview);
+            String OPEN_DATA_URL = "https://ressources.data.sncf.com/explore/embed/dataset/objets-trouves-gares/?sort=date&static=false&datasetcard=false";
+            webView.loadUrl(OPEN_DATA_URL);
 
-        Toast t = Toast.makeText(OpenDataActivity.this, "Cargando...", Toast.LENGTH_SHORT);
-        t.setDuration(Toast.LENGTH_LONG);
-        t.show();
+            Toast t = Toast.makeText(OpenDataActivity.this, "Cargando...", Toast.LENGTH_SHORT);
+            t.setDuration(Toast.LENGTH_LONG);
+            t.show();
 
-        webView.setWebViewClient(new WebViewClient());
-        WebSettings webSettings = webView.getSettings();
-        webSettings.setJavaScriptEnabled(true);
+            webView.setWebViewClient(new WebViewClient());
+            WebSettings webSettings = webView.getSettings();
+            webSettings.setJavaScriptEnabled(true);
+        } else {
+            TextView withoutConnection = findViewById(R.id.without_connection);
+            withoutConnection.setText(withoutConnection.getResources().getString(R.string.info_txt4));
+        }
     }
 
     @Override
@@ -150,5 +170,10 @@ public class OpenDataActivity extends AppCompatActivity {
         Intent intent = new Intent(this, LoginActivity.class);
         startActivity(intent);
         finish();
+    }
+
+    public boolean isConnected() throws InterruptedException, IOException {
+        String command = "ping -c 1 google.com";
+        return (Runtime.getRuntime().exec (command).waitFor() == 0);
     }
 }

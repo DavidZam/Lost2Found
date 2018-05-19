@@ -17,10 +17,13 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.io.IOException;
 
 import es.lost2found.R;
 import es.lost2found.database.DB_user;
@@ -35,16 +38,12 @@ public class SettingsActivity extends AppCompatActivity {
 
     private DrawerLayout mDrawerLayout;
     private String nombreActual, emailActual;
+    private boolean connected;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
-
-
-        findViewById(R.id.cambiarNombre).setOnClickListener(view -> createAndDisplayDialogNombre());
-        findViewById(R.id.cambiarEmail).setOnClickListener(view -> createAndDisplayDialogEmail());
-        findViewById(R.id.cambiarPass).setOnClickListener(view -> createAndDisplayDialogPass());
 
         Toolbar tb = findViewById(R.id.toolbar);
         setSupportActionBar(tb);
@@ -54,6 +53,12 @@ public class SettingsActivity extends AppCompatActivity {
             ab.setHomeAsUpIndicator(R.drawable.ic_menu);
         }
         mDrawerLayout = findViewById(R.id.drawer_layout);
+
+        try {
+            connected = isConnected();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         Window window = this.getWindow();
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
@@ -87,6 +92,7 @@ public class SettingsActivity extends AppCompatActivity {
         final Intent help = new Intent(this, HelpActivity.class);
         final Intent rate = new Intent(this, RateActivity.class);
         final Intent openData = new Intent(this, OpenDataActivity.class);
+        final Intent config = new Intent(this, SettingsActivity.class);
 
         navView.setNavigationItemSelectedListener(
                 menuItem -> {
@@ -119,12 +125,35 @@ public class SettingsActivity extends AppCompatActivity {
                         finish();
                     } else if(menuItem.getItemId()== R.id.nav_logout) {
                         logoutUser();
+                    } else if(menuItem.getItemId() == R.id.nav_settings){
+                        startActivity(config);
+                        finish();
                     }
                     return true;
                 }
         );
         navView.setCheckedItem(R.id.nav_settings);
 
+        if(connected) {
+            TextView withoutConnection = findViewById(R.id.without_connection);
+            withoutConnection.setText("");
+            TextView tv = findViewById(R.id.textView7);
+            tv.setText(tv.getResources().getString(R.string.settings_text));
+            findViewById(R.id.cambiarNombre).setOnClickListener(view -> createAndDisplayDialogNombre());
+            findViewById(R.id.cambiarEmail).setOnClickListener(view -> createAndDisplayDialogEmail());
+            findViewById(R.id.cambiarPass).setOnClickListener(view -> createAndDisplayDialogPass());
+        } else {
+            TextView tv = findViewById(R.id.textView7);
+            tv.setText("");
+            Button b1 = findViewById(R.id.cambiarNombre);
+            b1.setVisibility(View.GONE);
+            Button b2 = findViewById(R.id.cambiarEmail);
+            b2.setVisibility(View.GONE);
+            Button b3 = findViewById(R.id.cambiarPass);
+            b3.setVisibility(View.GONE);
+            TextView withoutConnection = findViewById(R.id.without_connection);
+            withoutConnection.setText(withoutConnection.getResources().getString(R.string.info_txt4));
+        }
     }
 
     private void createAndDisplayDialogNombre() {
@@ -162,7 +191,6 @@ public class SettingsActivity extends AppCompatActivity {
         });
 
         builder.create().show();
-
     }
 
     private void createAndDisplayDialogEmail() {
@@ -319,5 +347,10 @@ public class SettingsActivity extends AppCompatActivity {
         Intent intent = new Intent(this, LoginActivity.class);
         startActivity(intent);
         finish();
+    }
+
+    public boolean isConnected() throws InterruptedException, IOException {
+        String command = "ping -c 1 google.com";
+        return (Runtime.getRuntime().exec (command).waitFor() == 0);
     }
 }

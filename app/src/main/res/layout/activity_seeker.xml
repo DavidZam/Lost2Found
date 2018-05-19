@@ -67,6 +67,18 @@
             android:textAlignment="center"
             android:textColor="@color/errorColor" />
 
+        <TextView
+            android:id="@+id/without_search2"
+            android:padding="16dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/toolbar"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="210dp"
+            android:textAlignment="center"
+            android:textColor="@color/colorPrimary"
+            android:textSize="20sp" />
+
     </RelativeLayout>
 
     <android.support.design.widget.CoordinatorLayout

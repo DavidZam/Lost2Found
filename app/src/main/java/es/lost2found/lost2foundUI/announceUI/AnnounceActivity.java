@@ -20,6 +20,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.TextView;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -46,6 +47,8 @@ public class AnnounceActivity extends AppCompatActivity implements FloatingActio
     private Integer userNumberAnnounces;
     private String typePlace;
     private String userName;
+    private boolean connected;
+    private TextView withoutAnnounces;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,6 +69,13 @@ public class AnnounceActivity extends AppCompatActivity implements FloatingActio
         }
         mDrawerLayout = findViewById(R.id.drawer_layout);
 
+        try {
+            connected = isConnected();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        withoutAnnounces = findViewById(R.id.without_announces);
 
         NavigationView navView = findViewById(R.id.nav_view);
 
@@ -94,6 +104,7 @@ public class AnnounceActivity extends AppCompatActivity implements FloatingActio
         final Intent rate = new Intent(this, RateActivity.class);
         final Intent config = new Intent(this, SettingsActivity.class);
         final Intent openData = new Intent(this, OpenDataActivity.class);
+        final Intent home = new Intent(this, AnnounceActivity.class);
 
         navView.setNavigationItemSelectedListener(
                 menuItem -> {
@@ -133,6 +144,9 @@ public class AnnounceActivity extends AppCompatActivity implements FloatingActio
                         finish();
                     } else if(menuItem.getItemId()== R.id.nav_logout) {
                         logoutUser();
+                    } else if(menuItem.getItemId()== R.id.nav_home) {
+                        startActivity(home);
+                        finish();
                     }
                     return true;
                 }
@@ -140,14 +154,20 @@ public class AnnounceActivity extends AppCompatActivity implements FloatingActio
         navView.setCheckedItem(R.id.nav_home);
 
         Announce delAnnounce = (Announce) getIntent().getSerializableExtra("delete");
-        if(delAnnounce != null) {
+        if(delAnnounce != null && connected) {
             String idAnuncio = String.valueOf(delAnnounce.getIdAnuncio());
             new deleteAnnounceFromDB().execute(idAnuncio, delAnnounce.getAnnounceCategorie());
+            withoutAnnounces.setText("");
+        } else {
+            withoutAnnounces.setText(withoutAnnounces.getResources().getString(R.string.info_txt4));
         }
 
-        if(spref != null) {
+        if(spref != null  && connected) {
             String userEmail = spref.getString("email", "");
             new getNumberObjectAnnouncesDB().execute(userEmail); // Devuelve el numero de anuncios del usuario en cuestion
+            withoutAnnounces.setText("");
+        } else {
+            withoutAnnounces.setText(withoutAnnounces.getResources().getString(R.string.info_txt4));
         }
 
         SharedPreferences spref2 = getApplicationContext().getSharedPreferences("Login", 0);
@@ -160,7 +180,7 @@ public class AnnounceActivity extends AppCompatActivity implements FloatingActio
             typePlace = extras.getString("typePlace");
         }
 
-        adapter = new AnnounceViewAdapter(announceList, userName, parentName, typePlace);
+        adapter = new AnnounceViewAdapter(announceList, userName, parentName, typePlace, withoutAnnounces);
         recyclerView = findViewById(R.id.announce_recyclerview);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -193,20 +213,15 @@ public class AnnounceActivity extends AppCompatActivity implements FloatingActio
     public void processAnnounceScreen(Integer numAnnounces) {
         if(numAnnounces != null) {
             if (numAnnounces == 0) {
-                TextView noAnnounces = findViewById(R.id.without_announces);
-                noAnnounces.setText(noAnnounces.getResources().getString(R.string.info_txt));
+                withoutAnnounces.setText(withoutAnnounces.getResources().getString(R.string.info_txt));
             } else {
-                TextView noannounces = findViewById(R.id.without_announces);
-                noannounces.setText("");
+                withoutAnnounces.setText("");
                 userNumberAnnounces = numAnnounces;
                 SharedPreferences spref = getApplicationContext().getSharedPreferences("Login", 0);
                 String userEmail = spref.getString("email", "");
 
                 new getObjectAnnouncesDB().execute(userEmail, String.valueOf(userNumberAnnounces)); // Devuelve una lista con los anuncios del usuario en cuestion
             }
-        } else {
-            TextView noannounces = findViewById(R.id.without_announces);
-            noannounces.setText(noannounces.getResources().getString(R.string.info_txt4));
         }
     }
 
@@ -234,8 +249,19 @@ public class AnnounceActivity extends AppCompatActivity implements FloatingActio
 
     @Override
     public void onClick(View v) {
-        final Intent newannounce = new Intent(this, PlaceActivity.class);
-        startActivity(newannounce);
+        try {
+            connected = isConnected();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        if(!connected) {
+            adapter.getListAnnounce().clear();
+            withoutAnnounces.setText(withoutAnnounces.getResources().getString(R.string.info_txt4));
+        } else {
+            withoutAnnounces.setText("");
+            final Intent newannounce = new Intent(this, PlaceActivity.class);
+            startActivity(newannounce);
+        }
     }
 
     @Override
@@ -258,5 +284,10 @@ public class AnnounceActivity extends AppCompatActivity implements FloatingActio
         Intent intent = new Intent(this, LoginActivity.class);
         startActivity(intent);
         finish();
+    }
+
+    public boolean isConnected() throws InterruptedException, IOException {
+        String command = "ping -c 1 google.com";
+        return (Runtime.getRuntime().exec (command).waitFor() == 0);
     }
 }

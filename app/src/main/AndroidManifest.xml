@@ -101,7 +101,7 @@
         <activity
             android:name=".lost2foundUI.otherUI.ContactActivity"
             android:screenOrientation="portrait"
-            android:label="@string/contact_text" />
+            android:label="@string/nav_title_section7" />
 
         <activity
             android:name=".lost2foundUI.otherUI.HelpActivity"
@@ -111,7 +111,7 @@
         <activity
             android:name=".lost2foundUI.otherUI.RateActivity"
             android:screenOrientation="portrait"
-            android:label="@string/rate_text" />
+            android:label="@string/nav_title_section10" />
 
         <activity
             android:name=".lost2foundUI.otherUI.SettingsActivity"

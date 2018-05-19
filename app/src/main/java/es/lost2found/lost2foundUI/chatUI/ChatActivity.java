@@ -19,6 +19,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.TextView;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -45,6 +46,7 @@ public class ChatActivity extends AppCompatActivity {
     private ChatViewAdapter chatAdapter;
     private RecyclerView recyclerView;
     private String userName;
+    private boolean connected;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,6 +68,12 @@ public class ChatActivity extends AppCompatActivity {
         window.setStatusBarColor(ContextCompat.getColor(this, R.color.color700));
 
         NavigationView navView = findViewById(R.id.nav_view);
+
+        try {
+            connected = isConnected();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         View headerLayout = navView.getHeaderView(0);
         TextView emailUser = headerLayout.findViewById(R.id.user_mail);
@@ -90,6 +98,7 @@ public class ChatActivity extends AppCompatActivity {
         final Intent rate = new Intent(this, RateActivity.class);
         final Intent config = new Intent(this, SettingsActivity.class);
         final Intent openData = new Intent(this, OpenDataActivity.class);
+        final Intent chat = new Intent(this, ChatActivity.class);
         navView.setNavigationItemSelectedListener(
                 menuItem -> {
                     menuItem.setChecked(true);
@@ -121,6 +130,9 @@ public class ChatActivity extends AppCompatActivity {
                         finish();
                     } else if(menuItem.getItemId()== R.id.nav_logout) {
                         logoutUser();
+                    } else if(menuItem.getItemId()== R.id.nav_chat) {
+                        startActivity(chat);
+                        finish();
                     }
                     return true;
                 }
@@ -129,11 +141,16 @@ public class ChatActivity extends AppCompatActivity {
 
         List<Chat> chatList = new ArrayList<>();
 
-        if(userName != null) {
+        if(userName != null && connected) {
             new getNumberChatsDB().execute(userName); // Devuelve el numero de chats del usuario en cuestion
+        } else {
+            TextView noannounces = findViewById(R.id.without_chats);
+            noannounces.setText(noannounces.getResources().getString(R.string.info_txt4));
         }
 
-        chatAdapter = new ChatViewAdapter(chatList, userName);
+        TextView noChats = findViewById(R.id.without_chats);
+
+        chatAdapter = new ChatViewAdapter(chatList, userName, noChats);
         recyclerView = findViewById(R.id.chat_recyclerview);
         recyclerView.setAdapter(chatAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -143,7 +160,11 @@ public class ChatActivity extends AppCompatActivity {
 
         @Override
         protected Integer doInBackground(String... strings) {
-            userId = Integer.valueOf(DB_user.getIdByName(strings[0])); // Funcion que dado el nombre del usuario devuelve su id
+            String userIdTxt = DB_user.getIdByName(strings[0]); // Funcion que dado el nombre del usuario devuelve su id
+            if(!userIdTxt.equals("")) {
+                userId = Integer.valueOf(userIdTxt);
+            }
+
             return DB_chat.getNumberChats(userId);
         }
 
@@ -209,5 +230,10 @@ public class ChatActivity extends AppCompatActivity {
         Intent intent = new Intent(this, LoginActivity.class);
         startActivity(intent);
         finish();
+    }
+
+    public boolean isConnected() throws InterruptedException, IOException {
+        String command = "ping -c 1 google.com";
+        return (Runtime.getRuntime().exec (command).waitFor() == 0);
     }
 }

@@ -17,6 +17,8 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.TextView;
 
+import java.io.IOException;
+
 import es.lost2found.R;
 import es.lost2found.lost2foundUI.announceUI.AnnounceActivity;
 import es.lost2found.lost2foundUI.chatUI.ChatActivity;
@@ -27,6 +29,7 @@ import es.lost2found.lost2foundUI.seekerUI.SeekerActivity;
 public class RateActivity extends AppCompatActivity {
 
     private DrawerLayout mDrawerLayout;
+    private boolean connected;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,19 +45,18 @@ public class RateActivity extends AppCompatActivity {
         }
         mDrawerLayout = findViewById(R.id.drawer_layout);
 
+        try {
+            connected = isConnected();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
         Window window = this.getWindow();
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         window.setStatusBarColor(ContextCompat.getColor(this, R.color.color700));
 
         NavigationView navView = findViewById(R.id.nav_view);
-
-        String s = "<h2> <font color=#1976D2> ¡Tu valoración cuenta! </font></h2> Nos ayudas a mantener y mejorar el sistema para que siga ayudando a muchas personas.<br><br>" +
-                "Además, colaboras en la difusión de la aplicación y llegar a más gente.<br><br>" +
-                "Es una forma de agradecer lo que te ofrece Lost2Found.<br><br>" +
-                "<h2> <font color=#1976D2> ¿Cómo nos puedes puntuar? </font></h2> Pincha en el siguiente enlace, busca nuestra aplicación y puntúa: <address>http://play.google.com/store/apps</address>";
-        TextView texto = findViewById(R.id.textinfo);
-        texto.setText(Html.fromHtml(s));
 
         View headerLayout = navView.getHeaderView(0);
         TextView emailUser = headerLayout.findViewById(R.id.user_mail);
@@ -79,6 +81,7 @@ public class RateActivity extends AppCompatActivity {
         final Intent help = new Intent(this, HelpActivity.class);
         final Intent config = new Intent(this, SettingsActivity.class);
         final Intent openData = new Intent(this, OpenDataActivity.class);
+        final Intent rate = new Intent(this, RateActivity.class);
 
         navView.setNavigationItemSelectedListener(
                 menuItem -> {
@@ -111,12 +114,28 @@ public class RateActivity extends AppCompatActivity {
                         finish();
                     } else if(menuItem.getItemId()== R.id.nav_logout) {
                         logoutUser();
+                    } else if(menuItem.getItemId()== R.id.nav_feedback) {
+                        startActivity(rate);
+                        finish();
                     }
                     return true;
                 }
         );
         navView.setCheckedItem(R.id.nav_feedback);
 
+        if(connected) {
+            TextView withoutConnection = findViewById(R.id.without_connection);
+            withoutConnection.setText("");
+            String s = "<h2> <font color=#1976D2> ¡Tu valoración cuenta! </font></h2> Nos ayudas a mantener y mejorar el sistema para que siga ayudando a muchas personas.<br><br>" +
+                    "Además, colaboras en la difusión de la aplicación y llegar a más gente.<br><br>" +
+                    "Es una forma de agradecer lo que te ofrece Lost2Found.<br><br>" +
+                    "<h2> <font color=#1976D2> ¿Cómo nos puedes puntuar? </font></h2> Pincha en el siguiente enlace, busca nuestra aplicación y puntúa: <address>http://play.google.com/store/apps</address>";
+            TextView texto = findViewById(R.id.textinfo);
+            texto.setText(Html.fromHtml(s));
+        } else {
+            TextView withoutConnection = findViewById(R.id.without_connection);
+            withoutConnection.setText(withoutConnection.getResources().getString(R.string.info_txt4));
+        }
     }
 
     @Override
@@ -140,5 +159,10 @@ public class RateActivity extends AppCompatActivity {
         Intent intent = new Intent(this, LoginActivity.class);
         startActivity(intent);
         finish();
+    }
+
+    public boolean isConnected() throws InterruptedException, IOException {
+        String command = "ping -c 1 google.com";
+        return (Runtime.getRuntime().exec (command).waitFor() == 0);
     }
 }

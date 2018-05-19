@@ -24,6 +24,7 @@ import android.widget.TextView;
 
 import com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -50,20 +51,25 @@ public class SeekerActivity extends AppCompatActivity implements FloatingActionB
     private String typePlace;
     MaterialBetterSpinner categoriaSeleccionada;
     MaterialBetterSpinner tipoAnuncionSeleccionado;
+    private boolean connected;
+    private TextView withoutSearch;
+    private TextView withoutSearch2;
+    private List<Announce> announceList;
+    private String userName;
+    private String parentName;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_seeker);
 
-        String[] categorias = {"Cartera", "Telefono", "Tarjeta bancaria", "Tarjeta transporte", "Otro"};
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_dropdown_item_1line, categorias);
-        categoriaSeleccionada = findViewById(R.id.listaCategorias);
-        categoriaSeleccionada.setAdapter(arrayAdapter);
+        try {
+            connected = isConnected();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
-        String[] tipo = {"Perdida", "Hallazgo"};
-        ArrayAdapter<String> arrayAdapter2 = new ArrayAdapter<>(this, android.R.layout.simple_dropdown_item_1line, tipo);
-        tipoAnuncionSeleccionado =  findViewById(R.id.tipoAnuncio);
-        tipoAnuncionSeleccionado.setAdapter(arrayAdapter2);
+        withoutSearch = findViewById(R.id.without_search);
+        withoutSearch2 = findViewById(R.id.without_search2);
 
         Toolbar tb = findViewById(R.id.toolbar);
         setSupportActionBar(tb);
@@ -80,6 +86,16 @@ public class SeekerActivity extends AppCompatActivity implements FloatingActionB
         window.setStatusBarColor(ContextCompat.getColor(this, R.color.color700));
 
         NavigationView navView = findViewById(R.id.nav_view);
+
+        String[] categorias = {"Cartera", "Telefono", "Tarjeta bancaria", "Tarjeta transporte", "Otro"};
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_dropdown_item_1line, categorias);
+        categoriaSeleccionada = findViewById(R.id.listaCategorias);
+        categoriaSeleccionada.setAdapter(arrayAdapter);
+
+        String[] tipo = {"Perdida", "Hallazgo"};
+        ArrayAdapter<String> arrayAdapter2 = new ArrayAdapter<>(this, android.R.layout.simple_dropdown_item_1line, tipo);
+        tipoAnuncionSeleccionado =  findViewById(R.id.tipoAnuncio);
+        tipoAnuncionSeleccionado.setAdapter(arrayAdapter2);
 
         View headerLayout = navView.getHeaderView(0);
         TextView emailUser = headerLayout.findViewById(R.id.user_mail);
@@ -104,6 +120,7 @@ public class SeekerActivity extends AppCompatActivity implements FloatingActionB
         final Intent rate = new Intent(this, RateActivity.class);
         final Intent config = new Intent(this, SettingsActivity.class);
         final Intent openData = new Intent(this, OpenDataActivity.class);
+        final Intent buscar = new Intent(this, SeekerActivity.class);
 
         navView.setNavigationItemSelectedListener(
                 menuItem -> {
@@ -136,6 +153,9 @@ public class SeekerActivity extends AppCompatActivity implements FloatingActionB
                         finish();
                     } else if(menuItem.getItemId()== R.id.nav_logout) {
                         logoutUser();
+                    } else if(menuItem.getItemId()== R.id.nav_search) {
+                        startActivity(buscar);
+                        finish();
                     }
                     return true;
                 }
@@ -146,22 +166,28 @@ public class SeekerActivity extends AppCompatActivity implements FloatingActionB
         search.setOnClickListener(this);
 
         Announce delAnnounce = (Announce) getIntent().getSerializableExtra("delete");
-        if(delAnnounce != null) {
-            String idAnuncio = String.valueOf(delAnnounce.getIdAnuncio());
-            new deleteAnnounceFromDB().execute(idAnuncio, delAnnounce.getAnnounceCategorie());
+        if(connected) {
+            if(delAnnounce != null) {
+                String idAnuncio = String.valueOf(delAnnounce.getIdAnuncio());
+                new deleteAnnounceFromDB().execute(idAnuncio, delAnnounce.getAnnounceCategorie());
+                withoutSearch2.setText("");
+            }
+        } else {
+            withoutSearch2.setText(withoutSearch2.getResources().getString(R.string.info_txt4));
         }
 
+
         SharedPreferences spref2 = getApplicationContext().getSharedPreferences("Login", 0);
-        String userName = spref2.getString("nombre", "");
-        List<Announce> announceList = new ArrayList<>();
-        String parentName = this.getClass().getSimpleName();
+        userName = spref2.getString("nombre", "");
+        announceList = new ArrayList<>();
+        parentName = this.getClass().getSimpleName();
 
         Bundle extras = getIntent().getExtras();
         if(extras != null) {
             typePlace = extras.getString("typePlace");
         }
 
-        adapter = new AnnounceViewAdapter(announceList, userName, parentName, typePlace);
+        adapter = new AnnounceViewAdapter(announceList, userName, parentName, typePlace, withoutSearch2);
         recyclerView = findViewById(R.id.search_recyclerview);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -177,21 +203,33 @@ public class SeekerActivity extends AppCompatActivity implements FloatingActionB
 
     @Override
     public void onClick(View v) {
-
-        if(!adapter.getListAnnounce().isEmpty()) {
+        try {
+            connected = isConnected();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        if(!connected) {
             adapter.getListAnnounce().clear();
+            TextView textView = findViewById(R.id.without_search2);
+            textView.setText(textView.getResources().getString(R.string.info_txt4));
+        } else {
+            TextView textView = findViewById(R.id.without_search2);
+            textView.setText("");
+            if(!adapter.getListAnnounce().isEmpty()) {
+                adapter.getListAnnounce().clear();
+            }
             listElements = 0;
             recyclerView.setAdapter(adapter);
             recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        }
 
-        if(categoriaSeleccionada.getText().toString().equalsIgnoreCase("") || tipoAnuncionSeleccionado.getText().toString().equalsIgnoreCase("")){
-            TextView textView = findViewById(R.id.without_search);
-            textView.setText(textView.getResources().getString(R.string.error_txt5));
-        } else {
-            String cat = categoriaSeleccionada.getText().toString();
-            String tipoA = tipoAnuncionSeleccionado.getText().toString();
-            new getNumberObjectAnnouncesDB().execute(cat, tipoA);
+            if(categoriaSeleccionada.getText().toString().equalsIgnoreCase("") || tipoAnuncionSeleccionado.getText().toString().equalsIgnoreCase("")) {
+                withoutSearch.setText(textView.getResources().getString(R.string.error_txt5));
+            } else {
+                withoutSearch2.setText("");
+                String cat = categoriaSeleccionada.getText().toString();
+                String tipoA = tipoAnuncionSeleccionado.getText().toString();
+                new getNumberObjectAnnouncesDB().execute(cat, tipoA);
+            }
         }
     }
 
@@ -272,5 +310,10 @@ public class SeekerActivity extends AppCompatActivity implements FloatingActionB
         Intent intent = new Intent(this, LoginActivity.class);
         startActivity(intent);
         finish();
+    }
+
+    public boolean isConnected() throws InterruptedException, IOException {
+        String command = "ping -c 1 google.com";
+        return (Runtime.getRuntime().exec (command).waitFor() == 0);
     }
 }
