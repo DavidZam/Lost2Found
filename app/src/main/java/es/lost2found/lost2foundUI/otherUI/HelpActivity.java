@@ -57,7 +57,12 @@ public class HelpActivity extends AppCompatActivity {
                 "&bull; La aplicación notificará a ambas personas de una coincidencia de objetos y les otorgará la posibilidad de ponerse en contacto. <br><br>" +
                 "<h2> <font color=#1976D2>¿Puede haber anuncios cuyos procesos coincidan simultáneamente? </font></h2> &bull; Perfectamente. Varios objetos pueden reunir las condiciones necesarias para que sus coincidencias sean similares " +
                 "(objetos parecidos, mismo lugar, fecha y hora). Por eso es imprescindible que los usuarios hablen entre ellos y se aseguren de que el objeto es el correcto.<br>" +
-                "<h2> <font color=#1976D2>¿Cuándo me llegará la notificación? </font></h2> &bull; Tan pronto como ambas partes registren los anuncios de pérdida y hallazgo y nuestro algoritmo haga su magia.<br><b>";
+                "<h2> <font color=#1976D2>¿Cuándo me llegará la notificación? </font></h2> &bull; Tan pronto como ambas partes registren los anuncios de pérdida y hallazgo y nuestro algoritmo haga su magia.<br>" +
+                "<h2> <font color=#1976D2>¿En qué se basa nuestro algoritmo? </font></h2> &bull; Cuando estamos comparando dos objetos, uno de pérdida y otro de hallazgo, dentro de la aplicación, el algoritmo usa factores como el color y la " +
+                "distancia de ambos objetos. Cuanto más parecidos y más cerca estén, el porcentaje de que sea el mismo objeto es bastante alto. <br><br>" +
+                "&bull; En cambio, cuando el match es con Open Data se basa en la distancia únicamente cuando está disponible. No todos los objetos que están registrados en el portal abierto tienen una dirección. <br>"+
+                "<h2> <font color=#1976D2>¿Tengo que entrar en la aplicación para saber si tengo algún mensaje?</font></h2> &bull; ¡Claro que no! Nuestro chat, fácil e intuitivo de usar, se actualiza cada 15 segundos para que nuestros usuarios " +
+                "no estén pendientes de meterse cada poco tiempo, sino que sea la aplicación quien avise.<br>";
         TextView texto = findViewById(R.id.textComoFunciona);
         texto.setText(Html.fromHtml(s));
 
