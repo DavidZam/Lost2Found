@@ -22,6 +22,8 @@
 
         function select($idUser1, $idUser2) {
             $connection = connectDB();
+	    $idUser1Tmp = $idUser1;
+	    $idUser2Tmp = $idUser2;
 
             $sql = mysqli_prepare($connection, "SELECT * FROM chat WHERE idUsuario1 = ? AND idUsuario2 = ?");
             mysqli_stmt_bind_param($sql, "ss", $idUser1, $idUser2);
@@ -35,18 +37,44 @@
 
             $realresult = $sql->bind_result($id, $nombreChat, $idUser1, $idUser2);
 
-            $rawdata = array();
-
             $sql->fetch();
 
-            $correct = $query;
+            if($sql->num_rows == 0) { // sin resultados, ejecutamos la misma consulta al reves
+                $sql2 = mysqli_prepare($connection, "SELECT * FROM chat WHERE idUsuario1 = ? AND idUsuario2 = ?");
+                mysqli_stmt_bind_param($sql2, "ss", $idUser2Tmp, $idUser1Tmp);
 
-            $rawdata['id'] = utf8_encode($id);
-            $rawdata['nombreChat'] = utf8_encode($nombreChat);
-            $rawdata['idUser1'] = utf8_encode($idUser1);
-            $rawdata['idUser2'] = utf8_encode($idUser2);
-            $rawdata['correct'] = $correct;
+                $query2 = $sql2->execute();
 
+                if(!$query2)
+                    die();
+
+                $result2 = $sql2->store_result();
+
+                $realresult = $sql2->bind_result($id, $nombreChat, $idUser1, $idUser2);
+
+                $sql2->fetch();
+
+                $correct = $query2;
+
+		$rawdata = array();
+
+                $rawdata['id'] = utf8_encode($id);
+                $rawdata['nombreChat'] = utf8_encode($nombreChat);
+                $rawdata['idUser1'] = utf8_encode($idUser1);
+                $rawdata['idUser2'] = utf8_encode($idUser2);
+                $rawdata['correct'] = $correct;
+            } else {
+		$rawdata = array();
+
+                $correct = $query;
+
+                $rawdata['id'] = utf8_encode($id);
+                $rawdata['nombreChat'] = utf8_encode($nombreChat);
+                $rawdata['idUser1'] = utf8_encode($idUser1);
+                $rawdata['idUser2'] = utf8_encode($idUser2);
+                $rawdata['correct'] = $correct;
+            }
+            
             disconnectDB($connection);
             return $rawdata;
         }
@@ -236,7 +264,7 @@
             $sql->fetch();
 
             $correct = $query;
-            
+
 
             $rawdata['id'] = utf8_encode($idUsuario);
             $rawdata['correct'] = $correct;

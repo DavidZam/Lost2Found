@@ -11,6 +11,7 @@
 	    require_once("chatClass.php");
 	    $chatObject = new Chat();
 	    $chat = $chatObject->select($idUser1, $idUser2);
-	    echo json_encode($chat);
+
+	    echo json_encode($chat, JSON_UNESCAPED_UNICODE);
 	}
 ?>
