@@ -1,5 +1,6 @@
 package es.lost2found.lost2foundUI.seekerUI;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
@@ -125,6 +126,14 @@ public class SeekerAnnounceInfoActivity extends AppCompatActivity {
 
     private class getObjectDataFromDB extends AsyncTask<String, Void, String> {
 
+        private ProgressDialog dialog = new ProgressDialog(SeekerAnnounceInfoActivity.this);
+
+        @Override
+        protected void onPreExecute() {
+            this.dialog.setMessage("Cargando...");
+            this.dialog.show();
+        }
+
         @Override
         protected String doInBackground(String... strings) {
             return DB_typeObject.getDataObjectById(strings[0], strings[1]);
@@ -163,7 +172,7 @@ public class SeekerAnnounceInfoActivity extends AppCompatActivity {
                     }
                     case "Otro": {
                         String params[] = dataObject.split(",");
-                        String o = "<h4> <font color=#699CFC> Datos: </font><br>" + "Nombre: " + params[0] + ", Descripcion: " + params[1] + " </h4><br>";
+                        String o = "<h4> <font color=#699CFC> Datos: </font><br>" + params[0] + ", " + params[1] + " </h4><br>";
                         param.setText(Html.fromHtml(o));
                         atributoDeterminante = params[0];
                         break;
@@ -184,6 +193,7 @@ public class SeekerAnnounceInfoActivity extends AppCompatActivity {
                     }
                 }
             }
+            this.dialog.dismiss();
         }
     }
 

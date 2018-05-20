@@ -1,5 +1,6 @@
 package es.lost2found.lost2foundUI.typeObjectUI;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
@@ -46,6 +47,14 @@ public class OtherObjectActivity extends AppCompatActivity {
 
     private class getObjectIdDB extends AsyncTask<String, Void, Integer> {
 
+        private ProgressDialog dialog = new ProgressDialog(OtherObjectActivity.this);
+
+        @Override
+        protected void onPreExecute() {
+            this.dialog.setMessage("Cargando...");
+            this.dialog.show();
+        }
+
         @Override
         protected Integer doInBackground(String... strings) {
             return DB_typeObject.getObjectId();
@@ -54,6 +63,7 @@ public class OtherObjectActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(Integer result) {
             processNewObject(result);
+            this.dialog.dismiss();
         }
     }
 
@@ -73,7 +83,7 @@ public class OtherObjectActivity extends AppCompatActivity {
         EditText announceDescription = findViewById(R.id.description);
         String announceDescriptionText = announceDescription.getText().toString();
 
-        if(announceNameText.equalsIgnoreCase("") || announceDescriptionText.equalsIgnoreCase("")) {
+        if(announceNameText.equalsIgnoreCase("")) {
             TextView textView = findViewById(R.id.wrong_information);
             textView.setText(textView.getResources().getString(R.string.error_txt3));
         } else {
@@ -83,6 +93,14 @@ public class OtherObjectActivity extends AppCompatActivity {
 
     private class saveObjectDB extends AsyncTask<String, Void, String> {
 
+        private ProgressDialog dialog = new ProgressDialog(OtherObjectActivity.this);
+
+        @Override
+        protected void onPreExecute() {
+            this.dialog.setMessage("Cargando...");
+            this.dialog.show();
+        }
+
         @Override
         protected String doInBackground(String... strings) {
             return DB_typeObject.insertObject(strings[0], strings[1], strings[2], strings[3], strings[4]);
@@ -91,6 +109,7 @@ public class OtherObjectActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(String result) {
             showAnnounceScreen(result);
+            this.dialog.dismiss();
         }
     }
 

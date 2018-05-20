@@ -224,8 +224,8 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
         @Override
         protected void onPostExecute(MapPlace result) {
-            this.dialog.dismiss();
             processNewMaplace(result);
+            this.dialog.dismiss();
         }
     }
 

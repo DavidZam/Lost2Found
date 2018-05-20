@@ -87,8 +87,8 @@ public class RegisterActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(User result) {
-            this.dialog.dismiss();
             processRegister(result);
+            this.dialog.dismiss();
         }
     }
 

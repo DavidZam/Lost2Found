@@ -1,5 +1,6 @@
 package es.lost2found.lost2foundUI.chatUI;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
@@ -158,6 +159,14 @@ public class ChatActivity extends AppCompatActivity {
 
     private class getNumberChatsDB extends AsyncTask<String, Void, Integer> {
 
+        private ProgressDialog dialog = new ProgressDialog(ChatActivity.this);
+
+        @Override
+        protected void onPreExecute() {
+            this.dialog.setMessage("Cargando...");
+            this.dialog.show();
+        }
+
         @Override
         protected Integer doInBackground(String... strings) {
             String userIdTxt = DB_user.getIdByName(strings[0]); // Funcion que dado el nombre del usuario devuelve su id
@@ -171,6 +180,7 @@ public class ChatActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(Integer numChats) {
             processChatScreen(numChats);
+            this.dialog.dismiss();
         }
     }
 
@@ -190,6 +200,14 @@ public class ChatActivity extends AppCompatActivity {
 
     private class getChatsDB extends AsyncTask<Integer, Void, Chat[]> {
 
+        private ProgressDialog dialog = new ProgressDialog(ChatActivity.this);
+
+        @Override
+        protected void onPreExecute() {
+            this.dialog.setMessage("Cargando...");
+            this.dialog.show();
+        }
+
         @Override
         protected Chat[] doInBackground(Integer... params) {
             return DB_chat.getChats(params[0], params[1]);
@@ -198,6 +216,7 @@ public class ChatActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(Chat[] chats) {
             updateAdapter(chats, userNumberChats);
+            this.dialog.dismiss();
         }
     }
 

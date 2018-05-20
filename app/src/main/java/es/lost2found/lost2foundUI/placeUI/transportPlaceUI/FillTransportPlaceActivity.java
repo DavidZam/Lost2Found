@@ -90,6 +90,14 @@ public class FillTransportPlaceActivity extends AppCompatActivity {
 
     private class linesDB extends AsyncTask<String, String[], String[]> {
 
+        private ProgressDialog dialog = new ProgressDialog(FillTransportPlaceActivity.this);
+
+        @Override
+        protected void onPreExecute() {
+            this.dialog.setMessage("Cargando...");
+            this.dialog.show();
+        }
+
         @Override
         protected String[] doInBackground(String... strings) {
             return DB_transportPlace.getLines(strings[0]);
@@ -98,10 +106,20 @@ public class FillTransportPlaceActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(String[] result) {
             updateAdapter(result);
+            this.dialog.dismiss();
         }
     }
 
     private class stationsDB extends AsyncTask<String, String[], String[]> {
+
+        private ProgressDialog dialog = new ProgressDialog(FillTransportPlaceActivity.this);
+
+        @Override
+        protected void onPreExecute() {
+            this.dialog.setMessage("Cargando...");
+            this.dialog.show();
+        }
+
         @Override
         protected String[] doInBackground(String... strings) {
             return DB_transportPlace.getStations(strings[0]);
@@ -110,6 +128,7 @@ public class FillTransportPlaceActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(String[] result) {
             updateAdapter2(result);
+            this.dialog.dismiss();
         }
     }
 
@@ -161,8 +180,8 @@ public class FillTransportPlaceActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(TransportPlace result) {
-            this.dialog.dismiss();
             processTransportPlace(result);
+            this.dialog.dismiss();
         }
     }
 

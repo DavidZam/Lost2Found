@@ -126,10 +126,9 @@ public class RateActivity extends AppCompatActivity {
         if(connected) {
             TextView withoutConnection = findViewById(R.id.without_connection);
             withoutConnection.setText("");
-            String s = "<h2> <font color=#1976D2> ¡Tu valoración cuenta! </font></h2> Nos ayudas a mantener y mejorar el sistema para que siga ayudando a muchas personas.<br><br>" +
-                    "Además, colaboras en la difusión de la aplicación y llegar a más gente.<br><br>" +
-                    "Es una forma de agradecer lo que te ofrece Lost2Found.<br><br>" +
-                    "<h2> <font color=#1976D2> ¿Cómo nos puedes puntuar? </font></h2> Pincha en el siguiente enlace, busca nuestra aplicación y puntúa: <address>http://play.google.com/store/apps</address>";
+            String s = "<h2> <font color=#1976D2> ¡Tu valoración cuenta! </font></h2> Valorándonos contribuyes a mantener y mejorar el sistema para que siga ayudando a muchas personas.<br><br>" +
+                    "Además colaboras en la difusión de la aplicación para así llegar a más gente, es una forma de agradecer lo que te ofrece Lost2Found.<br><br>" +
+                    "<h2> <font color=#1976D2> ¿Cómo nos puedes puntuar? </font></h2> Pincha en el siguiente enlace, busca nuestra aplicación y puntúa:<br><br> <address>http://play.google.com/store/apps</address>";
             TextView texto = findViewById(R.id.textinfo);
             texto.setText(Html.fromHtml(s));
         } else {

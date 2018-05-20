@@ -67,8 +67,8 @@ public class LoginActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(User result) {
-            this.dialog.dismiss();
             processLogin(result);
+            this.dialog.dismiss();
         }
     }
 

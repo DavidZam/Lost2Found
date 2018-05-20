@@ -1,5 +1,6 @@
 package es.lost2found.lost2foundUI.seekerUI;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
@@ -195,9 +196,22 @@ public class SeekerActivity extends AppCompatActivity implements FloatingActionB
 
     private class deleteAnnounceFromDB extends AsyncTask<String, Void, Boolean> {
 
+        private ProgressDialog dialog = new ProgressDialog(SeekerActivity.this);
+
+        @Override
+        protected void onPreExecute() {
+            this.dialog.setMessage("Cargando...");
+            this.dialog.show();
+        }
+
         @Override
         protected Boolean doInBackground(String... strings) {
             return DB_announce.deleteAnnounce(strings[0], strings[1]);
+        }
+
+        @Override
+        protected void onPostExecute(Boolean result) {
+            this.dialog.dismiss();
         }
     }
 
@@ -240,6 +254,14 @@ public class SeekerActivity extends AppCompatActivity implements FloatingActionB
 
     private class getNumberObjectAnnouncesDB extends AsyncTask<String, Void, Integer> {
 
+        private ProgressDialog dialog = new ProgressDialog(SeekerActivity.this);
+
+        @Override
+        protected void onPreExecute() {
+            this.dialog.setMessage("Cargando...");
+            this.dialog.show();
+        }
+
         @Override
         protected Integer doInBackground(String... strings) {
             return DB_announce.getNumberSeekerAnnounces(strings[0], strings[1]);
@@ -248,6 +270,7 @@ public class SeekerActivity extends AppCompatActivity implements FloatingActionB
         @Override
         protected void onPostExecute(Integer numAnnounce) {
             processAnnounceScreen(numAnnounce);
+            this.dialog.dismiss();
         }
     }
 
@@ -269,6 +292,14 @@ public class SeekerActivity extends AppCompatActivity implements FloatingActionB
 
     private class getObjectAnnouncesDB extends AsyncTask<String, Void, Announce[]> {
 
+        private ProgressDialog dialog = new ProgressDialog(SeekerActivity.this);
+
+        @Override
+        protected void onPreExecute() {
+            this.dialog.setMessage("Cargando...");
+            this.dialog.show();
+        }
+
         @Override
         protected Announce[] doInBackground(String... strings) {
             return DB_announce.getAnnouncesSeeker(strings[0], strings[1], strings[2]);
@@ -277,6 +308,7 @@ public class SeekerActivity extends AppCompatActivity implements FloatingActionB
         @Override
         protected void onPostExecute(Announce[] announces) {
             updateAdapter(announces, numberAnnounces);
+            this.dialog.dismiss();
         }
     }
 

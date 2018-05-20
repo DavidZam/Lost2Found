@@ -1,5 +1,6 @@
 package es.lost2found.lost2foundUI.chatUI.chatConcreteUI;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -190,6 +191,14 @@ public class ChatConcrete extends AppCompatActivity {
 
     private class createNewChatMsgOnDB extends AsyncTask<String, Void, Message> {
 
+        private ProgressDialog dialog = new ProgressDialog(ChatConcrete.this);
+
+        @Override
+        protected void onPreExecute() {
+            this.dialog.setMessage("Cargando...");
+            this.dialog.show();
+        }
+
         @Override
         protected Message doInBackground(String... strings) {
             String actualHour = new SimpleDateFormat("HH:mm").format(Calendar.getInstance().getTime()); // Hora del msg
@@ -197,9 +206,22 @@ public class ChatConcrete extends AppCompatActivity {
             Integer userId = Integer.valueOf(DB_user.getIdByName(userName)); // Funcion que dado el nombre del usuario devuelve su id
             return DB_message.createNewMsg(strings[0], actualHour, chatId, userId);
         }
+
+        @Override
+        protected void onPostExecute(Message result) {
+            this.dialog.dismiss();
+        }
     }
 
     private class getNumberChatMsgsDB extends AsyncTask<Chat, Void, Integer> {
+
+        private ProgressDialog dialog = new ProgressDialog(ChatConcrete.this);
+
+        @Override
+        protected void onPreExecute() {
+            this.dialog.setMessage("Cargando...");
+            this.dialog.show();
+        }
 
         @Override
         protected Integer doInBackground(Chat... params) {
@@ -210,6 +232,7 @@ public class ChatConcrete extends AppCompatActivity {
         @Override
         protected void onPostExecute(Integer numMsgs) {
             processChatConcreteScreen(numMsgs);
+            this.dialog.dismiss();
         }
     }
 
@@ -222,6 +245,15 @@ public class ChatConcrete extends AppCompatActivity {
 
     private class getMsgsDB extends AsyncTask<Integer, Void, Message[]> {
 
+        private ProgressDialog dialog = new ProgressDialog(ChatConcrete.this);
+
+        @Override
+        protected void onPreExecute() {
+            this.dialog.setMessage("Cargando...");
+            this.dialog.show();
+        }
+
+
         @Override
         protected Message[] doInBackground(Integer... params) {
             return DB_message.getMsgs(params[0], params[1]);
@@ -230,6 +262,7 @@ public class ChatConcrete extends AppCompatActivity {
         @Override
         protected void onPostExecute(Message[] msgs) {
             updateAdapter(msgs, chatNumberMsgs);
+            this.dialog.dismiss();
         }
     }
 

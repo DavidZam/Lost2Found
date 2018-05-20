@@ -1,5 +1,6 @@
 package es.lost2found.lost2foundUI.announceUI.matchAnnounceUI;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -139,20 +140,33 @@ public class MatchAnnounceInfoActivity extends AppCompatActivity {
         ImageView image = findViewById(R.id.imageinfoannounce);
 
         Button contact = findViewById(R.id.contactar);
-        contact.setText(getResources().getText(R.string.contact_text) + a.userOwner);
+        contact.setText(getResources().getText(R.string.contact_text) + " " + a.userOwner);
 
-        if(a.announceCategorie.equals("Telefono")){
-            image.setImageResource(R.drawable.ic_smartphone);
-        }else if(a.announceCategorie.equals("Cartera")){
-            image.setImageResource(R.drawable.ic_wallet);
-        }else if(a.announceCategorie.equals("Otro")){
-            image.setImageResource(R.drawable.ic_other);
-        }else{
-            image.setImageResource(R.drawable.ic_card);
+        switch (a.announceCategorie) {
+            case "Telefono":
+                image.setImageResource(R.drawable.ic_smartphone);
+                break;
+            case "Cartera":
+                image.setImageResource(R.drawable.ic_wallet);
+                break;
+            case "Otro":
+                image.setImageResource(R.drawable.ic_other);
+                break;
+            default:
+                image.setImageResource(R.drawable.ic_card);
+                break;
         }
     }
 
     private class getObjectDataFromDB extends AsyncTask<String, Void, String> {
+
+        private ProgressDialog dialog = new ProgressDialog(MatchAnnounceInfoActivity.this);
+
+        @Override
+        protected void onPreExecute() {
+            this.dialog.setMessage("Cargando...");
+            this.dialog.show();
+        }
 
         @Override
         protected String doInBackground(String... strings) {
@@ -181,7 +195,7 @@ public class MatchAnnounceInfoActivity extends AppCompatActivity {
                         param.setText(Html.fromHtml(o));
                     }
                 }else if(a.announceCategorie.equals("Otro")){
-                    String o = "<h4> <font color=#699CFC> Datos: </font><br>"+ "Nombre: " + params[0] + ", Descripcion: " + params[1] +" </h4><br>";
+                    String o = "<h4> <font color=#699CFC> Datos: </font><br>" + params[0] + ", " + params[1] + " </h4><br>";
                     param.setText(Html.fromHtml(o));
                 }else if(a.announceCategorie.equals("Tarjeta bancaria")){
                     String o = "<h4> <font color=#699CFC> Datos: </font><br>"+ "Banco: " + params[0] + ", Propietario: " + params[1] +" </h4><br>";
@@ -191,6 +205,7 @@ public class MatchAnnounceInfoActivity extends AppCompatActivity {
                     param.setText(Html.fromHtml(o));
                 }
             }
+            this.dialog.dismiss();
         }
     }
 

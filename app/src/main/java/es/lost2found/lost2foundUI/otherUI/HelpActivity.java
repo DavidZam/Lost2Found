@@ -52,17 +52,18 @@ public class HelpActivity extends AppCompatActivity {
 
         String s = "<h2> <font color=#1976D2>¿Cómo funciona Lost2Found? </font></h2> &bull; Cuando una persona pierde un objeto lo notifica creando un anuncio de pérdida y rellenando los máximos campos posibles.<br><br>" +
                 "&bull; Otra persona encuentra ese mismo objeto y crea un anuncio de hallazgo, completando todos los campos que le sea posible. <br><br>" +
-                "&bull; Lost2Found cuenta con un algoritmo basado en un sistema de puntos, es decir, ambos anuncios deben tener características iguales y," +
-                " cuantas más se acierten, más puntos se obtiene y podrá ser un posible acierto. <br><br>" +
-                "&bull; La aplicación notificará a ambas personas de una coincidencia de objetos y les otorgará la posibilidad de ponerse en contacto. <br><br>" +
+                "&bull; Lost2Found cuenta con un algoritmo que nos proporciona un porcentaje de matching calculado en función de cuánto tengan en común las características de los objetos de ambos anuncios" +
+                ", de esta manera se le muestra al usuario una lista de posibles anuncios que son 'compatibles' con su anuncio de pérdida y qué podrían ser su objeto perdido o encontrado.<br><br>" +
+                "&bull; En caso de que el usuario piense que un anuncio con el que se ha hecho match corresponse a su objeto solo tiene que pulsar en contactar para comunicarse con el dueño de dicho anuncio. <br><br>" +
                 "<h2> <font color=#1976D2>¿Puede haber anuncios cuyos procesos coincidan simultáneamente? </font></h2> &bull; Perfectamente. Varios objetos pueden reunir las condiciones necesarias para que sus coincidencias sean similares " +
                 "(objetos parecidos, mismo lugar, fecha y hora). Por eso es imprescindible que los usuarios hablen entre ellos y se aseguren de que el objeto es el correcto.<br>" +
-                "<h2> <font color=#1976D2>¿Cuándo me llegará la notificación? </font></h2> &bull; Tan pronto como ambas partes registren los anuncios de pérdida y hallazgo y nuestro algoritmo haga su magia.<br>" +
                 "<h2> <font color=#1976D2>¿En qué se basa nuestro algoritmo? </font></h2> &bull; Cuando estamos comparando dos objetos, uno de pérdida y otro de hallazgo, dentro de la aplicación, el algoritmo usa factores como el color y la " +
-                "distancia de ambos objetos. Cuanto más parecidos y más cerca estén, el porcentaje de que sea el mismo objeto es bastante alto. <br><br>" +
-                "&bull; En cambio, cuando el match es con Open Data se basa en la distancia únicamente cuando está disponible. No todos los objetos que están registrados en el portal abierto tienen una dirección. <br>"+
+                "distancia de ambos objetos. Cuanto más parecidos y más cerca estén, el porcentaje de matching será más alto. <br><br>" +
+                "&bull; Cuando se realiza el match con el portal de open data en cambio, el matching se basa sobretodo en la distancia, ya que en este portal no se publican determinadas caracteristicas de los objetos perdidos o encontrados, " +
+                "como por ejemplo el color, además de esto en determinadas ocasiones tampoco se dispone del lugar donde se ha perdido o encontrado el objeto (no todos los objetos publicados en el portal abierto tienen registrado un lugar), " +
+                "por lo que el cálculo de la distancia resulta imposible, por esto recomendamos siempre a nuestros usuarios que creen anuncios en nuestra aplicación y especifiquen todos los datos posibles acerca de su objeto.<br>"+
                 "<h2> <font color=#1976D2>¿Tengo que entrar en la aplicación para saber si tengo algún mensaje?</font></h2> &bull; ¡Claro que no! Nuestro chat, fácil e intuitivo de usar, se actualiza cada 15 segundos para que nuestros usuarios " +
-                "no estén pendientes de meterse cada poco tiempo, sino que sea la aplicación quien avise.<br>";
+                "no estén pendientes de meterse cada poco tiempo, sino que sea la aplicación quien se actualize por si hay nuevos mensajes disponibles.<br>";
         TextView texto = findViewById(R.id.textComoFunciona);
         texto.setText(Html.fromHtml(s));
 

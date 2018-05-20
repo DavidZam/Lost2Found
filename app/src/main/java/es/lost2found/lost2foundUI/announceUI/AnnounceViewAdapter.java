@@ -114,7 +114,7 @@ public class AnnounceViewAdapter extends RecyclerView.Adapter<AnnounceViewHolder
         return this.listAnnounce;
     }
 
-    public boolean isConnected() throws InterruptedException, IOException {
+    private boolean isConnected() throws InterruptedException, IOException {
         String command = "ping -c 1 google.com";
         return (Runtime.getRuntime().exec (command).waitFor() == 0);
     }

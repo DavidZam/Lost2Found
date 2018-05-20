@@ -51,7 +51,7 @@ public class ContactActivity extends AppCompatActivity {
 
         View headerLayout = navView.getHeaderView(0);
 
-        String s = "Si no has encontrado la información que buscabas o hay algo que no te ha quedado claro, puedes escribirnos a <b>lost2found@gmail.com</b> y nos pondremos en contacto contigo para aclarar todas las dudas que tengas. <br><br><br> <b>¡Gracias por confiar en nosotros!</b>";
+        String s = "Si no has encontrado la información que buscabas o hay algo que no te ha quedado claro, puedes escribirnos a <b>lost2foundsoporte@gmail.com</b> y nos pondremos en contacto contigo para aclarar todas las dudas que tengas. <br><br><br> <b>¡Gracias por confiar en nosotros!</b>";
         TextView texto = findViewById(R.id.textinfo);
         texto.setText(Html.fromHtml(s));
 

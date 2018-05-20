@@ -10,6 +10,7 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.nio.charset.Charset;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
@@ -177,7 +178,7 @@ public class DB_chat {
                 else
                     instream = con.getInputStream();
 
-                BufferedReader in = new BufferedReader(new InputStreamReader(instream));
+                BufferedReader in = new BufferedReader(new InputStreamReader(instream, Charset.forName("UTF-8")),8192);
                 String inputLine;
                 StringBuilder response = new StringBuilder();
 

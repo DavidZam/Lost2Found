@@ -135,8 +135,8 @@ public class MatchAnnounce extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(List<OpenDataAnnounce> announces) {
-            this.dialog.dismiss();
             processOpenDataAnnounceScreen(announces);
+            this.dialog.dismiss();
         }
     }
 
@@ -262,8 +262,8 @@ public class MatchAnnounce extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(Integer numAnnounce) {
-            this.dialog.dismiss();
             processAnnounceScreen(numAnnounce);
+            this.dialog.dismiss();
         }
     }
 
@@ -298,8 +298,8 @@ public class MatchAnnounce extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(Announce[] announces) {
-            this.dialog.dismiss();
             updateAdapter(announces, numberAnnounces);
+            this.dialog.dismiss();
         }
     }
 
@@ -407,7 +407,10 @@ public class MatchAnnounce extends AppCompatActivity {
             recyclerView.setLayoutManager(new LinearLayoutManager(this));
         }
         Collections.sort(matchPercentagesList);
-        Collections.reverse(matchPercentagesList);
+        if(matchPercentagesList.size() >= 2) {
+            if(Double.valueOf(matchPercentagesList.get(0)) < Double.valueOf(matchPercentagesList.get(1)))
+                Collections.reverse(matchPercentagesList);
+        }
 
         adapter.setListPercentageColor(colorPercentagesList);
         adapter.setListPercentageDistance(distancePercentagesList);
@@ -574,8 +577,8 @@ public class MatchAnnounce extends AppCompatActivity {
         Double matchPercentageDouble;
 
         // Formula del match...
-        Double colorMultiplier = 0.35;
-        Double distanceMultiplier = 0.65;
+        Double colorMultiplier = 0.325;
+        Double distanceMultiplier = 0.625;
 
         matchPercentageDouble = colorPercentage * colorMultiplier + distancePercentage * distanceMultiplier;
 

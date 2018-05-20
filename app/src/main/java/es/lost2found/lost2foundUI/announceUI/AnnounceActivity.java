@@ -1,5 +1,6 @@
 package es.lost2found.lost2foundUI.announceUI;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
@@ -27,6 +28,7 @@ import java.util.List;
 import es.lost2found.R;
 import es.lost2found.database.DB_announce;
 import es.lost2found.entities.Announce;
+import es.lost2found.lost2foundUI.announceUI.matchAnnounceUI.MatchAnnounce;
 import es.lost2found.lost2foundUI.chatUI.ChatActivity;
 import es.lost2found.lost2foundUI.loginUI.LoginActivity;
 import es.lost2found.lost2foundUI.openDataUI.OpenDataActivity;
@@ -191,13 +193,34 @@ public class AnnounceActivity extends AppCompatActivity implements FloatingActio
 
     private class deleteAnnounceFromDB extends AsyncTask<String, Void, Boolean> {
 
+        private ProgressDialog dialog = new ProgressDialog(AnnounceActivity.this);
+
+        @Override
+        protected void onPreExecute() {
+            this.dialog.setMessage("Cargando...");
+            this.dialog.show();
+        }
+
         @Override
         protected Boolean doInBackground(String... strings) {
             return DB_announce.deleteAnnounce(strings[0], strings[1]);
         }
+
+        @Override
+        protected void onPostExecute(Boolean result) {
+            this.dialog.dismiss();
+        }
     }
 
     private class getNumberObjectAnnouncesDB extends AsyncTask<String, Void, Integer> {
+
+        private ProgressDialog dialog = new ProgressDialog(AnnounceActivity.this);
+
+        @Override
+        protected void onPreExecute() {
+            this.dialog.setMessage("Cargando...");
+            this.dialog.show();
+        }
 
         @Override
         protected Integer doInBackground(String... strings) {
@@ -207,6 +230,7 @@ public class AnnounceActivity extends AppCompatActivity implements FloatingActio
         @Override
         protected void onPostExecute(Integer numAnnounce) {
             processAnnounceScreen(numAnnounce);
+            this.dialog.dismiss();
         }
     }
 
@@ -227,6 +251,14 @@ public class AnnounceActivity extends AppCompatActivity implements FloatingActio
 
     private class getObjectAnnouncesDB extends AsyncTask<String, Void, Announce[]> {
 
+        private ProgressDialog dialog = new ProgressDialog(AnnounceActivity.this);
+
+        @Override
+        protected void onPreExecute() {
+            this.dialog.setMessage("Cargando...");
+            this.dialog.show();
+        }
+
         @Override
         protected Announce[] doInBackground(String... strings) {
             return DB_announce.getAnnounces(strings[0], strings[1]);
@@ -235,6 +267,7 @@ public class AnnounceActivity extends AppCompatActivity implements FloatingActio
         @Override
         protected void onPostExecute(Announce[] announces) {
             updateAdapter(announces, userNumberAnnounces);
+            this.dialog.dismiss();
         }
     }
 

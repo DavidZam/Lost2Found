@@ -88,8 +88,8 @@ public class FillConcretePlaceActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(ConcretePlace result) {
-            this.dialog.dismiss();
             processNewConcretePlace(result);
+            this.dialog.dismiss();
         }
     }
 
