@@ -12,9 +12,6 @@
         android:layout_height="match_parent"
         android:background="@color/colorSecondaryText"
         tools:context=".lost2foundUI.announceUI.matchAnnounceUI.MatchAnnounceInfoActivity"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="16dp"
         tools:showIn="@layout/activity_matchannounce_info">
 
         <android.support.v7.widget.Toolbar
@@ -25,84 +22,85 @@
 
         </android.support.v7.widget.Toolbar>
 
-            <RelativeLayout
-                android:id="@+id/login_layout"
-                android:layout_width="match_parent"
+        <RelativeLayout
+            android:id="@+id/login_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/toolbar_center"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <TextView
+                android:id="@+id/categoria"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp" />
+
+            <TextView
+                android:id="@+id/tipo"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:layout_below="@id/categoria" />
+
+            <TextView
+                android:id="@+id/dia"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:layout_below="@id/tipo" />
+
+            <TextView
+                android:id="@+id/hora"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:layout_alignParentEnd="true"
+                android:layout_below="@+id/tipo"
+                android:layout_marginEnd="100dp"
+                android:layout_marginStart="20dp" />
+
+            <TextView
+                android:id="@+id/lugar"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:layout_below="@id/dia" />
+
+            <TextView
+                android:id="@+id/distance"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/lugar"
+                android:textAllCaps="false" />
+
+            <TextView
+                android:id="@+id/distancePercentage"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:layout_below="@+id/lugar"
+                android:layout_marginStart="10sp"
+                android:layout_toEndOf="@+id/distance"
+                android:textAllCaps="false" />
+
+            <TextView
+                android:id="@+id/usuario"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:layout_below="@id/lugar"
+                android:layout_marginTop="45sp" />
+
+            <TextView
+                android:id="@+id/param"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/toolbar_center"
-                android:orientation="vertical"
-                android:padding="16dp">
+                android:layout_below="@id/usuario" />
 
-                <TextView
-                    android:id="@+id/categoria"
-                    android:layout_width="wrap_content"
-                    android:layout_height="50dp" />
-
-                <TextView
-                    android:id="@+id/tipo"
-                    android:layout_width="wrap_content"
-                    android:layout_below="@id/categoria"
-                    android:layout_height="50dp" />
-
-                <TextView
-                    android:id="@+id/dia"
-                    android:layout_width="wrap_content"
-                    android:layout_below="@id/tipo"
-                    android:layout_height="50dp" />
-
-                <TextView
-                    android:id="@+id/hora"
-                    android:layout_width="wrap_content"
-                    android:layout_height="50dp"
-                    android:layout_alignParentEnd="true"
-                    android:layout_marginStart="20dp"
-                    android:layout_below="@+id/tipo"
-                    android:layout_marginEnd="100dp" />
-
-                <TextView
-                    android:id="@+id/lugar"
-                    android:layout_width="wrap_content"
-                    android:layout_below="@id/dia"
-                    android:layout_height="50dp" />
-
-                <TextView
-                    android:id="@+id/distance"
-                    android:layout_width="wrap_content"
-                    android:layout_height="50dp"
-                    android:layout_below="@+id/lugar"
-                    android:layout_alignParentStart="true"
-                    android:textAllCaps="false" />
-
-                <TextView
-                    android:id="@+id/distancePercentage"
-                    android:layout_width="wrap_content"
-                    android:layout_height="50dp"
-                    android:layout_marginStart="10sp"
-                    android:layout_toEndOf="@+id/distance"
-                    android:layout_below="@+id/lugar"
-                    android:textAllCaps="false" />
-
-                <TextView
-                    android:id="@+id/usuario"
-                    android:layout_width="wrap_content"
-                    android:layout_height="50dp"
-                    android:layout_below="@id/lugar"
-                    android:layout_marginTop="45sp" />
-
-                <TextView
-                    android:id="@+id/param"
-                    android:layout_width="wrap_content"
-                    android:layout_below="@id/usuario"
-                    android:layout_height="50dp" />
-
-            </RelativeLayout>
+        </RelativeLayout>
 
         <RelativeLayout
             android:layout_width="351dp"
-            android:layout_height="155dp"
+            android:layout_height="135dp"
             android:padding="12dp"
             android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true">
+            android:layout_centerHorizontal="true"
+            android:id="@+id/relativeLayout">
 
             <Button
                 android:id="@+id/contactar"
@@ -111,7 +109,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
                 android:layout_centerHorizontal="true"
-                android:layout_marginBottom="16dp"
+                android:layout_marginBottom="10dp"
                 android:onClick="contactar"
                 android:padding="10sp"
                 android:textSize="16sp" />
