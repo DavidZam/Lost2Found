@@ -199,11 +199,13 @@ public class MatchAnnounce extends AppCompatActivity {
                             coordinates2 = oldAnnounceLatLng[0] + "," + oldAnnounceLatLng[1];
                         }
                         // Calculo distancia
-                        distanceDouble = getDistance(coordinates1, coordinates2);
-                        distanceMetres = String.valueOf(distanceDouble);
-                        distancePercentage = getDistancePercentage(distanceMetres);
-                        openDataDistancePercentagesList.add(i, distancePercentage);
-                        openDataDistancesList.add(i, distanceMetres);
+                        if(coordinates2 != null) {
+                            distanceDouble = getDistance(coordinates1, coordinates2);
+                            distanceMetres = String.valueOf(distanceDouble);
+                            distancePercentage = getDistancePercentage(distanceMetres);
+                            openDataDistancePercentagesList.add(i, distancePercentage);
+                            openDataDistancesList.add(i, distanceMetres);
+                        }
                         // Calculo del match final a partir de las caracteristicas especificas de los dos objetos y el porcentaje de la distancia:
                         Double distancePercentageInt = Double.valueOf(distancePercentage);
                         String matchPercentaje = getOpenDataMatchPercentage(distancePercentageInt, oldAnnounce, announces.get(i));
@@ -383,11 +385,13 @@ public class MatchAnnounce extends AppCompatActivity {
                         coordinates1 = matchAnnounceLatLng[0] + "," + matchAnnounceLatLng[1];
                     }
                     // Calculo distancia
-                    distanceDouble = getDistance(coordinates1, coordinates2);
-                    distanceMetres = String.valueOf(distanceDouble);
-                    distancePercentage = getDistancePercentage(distanceMetres);
-                    distancePercentagesList.add(i, distancePercentage);
-                    distancesList.add(i, distanceMetres);
+                    if(coordinates1 != null && coordinates2 != null) {
+                        distanceDouble = getDistance(coordinates1, coordinates2);
+                        distanceMetres = String.valueOf(distanceDouble);
+                        distancePercentage = getDistancePercentage(distanceMetres);
+                        distancePercentagesList.add(i, distancePercentage);
+                        distancesList.add(i, distanceMetres);
+                    }
                 }
             }
 
