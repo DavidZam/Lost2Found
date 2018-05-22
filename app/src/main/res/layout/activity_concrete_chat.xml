@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        tools:context=".lost2foundUI.chatUI.chatConcreteUI.ChatConcrete"
+        tools:context=".lost2found.chatUI.chatConcreteUI.ChatConcrete"
         tools:showIn="@layout/activity_concrete_chat"
         android:orientation="vertical"
         android:background="@color/colorSecondaryText">
@@ -51,7 +51,7 @@
         android:layout_height="wrap_content"
         android:fitsSystemWindows="true"
         android:theme="@style/Lost2FoundTheme"
-        tools:context=".lost2foundUI.chatUI.chatConcreteUI.ChatConcrete">
+        tools:context=".lost2found.chatUI.chatConcreteUI.ChatConcrete">
 
         <LinearLayout
             android:id="@+id/layout_chatbox"

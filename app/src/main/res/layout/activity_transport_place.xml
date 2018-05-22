@@ -9,7 +9,7 @@
     <RelativeLayout android:id="@+id/content_frame"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".lost2foundUI.placeUI.transportPlaceUI.TransportPlaceActivity"
+        tools:context=".lost2found.placeUI.transportPlaceUI.TransportPlaceActivity"
         tools:showIn="@layout/activity_fill_transport_place"
         android:background="@color/colorSecondaryText">
 

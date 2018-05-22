@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/colorSecondaryText"
-        tools:context=".lost2foundUI.announceUI.matchAnnounceUI.MatchAnnounceInfoActivity"
+        tools:context=".lost2found.announceUI.matchAnnounceUI.MatchAnnounceInfoActivity"
         tools:ignore="MissingConstraints"
         tools:layout_editor_absoluteX="0dp"
         tools:layout_editor_absoluteY="16dp"
@@ -127,7 +127,7 @@
                 android:layout_alignParentStart="true"
                 android:textAllCaps="false" />
 
-            <es.lost2found.lost2foundUI.pickerUI.ColorView
+            <es.lost2found.lost2found.pickerUI.ColorView
                 android:id="@+id/color_view"
                 android:layout_width="30dp"
                 android:layout_height="29dp"
@@ -137,7 +137,7 @@
                 android:background="@drawable/rounded"
                 android:visibility="visible">
 
-            </es.lost2found.lost2foundUI.pickerUI.ColorView>
+            </es.lost2found.lost2found.pickerUI.ColorView>
 
             <ImageView
                 android:id="@+id/imageinfoannounce"

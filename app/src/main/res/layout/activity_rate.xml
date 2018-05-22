@@ -9,7 +9,7 @@
     android:fitsSystemWindows="true"
     android:paddingTop="16dp"
     android:theme="@style/Lost2FoundTheme"
-    tools:context=".lost2foundUI.otherUI.RateActivity">
+    tools:context=".lost2found.otherUI.RateActivity">
 
     <RelativeLayout
         android:id="@+id/content_frame"
@@ -17,7 +17,7 @@
         android:layout_height="match_parent"
         android:layout_marginTop="16dp"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        tools:context=".lost2foundUI.otherUI.RateActivity"
+        tools:context=".lost2found.otherUI.RateActivity"
         tools:showIn="@layout/activity_rate"
         android:background="@color/colorSecondaryText">
 
@@ -49,6 +49,18 @@
                 android:layout_marginEnd="20dp"
                 android:padding="8sp"
                 android:layout_below="@id/toolbar"/>
+
+        <Button
+            android:id="@+id/rate"
+            style="@style/buttonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/textinfo"
+            android:layout_centerHorizontal="true"
+            android:hint="@string/rate_button_text"
+            android:textColorHint="@color/White"
+            android:padding="10sp"
+            android:textSize="15sp" />
 
         </RelativeLayout>
 

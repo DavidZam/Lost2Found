@@ -14,7 +14,7 @@
         android:background="@color/colorSecondaryText"
         android:orientation="vertical"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        tools:context=".lost2foundUI.announceUI.NewAnnounceActivity"
+        tools:context=".lost2found.announceUI.NewAnnounceActivity"
         tools:showIn="@layout/activity_new_announce">
 
         <android.support.v7.widget.Toolbar
@@ -113,7 +113,7 @@
                 android:onClick="showColorPickerDialog"
                 android:text="@string/color_button_text" />
 
-            <es.lost2found.lost2foundUI.pickerUI.ColorView
+            <es.lost2found.lost2found.pickerUI.ColorView
                 android:id="@+id/color_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

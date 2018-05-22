@@ -9,7 +9,7 @@
     android:fitsSystemWindows="true"
     android:paddingTop="16dp"
     android:theme="@style/Lost2FoundTheme"
-    tools:context=".lost2foundUI.otherUI.AboutUsActivity">
+    tools:context=".lost2found.otherUI.AboutUsActivity">
 
     <RelativeLayout
         android:id="@+id/content_frame"
@@ -17,7 +17,7 @@
         android:layout_height="match_parent"
         android:layout_marginTop="16dp"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        tools:context=".lost2foundUI.otherUI.AboutUsActivity"
+        tools:context=".lost2found.otherUI.AboutUsActivity"
         tools:showIn="@layout/activity_abouts_us"
         android:background="@color/colorSecondaryText">
 

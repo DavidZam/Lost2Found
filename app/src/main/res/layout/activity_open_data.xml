@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:theme="@style/Lost2FoundTheme"
-    tools:context=".lost2foundUI.announceUI.AnnounceActivity">
+    tools:context=".lost2found.announceUI.AnnounceActivity">
 
     <RelativeLayout
         android:id="@+id/content_frame"
@@ -15,7 +15,7 @@
         android:layout_marginTop="-6dp"
         android:background="@color/colorSecondaryText"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        tools:context=".lost2foundUI.openDataUI.OpenDataActivity"
+        tools:context=".lost2found.openDataUI.OpenDataActivity"
         tools:showIn="@layout/activity_open_data">
 
         <android.support.v7.widget.Toolbar

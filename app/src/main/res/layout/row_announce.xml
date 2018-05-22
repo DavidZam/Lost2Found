@@ -69,7 +69,7 @@
             android:textSize="22sp"
             android:textStyle="bold" />
 
-        <es.lost2found.lost2foundUI.pickerUI.ColorView
+        <es.lost2found.lost2found.pickerUI.ColorView
             android:id="@+id/color_view"
             android:layout_width="32dp"
             android:layout_height="29dp"

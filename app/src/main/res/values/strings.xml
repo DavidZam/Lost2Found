@@ -20,6 +20,7 @@
     <string name="confirm_button_text">Confirmar</string>
     <string name="next_button_text">Siguiente</string>
     <string name="contact_button_text">Contactar</string>
+    <string name="rate_button_text">Puntuar</string>
     <string name="contact_text">Contactar con</string>
     <string name="select_button_text">Seleccionar</string>
     <string name="spinner_placeholder">Categoria</string>

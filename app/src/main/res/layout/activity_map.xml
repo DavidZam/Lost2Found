@@ -7,12 +7,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:theme="@style/Lost2FoundTheme"
-    tools:context=".lost2foundUI.placeUI.MapActivity">
+    tools:context=".lost2found.placeUI.MapActivity">
 
     <RelativeLayout android:id="@+id/content_frame"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".lost2foundUI.chatUI.chatConcreteUI.ChatConcrete"
+        tools:context=".lost2found.chatUI.chatConcreteUI.ChatConcrete"
         tools:showIn="@layout/activity_concrete_chat"
         android:orientation="vertical"
         android:background="@color/colorSecondaryText">

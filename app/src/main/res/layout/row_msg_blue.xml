@@ -8,7 +8,7 @@
     android:layout_height="wrap_content"
     android:fitsSystemWindows="true"
     android:theme="@style/Lost2FoundTheme"
-    tools:context=".lost2foundUI.chatUI.chatConcreteUI.ChatConcrete">
+    tools:context=".lost2found.chatUI.chatConcreteUI.ChatConcrete">
 
     <RelativeLayout
         xmlns:android="http://schemas.android.com/apk/res/android"

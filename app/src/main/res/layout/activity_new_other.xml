@@ -14,7 +14,7 @@
         android:background="@color/colorSecondaryText"
         android:orientation="vertical"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        tools:context=".lost2foundUI.announceUI.NewAnnounceActivity"
+        tools:context=".lost2found.announceUI.NewAnnounceActivity"
         tools:showIn="@layout/activity_new_announce">
 
         <android.support.v7.widget.Toolbar
