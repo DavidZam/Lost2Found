@@ -1,6 +1,6 @@
 # Lost2Found
 
-![screenshot 1](https://i.imgur.com/H1O054x.png) &nbsp; ![screenshot 2](https://i.imgur.com/usT8A6I.png)
+<img src="https://i.imgur.com/joIObbp.png" width="250" />
 
 Lost2Found es una aplicación que permite encontrar objetos perdidos con ayuda de open data. Forma parte de un trabajo de final de grado para el grado en ingeniería informática de la Universidad Complutense de Madrid.
 ## Requisitos
