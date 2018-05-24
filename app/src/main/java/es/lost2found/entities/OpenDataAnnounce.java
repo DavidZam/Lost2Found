@@ -9,6 +9,7 @@ public class OpenDataAnnounce implements Serializable {
     public String lostFoundHourText;
     public String announceCategorie;
     public String place;
+    private Double matchPercentage;
 
     public OpenDataAnnounce(String announceType, String announceDateText, String lostFoundHourText, String announceCategorie, String place) {
         this.announceType = announceType;
@@ -74,6 +75,14 @@ public class OpenDataAnnounce implements Serializable {
 
     public String getPlace() {
         return this.place;
+    }
+
+    public Double getMatchPercentage() {
+        return this.matchPercentage;
+    }
+
+    public void setMatchPercentage(Double matchPercentage) {
+        this.matchPercentage = matchPercentage;
     }
 
 }

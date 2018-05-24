@@ -27,6 +27,7 @@ public class MatchAnnounceViewAdapter extends RecyclerView.Adapter<AnnounceViewH
     private String typePlaceMatchAnnounce;
 
     MatchAnnounceViewAdapter(List<Announce> listAnnounce, String actualUser, Announce oldAnnounce, String atrDeterminante, List<String>  colorPercentagesList, List<String>  distancePercentagesList, List<String>  distancesList, String typePlaceOldAnnounce, String typePlaceMatchAnnounce, List<String>  matchPercentagesList) {
+        Collections.reverse(listAnnounce);
         this.listAnnounce = listAnnounce;
         this.actualUser = actualUser;
         this.oldAnnounce = oldAnnounce;
@@ -144,5 +145,9 @@ public class MatchAnnounceViewAdapter extends RecyclerView.Adapter<AnnounceViewH
 
     void setListPercentageMatch(List<String> listPercentageMatch) {
         this.matchPercentagesList = listPercentageMatch;
+    }
+
+    void setAnnounceList(List<Announce> listAnnounce) {
+        this.listAnnounce = listAnnounce;
     }
 }

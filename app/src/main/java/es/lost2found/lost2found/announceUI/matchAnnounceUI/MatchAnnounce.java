@@ -20,6 +20,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import es.lost2found.R;
@@ -52,6 +53,8 @@ public class MatchAnnounce extends AppCompatActivity {
     private int placeIdOldAnnounce;
     private Double[] oldAnnounceLatLng;
     private Double[] matchAnnounceLatLng;
+    private List<Announce>  announceList;
+    private List<OpenDataAnnounce> openDataAnnounceList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,8 +76,8 @@ public class MatchAnnounce extends AppCompatActivity {
 
         SharedPreferences spref2 = getApplicationContext().getSharedPreferences("Login", 0);
         String userEmail = spref2.getString("email", "");
-        List<Announce> announceList = new ArrayList<>();
-        List<OpenDataAnnounce> openDataAnnounceList = new ArrayList<>();
+        announceList = new ArrayList<>();
+        openDataAnnounceList = new ArrayList<>();
 
         if(getIntent().getBooleanExtra("oldAnnounceSet", false)) {
             oldAnnounce = (Announce) getIntent().getSerializableExtra("match");
@@ -236,8 +239,23 @@ public class MatchAnnounce extends AppCompatActivity {
                     }
                 }
             }
-            Collections.sort(openDataMatchPercentagesList);
-            Collections.reverse(openDataMatchPercentagesList);
+
+            Collections.sort(openDataAnnounceList, (o1, o2) -> {
+                Double o1d = o1.getMatchPercentage();
+                Double o2d = o2.getMatchPercentage();
+                return Double.compare(o2d, o1d);
+            });
+            openDataAdapter.setAnnounceList(openDataAnnounceList);
+            openDataAdapter.notifyDataSetChanged();
+
+            Collections.sort(openDataMatchPercentagesList, (s1, s2) -> {
+                Double o1d = Double.valueOf(s1);
+                Double o2d = Double.valueOf(s2);
+                return Double.compare(o2d, o1d);
+            });
+
+            //Collections.sort(openDataMatchPercentagesList);
+            //Collections.reverse(openDataMatchPercentagesList);
 
             openDataAdapter.setListPercentageDistance(openDataDistancePercentagesList);
             openDataAdapter.setListDistance(openDataDistancesList);
@@ -403,6 +421,9 @@ public class MatchAnnounce extends AppCompatActivity {
                 matchPercentajeArray[1] = matchPercentajeArray[1] + "0";
             }
             matchPercentaje = matchPercentajeArray[0] + "." + matchPercentajeArray[1].substring(0, 2);
+
+            announces[i].setMatchPercentage(Double.valueOf(matchPercentaje));
+
             matchPercentagesList.add(i, matchPercentaje);
 
             adapter.insert(listElements, announces[i]);
@@ -410,11 +431,20 @@ public class MatchAnnounce extends AppCompatActivity {
             recyclerView.setAdapter(adapter);
             recyclerView.setLayoutManager(new LinearLayoutManager(this));
         }
-        Collections.sort(matchPercentagesList);
-        if(matchPercentagesList.size() >= 2) {
-            if(Double.valueOf(matchPercentagesList.get(0)) < Double.valueOf(matchPercentagesList.get(1)))
-                Collections.reverse(matchPercentagesList);
-        }
+
+        Collections.sort(announceList, (o1, o2) -> {
+            Double o1d = o1.getMatchPercentage();
+            Double o2d = o2.getMatchPercentage();
+            return Double.compare(o2d, o1d);
+        });
+        adapter.setAnnounceList(announceList);
+        adapter.notifyDataSetChanged();
+
+        Collections.sort(matchPercentagesList, (s1, s2) -> {
+            Double o1d = Double.valueOf(s1);
+            Double o2d = Double.valueOf(s2);
+            return Double.compare(o2d, o1d);
+        });
 
         adapter.setListPercentageColor(colorPercentagesList);
         adapter.setListPercentageDistance(distancePercentagesList);
@@ -559,17 +589,20 @@ public class MatchAnnounce extends AppCompatActivity {
         String percentageText = "";
         Double percentage;
         Double Ddistance = Double.parseDouble(distance);
-        if(Ddistance >= 1000.00) { // >= 1km
+        if(Ddistance >= 2000.00) { // >= 1km
             percentage = 0.00;
             percentageText = String.valueOf(percentage);
         } else { // < 1 km
-            if (Ddistance <= 20) {
+            if (Ddistance <= 100) {
                 percentage = 100.00;
                 percentageText = String.valueOf(percentage);
                 percentageText = percentageText.substring(0, 4);
-            } else if (Ddistance > 20 && Ddistance < 999) {
-                percentage = 1000 - Ddistance;
-                percentage /= 10;
+            } else if (Ddistance > 100 && Ddistance < 999) {
+                Double tmp;
+                tmp = Ddistance / 100;
+                percentage = 100 - (tmp * 10);
+                //percentage = 1000 - Ddistance;
+                //percentage /= 10;
                 percentageText = String.valueOf(percentage);
                 percentageText = percentageText.substring(0, 4);
             }
@@ -581,8 +614,8 @@ public class MatchAnnounce extends AppCompatActivity {
         Double matchPercentageDouble;
 
         // Formula del match...
-        Double colorMultiplier = 0.325;
-        Double distanceMultiplier = 0.625;
+        Double colorMultiplier = 0.225;
+        Double distanceMultiplier = 0.725;
 
         matchPercentageDouble = colorPercentage * colorMultiplier + distancePercentage * distanceMultiplier;
 

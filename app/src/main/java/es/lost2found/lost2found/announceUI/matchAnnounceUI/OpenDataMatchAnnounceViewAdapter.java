@@ -126,4 +126,8 @@ public class OpenDataMatchAnnounceViewAdapter extends RecyclerView.Adapter<OpenD
     void setListPercentageMatch(List<String> listPercentageMatch) {
         this.matchPercentagesList = listPercentageMatch;
     }
+
+    void setAnnounceList(List<OpenDataAnnounce> listAnnounce) {
+        this.listAnnounce = listAnnounce;
+    }
 }

@@ -53,6 +53,7 @@
 
         <activity
             android:name=".lost2found.announceUI.NewAnnounceActivity"
+            android:parentActivityName=".lost2found.announceUI.AnnounceActivity"
             android:screenOrientation="portrait"
             android:label="@string/new_announce_text" />
 
