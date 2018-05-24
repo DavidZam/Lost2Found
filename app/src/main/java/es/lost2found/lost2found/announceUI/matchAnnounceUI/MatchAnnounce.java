@@ -254,9 +254,6 @@ public class MatchAnnounce extends AppCompatActivity {
                 return Double.compare(o2d, o1d);
             });
 
-            //Collections.sort(openDataMatchPercentagesList);
-            //Collections.reverse(openDataMatchPercentagesList);
-
             openDataAdapter.setListPercentageDistance(openDataDistancePercentagesList);
             openDataAdapter.setListDistance(openDataDistancesList);
             openDataAdapter.setTypePlaceOldAnnounce(typePlaceOldAnnounce);
@@ -445,6 +442,10 @@ public class MatchAnnounce extends AppCompatActivity {
             Double o2d = Double.valueOf(s2);
             return Double.compare(o2d, o1d);
         });
+
+        Collections.reverse(colorPercentagesList);
+        Collections.reverse(distancePercentagesList);
+        Collections.reverse(distancesList);
 
         adapter.setListPercentageColor(colorPercentagesList);
         adapter.setListPercentageDistance(distancePercentagesList);
