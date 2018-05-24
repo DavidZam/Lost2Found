@@ -6,7 +6,7 @@ android {
         applicationId "es.lost2found"
         minSdkVersion 21
         targetSdkVersion 27
-        versionCode 2
+        versionCode 3
         versionName "1.2"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         resValue "string", "google_maps_key", (project.findProperty("AIzaSyA6NVXllfUxwrhX0kqaeGD9usn12uY8fgQ") ?: "")
