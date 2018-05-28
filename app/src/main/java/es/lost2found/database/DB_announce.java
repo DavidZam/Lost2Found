@@ -619,12 +619,23 @@ public class DB_announce {
         return idPlace;
     }
 
-    public static List<OpenDataAnnounce>  getMatchOpenDataFoundAnnounces(String categoria, String dia) {
+    public static List<OpenDataAnnounce>  getMatchOpenDataFoundAnnounces(String categoria, String fecha) {
         // Devuelve los anuncios del open data despues de filtrarlos por categoria y dia
-        if(dia.contains("/")) { // dia tiene que estar en el formato YYYY-MM-dd
-            dia = dia.replace("/", "-");
+        String dia = "";
+        String mes = "";
+        String año = "";
+        String dialimite = "";
+        String diasobrante = "";
+        if(fecha.contains("/")) { // dia tiene que estar en el formato YYYY-MM-dd
+            fecha = fecha.replace("/", "-");
+            dia = fecha.substring(fecha.length() - 2, fecha.length());
+            mes = fecha.substring(fecha.length() - 5, fecha.length() - 3);
+            año = fecha.substring(0, fecha.length() - 6);
+            diasobrante = dia.substring(1, dia.length());
+            int diasobranteInt = Integer.valueOf(diasobrante) + 3;
+            dialimite = dia.substring(0, dia.length() - 1) + String.valueOf(diasobranteInt);
         }
-        String OPEN_DATA_URL = "https://data.sncf.com/api/records/1.0/search//?dataset=objets-trouves-restitution&rows=25&sort=-date&facet=date&refine.date=" + dia + "&timezone=Europe/Madrid";
+        String OPEN_DATA_URL = "https://data.sncf.com/api/records/1.0/search//?dataset=objets-trouves-restitution&q=date+%3E%3D+" + año + "%2F" + mes + "%2F" + dia + "+date+%3C+" + año + "%2F" + mes + "%2F" + dialimite + "&rows=500&sort=-date&timezone=Europe/Madrid"; // &facet=date&refine.date=" + dia + "
         List<OpenDataAnnounce> announces = new ArrayList<>();
         HttpURLConnection connection = null;
         InputStream instream = null;
@@ -696,12 +707,23 @@ public class DB_announce {
         return announces;
     }
 
-    public static List<OpenDataAnnounce>  getMatchOpenDataLostAnnounces(String categoria, String dia) {
+    public static List<OpenDataAnnounce>  getMatchOpenDataLostAnnounces(String categoria, String fecha) {
         // Devuelve los anuncios del open data despues de filtrarlos por categoria y dia
-        if(dia.contains("/")) { // dia tiene que estar en el formato YYYY-MM-dd
-            dia = dia.replace("/", "-");
+        String dia = "";
+        String mes = "";
+        String año = "";
+        String dialimite = "";
+        String diasobrante = "";
+        if(fecha.contains("/")) { // dia tiene que estar en el formato YYYY-MM-dd
+            fecha = fecha.replace("/", "-");
+            dia = fecha.substring(fecha.length() - 2, fecha.length());
+            mes = fecha.substring(fecha.length() - 5, fecha.length() - 3);
+            año = fecha.substring(0, fecha.length() - 6);
+            diasobrante = dia.substring(1, dia.length());
+            int diasobranteInt = Integer.valueOf(diasobrante) + 3;
+            dialimite = dia.substring(0, dia.length() - 1) + String.valueOf(diasobranteInt);
         }
-        String OPEN_DATA_URL = "https://data.sncf.com/api/records/1.0/search//?dataset=objets-trouves-gares&rows=25&sort=-date&facet=date&refine.date=" + dia + "&timezone=Europe/Madrid";
+        String OPEN_DATA_URL = "https://data.sncf.com/api/records/1.0/search//?dataset=objets-trouves-restitution&q=date+%3E%3D+" + año + "%2F" + mes + "%2F" + dia + "+date+%3C+" + año + "%2F" + mes + "%2F" + dialimite + "&rows=500&sort=-date&timezone=Europe/Madrid"; // &facet=date&refine.date=" + dia + "
         List<OpenDataAnnounce> announces = new ArrayList<>();
         HttpURLConnection connection = null;
         InputStream instream = null;

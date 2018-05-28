@@ -123,7 +123,7 @@ public class MatchAnnounce extends AppCompatActivity {
 
         @Override
         protected void onPreExecute() {
-            this.dialog.setMessage("Cargando...");
+            this.dialog.setMessage("Cargando gran cantidad de datos, esto llevará un tiempo...");
             this.dialog.show();
         }
 
@@ -210,8 +210,13 @@ public class MatchAnnounce extends AppCompatActivity {
                             openDataDistancesList.add(i, distanceMetres);
                         }
                         // Calculo del match final a partir de las caracteristicas especificas de los dos objetos y el porcentaje de la distancia:
-                        Double distancePercentageInt = Double.valueOf(distancePercentage);
-                        String matchPercentaje = getOpenDataMatchPercentage(distancePercentageInt, oldAnnounce, announces.get(i));
+                        String matchPercentaje;
+                        if(!distancePercentage.equals("")) {
+                            Double distancePercentageInt = Double.valueOf(distancePercentage);
+                            matchPercentaje = getOpenDataMatchPercentage(distancePercentageInt, oldAnnounce, announces.get(i));
+                        } else {
+                            matchPercentaje = "0.00";
+                        }
                         String matchPercentajeArray[] = matchPercentaje.split("\\.");
                         if(matchPercentajeArray[1].length() == 1) {
                             matchPercentajeArray[1] = matchPercentajeArray[1] + "0";
@@ -653,7 +658,7 @@ public class MatchAnnounce extends AppCompatActivity {
 
         matchPercentageDouble = distancePercentage * distanceMultiplier;
 
-        if(distancePercentage != 0) {
+        //if(distancePercentage != 0) {
             String oldAnnounceDay = oldAnnounce.getAnnounceDateText().substring(oldAnnounce.getAnnounceDateText().length()-2);
             Integer oldAnnounceDayInt = Integer.valueOf(oldAnnounceDay);
             String matchAnnounceDay = matchAnnounce.getAnnounceDateText().substring(matchAnnounce.getAnnounceDateText().length()-2);
@@ -676,7 +681,7 @@ public class MatchAnnounce extends AppCompatActivity {
                     matchPercentageDouble += 10.0;
                 }
             }
-        }
+        //}
 
         return String.valueOf(matchPercentageDouble); // Nos da el porcentaje de match entre los dos anuncios
     }
