@@ -217,6 +217,9 @@ public class MatchAnnounce extends AppCompatActivity {
                             matchPercentajeArray[1] = matchPercentajeArray[1] + "0";
                         }
                         matchPercentaje = matchPercentajeArray[0] + "." + matchPercentajeArray[1].substring(0, 2);
+                        Double matchPercentajeDouble = Double.valueOf(matchPercentaje);
+                        if(matchPercentajeDouble != null)
+                            announces.get(i).setMatchPercentage(matchPercentajeDouble);
                         openDataMatchPercentagesList.add(i, matchPercentaje);
                         openDataAdapter.insert(openDataListElements, announces.get(i));
                         openDataListElements++;
@@ -231,6 +234,10 @@ public class MatchAnnounce extends AppCompatActivity {
                             matchPercentageArray[1] = matchPercentageArray[1] + "0";
                         }
                         matchPercentage = matchPercentageArray[0] + "." + matchPercentageArray[1].substring(0, 2);
+                        Double matchPercentajeDouble = Double.valueOf(matchPercentage);
+                        if(matchPercentajeDouble != null)
+                            announces.get(i).setMatchPercentage(matchPercentajeDouble);
+
                         openDataMatchPercentagesList.add(i, matchPercentage);
                         openDataAdapter.insert(openDataListElements, announces.get(i));
                         openDataListElements++;
