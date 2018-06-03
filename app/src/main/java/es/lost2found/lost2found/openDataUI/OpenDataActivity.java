@@ -1,7 +1,9 @@
 package es.lost2found.lost2found.openDataUI;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import es.lost2found.R;
 import es.lost2found.lost2found.announceUI.AnnounceActivity;
@@ -32,6 +34,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.IOException;
+import java.net.InetSocketAddress;
+import java.net.Socket;
+import java.net.SocketAddress;
 
 public class OpenDataActivity extends AppCompatActivity {
 
@@ -57,7 +62,7 @@ public class OpenDataActivity extends AppCompatActivity {
         mDrawerLayout = findViewById(R.id.drawer_layout);
 
         try {
-            connected = isConnected();
+            connected = new checkIfDeviceIsConnected().execute().get(); // Check if device is connected
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -172,8 +177,44 @@ public class OpenDataActivity extends AppCompatActivity {
         finish();
     }
 
-    public boolean isConnected() throws InterruptedException, IOException {
-        String command = "ping -c 1 google.com";
-        return (Runtime.getRuntime().exec (command).waitFor() == 0);
+    public boolean isInternetAvailable(String address, int port, int timeoutMs) {
+        try {
+            Socket sock = new Socket();
+            SocketAddress sockaddr = new InetSocketAddress(address, port);
+
+            sock.connect(sockaddr, timeoutMs); // This will block no more than timeoutMs
+            sock.close();
+
+            return true;
+
+        } catch (IOException e) { return false; }
+    }
+
+    private class checkIfDeviceIsConnected extends AsyncTask<Void, Void, Boolean> {
+
+        private ProgressDialog dialog = new ProgressDialog(OpenDataActivity.this);
+
+        @Override
+        protected void onPreExecute() {
+            this.dialog.setMessage("Comprobando conexion...");
+            this.dialog.show();
+        }
+
+        @Override
+        protected Boolean doInBackground(Void... params) {
+            if (isInternetAvailable("8.8.8.8", 53, 1000)) {
+                // Internet available, do something
+                connected = true;
+            } else {
+                // Internet not available
+                connected = false;
+            }
+            return connected;
+        }
+
+        @Override
+        protected void onPostExecute(Boolean result) {
+            this.dialog.dismiss();
+        }
     }
 }

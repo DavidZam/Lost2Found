@@ -22,6 +22,9 @@ import android.view.WindowManager;
 import android.widget.TextView;
 
 import java.io.IOException;
+import java.net.InetSocketAddress;
+import java.net.Socket;
+import java.net.SocketAddress;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -69,12 +72,6 @@ public class AnnounceActivity extends AppCompatActivity implements FloatingActio
             ab.setHomeAsUpIndicator(R.drawable.ic_menu);
         }
         mDrawerLayout = findViewById(R.id.drawer_layout);
-
-        try {
-            connected = isConnected();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
 
         withoutAnnounces = findViewById(R.id.without_announces);
 
@@ -153,6 +150,12 @@ public class AnnounceActivity extends AppCompatActivity implements FloatingActio
                 }
         );
         navView.setCheckedItem(R.id.nav_home);
+
+        try {
+            connected = new checkIfDeviceIsConnected().execute().get(); // Check if device is connected
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         Announce delAnnounce = (Announce) getIntent().getSerializableExtra("delete");
         if(delAnnounce != null && connected) {
@@ -282,7 +285,7 @@ public class AnnounceActivity extends AppCompatActivity implements FloatingActio
     @Override
     public void onClick(View v) {
         try {
-            connected = isConnected();
+            connected = new checkIfDeviceIsConnected().execute().get(); // Check if device is connected
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -318,8 +321,44 @@ public class AnnounceActivity extends AppCompatActivity implements FloatingActio
         finish();
     }
 
-    public boolean isConnected() throws InterruptedException, IOException {
-        String command = "ping -c 1 google.com";
-        return (Runtime.getRuntime().exec (command).waitFor() == 0);
+    public boolean isInternetAvailable(String address, int port, int timeoutMs) {
+        try {
+            Socket sock = new Socket();
+            SocketAddress sockaddr = new InetSocketAddress(address, port);
+
+            sock.connect(sockaddr, timeoutMs); // This will block no more than timeoutMs
+            sock.close();
+
+            return true;
+
+        } catch (IOException e) { return false; }
+    }
+
+    private class checkIfDeviceIsConnected extends AsyncTask<Void, Void, Boolean> {
+
+        private ProgressDialog dialog = new ProgressDialog(AnnounceActivity.this);
+
+        @Override
+        protected void onPreExecute() {
+            this.dialog.setMessage("Comprobando conexion...");
+            this.dialog.show();
+        }
+
+        @Override
+        protected Boolean doInBackground(Void... params) {
+            if (isInternetAvailable("8.8.8.8", 53, 1000)) {
+                // Internet available, do something
+                connected = true;
+            } else {
+                // Internet not available
+                connected = false;
+            }
+            return connected;
+        }
+
+        @Override
+        protected void onPostExecute(Boolean result) {
+            this.dialog.dismiss();
+        }
     }
 }

@@ -1,9 +1,11 @@
 package es.lost2found.lost2found.otherUI;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.content.ContextCompat;
@@ -21,6 +23,9 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import java.io.IOException;
+import java.net.InetSocketAddress;
+import java.net.Socket;
+import java.net.SocketAddress;
 
 import es.lost2found.R;
 import es.lost2found.lost2found.announceUI.AnnounceActivity;
@@ -49,7 +54,7 @@ public class RateActivity extends AppCompatActivity {
         mDrawerLayout = findViewById(R.id.drawer_layout);
 
         try {
-            connected = isConnected();
+            connected = new checkIfDeviceIsConnected().execute().get(); // Check if device is connected
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -126,7 +131,9 @@ public class RateActivity extends AppCompatActivity {
         );
         navView.setCheckedItem(R.id.nav_feedback);
 
+        Button rateButton = findViewById(R.id.rate);
         if(connected) {
+            rateButton.setVisibility(View.VISIBLE);
             TextView withoutConnection = findViewById(R.id.without_connection);
             withoutConnection.setText("");
             String s = "<h2> <font color=#1976D2> ¡Tu valoración cuenta! </font></h2> Valorándonos contribuyes a mantener y mejorar el sistema para que siga ayudando a muchas personas.<br><br>" +
@@ -135,12 +142,12 @@ public class RateActivity extends AppCompatActivity {
             TextView texto = findViewById(R.id.textinfo);
             texto.setText(Html.fromHtml(s));
         } else {
+            rateButton.setVisibility(View.GONE);
             TextView withoutConnection = findViewById(R.id.without_connection);
             withoutConnection.setText(withoutConnection.getResources().getString(R.string.info_txt4));
         }
 
-        Button ratebutton = findViewById(R.id.rate);
-        ratebutton.setOnClickListener(v -> {
+        rateButton.setOnClickListener(v -> {
             final String appPackageName = getPackageName();
             try {
                 startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + appPackageName)));
@@ -173,8 +180,44 @@ public class RateActivity extends AppCompatActivity {
         finish();
     }
 
-    public boolean isConnected() throws InterruptedException, IOException {
-        String command = "ping -c 1 google.com";
-        return (Runtime.getRuntime().exec (command).waitFor() == 0);
+    public boolean isInternetAvailable(String address, int port, int timeoutMs) {
+        try {
+            Socket sock = new Socket();
+            SocketAddress sockaddr = new InetSocketAddress(address, port);
+
+            sock.connect(sockaddr, timeoutMs); // This will block no more than timeoutMs
+            sock.close();
+
+            return true;
+
+        } catch (IOException e) { return false; }
+    }
+
+    private class checkIfDeviceIsConnected extends AsyncTask<Void, Void, Boolean> {
+
+        private ProgressDialog dialog = new ProgressDialog(RateActivity.this);
+
+        @Override
+        protected void onPreExecute() {
+            this.dialog.setMessage("Comprobando conexion...");
+            this.dialog.show();
+        }
+
+        @Override
+        protected Boolean doInBackground(Void... params) {
+            if (isInternetAvailable("8.8.8.8", 53, 1000)) {
+                // Internet available, do something
+                connected = true;
+            } else {
+                // Internet not available
+                connected = false;
+            }
+            return connected;
+        }
+
+        @Override
+        protected void onPostExecute(Boolean result) {
+            this.dialog.dismiss();
+        }
     }
 }
