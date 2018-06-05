@@ -1,8 +1,11 @@
 package es.lost2found.lost2found.announceUI;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -22,9 +25,11 @@ import android.view.WindowManager;
 import android.widget.TextView;
 
 import java.io.IOException;
+import java.net.HttpURLConnection;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.net.SocketAddress;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -321,7 +326,7 @@ public class AnnounceActivity extends AppCompatActivity implements FloatingActio
         finish();
     }
 
-    public boolean isInternetAvailable(String address, int port, int timeoutMs) {
+    /*public boolean isInternetAvailable(String address, int port, int timeoutMs) {
         try {
             Socket sock = new Socket();
             SocketAddress sockaddr = new InetSocketAddress(address, port);
@@ -332,6 +337,16 @@ public class AnnounceActivity extends AppCompatActivity implements FloatingActio
             return true;
 
         } catch (IOException e) { return false; }
+    }*/
+
+    public static boolean isNetworkAvailable(Context context){
+        ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        if ((activeNetworkInfo != null)&&(activeNetworkInfo.isConnected())){
+            return true;
+        }else{
+            return false;
+        }
     }
 
     private class checkIfDeviceIsConnected extends AsyncTask<Void, Void, Boolean> {
@@ -346,14 +361,34 @@ public class AnnounceActivity extends AppCompatActivity implements FloatingActio
 
         @Override
         protected Boolean doInBackground(Void... params) {
-            if (isInternetAvailable("8.8.8.8", 53, 1000)) {
+            /*if (isInternetAvailable("8.8.8.8", 53, 1000)) {
                 // Internet available, do something
                 connected = true;
             } else {
                 // Internet not available
                 connected = false;
             }
-            return connected;
+            return connected;*/
+            Context cont = getApplicationContext();
+            if (isNetworkAvailable(cont)) {
+                try {
+                    HttpURLConnection urlc = (HttpURLConnection)
+                            (new URL("http://clients3.google.com/generate_204")
+                                    .openConnection());
+                    urlc.setRequestProperty("User-Agent", "Android");
+                    urlc.setRequestProperty("Connection", "close");
+                    urlc.setConnectTimeout(1500);
+                    urlc.connect();
+                    return (urlc.getResponseCode() == 204 &&
+                            urlc.getContentLength() == 0);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    //Log.e(TAG, "Error checking internet connection", e);
+                }
+            } else {
+                //Log.d(TAG, "No network available!");
+            }
+            return false;
         }
 
         @Override

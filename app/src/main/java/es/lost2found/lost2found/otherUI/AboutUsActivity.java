@@ -49,7 +49,7 @@ public class AboutUsActivity extends AppCompatActivity {
 
         NavigationView navView = findViewById(R.id.nav_view);
 
-        String s = "<h2> <font color=#1976D2>¿Cuál es nuestra misión? </font></h2> Lost2Found ha sido creado con el objetivo de poner en contacto a personas que han encontrado algún tipo de objeto con aquellas que lo han encontrado, de forma sencilla y rápida.<br><br><br>" +
+        String s = "<h2> <font color=#1976D2>¿Cuál es nuestra misión? </font></h2> Lost2Found ha sido creado con el objetivo de poner en contacto a personas que han perdido algún tipo de objeto con aquellas que lo han encontrado, de forma sencilla y rápida.<br><br><br>" +
                     "<h2> <font color=#1976D2>¿Qué visión tiene Lost2Found? </font></h2> Intentamos hacer un mundo mejor poniendo en contacto a personas para recuperar sus objetos perdidos, y cumplir así nuestro objetivo.<br><br><br>" +
                     "<h2> <font color=#1976D2>¿Cuáles son nuestros valores? </font></h2> Nuestro proyecto se basa en creer en las personas y en sus colaboraciones altruistas, de esta manera Lost2Found se retroalimenta.<br><br><b>";
         TextView texto = findViewById(R.id.textinfoannounce);

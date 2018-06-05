@@ -53,7 +53,7 @@ public class HelpActivity extends AppCompatActivity {
         String s = "<h2> <font color=#1976D2>¿Cómo funciona Lost2Found? </font></h2> &bull; Cuando una persona pierde un objeto lo notifica creando un anuncio de pérdida y rellenando los máximos campos posibles.<br><br>" +
                 "&bull; Otra persona encuentra ese mismo objeto y crea un anuncio de hallazgo, completando todos los campos que le sea posible. <br><br>" +
                 "&bull; Lost2Found cuenta con un algoritmo que nos proporciona un porcentaje de matching calculado en función de cuánto tengan en común las características de los objetos de ambos anuncios" +
-                ", de esta manera se le muestra al usuario una lista de posibles anuncios que son 'compatibles' con su anuncio de pérdida y qué podrían ser su objeto perdido o encontrado.<br><br>" +
+                ", de esta manera se le muestra al usuario una lista de posibles anuncios que son 'compatibles' con su anuncio de pérdida y que podrían ser su objeto perdido o encontrado.<br><br>" +
                 "&bull; En caso de que el usuario piense que un anuncio con el que se ha hecho match corresponse a su objeto solo tiene que pulsar en contactar para comunicarse con el dueño de dicho anuncio. <br><br>" +
                 "<h2> <font color=#1976D2>¿Puede haber anuncios cuyos procesos coincidan simultáneamente? </font></h2> &bull; Perfectamente. Varios objetos pueden reunir las condiciones necesarias para que sus coincidencias sean similares " +
                 "(objetos parecidos, mismo lugar, fecha y hora). Por eso es imprescindible que los usuarios hablen entre ellos y se aseguren de que el objeto es el correcto.<br>" +
