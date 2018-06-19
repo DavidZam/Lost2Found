@@ -252,7 +252,7 @@ public class MatchAnnounce extends AppCompatActivity {
                 }
             }
 
-            Collections.sort(openDataAnnounceList, (o1, o2) -> {
+            /*Collections.sort(openDataAnnounceList, (o1, o2) -> {
                 Double o1d = o1.getMatchPercentage();
                 Double o2d = o2.getMatchPercentage();
                 return Double.compare(o2d, o1d);
@@ -264,7 +264,7 @@ public class MatchAnnounce extends AppCompatActivity {
                 Double o1d = Double.valueOf(s1);
                 Double o2d = Double.valueOf(s2);
                 return Double.compare(o2d, o1d);
-            });
+            });*/
 
             openDataAdapter.setListPercentageDistance(openDataDistancePercentagesList);
             openDataAdapter.setListDistance(openDataDistancesList);
@@ -423,7 +423,9 @@ public class MatchAnnounce extends AppCompatActivity {
             }
 
             // Calculo del match final a partir de las caracteristicas especificas de los dos objetos, el porcentaje del color y el porcentaje de la distancia:
-            Double distancePercentageInt = Double.valueOf(distancePercentage);
+            Double distancePercentageInt = 0.0;
+            if(!distancePercentage.equals(""))
+                distancePercentageInt = Double.valueOf(distancePercentage);
             String matchPercentaje = getMatchPercentage(distancePercentageInt, colorPercentage, oldAnnounce, announces[i]);
             String matchPercentajeArray[] = matchPercentaje.split("\\.");
             if(matchPercentajeArray[1].length() == 1) {
@@ -441,7 +443,7 @@ public class MatchAnnounce extends AppCompatActivity {
             recyclerView.setLayoutManager(new LinearLayoutManager(this));
         }
 
-        Collections.sort(announceList, (o1, o2) -> {
+        /*Collections.sort(announceList, (o1, o2) -> {
             Double o1d = o1.getMatchPercentage();
             Double o2d = o2.getMatchPercentage();
             return Double.compare(o2d, o1d);
@@ -454,10 +456,12 @@ public class MatchAnnounce extends AppCompatActivity {
             Double o2d = Double.valueOf(s2);
             return Double.compare(o2d, o1d);
         });
+        adapter.setListPercentageMatch(matchPercentagesList);
+        adapter.notifyDataSetChanged();
 
         Collections.reverse(colorPercentagesList);
         Collections.reverse(distancePercentagesList);
-        Collections.reverse(distancesList);
+        Collections.reverse(distancesList);*/
 
         adapter.setListPercentageColor(colorPercentagesList);
         adapter.setListPercentageDistance(distancePercentagesList);

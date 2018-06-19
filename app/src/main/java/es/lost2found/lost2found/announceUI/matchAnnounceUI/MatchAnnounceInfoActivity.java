@@ -100,9 +100,13 @@ public class MatchAnnounceInfoActivity extends AppCompatActivity {
             colorPercentage.setTextColor(getResources().getColor(R.color.FireBrick));
         }
 
+        if(distancePercentageText.equals(""))
+            distancePercentageText = "0.0";
         String distancePerc = "<h4>" + distancePercentageText + "%" + "</h4><br>";
         distancePercentage.setText(Html.fromHtml(distancePerc));
-        double distancePercentageValue = Double.valueOf(distancePercentageText);
+        double distancePercentageValue = 0.0;
+        if(!distancePercentageText.equals(""))
+            distancePercentageValue = Double.valueOf(distancePercentageText);
         if(distancePercentageValue >= 70) {
             distancePercentage.setTextColor(getResources().getColor(R.color.ForestGreen));
         } else if(distancePercentageValue < 70 && distancePercentageValue >= 20) {

@@ -723,7 +723,7 @@ public class DB_announce {
             int diasobranteInt = Integer.valueOf(diasobrante) + 3;
             dialimite = dia.substring(0, dia.length() - 1) + String.valueOf(diasobranteInt);
         }
-        String OPEN_DATA_URL = "https://data.sncf.com/api/records/1.0/search//?dataset=objets-trouves-restitution&q=date+%3E%3D+" + año + "%2F" + mes + "%2F" + dia + "+date+%3C+" + año + "%2F" + mes + "%2F" + dialimite + "&rows=500&sort=-date&timezone=Europe/Madrid"; // &facet=date&refine.date=" + dia + "
+        String OPEN_DATA_URL = "https://data.sncf.com/api/records/1.0/search//?dataset=objets-trouves-gares&q=date+%3E%3D+" + año + "%2F" + mes + "%2F" + dia + "+date+%3C+" + año + "%2F" + mes + "%2F" + dialimite + "&rows=500&sort=-date&timezone=Europe/Madrid"; // &facet=date&refine.date=" + dia + "
         List<OpenDataAnnounce> announces = new ArrayList<>();
         HttpURLConnection connection = null;
         InputStream instream = null;
